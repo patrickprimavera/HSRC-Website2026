@@ -2,117 +2,129 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Human Shelter Realty - Recruit Portal</title>
 
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        #feature-slider::-webkit-scrollbar {
+            display: none;
+        }
 
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.1.7/dist/signature_pad.umd.min.js"></script>
+        #feature-slider {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
 
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        brand: {
-                            dark: '#144242',
-                            navy: '#1e293b',
-                            gold: '#f59e0b',
-                            goldHover: '#d97706',
-                            light: '#f8fafc',
-                        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Human Shelter Realty - Recruit Portal</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/signature_pad@4.1.7/dist/signature_pad.umd.min.js"></script>
+
+<script>
+    tailwind.config = {
+        theme: {
+            extend: {
+                colors: {
+                    brand: {
+                        dark: '#144242',
+                        navy: '#1e293b',
+                        gold: '#f59e0b',
+                        goldHover: '#d97706',
+                        light: '#f8fafc',
                     }
                 }
             }
         }
-    </script>
+    }
+</script>
 
-    <style>
-        body {
-            background-color: #f4f0eb;
-            background-image: url('pic5.png');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            min-height: 100vh;
-            margin: 0;
+<style>
+    body {
+        background-color: #f4f0eb;
+        background-image: url('pic5.png');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        min-height: 100vh;
+        margin: 0;
+    }
+
+
+    .step-content {
+        display: none;
+        animation: fadeIn 0.5s forwards;
+    }
+
+    .step-content.active {
+        display: block;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
         }
 
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
 
-        .step-content {
-            display: none;
-            animation: fadeIn 0.5s forwards;
+    ::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: #cbd5e1;
+        border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: #94a3b8;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    .fade-in-section {
+        animation: sectionReveal 0.8s ease-out forwards;
+    }
+
+    /* Front-page scroll lock */
+    body.scroll-locked {
+        overflow: hidden;
+    }
+
+    /* Focus style for keyboard users */
+    button:focus-visible,
+    a:focus-visible {
+        outline: 3px solid rgba(245, 158, 11, 0.65);
+        outline-offset: 2px;
+    }
+
+    @keyframes sectionReveal {
+        from {
+            opacity: 0;
+            transform: translateY(40px);
         }
 
-        .step-content.active {
-            display: block;
+        to {
+            opacity: 1;
+            transform: translateY(0);
         }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
-            border-radius: 4px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: #94a3b8;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        .fade-in-section {
-            animation: sectionReveal 0.8s ease-out forwards;
-        }
-
-        /* Front-page scroll lock */
-        body.scroll-locked {
-            overflow: hidden;
-        }
-
-        /* Focus style for keyboard users */
-        button:focus-visible,
-        a:focus-visible {
-            outline: 3px solid rgba(245, 158, 11, 0.65);
-            outline-offset: 2px;
-        }
-
-        @keyframes sectionReveal {
-            from {
-                opacity: 0;
-                transform: translateY(40px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-    </style>
+    }
+</style>
 </head>
 
 <body class="bg-slate-50 min-h-screen flex flex-col justify-between" data-onboard="locked">
@@ -258,20 +270,23 @@ background-position:center;
         </div>
 
         <div class="mt-12 bg-white rounded-[40px] shadow-2xl p-8 relative z-0">
-            <div class="flex flex-col md:flex-row justify-center items-stretch gap-4 md:gap-8">
+            <div id="feature-slider"
+                class="flex overflow-x-auto md:overflow-visible snap-x snap-mandatory gap-4 md:gap-8 scroll-smooth">
 
-                <div class="min-w-full md:min-w-0 flex-1 animate-fade-in transition duration-500 ease-in-out hover:scale-105 hover:bg-amber-100 bg-white p-6 rounded-lg shadow-md border-b-4 border-amber-400">
+                <div
+                    class="min-w-full md:min-w-0 flex-1 animate-fade-in transition duration-500 ease-in-out hover:scale-105 hover:bg-amber-100 bg-white p-6 rounded-lg shadow-md border-b-4 border-amber-400">
                     <h3 class="font-bold text-xl text-[#166534]">Make an Impact</h3>
                     <p class="text-slate-600">Help clients find homes and build communities.</p>
                 </div>
 
-                <div class="min-w-full md:min-w-0 flex-1 animate-fade-in transition duration-500 ease-in-out hover:scale-105 hover:bg-amber-100 bg-white p-6 rounded-lg shadow-md border-b-4 border-amber-400">
+                <div
+                    class="min-w-full md:min-w-0 flex-1 animate-fade-in transition duration-500 ease-in-out hover:scale-105 hover:bg-amber-100 bg-white p-6 rounded-lg shadow-md border-b-4 border-amber-400">
                     <h3 class="font-bold text-xl text-[#166534]">Grow With Us</h3>
                     <p class="text-slate-600">Training and mentorship for success.</p>
                 </div>
 
-                    <div
-                        class="flex-1 animate-fade-in transition duration-500 ease-in-out hover:scale-105 hover:bg-sky-100 bg-white p-6 rounded-lg shadow-md border-b-4 border-transparent hover:border-sky-500">
+                <div
+                    class="min-w-full md:min-w-0 flex-1 animate-fade-in transition duration-500 ease-in-out hover:scale-105 hover:bg-sky-100 bg-white p-6 rounded-lg shadow-md border-b-4 border-transparent hover:border-sky-500">
                     <h3 class="font-bold text-xl text-[#166534]">Build a Legacy</h3>
                     <p class="text-slate-600">Join a team committed to excellence.</p>
                 </div>
@@ -1042,21 +1057,21 @@ background-position:center;
                                 </div>
                             </div>
 
-                                <!-- NEW: Generate/Check Passing Button -->
+                            <!-- NEW: Generate/Check Passing Button -->
 
 
-                                <label class="flex items-start gap-3 cursor-pointer select-none"
-                                    id="terms-checkbox-wrapper">
-                                    <input type="checkbox" id="terms-checkbox" onchange="toggleSignaturePadState()"
-                                        class="w-5 h-5 rounded mt-0.5 text-brand-gold focus:ring-brand-gold accent-brand-gold border-slate-400 shrink-0"
-                                        disabled>
-                                    <span class="text-xs md:text-sm font-bold text-slate-800 leading-snug">
-                                        V. I understand that my accreditation depends on fulfilling these conditions.
-                                        Providing false information or failing to meet these standards is grounds for
-                                        the immediate disapproval or revocation of my accreditation. <span
-                                            class="text-red-500">* (Please Click Box)</span>
-                                    </span>
-                                </label>
+                            <label class="flex items-start gap-3 cursor-pointer select-none"
+                                id="terms-checkbox-wrapper">
+                                <input type="checkbox" id="terms-checkbox" onchange="toggleSignaturePadState()"
+                                    class="w-5 h-5 rounded mt-0.5 text-brand-gold focus:ring-brand-gold accent-brand-gold border-slate-400 shrink-0"
+                                    disabled>
+                                <span class="text-xs md:text-sm font-bold text-slate-800 leading-snug">
+                                    V. I understand that my accreditation depends on fulfilling these conditions.
+                                    Providing false information or failing to meet these standards is grounds for
+                                    the immediate disapproval or revocation of my accreditation. <span
+                                        class="text-red-500">* (Please Click Box)</span>
+                                </span>
+                            </label>
 
                             <div id="signature-container-wrapper"
                                 class="opacity-40 pointer-events-none transition-all duration-300 mt-6">
@@ -2083,36 +2098,37 @@ background-position:center;
         });
     </script>
 
-<script>
-document.addEventListener('DOMContentLoaded', () => {
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
 
-    if (window.innerWidth >= 768) return;
+            if (window.innerWidth >= 768) return;
 
-    const slider = document.getElementById('feature-slider');
+            const slider = document.getElementById('feature-slider');
 
-    if (!slider) return;
+            if (!slider) return;
 
-    let current = 0;
+            let current = 0;
 
-    setInterval(() => {
+            setInterval(() => {
 
-        const cards = slider.children;
+                const cards = slider.children;
 
-        current++;
+                current++;
 
-        if (current >= cards.length) {
-            current = 0;
-        }
+                if (current >= cards.length) {
+                    current = 0;
+                }
 
-        cards[current].scrollIntoView({
-            behavior: 'smooth',
-            inline: 'start'
+                cards[current].scrollIntoView({
+                    behavior: 'smooth',
+                    inline: 'start'
+                });
+
+            }, 3000);
+
         });
-
-    }, 3000);
-
-});
-</script>
+    </script>
 
 </body>
+
 </html>
