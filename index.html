@@ -328,45 +328,42 @@ background-position:center;
                         Application in 5 Easy Steps. Let's Begin.</p>
                 </div>
 
-                <div class="flex justify-between items-center max-w-2xl mx-auto relative px-4 py-2">
+                <div class="flex justify-between items-start max-w-2xl mx-auto relative px-2 md:px-4 py-2 overflow-x-auto">
                     <div class="absolute top-7 left-4 right-4 h-1 bg-slate-200 -z-10"></div>
                     <div id="progress-bar-fill"
                         class="absolute top-7 left-4 h-1 bg-brand-gold -z-10 transition-all duration-500"
                         style="width: 0%"></div>
 
-                    <div class="step-indicator flex flex-col items-center relative z-10" data-step="1">
+                    <div class="step-indicator flex flex-col items-center relative z-10 w-[70px] shrink-0" data-step="1">
                         <div
                             class="w-10 h-10 rounded-full bg-brand-gold text-white flex items-center justify-center font-bold shadow-md border-4 border-white text-xs">
                             1</div>
-                        <span
-                            class="text-[10px] sm:text-xs font-bold mt-2 text-brand-navy tracking-wide">Orientation</span>
+                        <span class="text-[9px] md:text-xs font-bold mt-2 text-center leading-tight max-w-[65px] break-words text-brand-navy">Orientation</span>
                     </div>
-                    <div class="step-indicator flex flex-col items-center relative z-10" data-step="2">
+                    <div class="step-indicator flex flex-col items-center relative z-10 w-[70px] shrink-0" data-step="2">
                         <div
                             class="w-10 h-10 rounded-full bg-slate-300 text-slate-500 flex items-center justify-center font-bold shadow-md border-4 border-white text-xs">
                             2</div>
-                        <span class="text-[10px] sm:text-xs font-bold mt-2 text-slate-500 tracking-wide">Select
+                        <span class="text-[9px] md:text-xs font-bold mt-2 text-center leading-tight max-w-[65px] break-words text-slate-500">Select
                             Location</span>
                     </div>
-                    <div class="step-indicator flex flex-col items-center relative z-10" data-step="3">
+                    <div class="step-indicator flex flex-col items-center relative z-10 w-[70px] shrink-0" data-step="3">
                         <div
                             class="w-10 h-10 rounded-full bg-slate-300 text-slate-500 flex items-center justify-center font-bold shadow-md border-4 border-white text-xs">
                             3</div>
-                        <span class="text-[10px] sm:text-xs font-bold mt-2 text-slate-500 tracking-wide">Contact
-                            Information</span>
+                        <span class="text-[9px] md:text-xs font-bold mt-2 text-center leading-tight max-w-[65px] break-words text-brand-navy">Contact Information</span>
                     </div>
-                    <div class="step-indicator flex flex-col items-center relative z-10" data-step="4">
+                    <div class="step-indicator flex flex-col items-center relative z-10 w-[70px] shrink-0" data-step="4">
                         <div
                             class="w-10 h-10 rounded-full bg-slate-300 text-slate-500 flex items-center justify-center font-bold shadow-md border-4 border-white text-xs">
                             4</div>
-                        <span class="text-[10px] sm:text-xs font-bold mt-2 text-slate-500 tracking-wide">Review, Agree &
-                            Sign</span>
+                        <span class="text-[9px] md:text-xs font-bold mt-2 text-center leading-tight max-w-[65px] break-words text-brand-navy">Review, Agree & Sign</span>
                     </div>
-                    <div class="step-indicator flex flex-col items-center relative z-10" data-step="5">
+                    <div class="step-indicator flex flex-col items-center relative z-10 w-[70px] shrink-0" data-step="5">
                         <div
                             class="w-10 h-10 rounded-full bg-slate-300 text-slate-500 flex items-center justify-center font-bold shadow-md border-4 border-white text-xs">
                             5</div>
-                        <span class="text-[10px] sm:text-xs font-bold mt-2 text-slate-500 tracking-wide">Set Your Schedule</span>
+                        <span class="text-[9px] md:text-xs font-bold mt-2 text-center leading-tight max-w-[65px] break-words text-slate-500">Set Your Schedule</span>
                     </div>
                 </div>
             </div>
@@ -1241,13 +1238,27 @@ background-position:center;
         }
 
         function showApplicationForm() {
-            const formScreen = document.getElementById('form-screen');
-            formScreen.classList.remove('hidden');
-            formScreen.classList.add('fade-in-section');
-            setTimeout(() => {
-                formScreen.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }, 50);
-        }
+
+    const welcomeHero = document.getElementById('welcome-hero');
+    const legacyHero = document.getElementById('legacy-hero');
+    const formScreen = document.getElementById('form-screen');
+
+    if (welcomeHero) {
+        welcomeHero.style.display = 'none';
+    }
+
+    if (legacyHero) {
+        legacyHero.style.display = 'none';
+    }
+
+    formScreen.classList.remove('hidden');
+    formScreen.classList.add('fade-in-section');
+
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+}
 
         // TOGGLE LOGIC FOR REFERRER FIELD
         function toggleReferrerField() {
