@@ -1,0 +1,1937 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Human Shelter Realty - Recruit Portal</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.1.7/dist/signature_pad.umd.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            dark: '#144242',
+                            navy: '#1e293b',
+                            gold: '#f59e0b',
+                            goldHover: '#d97706',
+                            light: '#f8fafc',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+        background-color: #f4f0eb;
+        background-image: url('pic5.png');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        min-height: 100vh;
+        margin: 0;
+        }
+            
+
+        .step-content {
+            display: none;
+            animation: fadeIn 0.5s forwards;
+        }
+
+        .step-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .fade-in-section {
+            animation: sectionReveal 0.8s ease-out forwards;
+        }
+
+        /* Front-page scroll lock */
+        body.scroll-locked {
+            overflow: hidden;
+        }
+
+        /* Focus style for keyboard users */
+        button:focus-visible, a:focus-visible {
+            outline: 3px solid rgba(245, 158, 11, 0.65);
+            outline-offset: 2px;
+        }
+
+        @keyframes sectionReveal {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-slate-50 min-h-screen flex flex-col justify-between" data-onboard="locked">
+
+    <header
+    class="bg-[#faf7f0] text-slate-800 px-6 py-3 flex items-center justify-between shadow-sm border-b border-[#eadeca] sticky top-0 z-50">
+    
+    <!-- Logo Part -->
+    <div class="flex items-center gap-4">
+        <img src="https://github.com/primaverapatrick07-sketch/HSRC-LOGO/blob/main/width_2048.png?raw=true"
+            alt="Human Shelter Realty Logo" class="h-12 w-auto object-contain"
+            onerror="this.src='https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=120&q=80'">
+        <div>
+            <h1 class="text-lg font-bold tracking-wide leading-tight text-[#1e293b]">Human Shelter Realty Corp.</h1>
+            <p class="text-xs text-slate-800 tracking-wider font-semibold text-[#1e293b]">Start Your Success Journey</p>
+        </div>
+    </div>
+
+    <!-- Right Side Container: Pinagsama ang Hotline at Follow Us -->
+    <div class="flex items-center gap-6">
+        
+        <!-- Customer Hotline -->
+        <div class="text-md text-slate-800 hidden sm:block text-[#1e293b]">
+            Customer Hotline: <span class="text-amber-500 font-bold text-[#1e293b] border-2 border-yellow-500 rounded-full p-1 transition-colors duration-300 bg-white-500 text-yellow">#123 456 789 </span>
+        </div>
+
+        <!-- Follow Us -->
+        <div class="flex items-center gap-2">
+            <span class="text-sm font-semibold">Follow Us:</span>
+            <a href="https://www.facebook.com/humanshelterofficial/" target="_blank" class="text-blue-600 hover:text-blue-800 text-2xl border-2 border-blue-600 rounded-full p-1 transition-colors duration-300 bg-white shadow-md hover:shadow-lg">
+                <i class="fab fa-facebook"></i>
+            </a>
+        </div>
+        
+    </div>
+</header>
+
+        <section
+id="welcome-hero"
+class="relative overflow-hidden min-h-screen"
+style="
+background:
+url('pic5.png');
+background-size:cover;
+background-position:center;
+">
+
+    <!-- lock legacy visibility until button click -->
+    <script>
+      (function(){
+        // keep legacy off-limits on first load
+        document.addEventListener('DOMContentLoaded', function(){
+          // ensure legacy is not reachable by accidental scroll restore/back-forward
+          document.body.setAttribute('data-onboard', 'locked');
+        });
+      })();
+    </script>
+
+
+    <div class="absolute inset-0 bg-black/20"></div>
+
+
+        <div class="grid lg:grid-cols-2 gap-10 items-center h-[calc(105vh-80px)] px-6 lg:px-30 relative z-55">
+
+            <div class="text-white">
+
+                <span class="inline-block border border-amber-400 text-amber-400 px-6 py-2 rounded-full text-sm font-semibold mb-6">
+                    HUMAN SHELTER REALTY CORP.
+                </span>
+
+                <h1 class="text-5xl lg:text-7xl font-extrabold leading-tight">
+                    Welcome to our
+                    <span class="block text-teal-300">
+                        Recruitment Portal
+                    </span>
+                </h1>
+
+                <p class="mt-6 text-lg text-white drop-shadow-lg leading-relaxed bg-white/50 backdrop-blur-md border border-white/20 rounded-2xl p-6">
+                    Start your success journey with Human Shelter Realty Corporation.
+                    Build your future, create opportunities, and become part of a team that transforms lives through real estate. 
+                </p> 
+                
+
+                <div class="mt-8 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-6">
+                    <p class="italic text-lg">
+                        "We don't just sell properties.
+                        We build dreams, create opportunities,
+                        and leave a lasting legacy."
+                    </p>
+                </div>
+
+                <button
+    onclick="scrollToLegacy()"
+    class="mt-8 bg-amber-500 hover:bg-amber-600 text-white px-8 py-4 rounded-xl font-bold text-lg transition relative overflow-hidden">
+    <span class="relative z-10 inline-flex items-center gap-2">
+        Start Your Journey Today (click to scroll down)
+        <i class="fa-solid fa-arrow-down animate-bounce ml-1"></i>
+    </span>
+    <span class="absolute inset-0 -translate-x-full bg-white/20 group-hover:translate-x-0 transition" aria-hidden="true"></span>
+</button>
+
+            </div>
+
+            <div class="relative flex justify-center">
+
+                <div class="absolute top-2 left-10 bg-white rounded-2xl px-4 pl-3 shadow-xl z-20">
+
+</div>
+
+                <!-- LEFT PHOTO -->
+<!-- MAIN PHOTO -->
+<div class="relative w-full max-w-xl">
+
+    <div class="absolute -top-5 -left-5 w-full h-full border-4 border-green-800 rounded-[50px]"></div>
+
+    <div class="relative h-[650px] rounded-[50px] overflow-hidden shadow-2xl border-4 border-white">
+        <img src="pic4.png" class="w-full h-full object-cover">
+    </div>
+
+</div>
+                
+
+                <div class="absolute bottom-4 right-10 bg-white rounded-2xl px-6 py-4 shadow-xl">
+                    <h3 class="text-2xl font-bold text-[#003d3d]">
+                        I ❤️ HSRC
+                    </h3>
+                    <p class="text-sm text-slate-600">
+                        One Team. One Vision. One Legacy.
+                    </p>
+                    <p class="font-bold text-amber-500">
+                        Selling Homes. Building Dreams.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    
+    <div class="mt-12 bg-white rounded-[40px] shadow-2xl p-8 relative z-0">
+    <div class="flex flex-row justify-center items-stretch gap-8">
+
+    <div class="flex-1 animate-fade-in transition duration-500 ease-in-out hover:scale-105 hover:bg-amber-100 bg-white p-6 rounded-lg shadow-md border-b-4 border-transparent hover:border-amber-500">
+        <h3 class="font-bold text-xl text-[#166534]">Make an Impact</h3>
+        <p class="text-slate-600">Help clients find homes and build communities.</p>
+    </div>
+
+    <div class="flex-1 animate-fade-in transition duration-500 ease-in-out hover:scale-105 hover:bg-emerald-100 bg-white p-6 rounded-lg shadow-md border-b-4 border-transparent hover:border-emerald-500">
+        <h3 class="font-bold text-xl text-[#166534]">Grow With Us</h3>
+        <p class="text-slate-600">Training and mentorship for success.</p>
+    </div>
+
+    <div class="flex-1 animate-fade-in transition duration-500 ease-in-out hover:scale-105 hover:bg-sky-100 bg-white p-6 rounded-lg shadow-md border-b-4 border-transparent hover:border-sky-500">
+        <h3 class="font-bold text-xl text-[#166534]">Build a Legacy</h3>
+        <p class="text-slate-600">Join a team committed to excellence.</p>
+    </div>
+
+</div>
+
+    </div>
+</div>
+</section>
+
+    <main class="container mx-auto px-4 py-6 max-w-4xl flex-grow flex flex-col items-center justify-center gap-10">
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ORIGINAL HERO CONTENT (kept but below; user can scroll down to see it) -->
+        <div id="legacy-hero"
+            class="w-full max-w-3xl bg-brand-dark/95 backdrop-blur-md text-white rounded-2xl p-8 md:p-12 shadow-2xl border border-slate-700/50 text-center py-14 transition-all duration-500 mt-8">
+            <span
+                class="bg-brand-gold/10 text-brand-gold/100 text-xs font-bold px-7 py-1.5 rounded-full tracking-widest uppercase mb-4 inline-block border border-brand-gold/30">
+                Careers & Recruitment
+            </span>
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-4">
+                <h2
+                    class="text-3xl md:text-5xl font-black text-white tracking-tight leading-tight font-['Century_Gothic',_sans-serif]">
+                    Build Your Legacy with Human Shelter
+                </h2>
+
+
+            </div>
+            <div class="w-20 h-1 bg-brand-gold mx-auto mb-8 rounded-full"></div>
+            <p class="text-slate-300 text-base md:text-1xl leading-relaxed max-w-2xl mx-auto mb-6">
+                Since 1989, Human Shelter Realty Corporation has been more than just a brokerage; we are a community of
+                dedicated sellers committed to changing the landscape of Philippine real estate.
+            </p>
+            <p class="text-slate-300 text-base md:text-1xl leading-relaxed max-w-2xl mx-auto mb-0 font-medium">
+                We don't just sell properties, we build legacy. Whether you are a seasoned broker or looking to start
+                your journey in the industry, we provide the mentorship, the tools, and the platform to help you
+                succeed.
+            </p>
+
+            <div class="mt-6 flex justify-center">
+                <button type="button" onclick="showApplicationForm()"
+                    class="inline-flex items-center gap-2 bg-brand-gold hover:bg-brand-goldHover text-white font-extrabold px-8 py-4 rounded-xl shadow-lg transition-all duration-300 transform hover:-translate-y-0.5 text-base md:text-lg tracking-wide cursor-pointer">
+                    Get Started & Apply Now <i class="fa-solid fa-arrow-down animate-bounce ml-1"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- APPLICATION FORM CONTAINER -->
+        <div id="form-screen" class="w-full max-w-4xl scroll-mt-24 hidden">
+
+            <div
+                class="bg-white/95 backdrop-blur-sm rounded-2xl p-6 md:p-8 shadow-xl border border-slate-200/80 mb-8 max-w-3xl mx-auto">
+                <div class="text-center mb-6">
+                    <h2
+                        class="text-3xl md:text-4xl font-extrabold text-brand-dark mb-2 font-['Century_Gothic',_sans-serif]">
+                        Join Our Team</h2>
+                    <p class="text-slate-600 text-sm md:text-base font-['Century_Gothic',_sans-serif]">Complete Your
+                        Application in 5 Easy Steps. Let's Begin.</p>
+                </div>
+
+                <div class="flex justify-between items-center max-w-2xl mx-auto relative px-4 py-2">
+                    <div class="absolute top-7 left-4 right-4 h-1 bg-slate-200 -z-10"></div>
+                    <div id="progress-bar-fill"
+                        class="absolute top-7 left-4 h-1 bg-brand-gold -z-10 transition-all duration-500"
+                        style="width: 0%"></div>
+
+                    <div class="step-indicator flex flex-col items-center relative z-10" data-step="1">
+                        <div
+                            class="w-10 h-10 rounded-full bg-brand-gold text-white flex items-center justify-center font-bold shadow-md border-4 border-white text-xs">
+                            1</div>
+                        <span
+                            class="text-[10px] sm:text-xs font-bold mt-2 text-brand-navy tracking-wide">Orientation</span>
+                    </div>
+                    <div class="step-indicator flex flex-col items-center relative z-10" data-step="2">
+                        <div
+                            class="w-10 h-10 rounded-full bg-slate-300 text-slate-500 flex items-center justify-center font-bold shadow-md border-4 border-white text-xs">
+                            2</div>
+                        <span class="text-[10px] sm:text-xs font-bold mt-2 text-slate-500 tracking-wide">Select
+                            Location</span>
+                    </div>
+                    <div class="step-indicator flex flex-col items-center relative z-10" data-step="3">
+                        <div
+                            class="w-10 h-10 rounded-full bg-slate-300 text-slate-500 flex items-center justify-center font-bold shadow-md border-4 border-white text-xs">
+                            3</div>
+                        <span class="text-[10px] sm:text-xs font-bold mt-2 text-slate-500 tracking-wide">Contact
+                            Information</span>
+                    </div>
+                    <div class="step-indicator flex flex-col items-center relative z-10" data-step="4">
+                        <div
+                            class="w-10 h-10 rounded-full bg-slate-300 text-slate-500 flex items-center justify-center font-bold shadow-md border-4 border-white text-xs">
+                            4</div>
+                        <span class="text-[10px] sm:text-xs font-bold mt-2 text-slate-500 tracking-wide">Review, Agree &
+                            Sign</span>
+                    </div>
+                    <div class="step-indicator flex flex-col items-center relative z-10" data-step="5">
+                        <div
+                            class="w-10 h-10 rounded-full bg-slate-300 text-slate-500 flex items-center justify-center font-bold shadow-md border-4 border-white text-xs">
+                            5</div>
+                        <span class="text-[10px] sm:text-xs font-bold mt-2 text-slate-500 tracking-wide">Set Your Schedule</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-2xl border-t-4 border-brand-gold overflow-hidden max-w-3xl mx-auto">
+                <form id="recruitmentForm" onsubmit="event.preventDefault();">
+
+                    <!-- STEP 1 -->
+                    <div id="step-1" class="step-content active p-8">
+                        <h3 class="text-2xl font-bold text-brand-dark mb-4 flex items-center gap-3">
+                            <i class="fa-solid fa-play-circle text-brand-gold"></i> Step 1: Watch Orientation
+                        </h3>
+                        <p class="mb-6 text-slate-600">Please watch the video below completely to unlock the application
+                            form.</p>
+                        <div
+                            class="bg-black rounded-lg overflow-hidden mb-6 aspect-video flex items-center justify-center relative">
+                            <video id="orientationVideo" class="w-full h-full object-cover"
+                                poster="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=1000&q=80"
+                                controls controlsList="nodownload">
+                                <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                            </video>
+                        </div>
+
+                        <!-- Title between videos (replace (title) later) -->
+                        <div class="w-full mb-4">
+                            <p class="text-center text-sm sm:text-base font-extrabold text-white bg-brand-dark/90 backdrop-blur-sm border border-white/10 rounded-xl py-3 px-4 shadow">
+                                (title) Second Video need to watch
+                            </p>
+                        </div>
+
+                        <!-- ADDED: Second Orientation Video requirement (shown only after video 1 ends) -->
+                        <div id="orientationVideo2-wrapper" class="hidden">
+                            <div
+                                class="bg-black rounded-lg overflow-hidden mb-6 aspect-video flex items-center justify-center relative">
+                                <video id="orientationVideo2" class="w-full h-full object-cover"
+                                    poster="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=1000&q=80"
+                                    controls controlsList="nodownload">
+                                    <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                                </video>
+                            </div>
+                        </div>
+
+
+
+                        <div id="video-status-msg"
+                            class="p-4 bg-red-50 text-red-700 rounded-lg flex items-center gap-2 mb-4 border border-red-200">
+                            <i class="fa-solid fa-lock"></i> <span id="status-text">You need to watch BOTH orientation videos completely to make the "Next" button show up.</span>
+                        </div>
+                    </div>
+
+                    <!-- STEP 2 -->
+                    <div id="step-2" class="step-content p-8">
+                        <h3 class="text-2xl font-bold text-brand-dark mb-4 flex items-center gap-3">
+                            <i class="fa-solid fa-user-tie text-brand-gold"></i> Step 2: Application Preferences
+                        </h3>
+                        <p class="mb-6 text-slate-600">Choose your preferred position and the Business Development
+                            Officer who will guide you through the process.</p>
+
+                        <div class="space-y-6">
+                            <div>
+                                <label class="block text-sm font-bold text-slate-700 mb-2">Position Applying For <span
+                                        class="text-red-500">*</span></label>
+                                <div class="relative">
+                                    <select id="position-applying" name="positionApplying"
+                                        class="block w-full px-4 py-3 rounded-lg border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-brand-gold appearance-none shadow-sm text-brand-dark font-medium"
+                                        required>
+                                        <option value="" disabled selected>-- Select Position --</option>
+                                        <option value="Referral Agent Only">Referral Agent Only</option>
+                                        <option value="Property Assistant (Entry-Level Agent)">Property Assistant
+                                            (Entry-Level Agent)</option>
+                                        <option value="Sales Manager (Network Builder)">Sales Manager (Network Builder)
+                                        </option>
+                                        <option value="Broker Partner (Licensed Broker)">Broker Partner (Licensed
+                                            Broker)</option>
+                                    </select>
+                                    <div
+                                        class="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none text-slate-500">
+                                        <i class="fa-solid fa-chevron-down"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-bold text-slate-700 mb-2">Select Location <span
+                                        class="text-red-500">*</span></label>
+                                <div class="relative">
+                                    <select id="BL-select" name="BL"
+                                        class="block w-full px-4 py-3 rounded-lg border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-brand-gold appearance-none shadow-sm text-brand-dark font-medium"
+                                        required>
+                                        <option value="" disabled selected>-- Select a Location --</option>
+                                        <option value="North Branch">North Branch (Bulacan, Pampanga, Tarlac, Bataan)
+                                        </option>
+                                        <option value="East Branch">East Branch (NCR, Rizal)</option>
+                                        <option value="South Branch">South Branch (Laguna, Batangas, Quezon)</option>
+                                        <option value="Southwest Branch">Southwest Branch (Cavite)</option>
+                                    </select>
+                                    <div
+                                        class="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none text-slate-500">
+                                        <i class="fa-solid fa-chevron-down"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- NEW: REFERRER QUESTION -->
+                            <div class="border-t border-slate-100 pt-4">
+                                <label class="block text-sm font-bold text-slate-700 mb-2">Did someone refer or invite
+                                    you to join Human Shelter? <span class="text-red-500">*</span></label>
+                                <div class="flex gap-6 mt-1">
+                                    <label
+                                        class="flex items-center gap-2 cursor-pointer text-brand-dark font-medium select-none">
+                                        <input type="radio" name="isReferred" value="Yes"
+                                            onchange="toggleReferrerField()" class="w-4 h-4 accent-brand-gold" required>
+                                        Yes
+                                    </label>
+                                    <label
+                                        class="flex items-center gap-2 cursor-pointer text-brand-dark font-medium select-none">
+                                        <input type="radio" name="isReferred" value="No"
+                                            onchange="toggleReferrerField()" class="w-4 h-4 accent-brand-gold"> No
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- NEW: REFERRER NAME FIELD (HIDDEN BY DEFAULT) -->
+                            <div id="referrer-name-container" class="hidden transition-all duration-300">
+                                <label class="block text-sm font-bold text-slate-700 mb-1">If Yes, please indicate the
+                                    full name of your referrer/recruiter: <span class="text-red-500">*</span></label>
+                                <input type="text" id="referrer-name" name="referrerName"
+                                    class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brand-gold text-brand-dark font-medium"
+                                    placeholder="e.g. HSRC Margz Bernabe">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- STEP 3 -->
+                    <div id="step-3" class="step-content p-8">
+                        <h3 class="text-2xl font-bold text-brand-dark mb-4 flex items-center gap-3">
+                            <i class="fa-solid fa-id-card text-brand-gold"></i> Step 3: Contact Information
+                        </h3>
+
+                        <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-6 text-sm text-amber-900">
+                            <p class="font-bold mb-2 flex items-center gap-2">
+                                <i class="fa-solid fa-shield-halved text-brand-gold"></i> Data Privacy Notice
+                            </p>
+                            <p>
+                                By providing your personal information, you explicitly authorize Human Shelter Realty Corp. to collect, use, and process your data in accordance with the Data Privacy Act of 2012
+                            </p>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                            <div class="col-span-2 md:col-span-1">
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Full Name <span
+                                        class="text-red-500">*</span></label>
+                                <input type="text" id="full-name" name="fullName"
+                                    class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brand-gold text-brand-dark"
+                                    placeholder="e.g. Juan dela Cruz" required>
+                            </div>
+
+                            <div class="col-span-2 md:col-span-1">
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Gender <span
+                                        class="text-red-500">*</span></label>
+                                <select id="gender" name="gender"
+                                    class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brand-gold text-brand-dark bg-white"
+                                    required>
+                                    <option value="" disabled selected>-- Select Gender --</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Prefer not to say">Prefer not to say</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Birth Date <span
+                                        class="text-red-500">*</span></label>
+                                <input type="date" id="birthdate" name="birthdate"
+                                    class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brand-gold text-brand-dark"
+                                    required>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">TIN (Optional)</label>
+                                <input type="text" id="tin-number" name="tinNumber"
+                                    class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brand-gold text-brand-dark"
+                                    placeholder="000-000-000-000">
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Email Address <span
+                                        class="text-red-500">*</span></label>
+                                <input type="email" id="email" name="email"
+                                    class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brand-gold text-brand-dark"
+                                    placeholder="juan@example.com" required>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Mobile Number <span
+                                        class="text-red-500">*</span></label>
+                                <input type="tel" id="phone" name="phone"
+                                    class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brand-gold text-brand-dark"
+                                    placeholder="+63 900 000 0000" required>
+                            </div>
+
+                            <div class="col-span-2">
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Facebook Profile Name <span
+                                        class="text-red-500">*</span></label>
+                                <input type="text" id="fb-account" name="fbAccount"
+                                    class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brand-gold text-brand-dark"
+                                    placeholder="e.g. facebook.com/juan.delacruz" required>
+                            </div>
+
+                            <div class="col-span-2">
+                                <label class="block text-sm font-medium text-slate-700 mb-1">Current Address <span
+                                        class="text-red-500">*</span></label>
+                                <input type="text" id="full-address" name="fullAddress"
+                                    class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brand-gold text-brand-dark"
+                                    placeholder="House No., Street, Barangay, City, Province" required>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- STEP 4 -->
+                    <div id="step-4" class="step-content p-8">
+                        <div class="space-y-6">
+                            <h3 class="text-2xl font-bold text-brand-dark mb-2 flex items-center gap-3">
+                                <i class="fa-solid fa-file-contract text-brand-gold"></i> Step 4: Knowledge Check
+                            </h3>
+
+                            <div class="bg-white border border-slate-200 rounded-xl shadow-sm">
+                                <div class="px-5 py-4 border-b border-slate-100 flex items-start gap-3">
+                                    <div class="w-10 h-10 rounded-xl bg-brand-dark/5 flex items-center justify-center border border-slate-200">
+                                        <i class="fa-solid fa-circle-check text-brand-gold"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-lg font-extrabold text-brand-dark">Knowledge Check</h4>
+                                        <p class="text-xs text-slate-500 mt-1">Complete the short quiz below to confirm your understanding of the video presentation.</p>
+                                    </div>
+                                </div>
+
+                                <div class="p-5 space-y-5">
+                                    <!-- Q1 -->
+                                    <div class="rounded-xl bg-slate-50/60 border border-slate-200 p-4">
+                                        <div class="flex items-center justify-between gap-3 mb-3">
+                                            <p class="font-bold text-slate-800 text-sm">1. In what year was Human Shelter founded?</p>
+                                        </div>
+                                        <div class="space-y-2">
+                                            <label class="flex items-center gap-3 cursor-pointer text-slate-700">
+                                                <input type="radio" name="quiz-q1" value="A" class="w-4 h-4 accent-brand-gold" required>
+                                                <span>A. 1989</span>
+                                            </label>
+                                            <label class="flex items-center gap-3 cursor-pointer text-slate-700">
+                                                <input type="radio" name="quiz-q1" value="B" class="w-4 h-4 accent-brand-gold">
+                                                <span>B. 1987</span>
+                                            </label>
+                                            <label class="flex items-center gap-3 cursor-pointer text-slate-700">
+                                                <input type="radio" name="quiz-q1" value="C" class="w-4 h-4 accent-brand-gold">
+                                                <span>C. 1990</span>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <!-- Q2 -->
+                                    <div class="rounded-xl bg-slate-50/60 border border-slate-200 p-4">
+                                        <div class="flex items-center justify-between gap-3 mb-3">
+                                            <p class="font-bold text-slate-800 text-sm">2. If a property is priced at ₱1.8 million, how is it classified?</p>
+                                        </div>
+                                        <div class="space-y-2">
+                                            <label class="flex items-center gap-3 cursor-pointer text-slate-700">
+                                                <input type="radio" name="quiz-q2" value="A" class="w-4 h-4 accent-brand-gold" required>
+                                                <span>A. Socialized Housing</span>
+                                            </label>
+                                            <label class="flex items-center gap-3 cursor-pointer text-slate-700">
+                                                <input type="radio" name="quiz-q2" value="B" class="w-4 h-4 accent-brand-gold">
+                                                <span>B. Open Market Housing</span>
+                                            </label>
+                                            <label class="flex items-center gap-3 cursor-pointer text-slate-700">
+                                                <input type="radio" name="quiz-q2" value="C" class="w-4 h-4 accent-brand-gold">
+                                                <span>C. Economic Housing</span>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <!-- Q3 -->
+                                    <div class="rounded-xl bg-slate-50/60 border border-slate-200 p-4">
+                                        <div class="flex items-center justify-between gap-3 mb-3">
+                                            <p class="font-bold text-slate-800 text-sm">3. For debt-to-income ratio, a buyer's monthly amortization payment should not exceed what percentage of their gross monthly income?</p>
+                                        </div>
+                                        <div class="space-y-2">
+                                            <label class="flex items-center gap-3 cursor-pointer text-slate-700">
+                                                <input type="radio" name="quiz-q3" value="A" class="w-4 h-4 accent-brand-gold" required>
+                                                <span>A. 20% to 25%</span>
+                                            </label>
+                                            <label class="flex items-center gap-3 cursor-pointer text-slate-700">
+                                                <input type="radio" name="quiz-q3" value="B" class="w-4 h-4 accent-brand-gold">
+                                                <span>B. 30% to 35%</span>
+                                            </label>
+                                            <label class="flex items-center gap-3 cursor-pointer text-slate-700">
+                                                <input type="radio" name="quiz-q3" value="C" class="w-4 h-4 accent-brand-gold">
+                                                <span>C. 10% to 12%</span>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <!-- Q4 -->
+                                    <div class="rounded-xl bg-slate-50/60 border border-slate-200 p-4">
+                                        <div class="flex items-center justify-between gap-3 mb-3">
+                                            <p class="font-bold text-slate-800 text-sm">4. Human Shelter has branches in the following locations, except:</p>
+                                        </div>
+                                        <div class="space-y-2">
+                                            <label class="flex items-center gap-3 cursor-pointer text-slate-700">
+                                                <input type="radio" name="quiz-q4" value="A" class="w-4 h-4 accent-brand-gold" required>
+                                                <span>A. Cavite</span>
+                                            </label>
+                                            <label class="flex items-center gap-3 cursor-pointer text-slate-700">
+                                                <input type="radio" name="quiz-q4" value="B" class="w-4 h-4 accent-brand-gold">
+                                                <span>B. Angono</span>
+                                            </label>
+                                            <label class="flex items-center gap-3 cursor-pointer text-slate-700">
+                                                <input type="radio" name="quiz-q4" value="C" class="w-4 h-4 accent-brand-gold">
+                                                <span>C. Tarlac</span>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <!-- Q5 -->
+                                    <div class="rounded-xl bg-slate-50/60 border border-slate-200 p-4">
+                                        <div class="flex items-center justify-between gap-3 mb-3">
+                                            <p class="font-bold text-slate-800 text-sm">5. Which of the following is NOT included in the "5 Golden Questions" asked during client qualification?</p>
+                                        </div>
+                                        <div class="space-y-2">
+                                            <label class="flex items-center gap-3 cursor-pointer text-slate-700">
+                                                <input type="radio" name="quiz-q5" value="A" class="w-4 h-4 accent-brand-gold" required>
+                                                <span>A. What is your salary?</span>
+                                            </label>
+                                            <label class="flex items-center gap-3 cursor-pointer text-slate-700">
+                                                <input type="radio" name="quiz-q5" value="B" class="w-4 h-4 accent-brand-gold">
+                                                <span>B. What is your preferred financing option?</span>
+                                            </label>
+                                            <label class="flex items-center gap-3 cursor-pointer text-slate-700">
+                                                <input type="radio" name="quiz-q5" value="C" class="w-4 h-4 accent-brand-gold">
+                                                <span>C. How much can you shell out for the down payment?</span>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <!-- Q6 -->
+                                    <div class="rounded-xl bg-slate-50/60 border border-slate-200 p-4">
+                                        <div class="flex items-center justify-between gap-3 mb-3">
+                                            <p class="font-bold text-slate-800 text-sm">6. What does "equity" mean in real estate financing?</p>
+                                        </div>
+                                        <div class="space-y-2">
+                                            <label class="flex items-center gap-3 cursor-pointer text-slate-700">
+                                                <input type="radio" name="quiz-q6" value="A" class="w-4 h-4 accent-brand-gold" required>
+                                                <span>A. The monthly payment made to the bank or Pag-IBIG</span>
+                                            </label>
+                                            <label class="flex items-center gap-3 cursor-pointer text-slate-700">
+                                                <input type="radio" name="quiz-q6" value="B" class="w-4 h-4 accent-brand-gold">
+                                                <span>B. The amount paid upfront, while the remaining balance is covered by the bank or Pag-IBIG</span>
+                                            </label>
+                                            <label class="flex items-center gap-3 cursor-pointer text-slate-700">
+                                                <input type="radio" name="quiz-q6" value="C" class="w-4 h-4 accent-brand-gold">
+                                                <span>C. Miscellaneous fees such as administrative and processing fees</span>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <!-- Q7 -->
+                                    <div class="rounded-xl bg-slate-50/60 border border-slate-200 p-4">
+                                        <div class="flex items-center justify-between gap-3 mb-3">
+                                            <p class="font-bold text-slate-800 text-sm">7. What is the key difference between bank financing and Pag-IBIG financing?</p>
+                                        </div>
+                                        <div class="space-y-2">
+                                            <label class="flex items-center gap-3 cursor-pointer text-slate-700">
+                                                <input type="radio" name="quiz-q7" value="A" class="w-4 h-4 accent-brand-gold" required>
+                                                <span>A. Pag-IBIG generally offers lower interest rates and longer payment terms.</span>
+                                            </label>
+                                            <label class="flex items-center gap-3 cursor-pointer text-slate-700">
+                                                <input type="radio" name="quiz-q7" value="B" class="w-4 h-4 accent-brand-gold">
+                                                <span>B. Pag-IBIG generally offers higher interest rates and shorter payment terms.</span>
+                                            </label>
+                                            <label class="flex items-center gap-3 cursor-pointer text-slate-700">
+                                                <input type="radio" name="quiz-q7" value="C" class="w-4 h-4 accent-brand-gold">
+                                                <span>C. Banks have higher interest rates, while Pag-IBIG offers shorter payment terms.</span>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <!-- Q8 -->
+                                    <div class="rounded-xl bg-slate-50/60 border border-slate-200 p-4">
+                                        <div class="flex items-center justify-between gap-3 mb-3">
+                                            <p class="font-bold text-slate-800 text-sm">8. When a property receives the morning sun, which direction is it typically facing?</p>
+                                        </div>
+                                        <div class="space-y-2">
+                                            <label class="flex items-center gap-3 cursor-pointer text-slate-700">
+                                                <input type="radio" name="quiz-q8" value="A" class="w-4 h-4 accent-brand-gold" required>
+                                                <span>A. North</span>
+                                            </label>
+                                            <label class="flex items-center gap-3 cursor-pointer text-slate-700">
+                                                <input type="radio" name="quiz-q8" value="B" class="w-4 h-4 accent-brand-gold">
+                                                <span>B. West</span>
+                                            </label>
+                                            <label class="flex items-center gap-3 cursor-pointer text-slate-700">
+                                                <input type="radio" name="quiz-q8" value="C" class="w-4 h-4 accent-brand-gold">
+                                                <span>C. East</span>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <!-- Q9 -->
+                                    <div class="rounded-xl bg-slate-50/60 border border-slate-200 p-4">
+                                        <div class="flex items-center justify-between gap-3 mb-3">
+                                            <p class="font-bold text-slate-800 text-sm">9. Which contract should a buyer sign when purchasing a property through installment payments?</p>
+                                        </div>
+                                        <div class="space-y-2">
+                                            <label class="flex items-center gap-3 cursor-pointer text-slate-700">
+                                                <input type="radio" name="quiz-q9" value="A" class="w-4 h-4 accent-brand-gold" required>
+                                                <span>A. Deed of Sale</span>
+                                            </label>
+                                            <label class="flex items-center gap-3 cursor-pointer text-slate-700">
+                                                <input type="radio" name="quiz-q9" value="B" class="w-4 h-4 accent-brand-gold">
+                                                <span>B. Contract to Sell</span>
+                                            </label>
+                                            <label class="flex items-center gap-3 cursor-pointer text-slate-700">
+                                                <input type="radio" name="quiz-q9" value="C" class="w-4 h-4 accent-brand-gold">
+                                                <span>C. Deed of Assignment</span>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <!-- Q10 -->
+                                    <div class="rounded-xl bg-slate-50/60 border border-slate-200 p-4">
+                                        <div class="flex items-center justify-between gap-3 mb-3">
+                                            <p class="font-bold text-slate-800 text-sm">10. What is an advantage of Human Shelter?</p>
+                                        </div>
+                                        <div class="space-y-2">
+                                            <label class="flex items-center gap-3 cursor-pointer text-slate-700">
+                                                <input type="radio" name="quiz-q10" value="A" class="w-4 h-4 accent-brand-gold" required>
+                                                <span>A. 37 years of industry experience</span>
+                                            </label>
+                                            <label class="flex items-center gap-3 cursor-pointer text-slate-700">
+                                                <input type="radio" name="quiz-q10" value="B" class="w-4 h-4 accent-brand-gold">
+                                                <span>B. Reputable projects and developers</span>
+                                            </label>
+                                            <label class="flex items-center gap-3 cursor-pointer text-slate-700">
+                                                <input type="radio" name="quiz-q10" value="D" class="w-4 h-4 accent-brand-gold">
+                                                <span>D. All of the above</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div
+                                class="border border-slate-300 rounded-xl p-5 bg-slate-50 text-slate-700 text-sm h-80 overflow-y-scroll space-y-5 leading-relaxed shadow-inner">
+                                <div>
+                                    <h4
+                                        class="font-extrabold text-brand-dark text-base border-b border-slate-200 pb-1 mb-2">
+                                        I. Responsibilities</h4>
+                                    <p class="text-xs text-slate-500 mb-3 italic">Understand your role,
+                                        responsibilities, and how you contribute to the success of the team and the
+                                        projects we handle, and start building your real estate journey with clarity and
+                                        purpose.</p>
+
+                                    <div class="space-y-3 pl-1">
+                                        <div>
+                                            <strong class="text-brand-navy font-bold block">Referral Agent</strong>
+                                            <ul class="list-disc pl-5 text-xs space-y-0.5 mt-0.5">
+                                                <li>Refers potential property buyers or leads to the sales team</li>
+                                                <li>Shares basic property information to interested clients</li>
+                                                <li>Connects clients to the appropriate sales representative</li>
+                                                <li>Ensures accurate and timely submission of referral details</li>
+                                            </ul>
+                                        </div>
+                                        <div>
+                                            <strong class="text-brand-navy font-bold block">Property Assistant (New
+                                                Agent)</strong>
+                                            <ul class="list-disc pl-5 text-xs space-y-0.5 mt-0.5">
+                                                <li>Assists in handling client inquiries about our projects</li>
+                                                <li>Provides basic property details and requirements to clients</li>
+                                                <li>Supports documentation and coordination with buyers</li>
+                                                <li>Helps schedule property presentations or site visits</li>
+                                                <li>Updates and organizes client records and lead information</li>
+                                            </ul>
+                                        </div>
+                                        <div>
+                                            <strong class="text-brand-navy font-bold block">Sales Manager (Agent with
+                                                Network)</strong>
+                                            <ul class="list-disc pl-5 text-xs space-y-0.5 mt-0.5">
+                                                <li>Leads and manages a group of agents or referral partners</li>
+                                                <li>Monitors team performance and sales targets</li>
+                                                <li>Trains and supports agents in closing deals and client handling</li>
+                                                <li>Develops strategies to generate more leads and sales opportunities
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div>
+                                            <strong class="text-brand-navy font-bold block">Licensed Broker
+                                                Partner</strong>
+                                            <ul class="list-disc pl-5 text-xs space-y-0.5 mt-0.5">
+                                                <li>Oversees and ensures full compliance with real estate laws,
+                                                    regulations, and ethical standards</li>
+                                                <li>Coordinates with management for project accreditation, updates, and
+                                                    ongoing developer requirements</li>
+                                                <li>Serves as the official broker partner for assigned projects and
+                                                    developers, ensuring committed support and representation</li>
+                                                <li>Maintains strong professional alignment between the developer,
+                                                    company, and selling network</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <h4
+                                        class="font-extrabold text-brand-dark text-base border-b border-slate-200 pb-1 mb-2">
+                                        II. Legal Status & Liability</h4>
+                                    <ul class="list-disc pl-5 space-y-1 text-xs">
+                                        <li><strong>Independent Contractor:</strong> You are an independent
+                                            entrepreneur, not an employee or partner.</li>
+                                        <li><strong>Liability:</strong> You are solely responsible for any expenses or
+                                            legal consequences resulting from your own negligent or unlawful acts. The
+                                            Broker is not liable for your personal actions.</li>
+                                        <li><strong>Confidentiality:</strong> Post-termination, you may not use any
+                                            proprietary information or trade secrets gained during this engagement for
+                                            your own benefit or that of others.</li>
+                                    </ul>
+                                </div>
+
+                                <div>
+                                    <h4
+                                        class="font-extrabold text-brand-dark text-base border-b border-slate-200 pb-1 mb-2">
+                                        III. Termination</h4>
+                                    <p class="text-xs"><strong>Termination:</strong> Either party may terminate this
+                                        agreement at any time by providing notice.</p>
+                                </div>
+
+                                <div>
+                                    <h4
+                                        class="font-extrabold text-brand-dark text-base border-b border-slate-200 pb-1 mb-2">
+                                        IV. Entire Agreement</h4>
+                                    <p class="text-xs">This document and the company’s Sales Policies represent the full
+                                        agreement between both parties. No other verbal or written understandings exist
+                                        outside of these documents.</p>
+                                </div>
+                            </div>
+
+                            <div class="p-4 bg-amber-50 rounded-xl border-2 border-amber-300 shadow-sm">
+                                <div class="mb-2">
+                                    <h4 class="text-sm font-extrabold text-brand-dark flex items-center gap-2">
+                                        <i class="fa-solid fa-clipboard-check text-brand-gold"></i> Knowledge Check Result
+                                    </h4>
+                                    <p class="text-xs text-slate-600">
+                                        Score: <span id="knowledge-check-score" class="font-bold text-brand-dark">-- / 10</span>
+                                    </p>
+                                </div>
+
+                                <!-- NEW: Generate/Check Passing Button -->
+                    
+
+                                <label class="flex items-start gap-3 cursor-pointer select-none" id="terms-checkbox-wrapper">
+                                    <input type="checkbox" id="terms-checkbox" onchange="toggleSignaturePadState()"
+                                        class="w-5 h-5 rounded mt-0.5 text-brand-gold focus:ring-brand-gold accent-brand-gold border-slate-400 shrink-0" disabled>
+                                    <span class="text-xs md:text-sm font-bold text-slate-800 leading-snug">
+                                        V. I understand that my accreditation depends on fulfilling these conditions.
+                                        Providing false information or failing to meet these standards is grounds for
+                                        the immediate disapproval or revocation of my accreditation. <span
+                                            class="text-red-500">* (Please Click Box)</span>
+                                    </span>
+                                </label>
+                            </div>
+
+                            <div id="signature-container-wrapper"
+                                class="opacity-40 pointer-events-none transition-all duration-300 mt-6">
+                                <div class="flex justify-between items-center mb-2">
+                                    <label class="block text-sm font-bold text-slate-800">Affix Signature Here (Pirmahan
+                                        Dito) <span class="text-red-500">*</span></label>
+                                    <button type="button" id="clear-pad-btn" onclick="clearSignature()"
+                                        class="text-xs font-bold text-red-500 hover:text-red-700 transition flex items-center gap-1 bg-red-50 px-2 py-1 rounded border border-red-200 shadow-sm"
+                                        disabled>
+                                        <i class="fa-solid fa-eraser"></i> Clear Pad
+                                    </button>
+                                </div>
+                                <div
+                                    class="bg-slate-100 border-2 border-dashed border-slate-400 rounded-xl overflow-hidden relative shadow-inner">
+                                    <canvas id="signature-pad"
+                                        class="w-full h-48 block cursor-crosshair bg-white"></canvas>
+                                </div>
+                                <p class="text-xs text-slate-500 mt-2"><i
+                                        class="fa-solid fa-info-circle text-amber-500"></i> Paalala: Pwede kang pumirma
+                                    gamit ang computer mouse o gamit ang iyong daliri sa smartphone.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- STEP 5 -->
+                    <div id="step-5" class="step-content p-8">
+                        <div id="step-5-form-fields" class="space-y-6">
+                            <h3 class="text-2xl font-bold text-brand-dark mb-2 flex items-center gap-3">
+                                <i class="fa-solid fa-comments text-brand-gold"></i> Step 5: Set Your Schedule
+                            </h3>
+                            <p class="text-sm text-slate-600 leading-relaxed">
+                                Finally, you’ll have the opportunity to meet, chat, and ask questions directly with our
+                                Branch Officer. This session is designed to guide you, clarify important details, and
+                                fully prepare you for your real estate journey ahead.
+                            </p>
+
+                            <div class="bg-slate-50 border border-slate-200 rounded-xl p-5 shadow-inner">
+                                <label class="block text-sm font-bold text-slate-800 mb-4">
+                                    Please select your preferred schedule and join us via online/Zoom: <span
+                                        class="text-red-500">*</span>
+                                </label>
+
+                                <div class="mb-4 text-sm">
+                                    <div class="font-bold text-slate-800">
+                                        Selected Location: <span id="step5-selected-location" class="text-brand-gold">--</span>
+                                    </div>
+
+                                </div>
+
+                                <div id="preferredScheduleOptions" class="grid grid-cols-1 gap-3">
+                                    <!-- Options will be injected dynamically based on Step 2 Location -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- LOADING STATE -->
+                        <div id="generation-loading" class="hidden text-center py-12">
+                            <div
+                                class="inline-block animate-spin rounded-full h-12 w-12 border-4 border-brand-gold border-t-transparent mb-4">
+                            </div>
+                            <h4 class="text-xl font-bold text-brand-dark">Uploading Profile & Signature to Google
+                                Drive...</h4>
+                            <p class="text-slate-500 text-sm mt-1">Submitting your signature and profile to our
+                                database...</p>
+                        </div>
+
+                        <!-- SUCCESS STATE -->
+                        <div id="generation-success" class="hidden py-4">
+                            <div class="text-center mb-6">
+                                <div
+                                    class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-100 text-green-600 text-3xl mb-4">
+                                    <i class="fa-solid fa-circle-check"></i>
+                                </div>
+                                <h4 class="text-2xl font-extrabold text-brand-dark">Application Successfully Submitted!
+                                </h4>
+                                <p class="text-slate-600 mt-2 max-w-xl mx-auto text-sm md:text-base leading-relaxed">
+                                    Congratulations and welcome aboard! We're excited to officially have you with us and
+                                    we look forward to celebrating your first successful sale very soon.
+                                </p>
+                            </div>
+
+                            <div class="bg-slate-50 rounded-xl p-6 border border-slate-200 space-y-4 mb-6">
+                                <div class="border-b border-slate-200 pb-3">
+                                    <span class="text-xs font-bold text-slate-400 tracking-wider uppercase">Assigned
+                                        Office Branch</span>
+                                    <div class="text-lg font-bold text-brand-dark flex items-center gap-2 mt-0.5">
+                                        <i class="fa-solid fa-location-dot text-brand-gold text-sm"></i>
+                                        <span id="success-BL-name">--</span>
+                                    </div>
+                                </div>
+                                <div class="border-b border-slate-200 pb-3">
+                                    <span class="text-xs font-bold text-slate-400 tracking-wider uppercase">Your Chosen
+                                        Meeting Schedule</span>
+                                    <p id="success-schedule"
+                                        class="text-md font-bold text-slate-700 flex items-center gap-2 mt-0.5">
+                                        <i class="fa-solid fa-calendar-day text-brand-gold text-sm"></i> --
+                                    </p>
+                                </div>
+                                <div>
+                                    <span class="text-xs font-bold text-slate-400 tracking-wider uppercase">Your Seminar
+                                        Zoom Access Link</span>
+                                    <div class="mt-2 flex flex-col sm:flex-row gap-2">
+                                        <input type="text" id="zoom-link-input" readonly
+                                            value="https://zoom.us/j/placeholder"
+                                            class="w-full bg-white border border-slate-300 px-3 py-2 rounded-lg text-sm text-brand-dark font-mono font-medium focus:outline-none">
+                                        <a id="success-zoom-btn" href="#" target="_blank"
+                                            class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm px-4 py-2 rounded-lg flex items-center justify-center gap-2 transition whitespace-nowrap">
+                                            <i class="fa-solid fa-video"></i> Enter Zoom Room
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div
+                                class="p-4 bg-amber-50 rounded-xl border border-amber-200 flex gap-3 text-sm text-amber-800 mb-8">
+                                <i class="fa-solid fa-envelope-open-text text-lg mt-0.5 shrink-0 text-brand-gold"></i>
+                                <div>
+                                    <strong class="font-bold block mb-0.5">Email Notification:</strong>
+                                    We have successfully processed and saved your digital signature and profile to our
+                                    database. Your assigned Office Branch will also reach out to you to send the exact
+                                    date before the seminar begins. Kindly save your Zoom access link above and make
+                                    sure to attend on your chosen schedule.
+
+                                    Thank you and God bless!
+                                </div>
+                            </div>
+
+                            <div class="border-t border-slate-200 pt-6 flex justify-center">
+                                <button type="button" onclick="resetToWelcomeScreen()"
+                                    class="px-6 py-3 bg-brand-navy hover:bg-slate-700 text-white font-bold rounded-lg shadow transition text-sm flex items-center justify-center gap-2">
+                                    <i class="fa-solid fa-house"></i> Back to Home
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- NAVIGATION FOOTER -->
+                    <div id="form-footer-nav"
+                        class="bg-slate-50 px-8 py-4 flex justify-between border-t border-slate-200">
+                        <button type="button" id="prevBtn"
+                            class="px-5 py-2 bg-slate-300 text-slate-700 font-semibold rounded-lg shadow hover:bg-slate-400 transition hidden">
+                            <i class="fa-solid fa-arrow-left mr-2"></i> Back
+                        </button>
+                        <button type="button" id="nextBtn"
+                            class="ml-auto px-5 py-2 bg-brand-gold text-white font-bold rounded-lg shadow hover:bg-brand-goldHover transition opacity-50 cursor-not-allowed"
+                            disabled>
+                            Next <i class="fa-solid fa-arrow-right mr-2"></i>
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer class="text-center py-4 bg-slate-900 text-slate-400 text-xs border-t border-slate-800">
+        &copy; 2026 Human Shelter Realty Corporation. All Rights Reserved.
+    </footer>
+
+    <!-- LOGIC FUNCTIONS SCRIPT -->
+    <script>
+        const EMAILJS_PUBLIC_KEY = "-abAUDBHoziDINJg5";
+        const EMAILJS_SERVICE_ID = "service_afcu23n";
+        const EMAILJS_TEMPLATE_ID = "template_4ows166";
+        const EMAILJS_APPLICANT_TEMPLATE_ID = "template_wjio09a";
+
+        const GOOGLE_SHEET_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyfCyVXw81IHFE90UrWp2B1QiiaZKHMhewyd_09jUpJ5mx1IHGH4aFi4AGjTNkAwmI/exec";
+
+        (function () {
+            emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+        })();
+
+        let currentStep = 1;
+        const totalSteps = 5;
+
+        // Step 1 gating for TWO videos
+        let isVideo1Finished = false;
+        let isVideo2Finished = false;
+
+        let targetTime1 = 0;
+        let targetTime2 = 0;
+
+        // Strict mode: if user ever seeks/skip, completion becomes invalid
+        // and we force restart so they must watch from the beginning.
+        let hasSeeking1 = false;
+        let hasSeeking2 = false;
+
+
+        let signaturePad;
+        let isKnowledgeResultGenerated = false;
+        let isKnowledgePassed = false;
+
+        const BLDatabase = {
+            "North Branch": { email: "primaverapatsiekurt17@gmail.com", zoomLink: "https://us02web.zoom.us/j/3205013581" },
+            "East Branch": { email: "well.bello@humanshelter.com.ph", zoomLink: "https://us02web.zoom.us/j/3205013581" },
+            "South Branch": { email: "marvin.nepomuceno@humanshelter.com.ph", zoomLink: "https://us02web.zoom.us/j/3205013581" },
+            "Southwest Branch": { email: "margz.bernabe@humanshelter.com.ph", zoomLink: "https://us02web.zoom.us/j/3205013581" },
+        };
+
+        const video = document.getElementById('orientationVideo');
+        const video2 = document.getElementById('orientationVideo2');
+        const video2Wrapper = document.getElementById('orientationVideo2-wrapper');
+
+        const nextBtn = document.getElementById('nextBtn');
+        const prevBtn = document.getElementById('prevBtn');
+        const statusMsg = document.getElementById('video-status-msg');
+        const form = document.getElementById('recruitmentForm');
+
+        function scrollToLegacy() {
+            const legacyEl = document.getElementById('legacy-hero');
+            if (!legacyEl) return;
+
+            // unlock legacy (must be triggered only by this button)
+            if (document.body.getAttribute('data-onboard') === 'locked') {
+                document.body.removeAttribute('data-onboard');
+            }
+
+            legacyEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+            // ensure the user sees the legacy immediately
+            legacyEl.setAttribute('data-revealed','true');
+
+            if (!legacyEl) return;
+
+            // allow scrolling for the jump
+            document.body.classList.remove('scroll-locked');
+            window.removeEventListener('wheel', preventWheel, { passive: false });
+            window.removeEventListener('touchmove', preventTouchMove, { passive: false });
+            window.removeEventListener('keydown', preventKeysForScroll, true);
+
+            legacyEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function preventWheel(e) {
+            if (document.body.getAttribute('data-onboard') === 'locked') {
+                e.preventDefault();
+                return;
+            }
+            const locked = document.body.classList.contains('scroll-locked');
+            if (!locked) return;
+            e.preventDefault();
+        }
+
+        function preventTouchMove(e) {
+            if (document.body.getAttribute('data-onboard') === 'locked') {
+                e.preventDefault();
+                return;
+            }
+            const locked = document.body.classList.contains('scroll-locked');
+            if (!locked) return;
+            e.preventDefault();
+        }
+
+        function preventKeysForScroll(e) {
+            // if onboarding locked, prevent any scroll that reveals legacy section
+            if (document.body.getAttribute('data-onboard') === 'locked') {
+                const legacyEl = document.getElementById('legacy-hero');
+                if (legacyEl) {
+                    const legacyTop = legacyEl.getBoundingClientRect().top;
+                    // prevent scrolling until button unlocks (legacy offscreen anyway)
+                    e.preventDefault();
+                    return;
+                }
+            }
+            const locked = document.body.classList.contains('scroll-locked');
+            if (!locked) return;
+
+            const keys = ['ArrowDown', 'ArrowUp', 'PageDown', 'PageUp', 'Home', 'End', ' '];
+            if (keys.includes(e.key)) {
+                e.preventDefault();
+            }
+        }
+
+        function showApplicationForm() {
+            const formScreen = document.getElementById('form-screen');
+            formScreen.classList.remove('hidden');
+            formScreen.classList.add('fade-in-section');
+            setTimeout(() => {
+                formScreen.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 50);
+        }
+
+        // TOGGLE LOGIC FOR REFERRER FIELD
+        function toggleReferrerField() {
+            const container = document.getElementById('referrer-name-container');
+            const input = document.getElementById('referrer-name');
+            const yesRadio = document.querySelector('input[name="isReferred"][value="Yes"]');
+
+            if (yesRadio && yesRadio.checked) {
+                container.classList.remove('hidden');
+                input.setAttribute('required', 'true');
+            } else {
+                container.classList.add('hidden');
+                input.removeAttribute('required');
+                input.value = ""; // I-clear ang text field kapag nag-"No"
+            }
+
+            // Re-validate step indicators/buttons kapag may nagbago
+            updateFormStep();
+        }
+
+        function initSignaturePad() {
+            const canvas = document.getElementById('signature-pad');
+            if (canvas) {
+                const ratio = Math.max(window.devicePixelRatio || 1, 1);
+                canvas.width = canvas.offsetWidth * ratio;
+                canvas.height = canvas.offsetHeight * ratio;
+                canvas.getContext("2d").scale(ratio, ratio);
+
+                signaturePad = new SignaturePad(canvas, { penColor: "rgb(15, 23, 42)" });
+            }
+        }
+
+        function toggleSignaturePadState() {
+            const checkbox = document.getElementById('terms-checkbox');
+            const wrapper = document.getElementById('signature-container-wrapper');
+            const clearBtn = document.getElementById('clear-pad-btn');
+
+            if (checkbox && checkbox.checked) {
+                wrapper.classList.remove('opacity-40', 'pointer-events-none');
+                clearBtn.removeAttribute('disabled');
+                unlockNextButton();
+            } else {
+                wrapper.classList.add('opacity-40', 'pointer-events-none');
+                clearBtn.setAttribute('disabled', 'true');
+                lockNextButton();
+                clearSignature();
+            }
+        }
+
+        function clearSignature() {
+            if (signaturePad) signaturePad.clear();
+        }
+
+        function resetToWelcomeScreen() {
+            form.reset();
+            clearSignature();
+            isVideo1Finished = false;
+
+            // Hide Video 2 again on reset
+            hideVideo2();
+
+
+            targetTime1 = 0;
+            targetTime2 = 0;
+
+            if (video) {
+                video.currentTime = 0;
+                video.load();
+            }
+
+            if (video2) {
+                video2.currentTime = 0;
+                video2.load();
+            }
+            isKnowledgeResultGenerated = false;
+            isKnowledgePassed = false;
+
+            // Re-enable Step 4 quiz radios after reset
+            const quizRadios = document.querySelectorAll('input[type="radio"][name^="quiz-q"]');
+            quizRadios.forEach(radio => radio.disabled = false);
+
+            // Re-enable generate button
+            const generateBtn = document.getElementById('knowledge-check-generate-btn');
+            if (generateBtn) {
+                generateBtn.disabled = false;
+                generateBtn.classList.remove('opacity-60', 'cursor-not-allowed');
+            }
+
+            video.currentTime = 0;
+            video.load();
+
+            // I-reset ang referrer container styling
+            document.getElementById('referrer-name-container').classList.add('hidden');
+            document.getElementById('referrer-name').removeAttribute('required');
+
+            statusMsg.className = "p-4 bg-red-50 text-red-700 rounded-lg flex items-center gap-2 mb-4 border border-red-200";
+            statusMsg.innerHTML = '<i class="fa-solid fa-lock"></i> <span id="status-text">You need to watch the first orientation video completely to unlock the second video.</span>';
+            lockNextButton();
+
+
+            // Reset knowledge check UI + disable agreement checkbox
+            const scoreEl = document.getElementById('knowledge-check-score');
+            if (scoreEl) scoreEl.textContent = '-- / 10';
+            const hintEl = document.getElementById('knowledge-check-hint');
+            if (hintEl) {
+                hintEl.textContent = 'Click this button para i-generate ang score at malaman kung makakapag-proceed ka sa signature.';
+                hintEl.classList.remove('text-red-600', 'font-bold', 'text-green-700');
+                hintEl.classList.add('text-slate-600');
+            }
+
+            const termsCheck = document.getElementById('terms-checkbox');
+            if (termsCheck) {
+                termsCheck.checked = false;
+                termsCheck.setAttribute('disabled', 'true');
+            }
+
+            document.getElementById('generation-success').classList.add('hidden');
+            document.getElementById('step-5-form-fields').classList.remove('hidden');
+            document.getElementById('form-footer-nav').classList.remove('hidden');
+
+            document.getElementById('form-screen').classList.add('hidden');
+            document.getElementById('form-screen').classList.remove('fade-in-section');
+
+            document.getElementById('signature-container-wrapper').classList.add('opacity-40', 'pointer-events-none');
+            document.getElementById('clear-pad-btn').setAttribute('disabled', 'true');
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            currentStep = 1;
+            updateFormStep();
+        }
+
+        video.addEventListener('timeupdate', () => {
+            if (!video.seeking) {
+                if (video.currentTime > targetTime1 && video.currentTime - targetTime1 < 1.5) {
+                    targetTime1 = video.currentTime;
+                }
+            }
+        });
+
+        video.addEventListener('seeking', () => {
+            // Any seek invalidates completion immediately.
+            isVideo1Finished = false;
+            // Hide/lock video2 again to keep it sequential.
+            hideVideo2();
+            video2.currentTime = 0;
+            try { video2.load(); } catch (e) {}
+            isVideo2Finished = false;
+            lockNextButton();
+
+
+            if (video.currentTime > targetTime1) {
+                video.currentTime = targetTime1;
+                statusMsg.className = "p-4 bg-orange-50 text-orange-700 rounded-lg flex items-center gap-2 mb-4 border border-orange-200";
+                const textNode = document.getElementById('status-text');
+                if (textNode) textNode.textContent = "You cannot skip the video. You must watch it in its entirety to unlock the form.";
+            }
+        });                                                     
+
+
+        function maybeUnlockNextAfterVideos() {
+            if (currentStep !== 1) return;
+            if (isVideo1Finished && isVideo2Finished) {
+                unlockNextButton();
+                statusMsg.className = "p-4 bg-green-50 text-green-700 rounded-lg flex items-center gap-2 mb-4 border border-green-200";
+                statusMsg.innerHTML = '<i class="fa-solid fa-lock-open"></i> <span>Thanks for watching BOTH videos! You are now ready to move on to Step 2.</span>';
+            }
+        }
+
+        function showVideo2() {
+            if (video2Wrapper) {
+                video2Wrapper.classList.remove('hidden');
+            }
+        }
+
+        function hideVideo2() {
+            if (video2Wrapper) {
+                video2Wrapper.classList.add('hidden');
+            }
+        }
+
+
+        const VIDEO_END_TOLERANCE_SECONDS = 0.8;
+
+        video.addEventListener('ended', () => {
+            // Strict completion check: mark finished only if the player actually reached (almost) the end.
+            if (!video.duration || Number.isNaN(video.duration)) return;
+
+            if (video.currentTime >= video.duration - VIDEO_END_TOLERANCE_SECONDS) {
+                isVideo1Finished = true;
+                // Reveal Video 2 only after Video 1 is completed.
+                showVideo2();
+                isVideo2Finished = false;
+                lockNextButton();
+                statusMsg.className = "p-4 bg-orange-50 text-orange-700 rounded-lg flex items-center gap-2 mb-4 border border-orange-200";
+                const textNode = document.getElementById('status-text');
+                if (textNode) textNode.textContent = "Great! Now you must watch the second orientation video completely. Skipping is not allowed.";
+
+                // Reset and start Video 2 from beginning
+                video2.currentTime = 0;
+                try { video2.load(); } catch (e) {}
+
+                // Auto-play (best effort; browser may block)
+                const p = video2.play();
+                if (p && typeof p.catch === 'function') p.catch(() => {});
+
+                maybeUnlockNextAfterVideos();
+            } else {
+                // If ended fired unexpectedly (e.g., due to seeking quirks), revert and keep locked.
+                isVideo1Finished = false;
+                hideVideo2();
+                video2.currentTime = 0;
+                try { video2.load(); } catch (e) {}
+                isVideo2Finished = false;
+                video.currentTime = Math.max(0, Math.min(targetTime1, video.duration - 0.25));
+            }
+        });
+
+
+
+        video2.addEventListener('timeupdate', () => {
+            if (!video2.seeking) {
+                if (video2.currentTime > targetTime2 && video2.currentTime - targetTime2 < 1.5) {
+                        targetTime2 = video2.currentTime;
+                }
+            }
+        });
+
+        // Strict skip prevention for Video 2 (prevents seeking forward/backward) + ensure it keeps playing
+        video2.addEventListener('seeking', () => {
+            // Any seek should invalidate completion state immediately.
+            isVideo2Finished = false;
+            // Keep Video 2 visible while user is on it
+            showVideo2();
+
+
+            // If user tries to seek forward/backward, revert to the last known watched position.
+            // Also force playback to continue so "skip" doesn't pause the video permanently.
+            if (!video2) return;
+            try {
+                if (video2.currentTime !== targetTime2) {
+                video2.currentTime = targetTime2;
+            }
+            } catch (e) {
+                // ignore
+            }
+
+            if (!video2.paused) {
+                // Next should remain locked while seeking.
+                lockNextButton();
+                return;
+            }
+
+            // Try to resume playback
+            const p = video2.play();
+            if (p && typeof p.catch === 'function') p.catch(() => {});
+
+            lockNextButton();
+            statusMsg.className = "p-4 bg-orange-50 text-orange-700 rounded-lg flex items-center gap-2 mb-4 border border-orange-200";
+            const textNode = document.getElementById('status-text');
+            if (textNode) textNode.textContent = "You cannot skip the second orientation video. Watch it completely before proceeding.";
+        });
+
+
+
+        video2.addEventListener('ended', () => {
+            if (!video2.duration || Number.isNaN(video2.duration)) return;
+
+            // Strict completion check for video2 as well.
+            if (video2.currentTime >= video2.duration - VIDEO_END_TOLERANCE_SECONDS) {
+                isVideo2Finished = true;
+                maybeUnlockNextAfterVideos();
+            } else {
+                isVideo2Finished = false;
+                lockNextButton();
+                video2.currentTime = Math.max(0, Math.min(targetTime2, video2.duration - 0.25));
+            }
+        });
+
+
+
+        function unlockNextButton() {
+            nextBtn.removeAttribute('disabled');
+            nextBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+        }
+
+        function lockNextButton() {
+            nextBtn.setAttribute('disabled', 'true');
+            nextBtn.classList.add('opacity-50', 'cursor-not-allowed');
+        }
+
+        // Form Inputs Real-time Tracker for Step validation
+        form.addEventListener('input', () => {
+            validateCurrentStepInputs();
+            // Step 4: auto-generate once all quiz answers are selected
+            maybeAutoGenerateKnowledgeResult();
+        });
+        form.addEventListener('change', () => {
+            validateCurrentStepInputs();
+            // Step 4: auto-generate once all quiz answers are selected
+            maybeAutoGenerateKnowledgeResult();
+        });
+
+
+        // Hanapin ang function na ito at palitan ang loob:
+        function validateCurrentStepInputs() {
+            // ... (Huwag galawin ang ibang logic) ...
+
+            // Keep existing behavior for Step 4 signature checkbox
+            if (currentStep === 4) {
+                const termsCheck = document.getElementById('terms-checkbox');
+                if (termsCheck && termsCheck.checked) {
+                    isValid = true;
+                } else {
+                    isValid = false;
+                }
+            }
+
+            // Step 5 validation: ensure preferredSchedule options are rendered and a radio is chosen
+            // (The Next button click handler already enforces this with reportValidity/alert.)
+        }
+
+        function areAllQuizAnswersSelected() {
+            const quizTotalQuestions = 10;
+            for (let i = 1; i <= quizTotalQuestions; i++) {
+                const selected = document.querySelector(`input[name="quiz-q${i}"]:checked`);
+                if (!selected) return false;
+            }
+            return true;
+        }
+
+        function maybeAutoGenerateKnowledgeResult() {
+            if (currentStep !== 4) return;
+            if (isKnowledgeResultGenerated) return;
+            if (!areAllQuizAnswersSelected()) return;
+
+            generateKnowledgeResult();
+        }
+
+
+
+        function generateKnowledgeResult() {
+            // Prevent re-generation once already generated (score becomes immutable)
+            if (isKnowledgeResultGenerated) return;
+
+
+            const quizTotalQuestions = 10;
+            const passThreshold = 6;
+            const correctAnswers = {
+                'quiz-q1': 'A',
+                'quiz-q2': 'C',
+                'quiz-q3': 'B',
+                'quiz-q4': 'B',
+                'quiz-q5': 'C',
+                'quiz-q6': 'B',
+                'quiz-q7': 'A',
+                'quiz-q8': 'C',
+                'quiz-q9': 'B',
+                'quiz-q10':'D'
+            };
+
+            // Mark as generated immediately to prevent edge-case double triggers
+            isKnowledgeResultGenerated = true;
+
+
+
+            let score = 0;
+            for (let i = 1; i <= quizTotalQuestions; i++) {
+                const name = `quiz-q${i}`;
+                const selected = document.querySelector(`input[name="${name}"]:checked`);
+                if (selected && selected.value === correctAnswers[name]) score++;
+            }
+
+            const scoreEl = document.getElementById('knowledge-check-score');
+            if (scoreEl) scoreEl.textContent = `${score} / ${quizTotalQuestions}`;
+
+            const hintEl = document.getElementById('knowledge-check-hint');
+            const termsWrapper = document.getElementById('terms-checkbox-wrapper');
+
+
+            // Lock quiz answers + disable/hide generate button after scoring
+            const generateBtn = document.getElementById('knowledge-check-generate-btn');
+            if (generateBtn) {
+                generateBtn.disabled = true;
+                generateBtn.classList.add('opacity-60', 'cursor-not-allowed');
+            }
+
+            // Disable all Step 4 quiz radios to prevent answer changes
+            const quizRadios = document.querySelectorAll('input[type="radio"][name^="quiz-q"]');
+            quizRadios.forEach(radio => radio.disabled = true);
+
+            if (score >= passThreshold) {
+                isKnowledgePassed = true;
+                if (hintEl) {
+                    hintEl.textContent = `Passed! You met the passing score (${passThreshold}/${quizTotalQuestions}). You may proceed to the checkbox and signature.`;
+                    hintEl.classList.remove('text-red-600', 'font-bold');
+                    hintEl.classList.add('text-green-700', 'font-bold');
+                }
+
+                if (termsWrapper) {
+                    const checkbox = document.getElementById('terms-checkbox');
+                    if (checkbox) checkbox.removeAttribute('disabled');
+                    termsWrapper.classList.remove('opacity-50');
+                }
+
+                // Unlock signature agreement flow
+                unlockNextButton();
+                return;
+            }
+
+            // Not passed
+            isKnowledgePassed = false;
+            if (hintEl) {
+                hintEl.textContent = `Sorry, hindi ka nakapasa. Minimum passing score: ${passThreshold}/${quizTotalQuestions}. Your score: ${score}.`;
+                hintEl.classList.remove('text-slate-600');
+                hintEl.classList.add('text-red-600', 'font-bold');
+            }
+
+            // Reset entire website back to landing with notification
+            resetToWelcomeScreen();
+            alert(`Sorry, hindi ka nakapasa. Minimum passing score: ${passThreshold}/${quizTotalQuestions}. Your score: ${score}. Ire-redirect ka pabalik sa landing page.`);
+        }
+
+        nextBtn.addEventListener('click', () => {
+            // Step 1 gate: lock Next if BOTH videos are not fully finished
+            if (currentStep === 1) {
+                if (!(isVideo1Finished && isVideo2Finished)) {
+                    lockNextButton();
+                    // Keep user on Step 1; no advance
+                    if (statusMsg) {
+                        statusMsg.className = "p-4 bg-red-50 text-red-700 rounded-lg flex items-center gap-2 mb-4 border border-red-200";
+                        const textNode = document.getElementById('status-text');
+                        if (textNode) textNode.textContent = "You need to watch BOTH orientation videos completely to proceed to Step 2.";
+                    }
+                    return;
+                }
+            }
+
+            const currentStepEl = document.getElementById(`step-${currentStep}`);
+            const inputs = currentStepEl.querySelectorAll('input[required], select[required]');
+            let isValid = true;
+
+            inputs.forEach(input => {
+                if (!input.checkValidity()) {
+                    input.reportValidity();
+                    isValid = false;
+                }
+            });
+
+            if (!isValid) return;
+
+            if (currentStep === 4) {
+                // Step 4 gate: kailangan muna ng Generate Result button
+                if (!isKnowledgeResultGenerated) {
+                    alert("Mangyaring pindutin muna ang 'Generate Result / Check Passing Score' para ma-check kung pumasa ka.");
+                    return;
+                }
+
+                if (!isKnowledgePassed) {
+                    // Safety net: should have been reset already inside generateKnowledgeResult
+                    alert("Hindi ka naka-pasa sa passing score. Ire-redirect ka sa landing page.");
+                    resetToWelcomeScreen();
+                    return;
+                }
+
+                // After passing: validate signature agreement and signature
+                const termsCheck = document.getElementById('terms-checkbox');
+                if (!termsCheck || !termsCheck.checked) {
+                    alert("Mangyaring basahin at i-click muna ang agreement box sa Section V bago mag-proceed.");
+                    return;
+                }
+                if (signaturePad && signaturePad.isEmpty()) {
+                    alert("Mangyaring ilagay ang iyong opisyal na lagda o pirma sa nakalaang box.");
+                    return;
+                }
+            }
+
+            if (currentStep === totalSteps) {
+                const schedSelected = document.querySelector('input[name="preferredSchedule"]:checked');
+                if (!schedSelected) {
+                    alert("Mangyaring pumili ng iyong gustong schedule bago mag-submit.");
+                    return;
+                }
+                processApplicationSubmission();
+                return;
+            }
+
+            currentStep++;
+            updateFormStep();
+        });
+
+        prevBtn.addEventListener('click', () => {
+            if (currentStep > 1) {
+                currentStep--;
+                updateFormStep();
+            }
+        });
+
+        function processApplicationSubmission() {
+    const selectedBdo = document.getElementById('BL-select').value;
+    const BLInfo = BLDatabase[selectedBdo] || { zoomLink: "https://zoom.us", email: "info@humanshelter.com.ph" };
+    const chosenSchedule = document.querySelector('input[name="preferredSchedule"]:checked').value;
+
+    document.getElementById('step-5-form-fields').classList.add('hidden');
+    document.getElementById('prevBtn').classList.add('hidden');
+    document.getElementById('nextBtn').classList.add('hidden');
+    document.getElementById('generation-loading').classList.remove('hidden');
+
+    const applicantEmail = document.getElementById('email').value;
+    const fullNameInput = document.getElementById('full-name').value;
+    const phoneInput = document.getElementById('phone').value;
+    const positionInput = document.getElementById('position-applying').value;
+    const genderInput = document.getElementById('gender').value;
+    const birthdateInput = document.getElementById('birthdate').value;
+    const tinInput = document.getElementById('tin-number').value;
+    const fbInput = document.getElementById('fb-account').value;
+    const addressInput = document.getElementById('full-address').value;
+
+    // Get Referrer fields
+    const isReferredInput = document.querySelector('input[name="isReferred"]:checked')?.value || "No";
+    const referrerNameInput = document.getElementById('referrer-name').value || "N/A";
+
+    const signatureBase64 = signaturePad ? signaturePad.toDataURL("image/png") : "";
+
+    const sheetFormData = new FormData();
+    sheetFormData.append('positionApplying', positionInput);
+    sheetFormData.append('fullName', fullNameInput);
+    sheetFormData.append('gender', genderInput);
+    sheetFormData.append('birthdate', birthdateInput);
+    sheetFormData.append('tinNumber', tinInput);
+    sheetFormData.append('email', applicantEmail);
+    sheetFormData.append('phone', phoneInput);
+    sheetFormData.append('fbAccount', fbInput);
+    sheetFormData.append('fullAddress', addressInput);
+    sheetFormData.append('branchlocation', selectedBdo);
+    sheetFormData.append('preferredSchedule', chosenSchedule);
+    sheetFormData.append('zoom_link', BLInfo.zoomLink);
+    sheetFormData.append('signatureRaw', signatureBase64);
+
+    // Appended new fields for Google Sheets
+    sheetFormData.append('isReferred', isReferredInput);
+    sheetFormData.append('referrerName', referrerNameInput);
+    
+    // Setup Target Emails safely if multiple recipients
+    let targetEmail = BLInfo.email;
+    if (Array.isArray(targetEmail)) {
+        targetEmail = targetEmail.join(", ");
+    }
+
+    // INAYOS NA LOGIC: Siguraduhing may laman ang iyong GOOGLE_SHEET_WEB_APP_URL variable
+    if (GOOGLE_SHEET_WEB_APP_URL && GOOGLE_SHEET_WEB_APP_URL.trim() !== "") {
+        fetch(GOOGLE_SHEET_WEB_APP_URL, {
+            method: 'POST',
+            body: sheetFormData
+        })
+        .then(response => response.json()) // Basahin bilang JSON Object
+        .then(data => {
+            // Siguraduhing may valid na URL na maipapasa para laging clickable ang button
+            let driveSignatureLink = (data && data.pdfUrl) ? data.pdfUrl : "https://drive.google.com/";
+            let certificateLink = (data && data.certUrl) ? data.certUrl : "https://drive.google.com/";
+
+            // Ipinasa nang ligtas patungo sa EmailJS handler mo
+            sendSystemEmails(selectedBdo, targetEmail, BLInfo.zoomLink, fullNameInput, applicantEmail, phoneInput, positionInput, genderInput, birthdateInput, tinInput, fbInput, addressInput, chosenSchedule, driveSignatureLink, isReferredInput, referrerNameInput, certificateLink);
+        })
+        .catch(error => {
+            console.error('Sheet Error:', error);
+            // Fallback kapag nag-error ang network para hindi mag-freeze ang link text sa button
+            let fallbackUrl = "https://drive.google.com/";
+            sendSystemEmails(selectedBdo, targetEmail, BLInfo.zoomLink, fullNameInput, applicantEmail, phoneInput, positionInput, genderInput, birthdateInput, tinInput, fbInput, addressInput, chosenSchedule, fallbackUrl, isReferredInput, referrerNameInput, fallbackUrl);
+        });
+    } else {
+        console.error("Web App URL is missing or empty.");
+        let fallbackUrl = "https://drive.google.com/";
+        sendSystemEmails(selectedBdo, targetEmail, BLInfo.zoomLink, fullNameInput, applicantEmail, phoneInput, positionInput, genderInput, birthdateInput, tinInput, fbInput, addressInput, chosenSchedule, "No Web App URL Configured", isReferredInput, referrerNameInput, fallbackUrl);
+    }
+}
+        function sendSystemEmails(selectedBdo, targetEmail, zoomLink, name, email, phone, position, gender, bdate, tin, fb, address, schedule, signatureLink, isReferred, referrerName, certificateLink) {
+            const BLTemplateParams = {
+                BL_name: selectedBdo, BL_email: targetEmail, recruit_name: name, recruit_email: email, recruit_phone: phone, position_applying: position, gender: gender, birthdate: bdate, tin_number: tin, fb_account: fb, full_address: address, selected_schedule: schedule, zoom_link: zoomLink, signature_link: signatureLink, is_referred: isReferred, referrer_name: referrerName, certificate_link: certificateLink // Assuming the same link for simplicity; adjust if different
+            };
+            const applicantTemplateParams = {
+    recruit_name: name,
+    recruit_email: email,
+    BL_name: selectedBdo,
+    selected_schedule: schedule,
+    zoom_link: zoomLink,
+    certificate_link: certificateLink
+};
+
+        console.log("certificateLink =", certificateLink);
+        console.log("applicantTemplateParams =", applicantTemplateParams);
+
+            Promise.all([
+                emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, BLTemplateParams),
+                emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_APPLICANT_TEMPLATE_ID, applicantTemplateParams)
+            ])
+                .then(function () {
+                    showSuccessState(selectedBdo, zoomLink, schedule);
+                })
+                .catch(function (error) {
+                    console.error('EMAILJS Error:', error);
+                    showSuccessState(selectedBdo, zoomLink, schedule);
+                });
+        }
+
+        function showSuccessState(BLName, zoomLink, schedule) {
+            document.getElementById('success-BL-name').innerHTML = `${BLName}`;
+            document.getElementById('success-schedule').innerHTML = `<i class="fa-solid fa-calendar-day text-brand-gold text-sm"></i> ${schedule}`;
+
+            document.getElementById('zoom-link-input').value = zoomLink;
+            document.getElementById('success-zoom-btn').href = zoomLink;
+            document.getElementById('generation-loading').classList.add('hidden');
+            document.getElementById('form-footer-nav').classList.add('hidden');
+            document.getElementById('generation-success').classList.remove('hidden');
+        }
+
+        function renderPreferredScheduleOptions(branchName) {
+            const optionsContainer = document.getElementById('preferredScheduleOptions');
+            if (!optionsContainer) return;
+
+            const selectedLocationEl = document.getElementById('step5-selected-location');
+            // Step 5: choices only Monday, Wednesday, Friday
+            const days = ['Monday 2:00 PM', 'Wednesday 2:00 PM', 'Friday 2:00 PM'];
+
+
+            // If no branch selected yet, keep it empty so user must choose schedule after Step 2.
+            if (!branchName) {
+                if (selectedLocationEl) selectedLocationEl.textContent = '--';
+                optionsContainer.innerHTML = '';
+                return;
+            }
+
+            if (selectedLocationEl) selectedLocationEl.textContent = branchName;
+
+            optionsContainer.innerHTML = days.map((day) => {
+                const value = `${day}`;
+
+                return `
+                    <label class="flex items-center gap-4 bg-white border border-slate-200 rounded-xl p-4 cursor-pointer hover:border-brand-gold transition shadow-sm select-none">
+                        <input type="radio" name="preferredSchedule" value="${value}"
+                            class="w-5 h-5 accent-brand-gold shrink-0" required>
+                        <div>
+                            <span class="block text-sm font-bold text-brand-dark">${day}</span>
+
+                        </div>
+                    </label>
+                `;
+            }).join('');
+        }
+
+        function updateFormStep() {
+            document.querySelectorAll('.step-content').forEach(content => { content.classList.remove('active'); });
+            document.getElementById(`step-${currentStep}`).classList.add('active');
+
+
+            const progressPercent = ((currentStep - 1) / (totalSteps - 1)) * 100;
+            document.getElementById('progress-bar-fill').style.width = `${progressPercent}%`;
+
+            document.querySelectorAll('.step-indicator').forEach(indicator => {
+                const stepNum = parseInt(indicator.getAttribute('data-step'));
+                const circle = indicator.querySelector('div');
+                const text = indicator.querySelector('span');
+
+                if (stepNum <= currentStep) {
+                    circle.className = "w-10 h-10 rounded-full bg-brand-gold text-white flex items-center justify-center font-bold shadow-md border-4 border-white text-xs";
+                    text.className = "text-[10px] sm:text-xs font-bold mt-2 text-brand-navy tracking-wide";
+                } else {
+                    circle.className = "w-10 h-10 rounded-full bg-slate-300 text-slate-500 flex items-center justify-center font-bold shadow-md border-4 border-white text-xs";
+                    text.className = "text-[10px] sm:text-xs font-bold mt-2 text-slate-500 tracking-wide";
+                }
+            });
+
+            // Handle Nav Buttons state for current steps
+            if (currentStep === 1) {
+                prevBtn.classList.add('hidden');
+            } else {
+                prevBtn.classList.remove('hidden');
+            }
+
+            if (currentStep === 4) {
+                nextBtn.innerHTML = 'Next <i class="fa-solid fa-arrow-right ml-2"></i>';
+                setTimeout(initSignaturePad, 100);
+            } else if (currentStep === 5) {
+                nextBtn.innerHTML = 'Submit Application <i class="fa-solid fa-paper-plane ml-2"></i>';
+            } else {
+                nextBtn.innerHTML = 'Next <i class="fa-solid fa-arrow-right ml-2"></i>';
+            }
+
+            // When entering Step 5, render schedule options based on selected location (Step 2)
+            if (currentStep === 5) {
+                const selectedBranch = document.getElementById('BL-select')?.value;
+                renderPreferredScheduleOptions(selectedBranch);
+
+                // If the currently selected schedule is no longer valid after re-rendering, clear it.
+                // (Simpler: rely on required validation when user re-selects.)
+            }
+
+            validateCurrentStepInputs();
+        }
+
+        // Re-render Step 5 options whenever the user changes location in Step 2
+        document.addEventListener('DOMContentLoaded', () => {
+            const blSelect = document.getElementById('BL-select');
+            if (blSelect) {
+                blSelect.addEventListener('change', () => {
+                    renderPreferredScheduleOptions(blSelect.value);
+                    // Clear previously selected schedule to force user to re-confirm day choice
+                    const checked = document.querySelector('input[name="preferredSchedule"]:checked');
+                    if (checked) checked.checked = false;
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>
