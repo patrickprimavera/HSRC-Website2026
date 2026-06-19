@@ -14,117 +14,117 @@
         }
     </style>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Human Shelter Realty - Recruit Portal</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Human Shelter Realty - Recruit Portal</title>
 
-<script src="https://cdn.tailwindcss.com"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/signature_pad@4.1.7/dist/signature_pad.umd.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.1.7/dist/signature_pad.umd.min.js"></script>
 
-<script>
-    tailwind.config = {
-        theme: {
-            extend: {
-                colors: {
-                    brand: {
-                        dark: '#144242',
-                        navy: '#1e293b',
-                        gold: '#f59e0b',
-                        goldHover: '#d97706',
-                        light: '#f8fafc',
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            dark: '#144242',
+                            navy: '#1e293b',
+                            gold: '#f59e0b',
+                            goldHover: '#d97706',
+                            light: '#f8fafc',
+                        }
                     }
                 }
             }
         }
-    }
-</script>
+    </script>
 
-<style>
-    body {
-        background-color: #f4f0eb;
-        background-image: url('pic5.png');
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-        min-height: 100vh;
-        margin: 0;
-    }
-
-
-    .step-content {
-        display: none;
-        animation: fadeIn 0.5s forwards;
-    }
-
-    .step-content.active {
-        display: block;
-    }
-
-    @keyframes fadeIn {
-        from {
-            opacity: 0;
-            transform: translateY(10px);
+    <style>
+        body {
+            background-color: #f4f0eb;
+            background-image: url('pic5.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            min-height: 100vh;
+            margin: 0;
         }
 
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
 
-    ::-webkit-scrollbar {
-        width: 8px;
-    }
-
-    ::-webkit-scrollbar-track {
-        background: #f1f1f1;
-    }
-
-    ::-webkit-scrollbar-thumb {
-        background: #cbd5e1;
-        border-radius: 4px;
-    }
-
-    ::-webkit-scrollbar-thumb:hover {
-        background: #94a3b8;
-    }
-
-    html {
-        scroll-behavior: smooth;
-    }
-
-    .fade-in-section {
-        animation: sectionReveal 0.8s ease-out forwards;
-    }
-
-    /* Front-page scroll lock */
-    body.scroll-locked {
-        overflow: hidden;
-    }
-
-    /* Focus style for keyboard users */
-    button:focus-visible,
-    a:focus-visible {
-        outline: 3px solid rgba(245, 158, 11, 0.65);
-        outline-offset: 2px;
-    }
-
-    @keyframes sectionReveal {
-        from {
-            opacity: 0;
-            transform: translateY(40px);
+        .step-content {
+            display: none;
+            animation: fadeIn 0.5s forwards;
         }
 
-        to {
-            opacity: 1;
-            transform: translateY(0);
+        .step-content.active {
+            display: block;
         }
-    }
-</style>
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .fade-in-section {
+            animation: sectionReveal 0.8s ease-out forwards;
+        }
+
+        /* Front-page scroll lock */
+        body.scroll-locked {
+            overflow: hidden;
+        }
+
+        /* Focus style for keyboard users */
+        button:focus-visible,
+        a:focus-visible {
+            outline: 3px solid rgba(245, 158, 11, 0.65);
+            outline-offset: 2px;
+        }
+
+        @keyframes sectionReveal {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
 </head>
 
 <body class="bg-slate-50 min-h-screen flex flex-col justify-between" data-onboard="locked">
@@ -286,7 +286,7 @@ background-position:center;
                 </div>
 
                 <div
-                    class="min-w-full md:min-w-0 flex-1 animate-fade-in transition duration-500 ease-in-out hover:scale-105 hover:bg-sky-100 bg-white p-6 rounded-lg shadow-md border-b-4 border-transparent hover:border-sky-500">
+                    class="min-w-full md:min-w-0 flex-1 animate-fade-in transition duration-500 ease-in-out hover:scale-105 hover:bg-amber-100 bg-white p-6 rounded-lg shadow-md border-b-4 border-amber-400">
                     <h3 class="font-bold text-xl text-[#166534]">Build a Legacy</h3>
                     <p class="text-slate-600">Join a team committed to excellence.</p>
                 </div>
@@ -2119,9 +2119,9 @@ background-position:center;
                     current = 0;
                 }
 
-                cards[current].scrollIntoView({
-                    behavior: 'smooth',
-                    inline: 'start'
+                slider.scrollTo({
+                    left: cards[current].offsetLeft,
+                    behavior: 'smooth'
                 });
 
             }, 3000);
