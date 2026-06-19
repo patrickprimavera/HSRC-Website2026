@@ -507,7 +507,7 @@ background-position:center;
                         </h3>
 
                         <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-6 text-sm text-amber-900">
-                            <p class="font-bold mb-2 flex-col items-center gap-2">
+                            <p class="font-bold mb-2 flex items-center gap-2">
                                 <i class="fa-solid fa-shield-halved text-brand-gold"></i> Data Privacy Notice
                             </p>
                             <p>
@@ -515,77 +515,106 @@ background-position:center;
                             </p>
                         </div>
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="flex flex-col gap-6 md:grid md:grid-cols-2">
 
-                            <div class="col-span-2 md:col-span-1">
-                                <label class="block text-sm font-medium text-slate-700 mb-1">Full Name <span
-                                        class="text-red-500">*</span></label>
-                                <input type="text" id="full-name" name="fullName"
-                                    class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brand-gold text-brand-dark"
-                                    placeholder="e.g. Juan dela Cruz" required>
-                            </div>
+    <div class="md:col-span-1">
+        <label class="block text-sm font-medium text-slate-700 mb-1">
+            Full Name <span class="text-red-500">*</span>
+        </label>
+        <input type="text"
+            id="full-name"
+            name="fullName"
+            class="block w-full min-w-0 px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brand-gold text-brand-dark"
+            placeholder="e.g. Juan dela Cruz"
+            required>
+    </div>
 
-                            <div class="col-span-2 md:col-span-1">
-                                <label class="block text-sm font-medium text-slate-700 mb-1">Gender <span
-                                        class="text-red-500">*</span></label>
-                                <select id="gender" name="gender"
-                                    class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brand-gold text-brand-dark bg-white"
-                                    required>
-                                    <option value="" disabled selected>-- Select Gender --</option>
-                                    <option value="Male">Male</option>
-                                    <option value="Female">Female</option>
-                                    <option value="Prefer not to say">Prefer not to say</option>
-                                </select>
-                            </div>
+    <div class="md:col-span-1">
+        <label class="block text-sm font-medium text-slate-700 mb-1">
+            Gender <span class="text-red-500">*</span>
+        </label>
+        <select id="gender"
+            name="gender"
+            class="block w-full min-w-0 px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brand-gold text-brand-dark bg-white"
+            required>
+            <option value="" disabled selected>-- Select Gender --</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Prefer not to say">Prefer not to say</option>
+        </select>
+    </div>
 
-                            <div>
-                                <label class="block text-sm font-medium text-slate-700 mb-1">Birth Date <span
-                                        class="text-red-500">*</span></label>
-                                <input type="date" id="birthdate" name="birthdate"
-                                    class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brand-gold text-brand-dark"
-                                    required>
-                            </div>
+    <div class="w-full min-w-0">
+        <label class="block text-sm font-medium text-slate-700 mb-1">
+            Birth Date <span class="text-red-500">*</span>
+        </label>
+        <input type="date"
+            id="birthdate"
+            name="birthdate"
+            class="block w-full min-w-0 px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brand-gold text-brand-dark"
+            required>
+    </div>
 
-                            <div>
-                                <label class="block text-sm font-medium text-slate-700 mb-1">TIN (Optional)</label>
-                                <input type="text" id="tin-number" name="tinNumber"
-                                    class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brand-gold text-brand-dark"
-                                    placeholder="000-000-000-000">
-                            </div>
+    <div class="w-full min-w-0">
+        <label class="block text-sm font-medium text-slate-700 mb-1">
+            TIN (Optional)
+        </label>
+        <input type="text"
+            id="tin-number"
+            name="tinNumber"
+            class="block w-full min-w-0 px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brand-gold text-brand-dark"
+            placeholder="000-000-000-000">
+    </div>
 
-                            <div>
-                                <label class="block text-sm font-medium text-slate-700 mb-1">Email Address <span
-                                        class="text-red-500">*</span></label>
-                                <input type="email" id="email" name="email"
-                                    class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brand-gold text-brand-dark"
-                                    placeholder="juan@example.com" required>
-                            </div>
+    <div class="w-full min-w-0">
+        <label class="block text-sm font-medium text-slate-700 mb-1">
+            Email Address <span class="text-red-500">*</span>
+        </label>
+        <input type="email"
+            id="email"
+            name="email"
+            class="block w-full min-w-0 px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brand-gold text-brand-dark"
+            placeholder="juan@example.com"
+            required>
+    </div>
 
-                            <div>
-                                <label class="block text-sm font-medium text-slate-700 mb-1">Mobile Number <span
-                                        class="text-red-500">*</span></label>
-                                <input type="tel" id="phone" name="phone"
-                                    class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brand-gold text-brand-dark"
-                                    placeholder="+63 900 000 0000" required>
-                            </div>
+    <div class="w-full min-w-0">
+        <label class="block text-sm font-medium text-slate-700 mb-1">
+            Mobile Number <span class="text-red-500">*</span>
+        </label>
+        <input type="tel"
+            id="phone"
+            name="phone"
+            class="block w-full min-w-0 px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brand-gold text-brand-dark"
+            placeholder="+63 900 000 0000"
+            required>
+    </div>
 
-                            <div class="col-span-2">
-                                <label class="block text-sm font-medium text-slate-700 mb-1">Facebook Profile Name <span
-                                        class="text-red-500">*</span></label>
-                                <input type="text" id="fb-account" name="fbAccount"
-                                    class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brand-gold text-brand-dark"
-                                    placeholder="e.g. facebook.com/juan.delacruz" required>
-                            </div>
+    <div class="md:col-span-2">
+        <label class="block text-sm font-medium text-slate-700 mb-1">
+            Facebook Profile Name <span class="text-red-500">*</span>
+        </label>
+        <input type="text"
+            id="fb-account"
+            name="fbAccount"
+            class="block w-full min-w-0 px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brand-gold text-brand-dark"
+            placeholder="e.g. facebook.com/juan.delacruz"
+            required>
+    </div>
 
-                            <div class="col-span-2">
-                                <label class="block text-sm font-medium text-slate-700 mb-1">Current Address <span
-                                        class="text-red-500">*</span></label>
-                                <input type="text" id="full-address" name="fullAddress"
-                                    class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brand-gold text-brand-dark"
-                                    placeholder="House No., Street, Barangay, City, Province" required>
-                            </div>
+    <div class="md:col-span-2">
+        <label class="block text-sm font-medium text-slate-700 mb-1">
+            Current Address <span class="text-red-500">*</span>
+        </label>
+        <input type="text"
+            id="full-address"
+            name="fullAddress"
+            class="block w-full min-w-0 px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brand-gold text-brand-dark"
+            placeholder="House No., Street, Barangay, City, Province"
+            required>
+    </div>
 
-                        </div>
+</div>
                     </div>
 
                     <!-- STEP 4 -->
