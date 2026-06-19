@@ -32,16 +32,16 @@
 
     <style>
         body {
-        background-color: #f4f0eb;
-        background-image: url('pic5.png');
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-        min-height: 100vh;
-        margin: 0;
+            background-color: #f4f0eb;
+            background-image: url('pic5.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            min-height: 100vh;
+            margin: 0;
         }
-            
+
 
         .step-content {
             display: none;
@@ -95,7 +95,8 @@
         }
 
         /* Focus style for keyboard users */
-        button:focus-visible, a:focus-visible {
+        button:focus-visible,
+        a:focus-visible {
             outline: 3px solid rgba(245, 158, 11, 0.65);
             outline-offset: 2px;
         }
@@ -117,68 +118,71 @@
 <body class="bg-slate-50 min-h-screen flex flex-col justify-between" data-onboard="locked">
 
     <header
-    class="bg-[#faf7f0] text-slate-800 px-6 py-3 flex items-center justify-between shadow-sm border-b border-[#eadeca] sticky top-0 z-50">
-    
-    <!-- Logo Part -->
-    <div class="flex items-center gap-4">
-        <img src="https://github.com/primaverapatrick07-sketch/HSRC-LOGO/blob/main/width_2048.png?raw=true"
-            alt="Human Shelter Realty Logo" class="h-12 w-auto object-contain"
-            onerror="this.src='https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=120&q=80'">
-        <div>
-            <h1 class="text-lg font-bold tracking-wide leading-tight text-[#1e293b]">Human Shelter Realty Corp.</h1>
-            <p class="text-xs text-slate-800 tracking-wider font-semibold text-[#1e293b]">Start Your Success Journey</p>
-        </div>
-    </div>
+        class="bg-[#faf7f0] text-slate-800 px-6 py-3 flex items-center justify-between shadow-sm border-b border-[#eadeca] sticky top-0 z-50">
 
-    <!-- Right Side Container: Pinagsama ang Hotline at Follow Us -->
-    <div class="flex items-center gap-6">
-        
-        <!-- Customer Hotline -->
-        <div class="text-md text-slate-800 hidden sm:block text-[#1e293b]">
-            Customer Hotline: <span class="text-amber-500 font-bold text-[#1e293b] border-2 border-yellow-500 rounded-full p-1 transition-colors duration-300 bg-white-500 text-yellow">#123 456 789 </span>
+        <!-- Logo Part -->
+        <div class="flex items-center gap-4">
+            <img src="https://github.com/primaverapatrick07-sketch/HSRC-LOGO/blob/main/width_2048.png?raw=true"
+                alt="Human Shelter Realty Logo" class="h-12 w-auto object-contain"
+                onerror="this.src='https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=120&q=80'">
+            <div>
+                <h1 class="text-lg font-bold tracking-wide leading-tight text-[#1e293b]">Human Shelter Realty Corp.</h1>
+                <p class="text-xs text-slate-800 tracking-wider font-semibold text-[#1e293b]">Start Your Success Journey
+                </p>
+            </div>
         </div>
 
-        <!-- Follow Us -->
-        <div class="flex items-center gap-2">
-            <span class="text-sm font-semibold">Follow Us:</span>
-            <a href="https://www.facebook.com/humanshelterofficial/" target="_blank" class="text-blue-600 hover:text-blue-800 text-2xl border-2 border-blue-600 rounded-full p-1 transition-colors duration-300 bg-white shadow-md hover:shadow-lg">
-                <i class="fab fa-facebook"></i>
-            </a>
-        </div>
-        
-    </div>
-</header>
+        <!-- Right Side Container: Pinagsama ang Hotline at Follow Us -->
+        <div class="flex items-center gap-6">
 
-        <section
-id="welcome-hero"
-class="relative overflow-hidden min-h-screen"
-style="
+            <!-- Customer Hotline -->
+            <div class="text-md text-slate-800 hidden sm:block text-[#1e293b]">
+                Customer Hotline: <span
+                    class="text-amber-500 font-bold text-[#1e293b] border-2 border-yellow-500 rounded-full p-1 transition-colors duration-300 bg-white-500 text-yellow">#123
+                    456 789 </span>
+            </div>
+
+            <!-- Follow Us -->
+            <div class="flex items-center gap-2">
+                <span class="text-sm font-semibold">Follow Us:</span>
+                <a href="https://www.facebook.com/humanshelterofficial/" target="_blank"
+                    class="text-blue-600 hover:text-blue-800 text-2xl border-2 border-blue-600 rounded-full p-1 transition-colors duration-300 bg-white shadow-md hover:shadow-lg">
+                    <i class="fab fa-facebook"></i>
+                </a>
+            </div>
+
+        </div>
+    </header>
+
+    <section id="welcome-hero" class="relative overflow-hidden min-h-screen" style="
 background:
 url('pic5.png');
 background-size:cover;
 background-position:center;
 ">
 
-    <!-- lock legacy visibility until button click -->
-    <script>
-      (function(){
-        // keep legacy off-limits on first load
-        document.addEventListener('DOMContentLoaded', function(){
-          // ensure legacy is not reachable by accidental scroll restore/back-forward
-          document.body.setAttribute('data-onboard', 'locked');
-        });
-      })();
-    </script>
+        <!-- lock legacy visibility until button click -->
+        <script>
+                (function () {
+                    // keep legacy off-limits on first load
+                    document.addEventListener('DOMContentLoaded', function () {
+                        // ensure legacy is not reachable by accidental scroll restore/back-forward
+                        document.body.setAttribute('data-onboard', 'locked');
+                    });
+                })();
+        </script>
 
 
-    <div class="absolute inset-0 bg-black/20"></div>
+        <div class="absolute inset-0 bg-black/20"></div>
 
 
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10 items-center min-h-screen px-4 lg:px-30 relative z-55">
+        <div
+            class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10 items-center min-h-screen px-4 lg:px-30 relative z-55">
 
             <div class="text-white">
 
-                <span class="inline-block border border-amber-400 text-amber-400 px-6 py-2 rounded-full text-sm font-semibold mb-6">
+                <span
+                    class="inline-block border border-amber-400 text-amber-400 px-6 py-2 rounded-full text-sm font-semibold mb-6">
                     HUMAN SHELTER REALTY CORP.
                 </span>
 
@@ -189,11 +193,13 @@ background-position:center;
                     </span>
                 </h1>
 
-                <p class="mt-6 text-lg text-white drop-shadow-lg leading-relaxed bg-white/50 backdrop-blur-md border border-white/20 rounded-2xl p-6">
+                <p
+                    class="mt-6 text-lg text-white drop-shadow-lg leading-relaxed bg-white/50 backdrop-blur-md border border-white/20 rounded-2xl p-6">
                     Start your success journey with Human Shelter Realty Corporation.
-                    Build your future, create opportunities, and become part of a team that transforms lives through real estate. 
-                </p> 
-                
+                    Build your future, create opportunities, and become part of a team that transforms lives through
+                    real estate.
+                </p>
+
 
                 <div class="mt-8 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-6">
                     <p class="italic text-lg">
@@ -203,15 +209,15 @@ background-position:center;
                     </p>
                 </div>
 
-                <button
-    onclick="scrollToLegacy()"
-    class="mt-8 bg-amber-500 hover:bg-amber-600 text-white px-8 py-4 rounded-xl font-bold text-lg transition relative overflow-hidden">
-    <span class="relative z-10 inline-flex items-center gap-2">
-        Start Your Journey Today (click to scroll down)
-        <i class="fa-solid fa-arrow-down animate-bounce ml-1"></i>
-    </span>
-    <span class="absolute inset-0 -translate-x-full bg-white/20 group-hover:translate-x-0 transition" aria-hidden="true"></span>
-</button>
+                <button onclick="scrollToLegacy()"
+                    class="mt-8 bg-amber-500 hover:bg-amber-600 text-white px-8 py-4 rounded-xl font-bold text-lg transition relative overflow-hidden">
+                    <span class="relative z-10 inline-flex items-center gap-2">
+                        Start Your Journey Today (click to scroll down)
+                        <i class="fa-solid fa-arrow-down animate-bounce ml-1"></i>
+                    </span>
+                    <span class="absolute inset-0 -translate-x-full bg-white/20 group-hover:translate-x-0 transition"
+                        aria-hidden="true"></span>
+                </button>
 
             </div>
 
@@ -219,20 +225,20 @@ background-position:center;
 
                 <div class="absolute top-2 left-10 bg-white rounded-2xl px-4 pl-3 shadow-xl z-20">
 
-</div>
+                </div>
 
                 <!-- LEFT PHOTO -->
-<!-- MAIN PHOTO -->
-<div class="relative w-full max-w-xl">
+                <!-- MAIN PHOTO -->
+                <div class="relative w-full max-w-xl">
 
-    <div class="absolute -top-5 -left-5 w-full h-full border-4 border-green-800 rounded-[50px]"></div>
+                    <div class="absolute -top-5 -left-5 w-full h-full border-4 border-green-800 rounded-[50px]"></div>
 
-    <div class="relative h-[650px] rounded-[50px] overflow-hidden shadow-2xl border-4 border-white">
-        <img src="pic4.png" class="w-full h-full object-cover">
-    </div>
+                    <div class="relative h-[650px] rounded-[50px] overflow-hidden shadow-2xl border-4 border-white">
+                        <img src="pic4.png" class="w-full h-full object-cover">
+                    </div>
 
-</div>
-                
+                </div>
+
 
                 <div class="absolute bottom-4 right-10 bg-white rounded-2xl px-6 py-4 shadow-xl">
                     <h3 class="text-2xl font-bold text-[#003d3d]">
@@ -249,35 +255,38 @@ background-position:center;
 
         </div>
 
-    </div>
-    
-    <div class="mt-12 bg-white rounded-[40px] shadow-2xl p-8 relative z-0">
-    <div class="flex flex-row justify-center items-stretch gap-8">
+        </div>
 
-    <div class="flex-1 animate-fade-in transition duration-500 ease-in-out hover:scale-105 hover:bg-amber-100 bg-white p-6 rounded-lg shadow-md border-b-4 border-transparent hover:border-amber-500">
-        <h3 class="font-bold text-xl text-[#166534]">Make an Impact</h3>
-        <p class="text-slate-600">Help clients find homes and build communities.</p>
-    </div>
+        <div class="mt-12 bg-white rounded-[40px] shadow-2xl p-8 relative z-0">
+            <div class="flex flex-row justify-center items-stretch gap-8">
 
-    <div class="flex-1 animate-fade-in transition duration-500 ease-in-out hover:scale-105 hover:bg-emerald-100 bg-white p-6 rounded-lg shadow-md border-b-4 border-transparent hover:border-emerald-500">
-        <h3 class="font-bold text-xl text-[#166534]">Grow With Us</h3>
-        <p class="text-slate-600">Training and mentorship for success.</p>
-    </div>
+                <div
+                    class="flex-1 animate-fade-in transition duration-500 ease-in-out hover:scale-105 hover:bg-amber-100 bg-white p-6 rounded-lg shadow-md border-b-4 border-transparent hover:border-amber-500">
+                    <h3 class="font-bold text-xl text-[#166534]">Make an Impact</h3>
+                    <p class="text-slate-600">Help clients find homes and build communities.</p>
+                </div>
 
-    <div class="flex-1 animate-fade-in transition duration-500 ease-in-out hover:scale-105 hover:bg-sky-100 bg-white p-6 rounded-lg shadow-md border-b-4 border-transparent hover:border-sky-500">
-        <h3 class="font-bold text-xl text-[#166534]">Build a Legacy</h3>
-        <p class="text-slate-600">Join a team committed to excellence.</p>
-    </div>
+                <div
+                    class="flex-1 animate-fade-in transition duration-500 ease-in-out hover:scale-105 hover:bg-emerald-100 bg-white p-6 rounded-lg shadow-md border-b-4 border-transparent hover:border-emerald-500">
+                    <h3 class="font-bold text-xl text-[#166534]">Grow With Us</h3>
+                    <p class="text-slate-600">Training and mentorship for success.</p>
+                </div>
 
-</div>
+                <div
+                    class="flex-1 animate-fade-in transition duration-500 ease-in-out hover:scale-105 hover:bg-sky-100 bg-white p-6 rounded-lg shadow-md border-b-4 border-transparent hover:border-sky-500">
+                    <h3 class="font-bold text-xl text-[#166534]">Build a Legacy</h3>
+                    <p class="text-slate-600">Join a team committed to excellence.</p>
+                </div>
 
-    </div>
-</div>
-</section>
+            </div>
+
+        </div>
+        </div>
+    </section>
 
     <main class="container mx-auto px-4 py-6 max-w-4xl flex-grow flex flex-col items-center justify-center gap-10">
-                </div>
-            </div>
+        </div>
+        </div>
 
         </div>
 
@@ -328,47 +337,61 @@ background-position:center;
                         Application in 5 Easy Steps. Let's Begin.</p>
                 </div>
 
-                <div class="flex justify-between items-start max-w-2xl mx-auto relative px-2 md:px-4 py-2 overflow-x-auto">
+                <div
+                    class="flex justify-between items-start max-w-2xl mx-auto relative px-2 md:px-4 py-2 overflow-x-auto">
                     <div class="absolute top-7 left-4 right-4 h-1 bg-slate-200 -z-10"></div>
                     <div id="progress-bar-fill"
                         class="absolute top-7 left-4 h-1 bg-brand-gold -z-10 transition-all duration-500"
                         style="width: 0%"></div>
 
-                    <div class="step-indicator flex flex-col items-center relative z-10 w-[70px] shrink-0" data-step="1">
+                    <div class="step-indicator flex flex-col items-center relative z-10 w-[70px] shrink-0"
+                        data-step="1">
                         <div
                             class="w-10 h-10 rounded-full bg-brand-gold text-white flex items-center justify-center font-bold shadow-md border-4 border-white text-xs">
                             1</div>
 
-                        <span class="text-[9px] md:text-xs font-bold mt-2 text-center leading-tight max-w-[65px] break-words text-brand-navy">Orientation</span>
+                        <span
+                            class="text-[9px] md:text-xs font-bold mt-2 text-center leading-tight max-w-[65px] break-words text-brand-navy">Orientation</span>
                     </div>
-                    <div class="step-indicator flex flex-col items-center relative z-10 w-[70px] shrink-0" data-step="2">
+                    <div class="step-indicator flex flex-col items-center relative z-10 w-[70px] shrink-0"
+                        data-step="2">
                         <div
                             class="w-10 h-10 rounded-full bg-slate-300 text-slate-500 flex items-center justify-center font-bold shadow-md border-4 border-white text-xs">
                             2</div>
                         <span class="block md:hidden text-[8px] font-bold mt-2 text-center">Location</span>
-                        <span class="hidden md:block text-[9px] md:text-xs font-bold mt-2 text-center leading-tight max-w-[65px] break-words text-slate-500">Select
+                        <span
+                            class="hidden md:block text-[9px] md:text-xs font-bold mt-2 text-center leading-tight max-w-[65px] break-words text-slate-500">Select
                             Location</span>
                     </div>
-                    <div class="step-indicator flex flex-col items-center relative z-10 w-[70px] shrink-0" data-step="3">
+                    <div class="step-indicator flex flex-col items-center relative z-10 w-[70px] shrink-0"
+                        data-step="3">
                         <div
                             class="w-10 h-10 rounded-full bg-slate-300 text-slate-500 flex items-center justify-center font-bold shadow-md border-4 border-white text-xs">
                             3</div>
-                            <span class="block md:hidden text-[8px] font-bold mt-2 text-center">Contact</span>
-                        <span class="hidden md:block text-[9px] md:text-xs font-bold mt-2 text-center leading-tight max-w-[65px] break-words text-brand-navy">Contact Information</span>
+                        <span class="block md:hidden text-[8px] font-bold mt-2 text-center">Contact</span>
+                        <span
+                            class="hidden md:block text-[9px] md:text-xs font-bold mt-2 text-center leading-tight max-w-[65px] break-words text-brand-navy">Contact
+                            Information</span>
                     </div>
-                    <div class="step-indicator flex flex-col items-center relative z-10 w-[70px] shrink-0" data-step="4">
+                    <div class="step-indicator flex flex-col items-center relative z-10 w-[70px] shrink-0"
+                        data-step="4">
                         <div
                             class="w-10 h-10 rounded-full bg-slate-300 text-slate-500 flex items-center justify-center font-bold shadow-md border-4 border-white text-xs">
                             4</div>
                         <span class="block md:hidden text-[8px] font-bold mt-2 text-center">Review</span>
-                        <span class="hidden md:block text-[9px] md:text-xs font-bold mt-2 text-center leading-tight max-w-[65px] break-words text-brand-navy">Review, Agree & Sign</span>
+                        <span
+                            class="hidden md:block text-[9px] md:text-xs font-bold mt-2 text-center leading-tight max-w-[65px] break-words text-brand-navy">Review,
+                            Agree & Sign</span>
                     </div>
-                    <div class="step-indicator flex flex-col items-center relative z-10 w-[70px] shrink-0" data-step="5">
+                    <div class="step-indicator flex flex-col items-center relative z-10 w-[70px] shrink-0"
+                        data-step="5">
                         <div
                             class="w-10 h-10 rounded-full bg-slate-300 text-slate-500 flex items-center justify-center font-bold shadow-md border-4 border-white text-xs">
                             5</div>
                         <span class="block md:hidden text-[8px] font-bold mt-2 text-center">Schedule</span>
-                        <span class="hidden md:block text-[9px] md:text-xs font-bold mt-2 text-center leading-tight max-w-[65px] break-words text-slate-500">Set Your Schedule</span>
+                        <span
+                            class="hidden md:block text-[9px] md:text-xs font-bold mt-2 text-center leading-tight max-w-[65px] break-words text-slate-500">Set
+                            Your Schedule</span>
                     </div>
                 </div>
             </div>
@@ -394,7 +417,8 @@ background-position:center;
 
                         <!-- Title between videos (replace (title) later) -->
                         <div class="w-full mb-4">
-                            <p class="text-center text-sm sm:text-base font-extrabold text-white bg-brand-dark/90 backdrop-blur-sm border border-white/10 rounded-xl py-3 px-4 shadow">
+                            <p
+                                class="text-center text-sm sm:text-base font-extrabold text-white bg-brand-dark/90 backdrop-blur-sm border border-white/10 rounded-xl py-3 px-4 shadow">
                                 (title) Second Video need to watch
                             </p>
                         </div>
@@ -415,7 +439,8 @@ background-position:center;
 
                         <div id="video-status-msg"
                             class="p-4 bg-red-50 text-red-700 rounded-lg flex items-center gap-2 mb-4 border border-red-200">
-                            <i class="fa-solid fa-lock"></i> <span id="status-text">You need to watch BOTH orientation videos completely to make the "Next" button show up.</span>
+                            <i class="fa-solid fa-lock"></i> <span id="status-text">You need to watch BOTH orientation
+                                videos completely to make the "Next" button show up.</span>
                         </div>
                     </div>
 
@@ -513,110 +538,92 @@ background-position:center;
                                 <i class="fa-solid fa-shield-halved text-brand-gold"></i> Data Privacy Notice
                             </p>
                             <p>
-                                By providing your personal information, you explicitly authorize Human Shelter Realty Corp. to collect, use, and process your data in accordance with the Data Privacy Act of 2012
+                                By providing your personal information, you explicitly authorize Human Shelter Realty
+                                Corp. to collect, use, and process your data in accordance with the Data Privacy Act of
+                                2012
                             </p>
                         </div>
 
                         <div class="flex flex-col gap-6 md:grid md:grid-cols-2">
 
-    <div class="md:col-span-1">
-        <label class="block text-sm font-medium text-slate-700 mb-1">
-            Full Name <span class="text-red-500">*</span>
-        </label>
-        <input type="text"
-            id="full-name"
-            name="fullName"
-            class="block w-full min-w-0 px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brand-gold text-brand-dark"
-            placeholder="e.g. Juan dela Cruz"
-            required>
-    </div>
+                            <div class="md:col-span-1">
+                                <label class="block text-sm font-medium text-slate-700 mb-1">
+                                    Full Name <span class="text-red-500">*</span>
+                                </label>
+                                <input type="text" id="full-name" name="fullName"
+                                    class="block w-full min-w-0 px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brand-gold text-brand-dark"
+                                    placeholder="e.g. Juan dela Cruz" required>
+                            </div>
 
-    <div class="md:col-span-1">
-        <label class="block text-sm font-medium text-slate-700 mb-1">
-            Gender <span class="text-red-500">*</span>
-        </label>
-        <select id="gender"
-            name="gender"
-            class="block w-full min-w-0 px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brand-gold text-brand-dark bg-white"
-            required>
-            <option value="" disabled selected>-- Select Gender --</option>
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-            <option value="Prefer not to say">Prefer not to say</option>
-        </select>
-    </div>
+                            <div class="md:col-span-1">
+                                <label class="block text-sm font-medium text-slate-700 mb-1">
+                                    Gender <span class="text-red-500">*</span>
+                                </label>
+                                <select id="gender" name="gender"
+                                    class="block w-full min-w-0 px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brand-gold text-brand-dark bg-white"
+                                    required>
+                                    <option value="" disabled selected>-- Select Gender --</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Prefer not to say">Prefer not to say</option>
+                                </select>
+                            </div>
 
-    <div class="w-full min-w-0">
-        <label class="block text-sm font-medium text-slate-700 mb-1">
-            Birth Date <span class="text-red-500">*</span>
-        </label>
-        <input type="date"
-            id="birthdate"
-            name="birthdate"
-            class="block w-full min-w-0 px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brand-gold text-brand-dark"
-            required>
-    </div>
+                            <div class="w-full min-w-0">
+                                <label class="block text-sm font-medium text-slate-700 mb-1">
+                                    Birth Date <span class="text-red-500">*</span>
+                                </label>
+                                <input type="date" id="birthdate" name="birthdate"
+                                    class="block w-full min-w-0 px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brand-gold text-brand-dark"
+                                    required>
+                            </div>
 
-    <div class="w-full min-w-0">
-        <label class="block text-sm font-medium text-slate-700 mb-1">
-            TIN (Optional)
-        </label>
-        <input type="text"
-            id="tin-number"
-            name="tinNumber"
-            class="block w-full min-w-0 px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brand-gold text-brand-dark"
-            placeholder="000-000-000-000">
-    </div>
+                            <div class="w-full min-w-0">
+                                <label class="block text-sm font-medium text-slate-700 mb-1">
+                                    TIN (Optional)
+                                </label>
+                                <input type="text" id="tin-number" name="tinNumber"
+                                    class="block w-full min-w-0 px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brand-gold text-brand-dark"
+                                    placeholder="000-000-000-000">
+                            </div>
 
-    <div class="w-full min-w-0">
-        <label class="block text-sm font-medium text-slate-700 mb-1">
-            Email Address <span class="text-red-500">*</span>
-        </label>
-        <input type="email"
-            id="email"
-            name="email"
-            class="block w-full min-w-0 px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brand-gold text-brand-dark"
-            placeholder="juan@example.com"
-            required>
-    </div>
+                            <div class="w-full min-w-0">
+                                <label class="block text-sm font-medium text-slate-700 mb-1">
+                                    Email Address <span class="text-red-500">*</span>
+                                </label>
+                                <input type="email" id="email" name="email"
+                                    class="block w-full min-w-0 px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brand-gold text-brand-dark"
+                                    placeholder="juan@example.com" required>
+                            </div>
 
-    <div class="w-full min-w-0">
-        <label class="block text-sm font-medium text-slate-700 mb-1">
-            Mobile Number <span class="text-red-500">*</span>
-        </label>
-        <input type="tel"
-            id="phone"
-            name="phone"
-            class="block w-full min-w-0 px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brand-gold text-brand-dark"
-            placeholder="+63 900 000 0000"
-            required>
-    </div>
+                            <div class="w-full min-w-0">
+                                <label class="block text-sm font-medium text-slate-700 mb-1">
+                                    Mobile Number <span class="text-red-500">*</span>
+                                </label>
+                                <input type="tel" id="phone" name="phone"
+                                    class="block w-full min-w-0 px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brand-gold text-brand-dark"
+                                    placeholder="+63 900 000 0000" required>
+                            </div>
 
-    <div class="md:col-span-2">
-        <label class="block text-sm font-medium text-slate-700 mb-1">
-            Facebook Profile Name <span class="text-red-500">*</span>
-        </label>
-        <input type="text"
-            id="fb-account"
-            name="fbAccount"
-            class="block w-full min-w-0 px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brand-gold text-brand-dark"
-            placeholder="e.g. facebook.com/juan.delacruz"
-            required>
-    </div>
+                            <div class="md:col-span-2">
+                                <label class="block text-sm font-medium text-slate-700 mb-1">
+                                    Facebook Profile Name <span class="text-red-500">*</span>
+                                </label>
+                                <input type="text" id="fb-account" name="fbAccount"
+                                    class="block w-full min-w-0 px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brand-gold text-brand-dark"
+                                    placeholder="e.g. facebook.com/juan.delacruz" required>
+                            </div>
 
-    <div class="md:col-span-2">
-        <label class="block text-sm font-medium text-slate-700 mb-1">
-            Current Address <span class="text-red-500">*</span>
-        </label>
-        <input type="text"
-            id="full-address"
-            name="fullAddress"
-            class="block w-full min-w-0 px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brand-gold text-brand-dark"
-            placeholder="House No., Street, Barangay, City, Province"
-            required>
-    </div>
+                            <div class="md:col-span-2">
+                                <label class="block text-sm font-medium text-slate-700 mb-1">
+                                    Current Address <span class="text-red-500">*</span>
+                                </label>
+                                <input type="text" id="full-address" name="fullAddress"
+                                    class="block w-full min-w-0 px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brand-gold text-brand-dark"
+                                    placeholder="House No., Street, Barangay, City, Province" required>
+                            </div>
 
-</div>
+                        </div>
                     </div>
 
                     <!-- STEP 4 -->
@@ -628,12 +635,14 @@ background-position:center;
 
                             <div class="bg-white border border-slate-200 rounded-xl shadow-sm">
                                 <div class="px-5 py-4 border-b border-slate-100 flex items-start gap-3">
-                                    <div class="w-10 h-10 rounded-xl bg-brand-dark/5 flex items-center justify-center border border-slate-200">
+                                    <div
+                                        class="w-10 h-10 rounded-xl bg-brand-dark/5 flex items-center justify-center border border-slate-200">
                                         <i class="fa-solid fa-circle-check text-brand-gold"></i>
                                     </div>
                                     <div>
                                         <h4 class="text-lg font-extrabold text-brand-dark">Knowledge Check</h4>
-                                        <p class="text-xs text-slate-500 mt-1">Complete the short quiz below to confirm your understanding of the video presentation.</p>
+                                        <p class="text-xs text-slate-500 mt-1">Complete the short quiz below to confirm
+                                            your understanding of the video presentation.</p>
                                     </div>
                                 </div>
 
@@ -641,19 +650,23 @@ background-position:center;
                                     <!-- Q1 -->
                                     <div class="rounded-xl bg-slate-50/60 border border-slate-200 p-4">
                                         <div class="flex items-center justify-between gap-3 mb-3">
-                                            <p class="font-bold text-slate-800 text-sm">1. In what year was Human Shelter founded?</p>
+                                            <p class="font-bold text-slate-800 text-sm">1. In what year was Human
+                                                Shelter founded?</p>
                                         </div>
                                         <div class="space-y-2">
                                             <label class="flex items-center gap-3 cursor-pointer text-slate-700">
-                                                <input type="radio" name="quiz-q1" value="A" class="w-4 h-4 accent-brand-gold" required>
+                                                <input type="radio" name="quiz-q1" value="A"
+                                                    class="w-4 h-4 accent-brand-gold" required>
                                                 <span> A. 1989</span>
                                             </label>
                                             <label class="flex items-center gap-3 cursor-pointer text-slate-700">
-                                                <input type="radio" name="quiz-q1" value="B" class="w-4 h-4 accent-brand-gold">
+                                                <input type="radio" name="quiz-q1" value="B"
+                                                    class="w-4 h-4 accent-brand-gold">
                                                 <span> B. 1987</span>
                                             </label>
                                             <label class="flex items-center gap-3 cursor-pointer text-slate-700">
-                                                <input type="radio" name="quiz-q1" value="C" class="w-4 h-4 accent-brand-gold">
+                                                <input type="radio" name="quiz-q1" value="C"
+                                                    class="w-4 h-4 accent-brand-gold">
                                                 <span> C. 1990</span>
                                             </label>
                                         </div>
@@ -662,19 +675,23 @@ background-position:center;
                                     <!-- Q2 -->
                                     <div class="rounded-xl bg-slate-50/60 border border-slate-200 p-4">
                                         <div class="flex items-center justify-between gap-3 mb-3">
-                                            <p class="font-bold text-slate-800 text-sm">2. If a property is priced at ₱1.8 million, how is it classified?</p>
+                                            <p class="font-bold text-slate-800 text-sm">2. If a property is priced at
+                                                ₱1.8 million, how is it classified?</p>
                                         </div>
                                         <div class="space-y-2">
                                             <label class="flex items-center gap-3 cursor-pointer text-slate-700">
-                                                <input type="radio" name="quiz-q2" value="A" class="w-4 h-4 accent-brand-gold" required>
+                                                <input type="radio" name="quiz-q2" value="A"
+                                                    class="w-4 h-4 accent-brand-gold" required>
                                                 <span> A. Socialized Housing</span>
                                             </label>
                                             <label class="flex items-center gap-3 cursor-pointer text-slate-700">
-                                                <input type="radio" name="quiz-q2" value="B" class="w-4 h-4 accent-brand-gold">
+                                                <input type="radio" name="quiz-q2" value="B"
+                                                    class="w-4 h-4 accent-brand-gold">
                                                 <span> B. Open Market Housing</span>
                                             </label>
                                             <label class="flex items-center gap-3 cursor-pointer text-slate-700">
-                                                <input type="radio" name="quiz-q2" value="C" class="w-4 h-4 accent-brand-gold">
+                                                <input type="radio" name="quiz-q2" value="C"
+                                                    class="w-4 h-4 accent-brand-gold">
                                                 <span> C. Economic Housing</span>
                                             </label>
                                         </div>
@@ -683,19 +700,24 @@ background-position:center;
                                     <!-- Q3 -->
                                     <div class="rounded-xl bg-slate-50/60 border border-slate-200 p-4">
                                         <div class="flex items-center justify-between gap-3 mb-3">
-                                            <p class="font-bold text-slate-800 text-sm">3. For debt-to-income ratio, a buyer's monthly amortization payment should not exceed what percentage of their gross monthly income?</p>
+                                            <p class="font-bold text-slate-800 text-sm">3. For debt-to-income ratio, a
+                                                buyer's monthly amortization payment should not exceed what percentage
+                                                of their gross monthly income?</p>
                                         </div>
                                         <div class="space-y-2">
                                             <label class="flex items-center gap-3 cursor-pointer text-slate-700">
-                                                <input type="radio" name="quiz-q3" value="A" class="w-4 h-4 accent-brand-gold" required>
+                                                <input type="radio" name="quiz-q3" value="A"
+                                                    class="w-4 h-4 accent-brand-gold" required>
                                                 <span> A. 20% to 25%</span>
                                             </label>
                                             <label class="flex items-center gap-3 cursor-pointer text-slate-700">
-                                                <input type="radio" name="quiz-q3" value="B" class="w-4 h-4 accent-brand-gold">
+                                                <input type="radio" name="quiz-q3" value="B"
+                                                    class="w-4 h-4 accent-brand-gold">
                                                 <span> B. 30% to 35%</span>
                                             </label>
                                             <label class="flex items-center gap-3 cursor-pointer text-slate-700">
-                                                <input type="radio" name="quiz-q3" value="C" class="w-4 h-4 accent-brand-gold">
+                                                <input type="radio" name="quiz-q3" value="C"
+                                                    class="w-4 h-4 accent-brand-gold">
                                                 <span> C. 10% to 12%</span>
                                             </label>
                                         </div>
@@ -704,19 +726,23 @@ background-position:center;
                                     <!-- Q4 -->
                                     <div class="rounded-xl bg-slate-50/60 border border-slate-200 p-4">
                                         <div class="flex items-center justify-between gap-3 mb-3">
-                                            <p class="font-bold text-slate-800 text-sm">4. Human Shelter has branches in the following locations, except:</p>
+                                            <p class="font-bold text-slate-800 text-sm">4. Human Shelter has branches in
+                                                the following locations, except:</p>
                                         </div>
                                         <div class="space-y-2">
                                             <label class="flex items-center gap-3 cursor-pointer text-slate-700">
-                                                <input type="radio" name="quiz-q4" value="A" class="w-4 h-4 accent-brand-gold" required>
+                                                <input type="radio" name="quiz-q4" value="A"
+                                                    class="w-4 h-4 accent-brand-gold" required>
                                                 <span> A. Cavite</span>
                                             </label>
                                             <label class="flex items-center gap-3 cursor-pointer text-slate-700">
-                                                <input type="radio" name="quiz-q4" value="B" class="w-4 h-4 accent-brand-gold">
+                                                <input type="radio" name="quiz-q4" value="B"
+                                                    class="w-4 h-4 accent-brand-gold">
                                                 <span> B. Angono</span>
                                             </label>
                                             <label class="flex items-center gap-3 cursor-pointer text-slate-700">
-                                                <input type="radio" name="quiz-q4" value="C" class="w-4 h-4 accent-brand-gold">
+                                                <input type="radio" name="quiz-q4" value="C"
+                                                    class="w-4 h-4 accent-brand-gold">
                                                 <span> C. Tarlac</span>
                                             </label>
                                         </div>
@@ -725,19 +751,24 @@ background-position:center;
                                     <!-- Q5 -->
                                     <div class="rounded-xl bg-slate-50/60 border border-slate-200 p-4">
                                         <div class="flex items-center justify-between gap-3 mb-3">
-                                            <p class="font-bold text-slate-800 text-sm">5. Which of the following is NOT included in the "5 Golden Questions" asked during client qualification?</p>
+                                            <p class="font-bold text-slate-800 text-sm">5. Which of the following is NOT
+                                                included in the "5 Golden Questions" asked during client qualification?
+                                            </p>
                                         </div>
                                         <div class="space-y-2">
                                             <label class="flex items-center gap-3 cursor-pointer text-slate-700">
-                                                <input type="radio" name="quiz-q5" value="A" class="w-4 h-4 accent-brand-gold" required>
+                                                <input type="radio" name="quiz-q5" value="A"
+                                                    class="w-4 h-4 accent-brand-gold" required>
                                                 <span> A. What is your salary?</span>
                                             </label>
                                             <label class="flex items-center gap-3 cursor-pointer text-slate-700">
-                                                <input type="radio" name="quiz-q5" value="B" class="w-4 h-4 accent-brand-gold">
+                                                <input type="radio" name="quiz-q5" value="B"
+                                                    class="w-4 h-4 accent-brand-gold">
                                                 <span> B. What is your preferred financing option?</span>
                                             </label>
                                             <label class="flex items-center gap-3 cursor-pointer text-slate-700">
-                                                <input type="radio" name="quiz-q5" value="C" class="w-4 h-4 accent-brand-gold">
+                                                <input type="radio" name="quiz-q5" value="C"
+                                                    class="w-4 h-4 accent-brand-gold">
                                                 <span> C. How much can you shell out for the down payment?</span>
                                             </label>
                                         </div>
@@ -746,20 +777,26 @@ background-position:center;
                                     <!-- Q6 -->
                                     <div class="rounded-xl bg-slate-50/60 border border-slate-200 p-4">
                                         <div class="flex items-center justify-between gap-3 mb-3">
-                                            <p class="font-bold text-slate-800 text-sm">6. What does "equity" mean in real estate financing?</p>
+                                            <p class="font-bold text-slate-800 text-sm">6. What does "equity" mean in
+                                                real estate financing?</p>
                                         </div>
                                         <div class="space-y-2">
                                             <label class="flex items-center gap-3 cursor-pointer text-slate-700">
-                                                <input type="radio" name="quiz-q6" value="A" class="w-4 h-4 accent-brand-gold" required>
+                                                <input type="radio" name="quiz-q6" value="A"
+                                                    class="w-4 h-4 accent-brand-gold" required>
                                                 <span> A. The monthly payment made to the bank or Pag-IBIG</span>
                                             </label>
                                             <label class="flex items-center gap-3 cursor-pointer text-slate-700">
-                                                <input type="radio" name="quiz-q6" value="B" class="w-4 h-4 accent-brand-gold">
-                                                <span> B. The amount paid upfront, while the remaining balance is covered by the bank or Pag-IBIG</span>
+                                                <input type="radio" name="quiz-q6" value="B"
+                                                    class="w-4 h-4 accent-brand-gold">
+                                                <span> B. The amount paid upfront, while the remaining balance is
+                                                    covered by the bank or Pag-IBIG</span>
                                             </label>
                                             <label class="flex items-center gap-3 cursor-pointer text-slate-700">
-                                                <input type="radio" name="quiz-q6" value="C" class="w-4 h-4 accent-brand-gold">
-                                                <span> C. Miscellaneous fees such as administrative and processing fees</span>
+                                                <input type="radio" name="quiz-q6" value="C"
+                                                    class="w-4 h-4 accent-brand-gold">
+                                                <span> C. Miscellaneous fees such as administrative and processing
+                                                    fees</span>
                                             </label>
                                         </div>
                                     </div>
@@ -767,20 +804,27 @@ background-position:center;
                                     <!-- Q7 -->
                                     <div class="rounded-xl bg-slate-50/60 border border-slate-200 p-4">
                                         <div class="flex items-center justify-between gap-3 mb-3">
-                                            <p class="font-bold text-slate-800 text-sm">7. What is the key difference between bank financing and Pag-IBIG financing?</p>
+                                            <p class="font-bold text-slate-800 text-sm">7. What is the key difference
+                                                between bank financing and Pag-IBIG financing?</p>
                                         </div>
                                         <div class="space-y-2">
                                             <label class="flex items-center gap-3 cursor-pointer text-slate-700">
-                                                <input type="radio" name="quiz-q7" value="A" class="w-4 h-4 accent-brand-gold" required>
-                                                <span> A. Pag-IBIG generally offers lower interest rates and longer payment terms.</span>
+                                                <input type="radio" name="quiz-q7" value="A"
+                                                    class="w-4 h-4 accent-brand-gold" required>
+                                                <span> A. Pag-IBIG generally offers lower interest rates and longer
+                                                    payment terms.</span>
                                             </label>
                                             <label class="flex items-center gap-3 cursor-pointer text-slate-700">
-                                                <input type="radio" name="quiz-q7" value="B" class="w-4 h-4 accent-brand-gold">
-                                                <span> B. Pag-IBIG generally offers higher interest rates and shorter payment terms.</span>
+                                                <input type="radio" name="quiz-q7" value="B"
+                                                    class="w-4 h-4 accent-brand-gold">
+                                                <span> B. Pag-IBIG generally offers higher interest rates and shorter
+                                                    payment terms.</span>
                                             </label>
                                             <label class="flex items-center gap-3 cursor-pointer text-slate-700">
-                                                <input type="radio" name="quiz-q7" value="C" class="w-4 h-4 accent-brand-gold">
-                                                <span> C. Banks have higher interest rates, while Pag-IBIG offers shorter payment terms.</span>
+                                                <input type="radio" name="quiz-q7" value="C"
+                                                    class="w-4 h-4 accent-brand-gold">
+                                                <span> C. Banks have higher interest rates, while Pag-IBIG offers
+                                                    shorter payment terms.</span>
                                             </label>
                                         </div>
                                     </div>
@@ -788,19 +832,23 @@ background-position:center;
                                     <!-- Q8 -->
                                     <div class="rounded-xl bg-slate-50/60 border border-slate-200 p-4">
                                         <div class="flex items-center justify-between gap-3 mb-3">
-                                            <p class="font-bold text-slate-800 text-sm">8. When a property receives the morning sun, which direction is it typically facing?</p>
+                                            <p class="font-bold text-slate-800 text-sm">8. When a property receives the
+                                                morning sun, which direction is it typically facing?</p>
                                         </div>
                                         <div class="space-y-2">
                                             <label class="flex items-center gap-3 cursor-pointer text-slate-700">
-                                                <input type="radio" name="quiz-q8" value="A" class="w-4 h-4 accent-brand-gold" required>
+                                                <input type="radio" name="quiz-q8" value="A"
+                                                    class="w-4 h-4 accent-brand-gold" required>
                                                 <span> A. North</span>
                                             </label>
                                             <label class="flex items-center gap-3 cursor-pointer text-slate-700">
-                                                <input type="radio" name="quiz-q8" value="B" class="w-4 h-4 accent-brand-gold">
+                                                <input type="radio" name="quiz-q8" value="B"
+                                                    class="w-4 h-4 accent-brand-gold">
                                                 <span> B. West</span>
                                             </label>
                                             <label class="flex items-center gap-3 cursor-pointer text-slate-700">
-                                                <input type="radio" name="quiz-q8" value="C" class="w-4 h-4 accent-brand-gold">
+                                                <input type="radio" name="quiz-q8" value="C"
+                                                    class="w-4 h-4 accent-brand-gold">
                                                 <span> C. East</span>
                                             </label>
                                         </div>
@@ -809,19 +857,23 @@ background-position:center;
                                     <!-- Q9 -->
                                     <div class="rounded-xl bg-slate-50/60 border border-slate-200 p-4">
                                         <div class="flex items-center justify-between gap-3 mb-3">
-                                            <p class="font-bold text-slate-800 text-sm">9. Which contract should a buyer sign when purchasing a property through installment payments?</p>
+                                            <p class="font-bold text-slate-800 text-sm">9. Which contract should a buyer
+                                                sign when purchasing a property through installment payments?</p>
                                         </div>
                                         <div class="space-y-2">
                                             <label class="flex items-center gap-3 cursor-pointer text-slate-700">
-                                                <input type="radio" name="quiz-q9" value="A" class="w-4 h-4 accent-brand-gold" required>
+                                                <input type="radio" name="quiz-q9" value="A"
+                                                    class="w-4 h-4 accent-brand-gold" required>
                                                 <span> A. Deed of Sale</span>
                                             </label>
                                             <label class="flex items-center gap-3 cursor-pointer text-slate-700">
-                                                <input type="radio" name="quiz-q9" value="B" class="w-4 h-4 accent-brand-gold">
+                                                <input type="radio" name="quiz-q9" value="B"
+                                                    class="w-4 h-4 accent-brand-gold">
                                                 <span> B. Contract to Sell</span>
                                             </label>
                                             <label class="flex items-center gap-3 cursor-pointer text-slate-700">
-                                                <input type="radio" name="quiz-q9" value="C" class="w-4 h-4 accent-brand-gold">
+                                                <input type="radio" name="quiz-q9" value="C"
+                                                    class="w-4 h-4 accent-brand-gold">
                                                 <span> C. Deed of Assignment</span>
                                             </label>
                                         </div>
@@ -830,19 +882,23 @@ background-position:center;
                                     <!-- Q10 -->
                                     <div class="rounded-xl bg-slate-50/60 border border-slate-200 p-4">
                                         <div class="flex items-center justify-between gap-3 mb-3">
-                                            <p class="font-bold text-slate-800 text-sm">10. What is an advantage of Human Shelter?</p>
+                                            <p class="font-bold text-slate-800 text-sm">10. What is an advantage of
+                                                Human Shelter?</p>
                                         </div>
                                         <div class="space-y-2">
                                             <label class="flex items-center gap-3 cursor-pointer text-slate-700">
-                                                <input type="radio" name="quiz-q10" value="A" class="w-4 h-4 accent-brand-gold" required>
+                                                <input type="radio" name="quiz-q10" value="A"
+                                                    class="w-4 h-4 accent-brand-gold" required>
                                                 <span> A. 37 years of industry experience</span>
                                             </label>
                                             <label class="flex items-center gap-3 cursor-pointer text-slate-700">
-                                                <input type="radio" name="quiz-q10" value="B" class="w-4 h-4 accent-brand-gold">
+                                                <input type="radio" name="quiz-q10" value="B"
+                                                    class="w-4 h-4 accent-brand-gold">
                                                 <span> B. Reputable projects and developers</span>
                                             </label>
                                             <label class="flex items-center gap-3 cursor-pointer text-slate-700">
-                                                <input type="radio" name="quiz-q10" value="C" class="w-4 h-4 accent-brand-gold">
+                                                <input type="radio" name="quiz-q10" value="C"
+                                                    class="w-4 h-4 accent-brand-gold">
                                                 <span> C. All of the above</span>
                                             </label>
                                         </div>
@@ -850,6 +906,49 @@ background-position:center;
                                 </div>
                             </div>
 
+
+                            <div id="knowledge-result-card"
+                                class="hidden bg-amber-50 border-2 border-amber-300 rounded-2xl p-5 mb-6 shadow-sm">
+
+                                <h3 class="text-xl font-bold text-brand-dark flex items-center gap-2 mb-3">
+                                    <i class="fa-solid fa-square-check text-brand-gold"></i>
+                                    Knowledge Check Result
+                                </h3>
+
+                                <div class="text-lg font-bold text-slate-700 mb-2">
+                                    Score:
+                                    <span id="knowledge-check-score">-- / 10</span>
+                                </div>
+
+                                <p class="text-sm text-slate-600 mb-3">
+                                    Note: A minimum score of <strong>6 points</strong> is required to proceed with the
+                                    application.
+                                </p>
+
+                                <div id="knowledge-pass-message" class="hidden">
+                                    <div class="bg-green-50 border border-green-300 rounded-xl p-4">
+                                        <p class="font-bold text-green-700">
+                                            Congratulations! 🎉 You've passed the Knowledge Check.
+                                        </p>
+                                        <p class="text-green-700 mt-1">
+                                            You may now move on to the application process.
+                                            Keep up the great work!
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div id="knowledge-fail-message" class="hidden">
+                                    <div class="bg-red-50 border border-red-300 rounded-xl p-4">
+                                        <p class="font-bold text-red-700">
+                                            Knowledge Check Not Passed
+                                        </p>
+                                        <p class="text-red-700 mt-1">
+                                            A minimum score of 6 out of 10 is required to proceed.
+                                        </p>
+                                    </div>
+                                </div>
+
+                            </div>
 
                             <div
                                 class="border border-slate-300 rounded-xl p-5 bg-slate-50 text-slate-700 text-sm h-80 overflow-y-scroll space-y-5 leading-relaxed shadow-inner">
@@ -945,22 +1044,14 @@ background-position:center;
                                 </div>
                             </div>
 
-                            <div class="p-4 bg-amber-50 rounded-xl border-2 border-amber-300 shadow-sm">
-                                <div class="mb-2">
-                                    <h4 class="text-sm font-extrabold text-brand-dark flex items-center gap-2">
-                                        <i class="fa-solid fa-clipboard-check text-brand-gold"></i> Knowledge Check Result
-                                    </h4>
-                                    <p class="text-xs text-slate-600">
-                                        Score: <span id="knowledge-check-score" class="font-bold text-brand-dark">-- / 10</span>
-                                    </p>
-                                </div>
-
                                 <!-- NEW: Generate/Check Passing Button -->
-                    
 
-                                <label class="flex items-start gap-3 cursor-pointer select-none" id="terms-checkbox-wrapper">
+
+                                <label class="flex items-start gap-3 cursor-pointer select-none"
+                                    id="terms-checkbox-wrapper">
                                     <input type="checkbox" id="terms-checkbox" onchange="toggleSignaturePadState()"
-                                        class="w-5 h-5 rounded mt-0.5 text-brand-gold focus:ring-brand-gold accent-brand-gold border-slate-400 shrink-0" disabled>
+                                        class="w-5 h-5 rounded mt-0.5 text-brand-gold focus:ring-brand-gold accent-brand-gold border-slate-400 shrink-0"
+                                        disabled>
                                     <span class="text-xs md:text-sm font-bold text-slate-800 leading-snug">
                                         V. I understand that my accreditation depends on fulfilling these conditions.
                                         Providing false information or failing to meet these standards is grounds for
@@ -1013,7 +1104,8 @@ background-position:center;
 
                                 <div class="mb-4 text-sm">
                                     <div class="font-bold text-slate-800">
-                                        Selected Location: <span id="step5-selected-location" class="text-brand-gold">--</span>
+                                        Selected Location: <span id="step5-selected-location"
+                                            class="text-brand-gold">--</span>
                                     </div>
 
                                 </div>
@@ -1189,7 +1281,7 @@ background-position:center;
             legacyEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
             // ensure the user sees the legacy immediately
-            legacyEl.setAttribute('data-revealed','true');
+            legacyEl.setAttribute('data-revealed', 'true');
 
             if (!legacyEl) return;
 
@@ -1244,26 +1336,26 @@ background-position:center;
 
         function showApplicationForm() {
 
-    const welcomeHero = document.getElementById('welcome-hero');
-    const legacyHero = document.getElementById('legacy-hero');
-    const formScreen = document.getElementById('form-screen');
+            const welcomeHero = document.getElementById('welcome-hero');
+            const legacyHero = document.getElementById('legacy-hero');
+            const formScreen = document.getElementById('form-screen');
 
-    if (welcomeHero) {
-        welcomeHero.style.display = 'none';
-    }
+            if (welcomeHero) {
+                welcomeHero.style.display = 'none';
+            }
 
-    if (legacyHero) {
-        legacyHero.style.display = 'none';
-    }
+            if (legacyHero) {
+                legacyHero.style.display = 'none';
+            }
 
-    formScreen.classList.remove('hidden');
-    formScreen.classList.add('fade-in-section');
+            formScreen.classList.remove('hidden');
+            formScreen.classList.add('fade-in-section');
 
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-    });
-}
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
 
         // TOGGLE LOGIC FOR REFERRER FIELD
         function toggleReferrerField() {
@@ -1410,7 +1502,7 @@ background-position:center;
             // Hide/lock video2 again to keep it sequential.
             hideVideo2();
             video2.currentTime = 0;
-            try { video2.load(); } catch (e) {}
+            try { video2.load(); } catch (e) { }
             isVideo2Finished = false;
             lockNextButton();
 
@@ -1421,7 +1513,7 @@ background-position:center;
                 const textNode = document.getElementById('status-text');
                 if (textNode) textNode.textContent = "You cannot skip the video. You must watch it in its entirety to unlock the form.";
             }
-        });                                                     
+        });
 
 
         function maybeUnlockNextAfterVideos() {
@@ -1464,11 +1556,11 @@ background-position:center;
 
                 // Reset and start Video 2 from beginning
                 video2.currentTime = 0;
-                try { video2.load(); } catch (e) {}
+                try { video2.load(); } catch (e) { }
 
                 // Auto-play (best effort; browser may block)
                 const p = video2.play();
-                if (p && typeof p.catch === 'function') p.catch(() => {});
+                if (p && typeof p.catch === 'function') p.catch(() => { });
 
                 maybeUnlockNextAfterVideos();
             } else {
@@ -1476,7 +1568,7 @@ background-position:center;
                 isVideo1Finished = false;
                 hideVideo2();
                 video2.currentTime = 0;
-                try { video2.load(); } catch (e) {}
+                try { video2.load(); } catch (e) { }
                 isVideo2Finished = false;
                 video.currentTime = Math.max(0, Math.min(targetTime1, video.duration - 0.25));
             }
@@ -1487,7 +1579,7 @@ background-position:center;
         video2.addEventListener('timeupdate', () => {
             if (!video2.seeking) {
                 if (video2.currentTime > targetTime2 && video2.currentTime - targetTime2 < 1.5) {
-                        targetTime2 = video2.currentTime;
+                    targetTime2 = video2.currentTime;
                 }
             }
         });
@@ -1505,8 +1597,8 @@ background-position:center;
             if (!video2) return;
             try {
                 if (video2.currentTime !== targetTime2) {
-                video2.currentTime = targetTime2;
-            }
+                    video2.currentTime = targetTime2;
+                }
             } catch (e) {
                 // ignore
             }
@@ -1519,7 +1611,7 @@ background-position:center;
 
             // Try to resume playback
             const p = video2.play();
-            if (p && typeof p.catch === 'function') p.catch(() => {});
+            if (p && typeof p.catch === 'function') p.catch(() => { });
 
             lockNextButton();
             statusMsg.className = "p-4 bg-orange-50 text-orange-700 rounded-lg flex items-center gap-2 mb-4 border border-orange-200";
@@ -1622,7 +1714,7 @@ background-position:center;
                 'quiz-q7': 'A',
                 'quiz-q8': 'C',
                 'quiz-q9': 'B',
-                'quiz-q10':'D'
+                'quiz-q10': 'D'
             };
 
             // Mark as generated immediately to prevent edge-case double triggers
@@ -1639,6 +1731,22 @@ background-position:center;
 
             const scoreEl = document.getElementById('knowledge-check-score');
             if (scoreEl) scoreEl.textContent = `${score} / ${quizTotalQuestions}`;
+            const resultCard = document.getElementById('knowledge-result-card');
+            const passMessage = document.getElementById('knowledge-pass-message');
+            const failMessage = document.getElementById('knowledge-fail-message');
+
+            if (resultCard) {
+                resultCard.classList.remove('hidden');
+            }
+
+            if (passMessage) passMessage.classList.add('hidden');
+            if (failMessage) failMessage.classList.add('hidden');
+
+            if (score >= 6) {
+                if (passMessage) passMessage.classList.remove('hidden');
+            } else {
+                if (failMessage) failMessage.classList.remove('hidden');
+            }
 
             const hintEl = document.getElementById('knowledge-check-hint');
             const termsWrapper = document.getElementById('terms-checkbox-wrapper');
@@ -1763,98 +1871,98 @@ background-position:center;
         });
 
         function processApplicationSubmission() {
-    const selectedBdo = document.getElementById('BL-select').value;
-    const BLInfo = BLDatabase[selectedBdo] || { zoomLink: "https://zoom.us", email: "info@humanshelter.com.ph" };
-    const chosenSchedule = document.querySelector('input[name="preferredSchedule"]:checked').value;
+            const selectedBdo = document.getElementById('BL-select').value;
+            const BLInfo = BLDatabase[selectedBdo] || { zoomLink: "https://zoom.us", email: "info@humanshelter.com.ph" };
+            const chosenSchedule = document.querySelector('input[name="preferredSchedule"]:checked').value;
 
-    document.getElementById('step-5-form-fields').classList.add('hidden');
-    document.getElementById('prevBtn').classList.add('hidden');
-    document.getElementById('nextBtn').classList.add('hidden');
-    document.getElementById('generation-loading').classList.remove('hidden');
+            document.getElementById('step-5-form-fields').classList.add('hidden');
+            document.getElementById('prevBtn').classList.add('hidden');
+            document.getElementById('nextBtn').classList.add('hidden');
+            document.getElementById('generation-loading').classList.remove('hidden');
 
-    const applicantEmail = document.getElementById('email').value;
-    const fullNameInput = document.getElementById('full-name').value;
-    const phoneInput = document.getElementById('phone').value;
-    const positionInput = document.getElementById('position-applying').value;
-    const genderInput = document.getElementById('gender').value;
-    const birthdateInput = document.getElementById('birthdate').value;
-    const tinInput = document.getElementById('tin-number').value;
-    const fbInput = document.getElementById('fb-account').value;
-    const addressInput = document.getElementById('full-address').value;
+            const applicantEmail = document.getElementById('email').value;
+            const fullNameInput = document.getElementById('full-name').value;
+            const phoneInput = document.getElementById('phone').value;
+            const positionInput = document.getElementById('position-applying').value;
+            const genderInput = document.getElementById('gender').value;
+            const birthdateInput = document.getElementById('birthdate').value;
+            const tinInput = document.getElementById('tin-number').value;
+            const fbInput = document.getElementById('fb-account').value;
+            const addressInput = document.getElementById('full-address').value;
 
-    // Get Referrer fields
-    const isReferredInput = document.querySelector('input[name="isReferred"]:checked')?.value || "No";
-    const referrerNameInput = document.getElementById('referrer-name').value || "N/A";
+            // Get Referrer fields
+            const isReferredInput = document.querySelector('input[name="isReferred"]:checked')?.value || "No";
+            const referrerNameInput = document.getElementById('referrer-name').value || "N/A";
 
-    const signatureBase64 = signaturePad ? signaturePad.toDataURL("image/png") : "";
+            const signatureBase64 = signaturePad ? signaturePad.toDataURL("image/png") : "";
 
-    const sheetFormData = new FormData();
-    sheetFormData.append('positionApplying', positionInput);
-    sheetFormData.append('fullName', fullNameInput);
-    sheetFormData.append('gender', genderInput);
-    sheetFormData.append('birthdate', birthdateInput);
-    sheetFormData.append('tinNumber', tinInput);
-    sheetFormData.append('email', applicantEmail);
-    sheetFormData.append('phone', phoneInput);
-    sheetFormData.append('fbAccount', fbInput);
-    sheetFormData.append('fullAddress', addressInput);
-    sheetFormData.append('branchlocation', selectedBdo);
-    sheetFormData.append('preferredSchedule', chosenSchedule);
-    sheetFormData.append('zoom_link', BLInfo.zoomLink);
-    sheetFormData.append('signatureRaw', signatureBase64);
+            const sheetFormData = new FormData();
+            sheetFormData.append('positionApplying', positionInput);
+            sheetFormData.append('fullName', fullNameInput);
+            sheetFormData.append('gender', genderInput);
+            sheetFormData.append('birthdate', birthdateInput);
+            sheetFormData.append('tinNumber', tinInput);
+            sheetFormData.append('email', applicantEmail);
+            sheetFormData.append('phone', phoneInput);
+            sheetFormData.append('fbAccount', fbInput);
+            sheetFormData.append('fullAddress', addressInput);
+            sheetFormData.append('branchlocation', selectedBdo);
+            sheetFormData.append('preferredSchedule', chosenSchedule);
+            sheetFormData.append('zoom_link', BLInfo.zoomLink);
+            sheetFormData.append('signatureRaw', signatureBase64);
 
-    // Appended new fields for Google Sheets
-    sheetFormData.append('isReferred', isReferredInput);
-    sheetFormData.append('referrerName', referrerNameInput);
-    
-    // Setup Target Emails safely if multiple recipients
-    let targetEmail = BLInfo.email;
-    if (Array.isArray(targetEmail)) {
-        targetEmail = targetEmail.join(", ");
-    }
+            // Appended new fields for Google Sheets
+            sheetFormData.append('isReferred', isReferredInput);
+            sheetFormData.append('referrerName', referrerNameInput);
 
-    // INAYOS NA LOGIC: Siguraduhing may laman ang iyong GOOGLE_SHEET_WEB_APP_URL variable
-    if (GOOGLE_SHEET_WEB_APP_URL && GOOGLE_SHEET_WEB_APP_URL.trim() !== "") {
-        fetch(GOOGLE_SHEET_WEB_APP_URL, {
-            method: 'POST',
-            body: sheetFormData
-        })
-        .then(response => response.json()) // Basahin bilang JSON Object
-        .then(data => {
-            // Siguraduhing may valid na URL na maipapasa para laging clickable ang button
-            let driveSignatureLink = (data && data.pdfUrl) ? data.pdfUrl : "https://drive.google.com/";
-            let certificateLink = (data && data.certUrl) ? data.certUrl : "https://drive.google.com/";
+            // Setup Target Emails safely if multiple recipients
+            let targetEmail = BLInfo.email;
+            if (Array.isArray(targetEmail)) {
+                targetEmail = targetEmail.join(", ");
+            }
 
-            // Ipinasa nang ligtas patungo sa EmailJS handler mo
-            sendSystemEmails(selectedBdo, targetEmail, BLInfo.zoomLink, fullNameInput, applicantEmail, phoneInput, positionInput, genderInput, birthdateInput, tinInput, fbInput, addressInput, chosenSchedule, driveSignatureLink, isReferredInput, referrerNameInput, certificateLink);
-        })
-        .catch(error => {
-            console.error('Sheet Error:', error);
-            // Fallback kapag nag-error ang network para hindi mag-freeze ang link text sa button
-            let fallbackUrl = "https://drive.google.com/";
-            sendSystemEmails(selectedBdo, targetEmail, BLInfo.zoomLink, fullNameInput, applicantEmail, phoneInput, positionInput, genderInput, birthdateInput, tinInput, fbInput, addressInput, chosenSchedule, fallbackUrl, isReferredInput, referrerNameInput, fallbackUrl);
-        });
-    } else {
-        console.error("Web App URL is missing or empty.");
-        let fallbackUrl = "https://drive.google.com/";
-        sendSystemEmails(selectedBdo, targetEmail, BLInfo.zoomLink, fullNameInput, applicantEmail, phoneInput, positionInput, genderInput, birthdateInput, tinInput, fbInput, addressInput, chosenSchedule, "No Web App URL Configured", isReferredInput, referrerNameInput, fallbackUrl);
-    }
-}
+            // INAYOS NA LOGIC: Siguraduhing may laman ang iyong GOOGLE_SHEET_WEB_APP_URL variable
+            if (GOOGLE_SHEET_WEB_APP_URL && GOOGLE_SHEET_WEB_APP_URL.trim() !== "") {
+                fetch(GOOGLE_SHEET_WEB_APP_URL, {
+                    method: 'POST',
+                    body: sheetFormData
+                })
+                    .then(response => response.json()) // Basahin bilang JSON Object
+                    .then(data => {
+                        // Siguraduhing may valid na URL na maipapasa para laging clickable ang button
+                        let driveSignatureLink = (data && data.pdfUrl) ? data.pdfUrl : "https://drive.google.com/";
+                        let certificateLink = (data && data.certUrl) ? data.certUrl : "https://drive.google.com/";
+
+                        // Ipinasa nang ligtas patungo sa EmailJS handler mo
+                        sendSystemEmails(selectedBdo, targetEmail, BLInfo.zoomLink, fullNameInput, applicantEmail, phoneInput, positionInput, genderInput, birthdateInput, tinInput, fbInput, addressInput, chosenSchedule, driveSignatureLink, isReferredInput, referrerNameInput, certificateLink);
+                    })
+                    .catch(error => {
+                        console.error('Sheet Error:', error);
+                        // Fallback kapag nag-error ang network para hindi mag-freeze ang link text sa button
+                        let fallbackUrl = "https://drive.google.com/";
+                        sendSystemEmails(selectedBdo, targetEmail, BLInfo.zoomLink, fullNameInput, applicantEmail, phoneInput, positionInput, genderInput, birthdateInput, tinInput, fbInput, addressInput, chosenSchedule, fallbackUrl, isReferredInput, referrerNameInput, fallbackUrl);
+                    });
+            } else {
+                console.error("Web App URL is missing or empty.");
+                let fallbackUrl = "https://drive.google.com/";
+                sendSystemEmails(selectedBdo, targetEmail, BLInfo.zoomLink, fullNameInput, applicantEmail, phoneInput, positionInput, genderInput, birthdateInput, tinInput, fbInput, addressInput, chosenSchedule, "No Web App URL Configured", isReferredInput, referrerNameInput, fallbackUrl);
+            }
+        }
         function sendSystemEmails(selectedBdo, targetEmail, zoomLink, name, email, phone, position, gender, bdate, tin, fb, address, schedule, signatureLink, isReferred, referrerName, certificateLink) {
             const BLTemplateParams = {
                 BL_name: selectedBdo, BL_email: targetEmail, recruit_name: name, recruit_email: email, recruit_phone: phone, position_applying: position, gender: gender, birthdate: bdate, tin_number: tin, fb_account: fb, full_address: address, selected_schedule: schedule, zoom_link: zoomLink, signature_link: signatureLink, is_referred: isReferred, referrer_name: referrerName, certificate_link: certificateLink // Assuming the same link for simplicity; adjust if different
             };
             const applicantTemplateParams = {
-    recruit_name: name,
-    recruit_email: email,
-    BL_name: selectedBdo,
-    selected_schedule: schedule,
-    zoom_link: zoomLink,
-    certificate_link: certificateLink
-};
+                recruit_name: name,
+                recruit_email: email,
+                BL_name: selectedBdo,
+                selected_schedule: schedule,
+                zoom_link: zoomLink,
+                certificate_link: certificateLink
+            };
 
-        console.log("certificateLink =", certificateLink);
-        console.log("applicantTemplateParams =", applicantTemplateParams);
+            console.log("certificateLink =", certificateLink);
+            console.log("applicantTemplateParams =", applicantTemplateParams);
 
             Promise.all([
                 emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, BLTemplateParams),
