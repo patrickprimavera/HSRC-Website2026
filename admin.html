@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HSRC Challenge Admin</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-100 min-h-screen">
+  <div class="max-w-6xl mx-auto p-4 md:p-8">
+    <div class="bg-white rounded-2xl shadow p-6 mb-6">
+      <h1 class="text-2xl md:text-3xl font-extrabold text-slate-800">HSRC 30-Day Challenge Admin</h1>
+      <p class="text-sm text-slate-500 mt-1">Review and approve/reject Step1–Step9 submissions.</p>
+    </div>
+
+    <div class="bg-white rounded-2xl shadow p-6 mb-6">
+      <div class="grid md:grid-cols-3 gap-4">
+        <div>
+          <label class="block text-sm font-bold text-slate-700 mb-1">Admin Key</label>
+          <input id="adminKey" type="password" class="w-full border rounded-lg px-3 py-2" placeholder="Enter admin key" />
+        </div>
+        <div>
+          <label class="block text-sm font-bold text-slate-700 mb-1">Filter by Email (optional)</label>
+          <input id="emailFilter" type="email" class="w-full border rounded-lg px-3 py-2" placeholder="user@email.com" />
+        </div>
+        <div class="flex items-end gap-2">
+          <button onclick="loadSubmissions()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-4 py-2 rounded-lg">
+            Load Submissions
+          </button>
+          <button onclick="clearFilter()" class="bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold px-4 py-2 rounded-lg">
+            Clear
+          </button>
+        </div>
+      </div>
+      <p id="statusText" class="mt-3 text-sm text-slate-500">Ready.</p>
+    </div>
+
+    <div class="bg-white rounded-2xl shadow p-4 md:p-6 overflow-x-auto">
+      <table class="min-w-full text-sm border border-slate-200">
+        <thead class="bg-slate-100">
+          <tr>
+            <th class="border p-2">Email</th>
+            <th class="border p-2">Step</th>
+            <th class="border p-2">File</th>
+            <th class="border p-2">Status</th>
+            <th class="border p-2">Action</th>
+          </tr>
+        </thead>
+        <tbody id="adminTableBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    const CHALLENGE_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwg5S-tiTSKUJ5FUaiblw1os2tUaIhobqLl7g-TZmirSeowOMlrxxa5kyTaYRq6LwcHYQ/exec";
+
+    function setStatus(msg, isError = false) {
+      const el = document.getElementById("statusText");
+      el.textContent = msg;
+      el.className = "mt-3 text-sm " + (isError ? "text-red-600" : "text-slate-500");
+    }
+
+    function clearFilter() {
+      document.getElementById("emailFilter").value = "";
+      document.getElementById("adminTableBody").innerHTML = "";
+      setStatus("Filter cleared.");
+    }
+
+    function normalizeStatus(v) {
+      if (!v) return "Pending";
+      const s = String(v).toLowerCase();
+      if (s.includes("approve")) return "Approved";
+      if (s.includes("reject")) return "Rejected";
+      return "Pending";
+    }
+
+    async function loadSubmissions() {
+      const adminKey = document.getElementById("adminKey").value.trim();
+      const email = document.getElementById("emailFilter").value.trim();
+
+      if (!adminKey) {
+        alert("Admin key is required.");
+        return;
+      }
+
+      setStatus("Loading submissions...");
+
+      const payload = new URLSearchParams();
+      payload.append("action", "admin_get_submissions");
+      payload.append("adminKey", adminKey);
+      if (email) payload.append("email", email);
+
+      try {
+        const resp = await fetch(CHALLENGE_WEB_APP_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
+          body: payload.toString()
+        });
+
+        const raw = await resp.text();
+        let data;
+        try {
+          data = JSON.parse(raw);
+        } catch (e) {
+          console.error("Non-JSON:", raw);
+          throw new Error("Server returned non-JSON response.");
+        }
+
+        if (!resp.ok || !data.ok) {
+          throw new Error(data.error || "Failed to load submissions.");
+        }
+
+        renderRows(data.rows || []);
+        setStatus(`Loaded ${data.rows?.length || 0} row(s).`);
+      } catch (err) {
+        console.error(err);
+        setStatus(err.message, true);
+      }
+    }
+
+    function renderRows(rows) {
+      const tbody = document.getElementById("adminTableBody");
+      tbody.innerHTML = "";
+
+      if (!rows.length) {
+        tbody.innerHTML = `<tr><td colspan="5" class="border p-3 text-center text-slate-500">No submissions found.</td></tr>`;
+        return;
+      }
+
+      rows.forEach((row) => {
+        const email = row.email || "";
+        for (let step = 1; step <= 9; step++) {
+          const fileUrl = row[`step${step}`] || "";
+          const statusRaw = row[`step${step}Status`] || "";
+          const status = normalizeStatus(statusRaw);
+
+          const tr = document.createElement("tr");
+          tr.innerHTML = `
+            <td class="border p-2">${email}</td>
+            <td class="border p-2 font-bold">Step ${step}</td>
+            <td class="border p-2">
+              ${fileUrl ? `<a href="${fileUrl}" target="_blank" class="text-blue-600 underline">Open File</a>` : `<span class="text-slate-400">No file</span>`}
+            </td>
+            <td class="border p-2">
+              <span class="${status === "Approved" ? "text-green-600 font-bold" : status === "Rejected" ? "text-red-600 font-bold" : "text-amber-600 font-bold"}">${status}</span>
+            </td>
+            <td class="border p-2">
+              <div class="flex gap-2">
+                <button class="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-xs" onclick="updateStepStatus('${email}', ${step}, 'Approved')">Approve</button>
+                <button class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-xs" onclick="updateStepStatus('${email}', ${step}, 'Rejected')">Reject</button>
+              </div>
+            </td>
+          `;
+          tbody.appendChild(tr);
+        }
+      });
+    }
+
+    async function updateStepStatus(email, stepNumber, status) {
+      const adminKey = document.getElementById("adminKey").value.trim();
+      if (!adminKey) {
+        alert("Admin key is required.");
+        return;
+      }
+
+      const payload = new URLSearchParams();
+      payload.append("action", "admin_update_step_status");
+      payload.append("adminKey", adminKey);
+      payload.append("email", email);
+      payload.append("stepNumber", String(stepNumber));
+      payload.append("status", status);
+
+      setStatus(`Updating ${email} Step ${stepNumber} => ${status}...`);
+
+      try {
+        const resp = await fetch(CHALLENGE_WEB_APP_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
+          body: payload.toString()
+        });
+
+        const raw = await resp.text();
+        let data;
+        try {
+          data = JSON.parse(raw);
+        } catch (e) {
+          console.error("Non-JSON:", raw);
+          throw new Error("Server returned non-JSON response.");
+        }
+
+        if (!resp.ok || !data.ok) {
+          throw new Error(data.error || "Failed to update status.");
+        }
+
+        setStatus(`Updated ${email} Step ${stepNumber} to ${status}.`);
+        await loadSubmissions();
+      } catch (err) {
+        console.error(err);
+        setStatus(err.message, true);
+      }
+    }
+  </script>
+</body>
+</html>

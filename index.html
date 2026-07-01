@@ -148,10 +148,17 @@
         <!-- Right Side Container: Pinagsama ang Hotline at Follow Us -->
         <div class="flex items-center gap-6">
 
-            <!-- Customer Hotline -->
-            <div class="text-md text-slate-800 hidden sm:block text-[#1e293b]">
-                Customer Hotline: <span
-                    class="text-amber-500 font-bold text-[#1e293b] border-2 border-yellow-500 rounded-full p-1 transition-colors duration-300 bg-white-500 text-yellow">09173206778</span>
+            <!-- Customer Hotline + 30-Day Challenge -->
+            <div class="text-md text-slate-800 hidden sm:flex items-center gap-3 text-[#1e293b]">
+                <div>
+                    Customer Hotline: <span
+                        class="text-amber-500 font-bold text-[#1e293b] border-2 border-yellow-500 rounded-full p-1 transition-colors duration-300 bg-white-500 text-yellow">09173206778</span>
+                </div>
+                <button type="button" onclick="goToChallengePage()"
+                    class="ml-2 inline-flex items-center gap-2 whitespace-nowrap bg-amber-500 hover:bg-amber-600 text-white font-bold px-4 py-2 rounded-xl shadow transition text-sm">
+                    <i class="fa-solid fa-id-card-clip"></i>
+                    accept the 30 days challenge
+                </button>
             </div>
 
             <!-- Follow Us -->
@@ -298,9 +305,278 @@ background-position:center;
     </section>
 
     <main class="container mx-auto px-4 py-6 max-w-4xl flex-grow flex flex-col items-center justify-center gap-10">
-        </div>
-        </div>
 
+        <!-- 30-Day Challenge SCREEN -->
+        <div id="challenge-screen" class="w-full hidden">
+            <section class="relative overflow-hidden min-h-screen" style="
+                background:
+                url('pic5.png');
+                background-size:cover;
+                background-position:center;
+            ">
+                <div class="absolute inset-0 bg-black/30"></div>
+
+                <div class="relative z-10 px-4 lg:px-10 py-10">
+                    <div class="text-center text-white mb-8">
+                        <h2 class="text-4xl md:text-5xl font-extrabold tracking-tight">30-DAY SALES MANAGER MENTORSHIP
+                        </h2>
+                        <p class="mt-2 text-xl font-bold text-amber-300">PASSPORT STAMP CHECKLIST</p>
+                    </div>
+
+                    <div class="bg-white/95 backdrop-blur-sm rounded-3xl shadow-2xl border border-white/40 p-6 md:p-10">
+                        <div class="flex flex-col md:flex-row gap-8">
+                            <div class="flex-1">
+                                <div class="mb-6">
+                                    <label class="block text-sm font-bold text-slate-700 mb-2">Email Address (for
+                                        approval updates and passport PDF) <span class="text-red-500">*</span></label>
+                                    <input id="challenge-email" type="email" placeholder="you@example.com"
+                                        class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-amber-500 text-slate-800 font-medium" />
+                                </div>
+
+                                <div class="space-y-5">
+                                    <!-- Step 1 -->
+                                    <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                                        <div class="flex items-center justify-between gap-3">
+                                            <div class="font-extrabold text-slate-800 flex items-center gap-2">
+                                                <span
+                                                    class="inline-flex items-center justify-center w-9 h-9 rounded-full bg-brand-gold text-white">1</span>
+                                                <span>Project Knowledge Seminar</span>
+                                            </div>
+                                            <div class="stamp-badge" data-step="1">STAMP</div>
+                                        </div>
+                                        <div class="mt-3">
+                                            <input type="file" accept="image/*" data-upload-step="1" class="w-full" />
+                                        </div>
+                                    </div>
+
+                                    <!-- Step 2 -->
+                                    <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                                        <div class="flex items-center justify-between gap-3">
+                                            <div class="font-extrabold text-slate-800 flex items-center gap-2">
+                                                <span
+                                                    class="inline-flex items-center justify-center w-9 h-9 rounded-full bg-brand-gold text-white">2</span>
+                                                <span>Site Orientation of Focus Project</span>
+                                            </div>
+                                            <div class="stamp-badge" data-step="2">STAMP</div>
+                                        </div>
+                                        <div class="mt-3">
+                                            <input type="file" accept="image/*" data-upload-step="2" class="w-full" />
+                                        </div>
+                                    </div>
+
+                                    <!-- Step 3 -->
+                                    <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                                        <div class="flex items-center justify-between gap-3">
+                                            <div class="font-extrabold text-slate-800 flex items-center gap-2">
+                                                <span
+                                                    class="inline-flex items-center justify-center w-9 h-9 rounded-full bg-brand-gold text-white">3</span>
+                                                <span>Branding Seminar</span>
+                                            </div>
+                                            <div class="stamp-badge" data-step="3">STAMP</div>
+                                        </div>
+                                        <div class="mt-3">
+                                            <input type="file" accept="image/*" data-upload-step="3" class="w-full" />
+                                        </div>
+                                    </div>
+
+                                    <!-- Step 4 -->
+                                    <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                                        <div class="flex items-center justify-between gap-3">
+                                            <div class="font-extrabold text-slate-800 flex items-center gap-2">
+                                                <span
+                                                    class="inline-flex items-center justify-center w-9 h-9 rounded-full bg-brand-gold text-white">4</span>
+                                                <span>Digital Marketing Seminar</span>
+                                            </div>
+                                            <div class="stamp-badge" data-step="4">STAMP</div>
+                                        </div>
+                                        <div class="mt-3">
+                                            <input type="file" accept="image/*" data-upload-step="4" class="w-full" />
+                                        </div>
+                                    </div>
+
+                                    <!-- Step 5 -->
+                                    <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                                        <div class="flex items-center justify-between gap-3">
+                                            <div class="font-extrabold text-slate-800 flex items-center gap-2">
+                                                <span
+                                                    class="inline-flex items-center justify-center w-9 h-9 rounded-full bg-brand-gold text-white">5</span>
+                                                <span>First Reel</span>
+                                            </div>
+                                            <div class="stamp-badge" data-step="5">STAMP</div>
+                                        </div>
+                                        <div class="mt-3">
+                                            <input type="file" accept="image/*" data-upload-step="5" class="w-full" />
+                                        </div>
+                                    </div>
+
+                                    <!-- Step 6 -->
+                                    <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                                        <div class="flex items-center justify-between gap-3">
+                                            <div class="font-extrabold text-slate-800 flex items-center gap-2">
+                                                <span
+                                                    class="inline-flex items-center justify-center w-9 h-9 rounded-full bg-brand-gold text-white">6</span>
+                                                <span>Page Creation</span>
+                                            </div>
+                                            <div class="stamp-badge" data-step="6">STAMP</div>
+                                        </div>
+                                        <div class="mt-3">
+                                            <input type="file" accept="image/*" data-upload-step="6" class="w-full" />
+                                        </div>
+                                    </div>
+
+                                    <!-- Step 7 -->
+                                    <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                                        <div class="flex items-center justify-between gap-3">
+                                            <div class="font-extrabold text-slate-800 flex items-center gap-2">
+                                                <span
+                                                    class="inline-flex items-center justify-center w-9 h-9 rounded-full bg-brand-gold text-white">7</span>
+                                                <span>First Client Presentation</span>
+                                            </div>
+                                            <div class="stamp-badge" data-step="7">STAMP</div>
+                                        </div>
+                                        <div class="mt-3">
+                                            <input type="file" accept="image/*" data-upload-step="7" class="w-full" />
+                                        </div>
+                                    </div>
+
+                                    <!-- Step 8 -->
+                                    <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                                        <div class="flex items-center justify-between gap-3">
+                                            <div class="font-extrabold text-slate-800 flex items-center gap-2">
+                                                <span
+                                                    class="inline-flex items-center justify-center w-9 h-9 rounded-full bg-brand-gold text-white">8</span>
+                                                <span>Shadow Selling</span>
+                                            </div>
+                                            <div class="stamp-badge" data-step="8">STAMP</div>
+                                        </div>
+                                        <div class="mt-3">
+                                            <input type="file" accept="image/*" data-upload-step="8" class="w-full" />
+                                        </div>
+                                    </div>
+
+                                    <!-- Step 9 (GOAL) -->
+                                    <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                                        <div class="flex items-center justify-between gap-3">
+                                            <div class="font-extrabold text-slate-800 flex items-center gap-2">
+                                                <span
+                                                    class="inline-flex items-center justify-center w-9 h-9 rounded-full bg-brand-gold text-white">9</span>
+                                                <span>First Reservation Goal</span>
+                                            </div>
+                                            <div class="stamp-badge-goal" data-step="9">GOAL</div>
+                                        </div>
+                                        <div class="mt-3">
+                                            <input type="file" accept="image/*" data-upload-step="9" class="w-full" />
+                                        </div>
+                                    </div>
+
+                                    <!-- Step 10 -->
+                                    <div class="rounded-2xl border-4 border-dashed border-amber-200 bg-amber-50 p-4">
+                                        <div class="flex items-center justify-between gap-3">
+                                            <div class="font-extrabold text-slate-800 flex items-center gap-2">
+                                                <span
+                                                    class="inline-flex items-center justify-center w-9 h-9 rounded-full bg-amber-500 text-white">10</span>
+                                                <span class="uppercase tracking-wide">RECEIVE OUR HSRC STARTER
+                                                    KIT</span>
+                                            </div>
+                                            <div
+                                                class="text-xs font-extrabold text-amber-700 bg-white border border-amber-200 px-3 py-1 rounded-full">
+                                                STARTER KIT</div>
+                                        </div>
+                                        <ul class="mt-3 list-disc pl-5 text-sm text-slate-700 space-y-1">
+                                            <li>Sales Kit & ID</li>
+                                            <li>Company Merchandise</li>
+                                            <li>Marketing & Sales Tools</li>
+                                            <li>Welcome Materials</li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="pt-2">
+                                        <button type="button" onclick="submitChallengeAll()"
+                                            class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold px-5 py-3 rounded-xl shadow">
+                                            Submit Challenge Steps 1–9
+                                        </button>
+                                    </div>
+                                    <div id="challenge-success-card"
+                                        class="hidden mt-6 rounded-2xl border border-green-500 bg-green-50 p-6 text-center shadow-lg">
+
+                                        <div class="text-5xl mb-3">🎉</div>
+
+                                        <h2 class="text-2xl font-bold text-green-700">
+                                            Congratulations!
+                                        </h2>
+
+                                        <p class="mt-2 text-green-600">
+                                            Your 30-Day Challenge has been completed successfully.
+                                        </p>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <aside class="w-full md:w-80">
+                                <div
+                                    class="bg-slate-900/90 text-white rounded-2xl p-5 border border-white/10 shadow-xl">
+                                    <div class="flex items-center justify-between">
+                                        <h3 class="text-lg font-extrabold">Approval Queue</h3>
+                                    </div>
+                                    <p class="text-xs text-slate-200 mt-2">Wait for admin check. Once approved, stamps
+                                        will turn earned.</p>
+
+                                    <div class="mt-4 space-y-2">
+                                        <div class="flex items-center justify-between bg-white/5 rounded-xl px-3 py-2">
+                                            <span class="text-sm font-bold">Step 1</span><span class="text-xs"
+                                                id="challenge-queue-1">Waiting...</span>
+                                        </div>
+                                        <div class="flex items-center justify-between bg-white/5 rounded-xl px-3 py-2">
+                                            <span class="text-sm font-bold">Step 2</span><span class="text-xs"
+                                                id="challenge-queue-2">Waiting...</span>
+                                        </div>
+                                        <div class="flex items-center justify-between bg-white/5 rounded-xl px-3 py-2">
+                                            <span class="text-sm font-bold">Step 3</span><span class="text-xs"
+                                                id="challenge-queue-3">Waiting...</span>
+                                        </div>
+                                        <div class="flex items-center justify-between bg-white/5 rounded-xl px-3 py-2">
+                                            <span class="text-sm font-bold">Step 4</span><span class="text-xs"
+                                                id="challenge-queue-4">Waiting...</span>
+                                        </div>
+                                        <div class="flex items-center justify-between bg-white/5 rounded-xl px-3 py-2">
+                                            <span class="text-sm font-bold">Step 5</span><span class="text-xs"
+                                                id="challenge-queue-5">Waiting...</span>
+                                        </div>
+                                        <div class="flex items-center justify-between bg-white/5 rounded-xl px-3 py-2">
+                                            <span class="text-sm font-bold">Step 6</span><span class="text-xs"
+                                                id="challenge-queue-6">Waiting...</span>
+                                        </div>
+                                        <div class="flex items-center justify-between bg-white/5 rounded-xl px-3 py-2">
+                                            <span class="text-sm font-bold">Step 7</span><span class="text-xs"
+                                                id="challenge-queue-7">Waiting...</span>
+                                        </div>
+                                        <div class="flex items-center justify-between bg-white/5 rounded-xl px-3 py-2">
+                                            <span class="text-sm font-bold">Step 8</span><span class="text-xs"
+                                                id="challenge-queue-8">Waiting...</span>
+                                        </div>
+                                        <div class="flex items-center justify-between bg-white/5 rounded-xl px-3 py-2">
+                                            <span class="text-sm font-bold">Step 9</span><span class="text-xs"
+                                                id="challenge-queue-9">Waiting...</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="mt-5">
+                                        <button type="button" onclick="startChallengePolling()"
+                                            class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold px-5 py-3 rounded-xl shadow mt-1">
+                                            Start Checking Approval
+                                        </button>
+                                        <button type="button" onclick="goBackToHome()"
+                                            class="mt-3 w-full bg-slate-700 hover:bg-slate-800 text-white font-bold px-5 py-3 rounded-xl shadow">
+                                            Back to Home
+                                        </button>
+                                    </div>
+                                </div>
+                            </aside>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </div>
 
         <!-- ORIGINAL HERO CONTENT (kept but below; user can scroll down to see it) -->
@@ -1239,7 +1515,10 @@ background-position:center;
         const EMAILJS_TEMPLATE_ID = "template_4ows166";
         const EMAILJS_APPLICANT_TEMPLATE_ID = "template_wjio09a";
 
-        const GOOGLE_SHEET_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwUFdUsiforVqLLP8G2jNcgQEi6cIuZvU9GKZH9g-NrhQei9IujuGAIm0nnfVZjqZDs/exec";
+        // Google Apps Script Web App URL (provided)
+        const GOOGLE_SHEET_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwHRI_tfnQDmGgMVjEBba6DHILJIZeXSmm9Q07xeMtOPpB_3FXkOzKXKhaZ1HTZkKcF/exec";
+        const CHALLENGE_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwg5S-tiTSKUJ5FUaiblw1os2tUaIhobqLl7g-TZmirSeowOMlrxxa5kyTaYRq6LwcHYQ/exec";
+
 
         (function () {
             emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
@@ -1369,8 +1648,249 @@ background-position:center;
             });
         }
 
+        // 30-Day Challenge Navigation
+        function goToChallengePage() {
+            const welcomeHero = document.getElementById('welcome-hero');
+            const legacyHero = document.getElementById('legacy-hero');
+            const formScreen = document.getElementById('form-screen');
+            const challengeScreen = document.getElementById('challenge-screen');
+
+            if (welcomeHero) welcomeHero.style.display = 'none';
+            if (legacyHero) legacyHero.style.display = 'none';
+            if (formScreen) {
+                formScreen.classList.add('hidden');
+                formScreen.classList.remove('fade-in-section');
+            }
+
+            if (challengeScreen) {
+                challengeScreen.classList.remove('hidden');
+                challengeScreen.classList.add('fade-in-section');
+            }
+
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+
+        // 30-Day Challenge (front-end only / backend endpoints are placeholders)
+        function goBackToHome() {
+            const welcomeHero = document.getElementById('welcome-hero');
+            const legacyHero = document.getElementById('legacy-hero');
+            const formScreen = document.getElementById('form-screen');
+            const challengeScreen = document.getElementById('challenge-screen');
+
+            if (challengeScreen) {
+                challengeScreen.classList.add('hidden');
+            }
+            if (welcomeHero) welcomeHero.style.display = '';
+            if (legacyHero) legacyHero.style.display = '';
+            if (formScreen) formScreen.classList.add('hidden');
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function getChallengeEmail() {
+            const el = document.getElementById('challenge-email');
+            return el ? el.value.trim() : '';
+        }
+
+        function setChallengeQueueStatus(step, text) {
+            const el = document.getElementById(`challenge-queue-${step}`);
+            if (el) el.textContent = text;
+
+            const stamp = document.querySelector(`[data-step="${step}"]`);
+            if (stamp) {
+                stamp.classList.remove('bg-emerald-500', 'text-white');
+                if (text.toLowerCase().includes('approved') || text.toLowerCase().includes('earned')) {
+                    stamp.classList.add('bg-emerald-500', 'text-white');
+                    stamp.textContent = 'STAMPED';
+                }
+            }
+        }
+
+        function setChallengeStepStatusText(step, text) {
+            const el = document.querySelector(`[data-status-text="${step}"]`);
+            if (el) el.textContent = text;
+        }
+
+        async function submitChallengeStep(stepNumber) {
+
+            const email = getChallengeEmail();
+            if (!email) {
+                alert("Please enter your email address first.");
+                return;
+            }
+
+            const fileInput = document.querySelector(
+                `input[data-upload-step="${stepNumber}"]`
+            );
+
+            if (!fileInput || !fileInput.files.length) {
+                alert(`Please upload Step ${stepNumber}`);
+                return;
+            }
+
+            const file = fileInput.files[0];
+
+            // UI
+            setChallengeQueueStatus(stepNumber, "Uploading...");
+            setChallengeStepStatusText(
+                stepNumber,
+                `Uploading Step ${stepNumber}...`
+            );
+
+            // Convert image to Base64
+            const base64 = await new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result.split(",")[1]);
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            });
+
+            // Primary payload as URLSearchParams (mas compatible sa Google Apps Script doPost(e))
+            const payload = new URLSearchParams();
+            payload.append("action", "challenge_submit_step");
+            payload.append("email", email);
+            payload.append("stepNumber", String(stepNumber));
+            payload.append("fileName", file.name);
+            payload.append("mimeType", file.type || "image/png");
+            payload.append("base64", base64);
+
+            console.log("[Challenge Submit] sending:", {
+                url: CHALLENGE_WEB_APP_URL,
+                action: "challenge_submit_step",
+                email,
+                stepNumber,
+                fileName: file.name
+            });
+
+            try {
+                const submitResp = await fetch(CHALLENGE_WEB_APP_URL, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
+                    },
+                    body: payload.toString()
+                });
+
+                const rawText = await submitResp.text();
+                let submitData = null;
+
+                try {
+                    submitData = JSON.parse(rawText);
+                } catch (parseErr) {
+                    console.error("[Challenge Submit] Non-JSON response:", rawText);
+                    throw new Error("Server returned non-JSON response. Check Apps Script deployment/access and doPost return JSON.");
+                }
+
+                if (!submitResp.ok || !submitData || submitData.ok !== true) {
+                    const msg = (submitData && (submitData.error || submitData.message))
+                        ? (submitData.error || submitData.message)
+                        : `Upload failed (HTTP ${submitResp.status})`;
+                    throw new Error(msg);
+                }
+
+                setChallengeQueueStatus(stepNumber, "Waiting for admin check...");
+                setChallengeStepStatusText(
+                    stepNumber,
+                    `Uploaded (pending admin approval) for Step ${stepNumber}.`
+                );
+
+                startChallengePolling();
+
+            } catch (err) {
+                console.error("[Challenge Submit] Error:", err);
+                alert(`Step ${stepNumber} upload failed: ${err.message}`);
+                setChallengeQueueStatus(stepNumber, "Upload Error");
+                setChallengeStepStatusText(stepNumber, `Upload Error: ${err.message}`);
+            }
+
+        } // <-- ISINGIT MO ITO
+
+        async function submitChallengeAll() {
+            for (let s = 1; s <= 9; s++) {
+                const input = document.querySelector(`input[data-upload-step="${s}"]`);
+                if (!input || !input.files || input.files.length === 0) {
+                    alert(`Missing screenshot for Step ${s}.`);
+                    return;
+                }
+            }
+
+            for (let s = 1; s <= 9; s++) {
+                await submitChallengeStep(s);
+            }
+        }
+
+        let challengePollingTimer = null;
+        async function startChallengePolling() {
+            const email = getChallengeEmail();
+            if (!email) {
+                alert('Please enter your email address first.');
+                return;
+            }
+
+            if (challengePollingTimer) {
+                clearInterval(challengePollingTimer);
+            }
+
+            const loadingEl = document.getElementById('challenge-global-loading');
+            if (loadingEl) loadingEl.classList.remove('hidden');
+
+            // Poll every 4 seconds (placeholder)
+            challengePollingTimer = setInterval(async () => {
+                try {
+                    // Placeholder: replace with backend action that returns approval array
+                    // Expected response shape: { steps: {1:true,...,9:true}, completed:true }
+                    let data = null;
+                    if (GOOGLE_SHEET_WEB_APP_URL && GOOGLE_SHEET_WEB_APP_URL.trim() !== '') {
+                        const fd = new FormData();
+                        fd.append('action', 'challenge_get_status');
+                        fd.append('email', email);
+
+                        const resp = await fetch(CHALLENGE_WEB_APP_URL, {
+                            method: "POST",
+                            body: fd
+                        });
+                        try {
+                            data = await resp.json();
+                        } catch (err) {
+                            data = null;
+                        }
+                    }
+
+                    if (data && data.steps) {
+                        for (let i = 1; i <= 9; i++) {
+                            const approved = !!data.steps[i];
+                            setChallengeQueueStatus(i, approved ? 'Approved ✓ (STAMP earned)' : 'Waiting for admin check...');
+                        }
+
+                        if (data.completed) {
+                            clearInterval(challengePollingTimer);
+                            challengePollingTimer = null;
+                            if (loadingEl) loadingEl.classList.add('hidden');
+                            document.getElementById('challenge-success-card')?.classList.remove('hidden');
+                            return;
+                        }
+                    } else {
+                        // Backend not ready: keep showing waiting states (frontend placeholder)
+                        for (let i = 1; i <= 9; i++) {
+                            const currentText = document.getElementById(`challenge-queue-${i}`)?.textContent || '';
+                            if (!currentText.toLowerCase().includes('approved') && !currentText.toLowerCase().includes('stamped')) {
+                                setChallengeQueueStatus(i, 'Waiting for admin check...');
+                            }
+                        }
+                    }
+                } catch (e) {
+                    console.error('Polling error:', e);
+                }
+            }, 4000);
+        }
+
         // TOGGLE LOGIC FOR REFERRER FIELD
         function toggleReferrerField() {
+
             const container = document.getElementById('referrer-name-container');
             const input = document.getElementById('referrer-name');
             const yesRadio = document.querySelector('input[name="isReferred"][value="Yes"]');
