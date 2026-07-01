@@ -24,6 +24,7 @@
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.1.7/dist/signature_pad.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
 
     <script>
         tailwind.config = {
@@ -491,7 +492,8 @@ background-position:center;
                                     </div>
 
                                     <div class="pt-2">
-                                        <button type="button" onclick="submitChallengeAll()"
+                                        <button id="challenge-submit-all-btn" type="button"
+                                            onclick="submitChallengeAll()"
                                             class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold px-5 py-3 rounded-xl shadow">
                                             Submit Challenge Steps 1–9
                                         </button>
@@ -562,7 +564,8 @@ background-position:center;
                                     </div>
 
                                     <div class="mt-5">
-                                        <button type="button" onclick="startChallengePolling()"
+                                        <button id="challenge-start-polling-btn" type="button"
+                                            onclick="startChallengePolling()"
                                             class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold px-5 py-3 rounded-xl shadow mt-1">
                                             Start Checking Approval
                                         </button>
@@ -1504,6 +1507,20 @@ background-position:center;
         </div>
     </main>
 
+    <!-- CHALLENGE LOADING OVERLAY -->
+    <div id="challenge-global-loading-overlay"
+        class="hidden fixed inset-0 z-[9999] bg-black/50 backdrop-blur-sm flex items-center justify-center px-4">
+        <div class="w-full max-w-md bg-white rounded-2xl shadow-2xl border border-slate-200 p-6 text-center">
+            <div
+                class="mx-auto mb-4 h-14 w-14 rounded-full border-4 border-emerald-500 border-t-transparent animate-spin">
+            </div>
+            <h3 class="text-lg font-extrabold text-slate-800">Please wait...</h3>
+            <p id="challenge-global-loading-text" class="mt-2 text-sm text-slate-600">
+                Processing your request.
+            </p>
+        </div>
+    </div>
+
     <footer class="text-center py-4 bg-slate-900 text-slate-400 text-xs border-t border-slate-800">
         &copy; 2026 Human Shelter Realty Corporation. All Rights Reserved.
     </footer>
@@ -1514,6 +1531,10 @@ background-position:center;
         const EMAILJS_SERVICE_ID = "service_afcu23n";
         const EMAILJS_TEMPLATE_ID = "template_4ows166";
         const EMAILJS_APPLICANT_TEMPLATE_ID = "template_wjio09a";
+
+        // Challenge completion email template (create this in EmailJS)
+        // Suggested variables: to_email, applicant_email, approved_steps, passport_summary, completion_message
+        const EMAILJS_CHALLENGE_TEMPLATE_ID = "template_challenge_completion";
 
         // Google Apps Script Web App URL (provided)
         const GOOGLE_SHEET_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwHRI_tfnQDmGgMVjEBba6DHILJIZeXSmm9Q07xeMtOPpB_3FXkOzKXKhaZ1HTZkKcF/exec";
@@ -1696,52 +1717,428 @@ background-position:center;
             return el ? el.value.trim() : '';
         }
 
+        function showChallengeLoading(message = "Processing your request...") {
+            const overlay = document.getElementById('challenge-global-loading-overlay');
+            const textEl = document.getElementById('challenge-global-loading-text');
+            if (textEl) textEl.textContent = message;
+            if (overlay) overlay.classList.remove('hidden');
+        }
+
+        function hideChallengeLoading() {
+            const overlay = document.getElementById('challenge-global-loading-overlay');
+            if (overlay) overlay.classList.add('hidden');
+        }
+
+        function setChallengeActionButtonsDisabled(disabled) {
+            const submitBtn = document.getElementById('challenge-submit-all-btn');
+            const pollingBtn = document.getElementById('challenge-start-polling-btn');
+
+            [submitBtn, pollingBtn].forEach((btn) => {
+                if (!btn) return;
+                btn.disabled = !!disabled;
+                btn.classList.toggle('opacity-50', !!disabled);
+                btn.classList.toggle('cursor-not-allowed', !!disabled);
+            });
+        }
+
         function setChallengeQueueStatus(step, text) {
             const el = document.getElementById(`challenge-queue-${step}`);
             if (el) el.textContent = text;
 
             const stamp = document.querySelector(`[data-step="${step}"]`);
-            if (stamp) {
-                stamp.classList.remove('bg-emerald-500', 'text-white');
-                if (text.toLowerCase().includes('approved') || text.toLowerCase().includes('earned')) {
-                    stamp.classList.add('bg-emerald-500', 'text-white');
-                    stamp.textContent = 'STAMPED';
+            if (!stamp) return;
+
+            const lowered = String(text || "").toLowerCase();
+
+            stamp.classList.remove(
+                "bg-emerald-500",
+                "bg-red-500",
+                "text-white",
+                "border",
+                "border-emerald-700",
+                "border-red-700",
+                "shadow-lg",
+                "shadow-emerald-200",
+                "shadow-red-200",
+                "rotate-[-6deg]",
+                "rotate-[6deg]",
+                "scale-105",
+                "tracking-widest",
+                "ring-4",
+                "ring-emerald-200",
+                "ring-red-200"
+            );
+
+            stamp.classList.add(
+                "font-extrabold",
+                "uppercase",
+                "tracking-widest",
+                "transition-all",
+                "duration-300"
+            );
+
+            if (lowered.includes("approved") || lowered.includes("earned") || lowered.includes("stamped")) {
+                stamp.textContent = "STAMPED";
+                stamp.classList.add(
+                    "bg-emerald-500",
+                    "text-white",
+                    "border",
+                    "border-emerald-700",
+                    "shadow-lg",
+                    "shadow-emerald-200",
+                    "rotate-[-6deg]",
+                    "scale-105",
+                    "ring-4",
+                    "ring-emerald-200"
+                );
+            } else if (lowered.includes("reject")) {
+                stamp.textContent = "REJECTED";
+                stamp.classList.add(
+                    "bg-red-500",
+                    "text-white",
+                    "border",
+                    "border-red-700",
+                    "shadow-lg",
+                    "shadow-red-200",
+                    "rotate-[6deg]",
+                    "scale-105",
+                    "ring-4",
+                    "ring-red-200"
+                );
+            } else {
+                stamp.classList.remove(
+                    "font-extrabold",
+                    "uppercase",
+                    "tracking-widest",
+                    "transition-all",
+                    "duration-300"
+                );
+
+                if (String(step) === "9" && stamp.classList.contains("stamp-badge-goal")) {
+                    stamp.textContent = "GOAL";
+                } else {
+                    stamp.textContent = "STAMP";
                 }
             }
         }
+
+
+        function getChallengeResultSummary(data) {
+            if (!data || !data.steps) {
+                return { hasRejected: false, hasApproved: false, allApproved: false, pendingCount: 9 };
+            }
+
+            let hasRejected = false;
+            let hasApproved = false;
+            let approvedCount = 0;
+            let decidedCount = 0;
+
+            for (let i = 1; i <= 9; i++) {
+                const v = data.steps[i];
+                const txt = String(v ?? "").trim().toLowerCase();
+
+                if (v === true || txt === "approved" || txt === "stamped") {
+                    hasApproved = true;
+                    approvedCount++;
+                    decidedCount++;
+                } else if (txt === "rejected" || txt === "reject") {
+                    hasRejected = true;
+                    decidedCount++;
+                }
+            }
+
+            const allApproved = approvedCount === 9;
+
+            return {
+                hasRejected,
+                hasApproved,
+                allApproved,
+                pendingCount: 9 - decidedCount
+            };
+        }
+
 
         function setChallengeStepStatusText(step, text) {
             const el = document.querySelector(`[data-status-text="${step}"]`);
             if (el) el.textContent = text;
         }
 
-        async function submitChallengeStep(stepNumber) {
+        function getChallengeEmailSentKey(email) {
+            return `challengeEmailSent:${String(email || '').toLowerCase()}`;
+        }
 
+        function getApprovedStepsFromData(data) {
+            const approved = [];
+            if (!data || !data.steps) return approved;
+
+            for (let i = 1; i <= 9; i++) {
+                const v = data.steps[i];
+                const txt = String(v ?? "").trim().toLowerCase();
+
+                if (v === true || txt === "approved" || txt === "stamped") {
+                    approved.push(i);
+                }
+            }
+
+            return approved;
+        }
+
+
+        function buildPassportSummary(approvedSteps) {
+            const boxes = [];
+            for (let i = 1; i <= 9; i++) {
+                const isApproved = approvedSteps.includes(i);
+                boxes.push(`${i}:${isApproved ? 'APPROVED' : 'PENDING'}`);
+            }
+            return boxes.join(' | ');
+        }
+
+        function renderChallengePassportPreview(approvedSteps) {
+            const container = document.getElementById('challenge-success-card');
+            if (!container) return;
+
+            const allApproved = approvedSteps.length === 9;
+            const stampsHtml = Array.from({ length: 9 }, (_, idx) => {
+                const step = idx + 1;
+                const approved = approvedSteps.includes(step);
+                return `
+                    <div class="border rounded-lg p-2 text-center ${approved ? 'border-green-600 bg-green-50' : 'border-slate-300 bg-white'}">
+                        <div class="text-xs font-bold text-slate-600">TASK ${step}</div>
+                        <div class="mt-1 text-[10px] font-extrabold ${approved ? 'text-green-700' : 'text-slate-400'}">
+                            ${approved ? 'APPROVED STAMP' : 'PENDING'}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            container.innerHTML = `
+                <div class="text-5xl mb-3">🎉</div>
+                <h2 class="text-2xl font-bold text-green-700">Congratulations!</h2>
+                <p class="mt-2 text-green-700 font-semibold">Your 30-Day Challenge has been completed successfully.</p>
+
+                <div class="mt-5 mx-auto max-w-2xl border-4 border-amber-600 rounded-2xl p-4 bg-white shadow-inner">
+                    <div class="text-center mb-3">
+                        <div class="text-sm font-extrabold tracking-widest text-amber-700">HSRC CHALLENGE PASSPORT</div>
+                        <div class="text-xs text-slate-500">Official Stamp Completion Record</div>
+                    </div>
+                    <div class="grid grid-cols-3 gap-2">${stampsHtml}</div>
+                    <div class="mt-3 text-center text-xs font-bold ${allApproved ? 'text-green-700' : 'text-amber-700'}">
+                        ${allApproved ? 'STATUS: ALL TASKS 1–9 APPROVED ✅' : 'STATUS: IN PROGRESS'}
+                    </div>
+                </div>
+            `;
+        }
+
+        async function uploadChallengePassportPdf(email, approvedSteps) {
+            try {
+                const pdfBase64 = await generateChallengePassportPdfBase64(email, approvedSteps);
+                const payload = new URLSearchParams();
+                payload.append("action", "challenge_upload_passport_pdf");
+                payload.append("email", email);
+                payload.append("fileName", `HSRC_Passport_${(email || 'applicant').replace(/[^a-z0-9]/gi, '_')}.pdf`);
+                payload.append("mimeType", "application/pdf");
+                payload.append("base64", pdfBase64);
+
+                const resp = await fetch(CHALLENGE_WEB_APP_URL, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
+                    body: payload.toString()
+                });
+
+                const raw = await resp.text();
+                let data = null;
+                try { data = JSON.parse(raw); } catch (e) { data = null; }
+
+                if (!resp.ok || !data || data.ok !== true) {
+                    throw new Error((data && (data.error || data.message)) || "Failed to upload passport PDF.");
+                }
+
+                return data.pdfUrl || "";
+            } catch (err) {
+                console.error("Passport PDF upload failed:", err);
+                return "";
+            }
+        }
+
+        async function generateChallengePassportPdfBase64(email, approvedSteps) {
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF({ orientation: 'portrait', unit: 'pt', format: 'a4' });
+
+            const pageW = 595.28;
+            const pageH = 841.89;
+
+            // Background
+            pdf.setFillColor(248, 250, 252);
+            pdf.rect(0, 0, pageW, pageH, 'F');
+
+            // Watermark logo
+            try {
+                const watermarkDataUrl = await loadImageAsDataUrl('logo3.png');
+                pdf.setGState(new pdf.GState({ opacity: 0.12 }));
+                pdf.addImage(watermarkDataUrl, 'PNG', 110, 180, 380, 380);
+                pdf.setGState(new pdf.GState({ opacity: 1 }));
+            } catch (e) {
+                console.warn("Watermark load failed:", e);
+            }
+
+            // Header
+            pdf.setFillColor(15, 118, 110);
+            pdf.rect(0, 0, pageW, 95, 'F');
+            pdf.setTextColor(255, 255, 255);
+            pdf.setFont("helvetica", "bold");
+            pdf.setFontSize(20);
+            pdf.text("HSRC CHALLENGE PASSPORT", 40, 45);
+            pdf.setFontSize(12);
+            pdf.setFont("helvetica", "normal");
+            pdf.text("Official 30-Day Challenge Completion Record", 40, 68);
+
+            // Applicant info
+            pdf.setTextColor(31, 41, 55);
+            pdf.setFont("helvetica", "bold");
+            pdf.setFontSize(12);
+            pdf.text(`Applicant: ${email}`, 40, 130);
+            pdf.text(`Approved Steps: ${approvedSteps.join(',')}`, 40, 150);
+
+            // Stamp grid
+            const startX = 40;
+            const startY = 190;
+            const boxW = 160;
+            const boxH = 78;
+            const gapX = 16;
+            const gapY = 14;
+
+            let idx = 0;
+            for (let row = 0; row < 3; row++) {
+                for (let col = 0; col < 3; col++) {
+                    const step = idx + 1;
+                    const approved = approvedSteps.includes(step);
+                    const x = startX + col * (boxW + gapX);
+                    const y = startY + row * (boxH + gapY);
+
+                    pdf.setDrawColor(148, 163, 184);
+                    pdf.setLineWidth(1);
+                    pdf.roundedRect(x, y, boxW, boxH, 8, 8);
+
+                    pdf.setFont("helvetica", "bold");
+                    pdf.setFontSize(11);
+                    pdf.setTextColor(51, 65, 85);
+                    pdf.text(`TASK ${step}`, x + 12, y + 22);
+
+                    if (approved) {
+                        pdf.setTextColor(22, 163, 74);
+                        pdf.setFont("helvetica", "bold");
+                        pdf.setFontSize(14);
+                        pdf.text("APPROVED STAMP", x + 12, y + 48);
+                    } else {
+                        pdf.setTextColor(107, 114, 128);
+                        pdf.setFont("helvetica", "bold");
+                        pdf.setFontSize(12);
+                        pdf.text("PENDING", x + 12, y + 48);
+                    }
+
+                    idx++;
+                }
+            }
+
+            // Footer
+            pdf.setFont("helvetica", "bold");
+            pdf.setTextColor(5, 150, 105);
+            pdf.setFontSize(12);
+            pdf.text("STATUS: ALL TASKS 1-9 APPROVED", 40, 510);
+
+            pdf.setFont("helvetica", "normal");
+            pdf.setTextColor(100, 116, 139);
+            pdf.setFontSize(10);
+            pdf.text("Generated by HSRC Challenge System", 40, 535);
+
+            const dataUri = pdf.output('datauristring');
+            return dataUri.split(',')[1];
+        }
+
+        function loadImageAsDataUrl(src) {
+            return new Promise((resolve, reject) => {
+                const img = new Image();
+                img.crossOrigin = 'anonymous';
+                img.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0);
+                    resolve(canvas.toDataURL('image/png'));
+                };
+                img.onerror = reject;
+                img.src = src;
+            });
+        }
+
+        function renderPassportPdfButton(pdfUrl) {
+            if (!pdfUrl) return;
+            const container = document.getElementById('challenge-success-card');
+            if (!container) return;
+
+            const existing = document.getElementById('challenge-passport-pdf-btn');
+            if (existing) existing.remove();
+
+            const wrap = document.createElement('div');
+            wrap.id = 'challenge-passport-pdf-btn';
+            wrap.className = 'mt-4';
+            wrap.innerHTML = `
+                <a href="${pdfUrl}" target="_blank"
+                    class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-bold px-4 py-2 rounded-xl shadow">
+                    <i class="fa-solid fa-file-pdf"></i>
+                    Open Passport PDF
+                </a>
+            `;
+            container.appendChild(wrap);
+        }
+
+        async function sendChallengeCompletionEmail(applicantEmail, approvedSteps, passportPdfLink = "") {
+            if (!applicantEmail) return false;
+            const alreadySentKey = getChallengeEmailSentKey(applicantEmail);
+            if (localStorage.getItem(alreadySentKey) === '1') return true;
+
+            const passportSummary = buildPassportSummary(approvedSteps);
+            const params = {
+                to_email: applicantEmail,
+                applicant_email: applicantEmail,
+                approved_steps: approvedSteps.join(','),
+                passport_summary: passportSummary,
+                completion_message: "Congratulations! Approved na ang lahat ng Task 1-9 mo sa HSRC 30-Day Challenge.",
+                passport_pdf_link: passportPdfLink || ""
+            };
+
+            try {
+                await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_CHALLENGE_TEMPLATE_ID, params);
+                localStorage.setItem(alreadySentKey, '1');
+                return true;
+            } catch (err) {
+                console.error("Challenge completion email failed:", err);
+                return false;
+            }
+        }
+
+        async function submitChallengeStep(stepNumber) {
             const email = getChallengeEmail();
             if (!email) {
                 alert("Please enter your email address first.");
-                return;
+                return false;
             }
 
-            const fileInput = document.querySelector(
-                `input[data-upload-step="${stepNumber}"]`
-            );
-
+            const fileInput = document.querySelector(`input[data-upload-step="${stepNumber}"]`);
             if (!fileInput || !fileInput.files.length) {
                 alert(`Please upload Step ${stepNumber}`);
-                return;
+                return false;
             }
 
             const file = fileInput.files[0];
 
-            // UI
             setChallengeQueueStatus(stepNumber, "Uploading...");
             setChallengeStepStatusText(
                 stepNumber,
                 `Uploading Step ${stepNumber}...`
             );
 
-            // Convert image to Base64
             const base64 = await new Promise((resolve, reject) => {
                 const reader = new FileReader();
                 reader.onload = () => resolve(reader.result.split(",")[1]);
@@ -1749,7 +2146,6 @@ background-position:center;
                 reader.readAsDataURL(file);
             });
 
-            // Primary payload as URLSearchParams (mas compatible sa Google Apps Script doPost(e))
             const payload = new URLSearchParams();
             payload.append("action", "challenge_submit_step");
             payload.append("email", email);
@@ -1782,7 +2178,7 @@ background-position:center;
                     submitData = JSON.parse(rawText);
                 } catch (parseErr) {
                     console.error("[Challenge Submit] Non-JSON response:", rawText);
-                    throw new Error("Server returned non-JSON response. Check Apps Script deployment/access and doPost return JSON.");
+                    throw new Error("Server returned non-JSON response.");
                 }
 
                 if (!submitResp.ok || !submitData || submitData.ok !== true) {
@@ -1792,101 +2188,192 @@ background-position:center;
                     throw new Error(msg);
                 }
 
-                setChallengeQueueStatus(stepNumber, "Waiting for admin check...");
+                setChallengeQueueStatus(stepNumber, "Uploaded");
                 setChallengeStepStatusText(
                     stepNumber,
-                    `Uploaded (pending admin approval) for Step ${stepNumber}.`
+                    `Step ${stepNumber} uploaded successfully.`
                 );
 
-                startChallengePolling();
-
+                return true;
             } catch (err) {
                 console.error("[Challenge Submit] Error:", err);
                 alert(`Step ${stepNumber} upload failed: ${err.message}`);
                 setChallengeQueueStatus(stepNumber, "Upload Error");
                 setChallengeStepStatusText(stepNumber, `Upload Error: ${err.message}`);
+                return false;
             }
-
-        } // <-- ISINGIT MO ITO
+        }
 
         async function submitChallengeAll() {
-            for (let s = 1; s <= 9; s++) {
-                const input = document.querySelector(`input[data-upload-step="${s}"]`);
-                if (!input || !input.files || input.files.length === 0) {
-                    alert(`Missing screenshot for Step ${s}.`);
-                    return;
-                }
+            const email = getChallengeEmail();
+            if (!email) {
+                alert("Please enter your email address first.");
+                return;
             }
 
-            for (let s = 1; s <= 9; s++) {
-                await submitChallengeStep(s);
+            setChallengeActionButtonsDisabled(true);
+            showChallengeLoading("Uploading Step 1 of 9...");
+
+            try {
+                for (let s = 1; s <= 9; s++) {
+                    const input = document.querySelector(`input[data-upload-step="${s}"]`);
+                    if (!input || !input.files || input.files.length === 0) {
+                        hideChallengeLoading();
+                        setChallengeActionButtonsDisabled(false);
+                        alert(`Missing screenshot for Step ${s}.`);
+                        return;
+                    }
+                }
+
+                for (let s = 1; s <= 9; s++) {
+                    showChallengeLoading(`Uploading Step ${s} of 9...`);
+                    const ok = await submitChallengeStep(s);
+
+                    if (!ok) {
+                        hideChallengeLoading();
+                        setChallengeActionButtonsDisabled(false);
+                        return;
+                    }
+                }
+
+                hideChallengeLoading();
+                setChallengeActionButtonsDisabled(false);
+                alert("All 9 challenge steps uploaded successfully.");
+            } catch (err) {
+                console.error("submitChallengeAll error:", err);
+                hideChallengeLoading();
+                setChallengeActionButtonsDisabled(false);
+                alert("Failed to submit challenge steps.");
             }
         }
 
         let challengePollingTimer = null;
+        let challengePollingResolved = false;
+
         async function startChallengePolling() {
             const email = getChallengeEmail();
             if (!email) {
-                alert('Please enter your email address first.');
+                alert("Please enter your email address first.");
                 return;
             }
 
             if (challengePollingTimer) {
                 clearInterval(challengePollingTimer);
+                challengePollingTimer = null;
             }
 
-            const loadingEl = document.getElementById('challenge-global-loading');
-            if (loadingEl) loadingEl.classList.remove('hidden');
+            challengePollingResolved = false;
 
-            // Poll every 4 seconds (placeholder)
-            challengePollingTimer = setInterval(async () => {
+            setChallengeActionButtonsDisabled(true);
+            showChallengeLoading("Checking approval status, please wait...");
+
+            const stopChallengePolling = () => {
+                if (challengePollingTimer) {
+                    clearInterval(challengePollingTimer);
+                    challengePollingTimer = null;
+                }
+            };
+
+            const checkStatus = async () => {
                 try {
-                    // Placeholder: replace with backend action that returns approval array
-                    // Expected response shape: { steps: {1:true,...,9:true}, completed:true }
-                    let data = null;
-                    if (GOOGLE_SHEET_WEB_APP_URL && GOOGLE_SHEET_WEB_APP_URL.trim() !== '') {
-                        const fd = new FormData();
-                        fd.append('action', 'challenge_get_status');
-                        fd.append('email', email);
+                    showChallengeLoading("Checking approval status, please wait...");
 
-                        const resp = await fetch(CHALLENGE_WEB_APP_URL, {
-                            method: "POST",
-                            body: fd
-                        });
-                        try {
-                            data = await resp.json();
-                        } catch (err) {
-                            data = null;
+                    const fd = new FormData();
+                    fd.append("action", "challenge_get_status");
+                    fd.append("email", email);
+
+                    const resp = await fetch(CHALLENGE_WEB_APP_URL, {
+                        method: "POST",
+                        body: fd
+                    });
+
+                    let data = null;
+                    try {
+                        data = await resp.json();
+                    } catch (err) {
+                        data = null;
+                    }
+
+                    if (!data || !data.steps) {
+                        showChallengeLoading("Waiting for admin approval result...");
+                        return false;
+                    }
+
+                    let hasAnyDecision = false;
+                    let approvedSteps = [];
+
+                    for (let i = 1; i <= 9; i++) {
+                        const rawStatus = data.steps[i];
+                        const txt = String(rawStatus ?? "").trim().toLowerCase();
+
+                        if (
+                            rawStatus === true ||
+                            txt === "approved" ||
+                            txt === "stamped"
+                        ) {
+                            setChallengeQueueStatus(i, "Approved ✓ (STAMPED)");
+                            approvedSteps.push(i);
+                            hasAnyDecision = true;
+
+                        } else if (
+                            rawStatus === false ||
+                            txt === "rejected" ||
+                            txt === "reject" ||
+                            txt.includes("reject") ||
+                            txt.includes("disapprove")
+                        ) {
+                            setChallengeQueueStatus(i, "Rejected ✗ (REJECTED)");
+                            hasAnyDecision = true;
+
+                        } else {
+                            setChallengeQueueStatus(i, "Waiting for admin check...");
                         }
                     }
 
-                    if (data && data.steps) {
-                        for (let i = 1; i <= 9; i++) {
-                            const approved = !!data.steps[i];
-                            setChallengeQueueStatus(i, approved ? 'Approved ✓ (STAMP earned)' : 'Waiting for admin check...');
-                        }
 
-                        if (data.completed) {
-                            clearInterval(challengePollingTimer);
-                            challengePollingTimer = null;
-                            if (loadingEl) loadingEl.classList.add('hidden');
-                            document.getElementById('challenge-success-card')?.classList.remove('hidden');
-                            return;
-                        }
-                    } else {
-                        // Backend not ready: keep showing waiting states (frontend placeholder)
-                        for (let i = 1; i <= 9; i++) {
-                            const currentText = document.getElementById(`challenge-queue-${i}`)?.textContent || '';
-                            if (!currentText.toLowerCase().includes('approved') && !currentText.toLowerCase().includes('stamped')) {
-                                setChallengeQueueStatus(i, 'Waiting for admin check...');
+                    if (hasAnyDecision) {
+                        challengePollingResolved = true;
+                        stopChallengePolling();
+
+                        if (approvedSteps.length > 0) {
+                            renderChallengePassportPreview(approvedSteps);
+                            document.getElementById("challenge-success-card")?.classList.remove("hidden");
+
+                            const passportPdfLink = await uploadChallengePassportPdf(email, approvedSteps);
+                            renderPassportPdfButton(passportPdfLink);
+
+                            const sent = await sendChallengeCompletionEmail(email, approvedSteps, passportPdfLink);
+                            if (!sent) {
+                                console.warn("Challenge email not sent.");
                             }
                         }
+
+                        hideChallengeLoading();
+                        setChallengeActionButtonsDisabled(false);
+                        alert("Admin result has been received.");
+                        return true;
                     }
+
+                    showChallengeLoading("Waiting for admin approval result...");
+                    return false;
                 } catch (e) {
-                    console.error('Polling error:', e);
+                    console.error("Polling error:", e);
+                    challengePollingResolved = true;
+                    stopChallengePolling();
+                    hideChallengeLoading();
+                    setChallengeActionButtonsDisabled(false);
+                    alert("Failed to check approval status.");
+                    return true;
                 }
-            }, 4000);
+            };
+
+            const resolvedNow = await checkStatus();
+
+            if (!resolvedNow && !challengePollingResolved && !challengePollingTimer) {
+                challengePollingTimer = setInterval(checkStatus, 4000);
+            }
         }
+
 
         // TOGGLE LOGIC FOR REFERRER FIELD
         function toggleReferrerField() {

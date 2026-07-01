@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>HSRC Challenge Admin</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
+
 <body class="bg-slate-100 min-h-screen">
   <div class="max-w-6xl mx-auto p-4 md:p-8">
     <div class="bg-white rounded-2xl shadow p-6 mb-6">
@@ -24,12 +26,8 @@
           <input id="emailFilter" type="email" class="w-full border rounded-lg px-3 py-2" placeholder="user@email.com" />
         </div>
         <div class="flex items-end gap-2">
-          <button onclick="loadSubmissions()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-4 py-2 rounded-lg">
-            Load Submissions
-          </button>
-          <button onclick="clearFilter()" class="bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold px-4 py-2 rounded-lg">
-            Clear
-          </button>
+          <button onclick="loadSubmissions()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-4 py-2 rounded-lg">Load Submissions</button>
+          <button onclick="clearFilter()" class="bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold px-4 py-2 rounded-lg">Clear</button>
         </div>
       </div>
       <p id="statusText" class="mt-3 text-sm text-slate-500">Ready.</p>
@@ -54,10 +52,19 @@
   <script>
     const CHALLENGE_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwg5S-tiTSKUJ5FUaiblw1os2tUaIhobqLl7g-TZmirSeowOMlrxxa5kyTaYRq6LwcHYQ/exec";
 
+    function showLoading(show) {
+      const overlay = document.getElementById('loadingOverlay');
+      if (overlay) {
+        show ? overlay.classList.remove('hidden') : overlay.classList.add('hidden');
+      }
+    }
+
     function setStatus(msg, isError = false) {
       const el = document.getElementById("statusText");
-      el.textContent = msg;
-      el.className = "mt-3 text-sm " + (isError ? "text-red-600" : "text-slate-500");
+      if (el) {
+        el.textContent = msg;
+        el.className = "mt-3 text-sm " + (isError ? "text-red-600" : "text-slate-500");
+      }
     }
 
     function clearFilter() {
@@ -68,9 +75,9 @@
 
     function normalizeStatus(v) {
       if (!v) return "Pending";
-      const s = String(v).toLowerCase();
-      if (s.includes("approve")) return "Approved";
-      if (s.includes("reject")) return "Rejected";
+      const s = String(v).trim().toLowerCase();
+      if (s === "approved") return "Approved";
+      if (s === "rejected" || s === "stamp") return "Rejected";
       return "Pending";
     }
 
@@ -78,13 +85,9 @@
       const adminKey = document.getElementById("adminKey").value.trim();
       const email = document.getElementById("emailFilter").value.trim();
 
-      if (!adminKey) {
-        alert("Admin key is required.");
-        return;
-      }
+      if (!adminKey) { alert("Admin key is required."); return; }
 
       setStatus("Loading submissions...");
-
       const payload = new URLSearchParams();
       payload.append("action", "admin_get_submissions");
       payload.append("adminKey", adminKey);
@@ -97,23 +100,11 @@
           body: payload.toString()
         });
 
-        const raw = await resp.text();
-        let data;
-        try {
-          data = JSON.parse(raw);
-        } catch (e) {
-          console.error("Non-JSON:", raw);
-          throw new Error("Server returned non-JSON response.");
-        }
-
-        if (!resp.ok || !data.ok) {
-          throw new Error(data.error || "Failed to load submissions.");
-        }
-
+        const data = await resp.json();
+        if (!data.ok) throw new Error(data.error || "Failed to load.");
         renderRows(data.rows || []);
         setStatus(`Loaded ${data.rows?.length || 0} row(s).`);
       } catch (err) {
-        console.error(err);
         setStatus(err.message, true);
       }
     }
@@ -121,35 +112,22 @@
     function renderRows(rows) {
       const tbody = document.getElementById("adminTableBody");
       tbody.innerHTML = "";
-
       if (!rows.length) {
         tbody.innerHTML = `<tr><td colspan="5" class="border p-3 text-center text-slate-500">No submissions found.</td></tr>`;
         return;
       }
-
       rows.forEach((row) => {
         const email = row.email || "";
         for (let step = 1; step <= 9; step++) {
           const fileUrl = row[`step${step}`] || "";
-          const statusRaw = row[`step${step}Status`] || "";
-          const status = normalizeStatus(statusRaw);
-
+          const status = normalizeStatus(row[`step${step}Status`]);
           const tr = document.createElement("tr");
           tr.innerHTML = `
             <td class="border p-2">${email}</td>
             <td class="border p-2 font-bold">Step ${step}</td>
-            <td class="border p-2">
-              ${fileUrl ? `<a href="${fileUrl}" target="_blank" class="text-blue-600 underline">Open File</a>` : `<span class="text-slate-400">No file</span>`}
-            </td>
-            <td class="border p-2">
-              <span class="${status === "Approved" ? "text-green-600 font-bold" : status === "Rejected" ? "text-red-600 font-bold" : "text-amber-600 font-bold"}">${status}</span>
-            </td>
-            <td class="border p-2">
-              <div class="flex gap-2">
-                <button class="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-xs" onclick="updateStepStatus('${email}', ${step}, 'Approved')">Approve</button>
-                <button class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-xs" onclick="updateStepStatus('${email}', ${step}, 'Rejected')">Reject</button>
-              </div>
-            </td>
+            <td class="border p-2">${fileUrl ? `<a href="${fileUrl}" target="_blank" class="text-blue-600 underline">Open File</a>` : `<span class="text-slate-400">No file</span>`}</td>
+            <td class="border p-2"><span class="${status === "Approved" ? "text-green-600 font-bold" : status === "Rejected" ? "text-red-600 font-bold" : "text-amber-600 font-bold"}">${status}</span></td>
+            <td class="border p-2"><div class="flex gap-2"><button class="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-xs" onclick="updateStepStatus('${email}', ${step}, 'Approved')">Approve</button><button class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-xs" onclick="updateStepStatus('${email}', ${step}, 'Rejected')">Reject</button></div></td>
           `;
           tbody.appendChild(tr);
         }
@@ -158,10 +136,11 @@
 
     async function updateStepStatus(email, stepNumber, status) {
       const adminKey = document.getElementById("adminKey").value.trim();
-      if (!adminKey) {
-        alert("Admin key is required.");
-        return;
-      }
+      if (!adminKey) { alert("Admin key is required."); return; }
+
+      // I-trigger ang loading screen
+      showLoading(true);
+      setStatus(`Updating...`);
 
       const payload = new URLSearchParams();
       payload.append("action", "admin_update_step_status");
@@ -170,8 +149,6 @@
       payload.append("stepNumber", String(stepNumber));
       payload.append("status", status);
 
-      setStatus(`Updating ${email} Step ${stepNumber} => ${status}...`);
-
       try {
         const resp = await fetch(CHALLENGE_WEB_APP_URL, {
           method: "POST",
@@ -179,26 +156,25 @@
           body: payload.toString()
         });
 
-        const raw = await resp.text();
-        let data;
-        try {
-          data = JSON.parse(raw);
-        } catch (e) {
-          console.error("Non-JSON:", raw);
-          throw new Error("Server returned non-JSON response.");
-        }
+        const data = await resp.json();
+        if (!data.ok) throw new Error(data.error || "Failed to update.");
 
-        if (!resp.ok || !data.ok) {
-          throw new Error(data.error || "Failed to update status.");
-        }
-
-        setStatus(`Updated ${email} Step ${stepNumber} to ${status}.`);
+        // Pagkatapos mag-update, tawagin ang loadSubmissions
         await loadSubmissions();
+        setStatus(`Successfully set to ${status}.`);
       } catch (err) {
-        console.error(err);
-        setStatus(err.message, true);
+        setStatus("Error: " + err.message, true);
+      } finally {
+        // SIGURADUHING mawawala ang loading DITO
+        showLoading(false);
       }
     }
   </script>
 </body>
+
+<div id="loadingOverlay" class="hidden fixed inset-0 bg-white bg-opacity-75 flex items-center justify-center z-50">
+  <div class="bg-white p-6 rounded-lg shadow-xl text-center">
+    <div class="text-xl font-bold text-blue-600 animate-pulse">Loading data...</div>
+  </div>
+</div>
 </html>
