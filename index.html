@@ -134,30 +134,29 @@
     <header class="bg-[#faf7f0] border-b border-[#eadeca] shadow-sm sticky top-0 z-50">
   <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
     
+    <!-- 1. Logo at Title -->
     <div class="flex items-center gap-3">
       <img src="https://github.com/primaverapatrick07-sketch/HSRC-LOGO/blob/main/width_2048.png?raw=true" class="h-10 w-auto md:h-12">
-      <div>
+      <div class="hidden sm:block">
         <h1 class="text-sm md:text-lg font-bold text-[#1e293b] leading-tight">Human Shelter Realty Corp.</h1>
         <p class="text-[10px] md:text-xs font-semibold text-[#1e293b]">Start Your Success Journey</p>
       </div>
     </div>
 
-    <div class="flex items-center gap-4">
+    <!-- 2. Action Area -->
+    <div class="flex items-center gap-3">
       
-      <div class="hidden md:flex items-center gap-2 text-sm">
-        <span class="font-bold text-[#1e293b]">Customer Hotline:</span>
-        <a href="tel:09173206778" class="text-amber-600 font-bold border border-amber-500 px-3 py-1 rounded-full bg-white hover:bg-amber-50 transition">0917-320-6778</a>
-      </div>
-
-      <button onclick="goToChallengePage()" class="hidden md:inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-white font-bold px-4 py-2 rounded-xl shadow transition text-sm">
-        <i class="fa-solid fa-id-card-clip"></i> Accept Challenge
+      <!-- Accept Challenge Button (Visible sa desktop, Icon lang sa mobile) -->
+      <button onclick="goToChallengePage()" class="flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-white font-bold px-3 py-1.5 md:px-4 md:py-2 rounded-xl shadow transition text-xs md:text-sm">
+        <i class="fa-solid fa-id-card-clip"></i>
+        <span class="hidden md:inline">Accept Challenge</span>
       </button>
 
-      <a href="https://www.facebook.com/humanshelterofficial/" target="_blank" class="text-blue-600 text-2xl hover:text-blue-800 transition">
+      <!-- Facebook at Phone Icons -->
+      <a href="https://www.facebook.com/humanshelterofficial/" target="_blank" class="text-blue-600 text-xl md:text-2xl">
         <i class="fab fa-facebook"></i>
       </a>
-
-      <a href="tel:09173206778" class="md:hidden text-amber-600 text-xl">
+      <a href="tel:09173206778" class="text-amber-600 text-xl md:text-2xl">
         <i class="fa-solid fa-phone"></i>
       </a>
       
