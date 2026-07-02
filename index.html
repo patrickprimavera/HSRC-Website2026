@@ -131,50 +131,39 @@
 
 <body class="bg-slate-50 min-h-screen flex flex-col justify-between" data-onboard="locked">
 
-    <header
-        class="bg-[#faf7f0] text-slate-800 px-6 py-3 flex items-center justify-between shadow-sm border-b border-[#eadeca] sticky top-0 z-50">
+    <header class="bg-[#faf7f0] border-b border-[#eadeca] shadow-sm sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+    
+    <div class="flex items-center gap-3">
+      <img src="https://github.com/primaverapatrick07-sketch/HSRC-LOGO/blob/main/width_2048.png?raw=true" class="h-10 w-auto md:h-12">
+      <div>
+        <h1 class="text-sm md:text-lg font-bold text-[#1e293b] leading-tight">Human Shelter Realty Corp.</h1>
+        <p class="text-[10px] md:text-xs font-semibold text-[#1e293b]">Start Your Success Journey</p>
+      </div>
+    </div>
 
-        <!-- Logo Part -->
-        <div class="flex items-center gap-4">
-            <img src="https://github.com/primaverapatrick07-sketch/HSRC-LOGO/blob/main/width_2048.png?raw=true"
-                alt="Human Shelter Realty Logo" class="h-12 w-auto object-contain"
-                onerror="this.src='https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=120&q=80'">
-            <div>
-                <h1 class="text-lg font-bold tracking-wide leading-tight text-[#1e293b]">Human Shelter Realty Corp.</h1>
-                <p class="text-xs text-slate-800 tracking-wider font-semibold text-[#1e293b]">Start Your Success Journey
-                </p>
-            </div>
-        </div>
+    <div class="flex items-center gap-4">
+      
+      <div class="hidden md:flex items-center gap-2 text-sm">
+        <span class="font-bold text-[#1e293b]">Customer Hotline:</span>
+        <a href="tel:09173206778" class="text-amber-600 font-bold border border-amber-500 px-3 py-1 rounded-full bg-white hover:bg-amber-50 transition">0917-320-6778</a>
+      </div>
 
-        <!-- Right Side Container: Pinagsama ang Hotline at Follow Us -->
-        <div class="flex items-center gap-6">
+      <button onclick="goToChallengePage()" class="hidden md:inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-white font-bold px-4 py-2 rounded-xl shadow transition text-sm">
+        <i class="fa-solid fa-id-card-clip"></i> Accept Challenge
+      </button>
 
-            <!-- Customer Hotline + 30-Day Challenge -->
-            <!-- Customer Hotline + 30-Day Challenge -->
-            <div class="text-md text-slate-800 flex flex-col sm:flex-row items-center gap-3 text-[#1e293b]">
-                ...
-            </div>
-            Customer Hotline: <span
-                class="text-amber-500 font-bold text-[#1e293b] border-2 border-yellow-500 rounded-full p-1 transition-colors duration-300 bg-white-500 text-yellow">09173206778</span>
-        </div>
-        <button type="button" onclick="goToChallengePage()"
-            class="ml-2 inline-flex items-center gap-2 whitespace-nowrap bg-amber-500 hover:bg-amber-600 text-white font-bold px-4 py-2 rounded-xl shadow transition text-sm">
-            <i class="fa-solid fa-id-card-clip"></i>
-            accept the 30 days challenge
-        </button>
-        </div>
+      <a href="https://www.facebook.com/humanshelterofficial/" target="_blank" class="text-blue-600 text-2xl hover:text-blue-800 transition">
+        <i class="fab fa-facebook"></i>
+      </a>
 
-        <!-- Follow Us -->
-        <div class="flex items-center gap-2">
-            <span class="text-sm font-semibold">Follow Us:</span>
-            <a href="https://www.facebook.com/humanshelterofficial/" target="_blank"
-                class="text-blue-600 hover:text-blue-800 text-2xl border-2 border-blue-600 rounded-full p-1 transition-colors duration-300 bg-white shadow-md hover:shadow-lg">
-                <i class="fab fa-facebook"></i>
-            </a>
-        </div>
-
-        </div>
-    </header>
+      <a href="tel:09173206778" class="md:hidden text-amber-600 text-xl">
+        <i class="fa-solid fa-phone"></i>
+      </a>
+      
+    </div>
+  </div>
+</header>
 
     <section id="welcome-hero" class="relative overflow-hidden min-h-screen" style="
 background:
