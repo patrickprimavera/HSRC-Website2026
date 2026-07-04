@@ -321,6 +321,16 @@ background-position:center;
                     <div class="bg-white/95 backdrop-blur-sm rounded-3xl shadow-2xl border border-white/40 p-6 md:p-10">
                         <div class="flex flex-col md:flex-row gap-8">
                             <div class="flex-1">
+                                <div class="mb-4">
+                                    <label class="block text-sm font-medium text-slate-700">Full Name</label>
+                                    <input type="text" id="challenge-full-name"
+                                        class="w-full mt-1 p-2 border rounded-lg" placeholder="Juan Dela Cruz">
+                                </div>
+                                <div class="mb-4">
+                                    <label class="block text-sm font-medium text-slate-700">Contact Number</label>
+                                    <input type="tel" id="challenge-phone" class="w-full mt-1 p-2 border rounded-lg"
+                                        placeholder="09123XXXXX">
+                                </div>
                                 <div class="mb-6">
                                     <label class="block text-sm font-bold text-slate-700 mb-2">Email Address (for
                                         approval updates and passport PDF) <span class="text-red-500">*</span></label>
@@ -611,7 +621,7 @@ background-position:center;
         </div>
 
         <!-- APPLICATION FORM CONTAINER -->
-        <div id="form-screen" clasAs="w-full max-w-4xl scroll-mt-24 hidden">
+        <div id="form-screen" class="w-full max-w-4xl scroll-mt-24 hidden">
 
             <div
                 class="bg-white/95 backdrop-blur-sm rounded-2xl p-6 md:p-8 shadow-xl border border-slate-200/80 mb-8 max-w-3xl mx-auto">
@@ -694,8 +704,9 @@ background-position:center;
                             form.</p>
                         <div
                             class="bg-black rounded-lg overflow-hidden mb-6 aspect-video flex items-center justify-center relative">
-                            <video id="orientationVideo2" class="w-full h-full object-cover"
-                                poster="display.jpeg" controls controlsList="nodownload">
+                            <video id="orientationVideo" class="w-full h-full object-cover"
+                                poster="display.jpeg"
+                                controls controlsList="nodownload">
                                 <source src="final102.mp4" type="video/mp4">
                             </video>
                         </div>
