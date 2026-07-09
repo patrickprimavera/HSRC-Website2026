@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-    <script src="https://cdn.jsdeli vr.net/npm/signature_pad@4.1.7/dist/signature_pad.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.1.7/dist/signature_pad.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
 
     <script>
@@ -206,7 +206,7 @@ background-position:center;
                 </h1>
 
                 <p
-                    class="mt-6 text-lg text-white drop-shadow-lg leading-relaxed bg-white/50 backdrop-blur-md border border-white/20 rounded-2xl p-6">
+                    class="mt-6 text-lg text-slate-800 drop-shadow-lg leading-relaxed bg-white border border-white rounded-2xl p-6">
                     Start your success journey with Human Shelter Realty Corporation.
                     Build your future, create opportunities, and become part of a team that transforms lives through
                     real estate.
@@ -635,7 +635,7 @@ background-position:center;
 
         <!-- ORIGINAL HERO CONTENT (kept but below; user can scroll down to see it) -->
         <div id="legacy-hero"
-            class="w-full max-w-3xl bg-brand-dark/95 backdrop-blur-md text-white rounded-2xl p-8 md:p-12 shadow-2xl border border-slate-700/50 text-center py-14 transition-all duration-500 mt-8">
+            class="w-full max-w-3xl bg-[#003f42] text-white rounded-2xl p-8 md:p-12 shadow-2xl border border-white/20 text-center py-14 transition-all duration-500 mt-8">
             <span
                 class="bg-brand-gold/10 text-brand-gold/100 text-xs font-bold px-7 py-1.5 rounded-full tracking-widest uppercase mb-4 inline-block border border-brand-gold/30">
                 Careers & Recruitment
@@ -1587,7 +1587,7 @@ background-position:center;
 
         // Google Apps Script Web App URL (provided)
         const GOOGLE_SHEET_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwHRI_tfnQDmGgMVjEBba6DHILJIZeXSmm9Q07xeMtOPpB_3FXkOzKXKhaZ1HTZkKcF/exec";
-        const CHALLENGE_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwXWcAt1RzpIBDzyWdJd5b9K4mzNrdb01GMHJ5ecjdXtn0j6vIrsjEmUE4-1w3yxvFGkA/exec";
+        const CHALLENGE_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxeBbViE-dYXvNe667YNzUiak5HcBM_pSwgPxjqufb94DlsSkn4s5ng1NMOR2ytmpDQ/exec";
 
 
         (function () {
@@ -1927,13 +1927,13 @@ background-position:center;
                 }
             }
 
-            const allApproved = approvedCount === 9;
+            const allApproved = approvedCount === 8;
 
             return {
                 hasRejected,
                 hasApproved,
                 allApproved,
-                pendingCount: 9 - decidedCount
+                pendingCount: 8 - decidedCount
             };
         }
 
@@ -2017,7 +2017,7 @@ background-position:center;
                     </div>
                     <div class="grid grid-cols-3 gap-2">${stampsHtml}</div>
                     <div class="mt-3 text-center text-xs font-bold ${allApproved ? 'text-green-700' : 'text-amber-700'}">
-                        ${allApproved ? 'STATUS: ALL TASKS 1–9 APPROVED ✅' : 'STATUS: IN PROGRESS'}
+                        ${allApproved ? 'STATUS: ALL TASKS 1–8 APPROVED ✅' : 'STATUS: IN PROGRESS'}
                     </div>
                 </div>
             `;
@@ -2030,16 +2030,13 @@ background-position:center;
                     JSON.parse(localStorage.getItem("challengeUserInfo") || "{}");
 
                 const fullName =
-                    challengeUserInfo.name
-                    || savedInfo.name
-                    || document.getElementById("challenge-full-name")?.value.trim()
-                    || "";
+                    savedInfo.name || "";
 
                 const contact =
-                    challengeUserInfo.contact
-                    || savedInfo.contact
-                    || document.getElementById("challenge-phone")?.value.trim()
-                    || "";
+                    savedInfo.contact || "";
+
+                const team =
+                    savedInfo.team || "";
 
                 // 1) Try get passport photo from current input/localStorage
                 let photoBase64 =
@@ -2056,14 +2053,28 @@ background-position:center;
                     photoBase64 = await loadImageUrlAsDataUrl(photoBase64);
                 }
 
+                const savedinfo =
+                    JSON.parse(
+                        localStorage.getItem("challengeUserInfo") || "{}"
+                    );
+
                 const pdfBase64 =
                     await generateChallengePassportPdfBase64(
+
                         email,
+
                         approvedSteps,
+
                         stepStatuses,
-                        fullName,
-                        contact,
+
+                        savedinfo.team || "",
+
+                        savedinfo.name || "",
+
+                        savedinfo.contact || "",
+
                         photoBase64
+
                     );
 
                 if (!pdfBase64) {
@@ -2077,7 +2088,17 @@ background-position:center;
 
                 payload.append(
                     "fileName",
-                    `HSRC_PASSPORT_${(fullName || "Applicant").replace(/[^a-z0-9]/gi, "_")}.pdf`
+
+                    "HSRC-PASSPORT-" +
+
+                    String(fullName || "APPLICANT")
+                        .toUpperCase()
+                        .trim()
+                        .replace(/\s+/g, "-")
+                        .replace(/[^A-Z0-9-]/g, "")
+
+                    + ".pdf"
+
                 );
 
                 payload.append("mimeType", "application/pdf");
@@ -2167,6 +2188,7 @@ background-position:center;
             email,
             approvedSteps,
             stepStatuses,
+            teamName,
             fullName,
             contact,
             photoBase64
@@ -2175,7 +2197,11 @@ background-position:center;
             const { jsPDF } = window.jspdf;
 
             // Basic 1-page PDF sized like an A4 portrait.
-            const pdf = new jsPDF({ orientation: 'p', unit: 'pt', format: 'a4' });
+            const pdf = new jsPDF({
+                orientation: 'landscape',
+                unit: 'pt',
+                format: 'a4'
+            });
 
             const pageW = pdf.internal.pageSize.getWidth();
             const pageH = pdf.internal.pageSize.getHeight();
@@ -2186,90 +2212,491 @@ background-position:center;
             // Draw to fit page
             pdf.addImage(bgImg, 'PNG', 0, 0, pageW, pageH);
 
+            // ===============================
+            // CHALLENGE TASK TITLE
+            // ===============================
 
-            // 2) Overlay text (you can tweak these coordinates later)
-            const safeName = String(fullName || '').toUpperCase();
-            const safeContact = String(contact || '');
+            pdf.setFont(
+                "helvetica",
+                "bold"
+            );
 
-            pdf.setFont('helvetica', 'bold');
-            pdf.setFontSize(14);
-            pdf.setTextColor(0, 60, 60);
-            pdf.text(safeName || 'APPLICANT', 60, 90);
+            pdf.setFontSize(
+                18
+            );
 
-            pdf.setFont('helvetica', 'normal');
-            pdf.setFontSize(10);
-            pdf.setTextColor(30, 41, 59);
-            pdf.text(safeContact || '', 60, 108);
+            pdf.setTextColor(
+                0,
+                90,
+                80
+            );
 
-            // 3) Stamps: TASK 1–8
-            // Coordinates are placeholders; adjust to match your template photo.
-            const stampBoxes = [
-                { x: 70, y: 150 },
-                { x: 240, y: 150 },
-                { x: 70, y: 220 },
-                { x: 240, y: 220 },
-                { x: 70, y: 290 },
-                { x: 240, y: 290 },
-                { x: 70, y: 360 },
-                { x: 240, y: 360 }
+
+            pdf.text(
+                "CHALLENGE TASKS",
+                130,
+                85
+            );
+
+
+            // TASK NAMES
+
+            const taskNames = [
+
+                "TEAM MEETING",
+
+                "PRODUCT KNOWLEDGE",
+
+                "SITE ORIENTATION",
+
+                "BRANDING / DIGITAL",
+
+                "FIRST REEL / VIDEO",
+
+                "SHADOW SELLING",
+
+                "CLIENT PRESENTATION",
+
+                "RESERVATION DONE"
+
             ];
 
-            const isApproved = (step) => approvedSteps.includes(step);
+            // TASK STAMPS POSITION
+
+            const taskBoxes = [
+
+                { x: 40, y: 160, w: 85, h: 170 },
+                { x: 130, y: 160, w: 85, h: 170 },
+                { x: 220, y: 160, w: 85, h: 170 },
+                { x: 310, y: 160, w: 85, h: 170 },
+
+                { x: 40, y: 350, w: 85, h: 170 },
+                { x: 130, y: 350, w: 85, h: 170 },
+                { x: 220, y: 350, w: 85, h: 170 },
+                { x: 310, y: 350, w: 85, h: 170 }
+
+            ];
+
+
+
+            // GENERATE STAMPS BASED ON ADMIN RESULT
 
             for (let i = 1; i <= 8; i++) {
-                const box = stampBoxes[i - 1] || { x: 70, y: 150 };
-                const approved = isApproved(i);
 
-                pdf.setDrawColor(180, 180, 180);
+
+                const box = taskBoxes[i - 1];
+
+                const status =
+                    String(stepStatuses[i] || "")
+                        .toUpperCase();
+
+                pdf.setDrawColor(60, 60, 60);
                 pdf.setLineWidth(1);
-                pdf.setFillColor(255, 255, 255);
 
-                if (approved) {
-                    pdf.setFillColor(234, 250, 242); // light green
-                    pdf.setDrawColor(16, 185, 129);
+                pdf.roundedRect(
+                    box.x, box.y, box.w, box.h,3,3 );
+
+
+                // TASK NUMBER
+
+                pdf.setFont(
+                    "helvetica",
+                    "bold"
+                );
+
+                pdf.setFontSize(7);
+
+                pdf.setTextColor(
+                    0,
+                    40,
+                    40
+                );
+
+
+                pdf.text(
+                    "TASK " + i,
+                    box.x + 28,
+                    box.y + 15
+                );
+
+
+                // TASK NAME
+
+                pdf.setFontSize(6);
+
+                pdf.text(
+                    taskNames[i - 1],
+                    box.x + 8,
+                    box.y + 30
+                );
+
+
+
+                // STAMPED
+
+                if (status === "APPROVED") {
+
+
+                    pdf.setFontSize(16);
+
+                    pdf.setTextColor(
+                        0,
+                        130,
+                        70
+                    );
+
+                    pdf.setDrawColor(
+                        0,
+                        130,
+                        70
+                    );
+
+
+                    pdf.roundedRect(
+                        box.x + 3,
+                        box.y + 85,
+                        80,
+                        30,
+                        5,
+                        5
+                    );
+
+
+                    pdf.text(
+                        "STAMPED",
+                        box.x + 7,
+                        box.y + 112,
+                        {
+                            angle: 12
+                        }
+                    );
+
                 }
 
-                pdf.rect(box.x, box.y, 120, 45, 'FD');
 
-                pdf.setTextColor(0, 0, 0);
-                pdf.setFontSize(10);
-                pdf.setFont('helvetica', 'bold');
-                pdf.text(`TASK ${i}`, box.x + 8, box.y + 16);
 
-                pdf.setFontSize(12);
-                pdf.setFont('helvetica', 'bold');
-                if (approved) {
-                    pdf.setTextColor(21, 128, 61);
-                    pdf.text('APPROVED', box.x + 10, box.y + 33);
-                } else {
-                    pdf.setTextColor(100, 116, 139);
-                    pdf.text('PENDING', box.x + 14, box.y + 33);
+                // REJECTED
+
+                if (status === "REJECTED") {
+
+
+                    pdf.setFontSize(14);
+
+                    pdf.setTextColor(
+                        220,
+                        0,
+                        0
+                    );
+
+
+                    pdf.setDrawColor(
+                        220,
+                        0,
+                        0
+                    );
+
+
+                    pdf.roundedRect(
+                        box.x + 3,
+                        box.y + 85,
+                        85,
+                        30,
+                        5,
+                        5
+                    );
+
+
+                    pdf.text(
+                        "REJECTED",
+                        box.x + 7,
+                        box.y + 112,
+                        {
+                            angle: 12
+                        }
+                    );
+
                 }
 
-                // If stepStatuses contains rejected info, override text/color.
-                const raw = stepStatuses && stepStatuses[i] != null ? String(stepStatuses[i]) : '';
-                const lower = raw.toLowerCase();
-                if (lower.includes('rejected') || lower.includes('reject')) {
-                    pdf.setDrawColor(220, 38, 38);
-                    pdf.setFillColor(254, 226, 226); // light red
-                    pdf.rect(box.x, box.y, 120, 45, 'FD');
-                    pdf.setTextColor(153, 27, 27);
-                    pdf.setFont('helvetica', 'bold');
-                    pdf.text(`TASK ${i}`, box.x + 8, box.y + 16);
-                    pdf.text('REJECTED', box.x + 8, box.y + 33);
-                }
             }
 
-            // 4) Optional 2x2 photo overlay (if present)
-            if (photoBase64 && String(photoBase64).startsWith('data:image')) {
-                const photoImg = await loadImageAsDataUrl(photoBase64);
-                // placeholder position
-                pdf.addImage(photoImg, 'PNG', 420, 140, 110, 130);
+            // ===============================
+            // APPLICANT PHOTO WITH BORDER
+            // ===============================
+
+            if (
+                photoBase64 &&
+                String(photoBase64).startsWith("data:image")
+            ) {
+
+
+                // PHOTO BORDER
+
+                pdf.setDrawColor(
+                    0,
+                    80,
+                    70
+                );
+
+
+                pdf.setLineWidth(
+                    2
+                );
+
+
+                pdf.roundedRect(
+                525, // X
+                115, // Y
+                130, // width
+                170, // height
+                
+                5,5);
+
+
+
+                // PHOTO
+
+                pdf.addImage(
+                    photoBase64,
+                    "PNG",
+                    530, // X move left/right
+                    120, // Y move up/down
+                    120, // width ng photo
+                    160 // height ng photo
+                );
+
+
             }
+
+
+            // ===============================
+            // PASSPORT DETAILS
+            // ===============================
+
+
+            // ===============================
+            // FIXED PASSPORT NUMBER
+            // ===============================
+
+            let passportNo =
+                localStorage.getItem(
+                    "challengePassportNo"
+                );
+
+
+            if (!passportNo) {
+
+
+                passportNo =
+                    "HSRC" +
+                    new Date()
+                        .getTime()
+                        .toString()
+                        .slice(-10);
+
+
+                localStorage.setItem(
+                    "challengePassportNo",
+                    passportNo
+                );
+
+
+            }
+
+
+            pdf.setFont(
+                "helvetica",
+                "bold"
+            );
+
+            pdf.setFontSize(10);
+
+            pdf.setTextColor(
+                0,
+                80,
+                70
+            );
+
+
+            let yDetail = 315;
+            let labelX = 500;
+            let valueX = 590;
+
+
+            // LABELS
+
+
+            pdf.text(
+                "Passport No.:",
+                labelX,
+                yDetail
+            );
+
+
+            pdf.text(
+                "Name:",
+                labelX,
+                yDetail + 25
+            );
+
+
+            pdf.text(
+                "Contact:",
+                labelX,
+                yDetail + 50
+            );
+
+
+            pdf.text(
+                "Email:",
+                labelX,
+                yDetail + 75
+            );
+
+
+            pdf.text(
+                "Status:",
+                labelX,
+                yDetail + 100
+            );
+
+
+
+            // VALUES
+
+            pdf.setFont(
+                "helvetica",
+                "normal"
+            );
+
+
+            pdf.setTextColor(
+                0,
+                0,
+                0
+            );
+
+
+            pdf.text(
+                passportNo,
+                valueX,
+                yDetail
+            );
+
+
+            pdf.text(
+                fullName || "",
+                valueX,
+                yDetail + 25,
+                {
+                    maxWidth: 160
+                }
+            );
+
+
+            pdf.text(
+                contact || "",
+                valueX,
+                yDetail + 50
+            );
+
+
+            pdf.text(
+                email || "",
+                valueX,
+                yDetail + 75,
+                {
+                    maxWidth: 160
+                }
+            );
+
+
+            pdf.text(
+                "HSRC PARTICIPANT",
+                valueX,
+                yDetail + 100
+            );
+
+
+
+            // ===============================
+            // PASSPORT BARCODE / MRZ
+            // ===============================
+
+
+            pdf.setFont(
+                "courier",
+                "bold"
+            );
+
+
+            pdf.setFontSize(
+                12
+            );
+
+
+            pdf.setTextColor(
+                20,
+                20,
+                20
+            );
+
+
+            let mrzName =
+                String(fullName || "APPLICANT")
+                    .toUpperCase()
+                    .replaceAll(
+                        " ",
+                        "<"
+                    );
+
+
+            // LINE 1
+
+            pdf.text(
+                `P<HSRC<<${mrzName}<<<<<<<<<<<<<<<<`,
+                445,
+                520
+            );
+
+
+            // LINE 2
+
+            pdf.text(
+                `${passportNo}<PHL2026<<<<<<<<<<<<<<`,
+                445,
+                545
+            );
+
+            // ===============================
+            // CHALLENGE FOOTER TEXT
+            // ===============================
+
+            pdf.setFont(
+                "helvetica",
+                "normal"
+            );
+
+            pdf.setFontSize(
+                10
+            );
+
+            pdf.setTextColor(
+                0,
+                90,
+                80
+            );
+
+
+            pdf.text(
+                "Collect all 8 stamps to complete your challenge!",
+                115,
+                545
+            );
 
             // Output
             const pdfBase64 = pdf.output('datauristring').split(',')[1];
             return pdfBase64;
+
         }
 
         function loadImageAsDataUrl(src) {
@@ -2432,9 +2859,25 @@ background-position:center;
             payload.append("email", email);
 
             challengeUserInfo = {
-                name: document.getElementById("challenge-full-name")?.value.trim() || "",
-                contact: document.getElementById("challenge-phone")?.value.trim() || ""
+
+                team:
+                    document.getElementById("challenge-team")
+                        ?.value.trim() || "",
+
+                name:
+                    document.getElementById("challenge-full-name")
+                        ?.value.trim() || "",
+
+                contact:
+                    document.getElementById("challenge-phone")
+                        ?.value.trim() || "",
+
+                email:
+                    document.getElementById("challenge-email")
+                        ?.value.trim() || ""
+
             };
+
 
             localStorage.setItem(
                 "challengeUserInfo",
@@ -2460,6 +2903,8 @@ background-position:center;
             payload.append("fileName", file.name);
             payload.append("mimeType", file.type || "image/png");
             payload.append("base64", base64);
+            localStorage.setItem("passportPhotoBase64", "data:" + (file.type || "image/png") + ";base64," + base64
+            );
 
             try {
                 const submitResp = await fetch(CHALLENGE_WEB_APP_URL, {
@@ -2806,6 +3251,15 @@ background-position:center;
 
         async function startChallengePolling() {
             const email = getChallengeEmail();
+            const savedInfo =
+                JSON.parse(
+                    localStorage.getItem("challengeUserInfo")
+                    || "{}"
+                );
+
+
+            challengeUserInfo = savedInfo;
+
             if (!email) {
                 alert("Please enter your email address first.");
                 return;
@@ -2858,7 +3312,10 @@ background-position:center;
                     }
 
                     // SAVE EXISTING PASSPORT PHOTO FROM GOOGLE DRIVE
-                    if (data.photoUrl) {
+                    if (
+                        data.photoUrl &&
+                        !localStorage.getItem("passportPhotoBase64")
+                    ) {
 
                         localStorage.setItem(
                             "passportPhotoBase64",
@@ -2869,6 +3326,7 @@ background-position:center;
 
                     let hasAnyDecision = false;
                     let approvedSteps = [];
+                    let stepStatuses = {};
 
                     for (let i = 1; i <= 8; i++) {
 
@@ -2882,9 +3340,8 @@ background-position:center;
                             lower.includes("stamped")
                         ) {
 
-                            setChallengeQueueStatus(i, "Approved ✓ (STAMPED)");
-                            approvedSteps.push(i);
-                            hasAnyDecision = true;
+                            setChallengeQueueStatus(i, "Approved ✓ (STAMPED)")
+                                ; approvedSteps.push(i); stepStatuses[i] = "APPROVED"; hasAnyDecision = true;
 
                         } else if (
                             lower.includes("rejected") ||
@@ -2909,6 +3366,8 @@ background-position:center;
                                 );
                             }
 
+                            stepStatuses[i] = "REJECTED";
+
                             hasAnyDecision = true;
 
                         } else {
@@ -2917,19 +3376,24 @@ background-position:center;
                                 i,
                                 "Pending"
                             );
-
+                            stepStatuses[i] = "PENDING";
                         }
                     }
 
 
-                    if (hasAnyDecision) {
+                    if (approvedSteps.length === 8) {
+
                         challengePollingResolved = true;
+
                         stopChallengePolling();
 
-                        // SHOW PASSPORT RESULT AFTER ADMIN CHECK
+
+                        // SHOW PASSPORT RESULT ONLY IF ALL TASKS APPROVED
+
                         renderChallengePassportPreview(
                             approvedSteps
                         );
+
 
                         document
                             .getElementById(
@@ -2943,31 +3407,39 @@ background-position:center;
 
                         console.log("START PDF GENERATE");
 
-                    const passportPdfLink =
+
+                        const passportPdfLink =
                             await uploadChallengePassportPdf(
                                 email,
                                 approvedSteps,
                                 data.steps
                             );
 
+
                         if (!passportPdfLink) {
-                            // If PDF failed to generate/upload, do not leave the UI in a stuck state.
-                            // Replace loading button with an error message.
-                            renderPassportPdfButtonLoading(
-                                "Failed to generate Passport PDF. Please try again."
+
+                            renderPassportPdfButtonError(
+                                "Passport PDF generation failed. Please try again."
                             );
-                            throw new Error("Passport PDF link is empty.");
+
+                            hideChallengeLoading();
+
+                            setChallengeActionButtonsDisabled(false);
+
+                            return true;
+
                         }
+
 
                         console.log(
                             "PASSPORT PDF LINK:",
                             passportPdfLink
                         );
 
+
                         renderPassportPdfButton(
                             passportPdfLink
                         );
-
 
 
                         const sent =
@@ -2986,10 +3458,17 @@ background-position:center;
 
                         }
 
+
                         hideChallengeLoading();
+
                         setChallengeActionButtonsDisabled(false);
-                        alert("Admin result has been received.");
+
+                        alert(
+                            "Admin result has been received."
+                        );
+
                         return true;
+
                     }
 
                     showChallengeLoading("Waiting for admin approval result...");
