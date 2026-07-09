@@ -2067,26 +2067,13 @@ background-position:center;
                     ) || "";
 
 
-                if (!photoBase64) {
+                if (
+                    !photoBase64 ||
+                    !photoBase64.startsWith("data:image")
+                ) {
 
                     photoBase64 =
                         await getPassportPhotoBase64();
-
-                }
-
-
-                // SAFETY:
-                // kapag Google Drive URL wag ipilit sa iPhone canvas
-                if (
-                    photoBase64 &&
-                    photoBase64.startsWith("http")
-                ) {
-
-                    console.warn(
-                        "Drive photo skipped for Safari compatibility"
-                    );
-
-                    photoBase64 = "";
 
                 }
 
@@ -2227,7 +2214,7 @@ background-position:center;
 
 
                         const maxSize =
-                            600;
+                            1200;
 
 
                         let width =
@@ -2295,7 +2282,7 @@ background-position:center;
                         const result =
                             canvas.toDataURL(
                                 "image/jpeg",
-                                0.7
+                                0.9
                             );
 
 
@@ -2496,7 +2483,7 @@ background-position:center;
 
                 // TASK NAME
 
-                pdf.setFontSize(6);
+                pdf.setFontSize(7);
 
                 pdf.text(
                     taskNames[i - 1],
