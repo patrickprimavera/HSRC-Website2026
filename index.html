@@ -3149,12 +3149,21 @@ background-position:center;
             challengeUserInfo = {
                 ...challengeUserInfo,
 
+                team:
+                    document.getElementById("challenge-team")?.value.trim() || "",
+
                 name:
                     document.getElementById("challenge-full-name")?.value.trim() || "",
 
                 contact:
                     document.getElementById("challenge-phone")?.value.trim() || ""
             };
+
+
+            localStorage.setItem(
+                "challengeUserInfo",
+                JSON.stringify(challengeUserInfo)
+            );
 
 
             localStorage.setItem(
