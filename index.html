@@ -2062,17 +2062,32 @@ background-position:center;
 
                 // 1) Try get passport photo from current input/localStorage
                 let photoBase64 =
-                    await getPassportPhotoBase64();
+                    localStorage.getItem(
+                        "passportPhotoBase64"
+                    ) || "";
 
-                // 2) If backend gave a photoUrl earlier, we store it into localStorage,
-                //    but this PDF generator needs data:image/... to overlay correctly.
+
                 if (!photoBase64) {
-                    photoBase64 = localStorage.getItem("passportPhotoBase64") || "";
+
+                    photoBase64 =
+                        await getPassportPhotoBase64();
+
                 }
 
-                // If we only have a plain URL (not data:image), convert to base64.
-                if (photoBase64 && !String(photoBase64).startsWith('data:image') && photoBase64.startsWith('http')) {
-                    photoBase64 = await loadImageUrlAsDataUrl(photoBase64);
+
+                // SAFETY:
+                // kapag Google Drive URL wag ipilit sa iPhone canvas
+                if (
+                    photoBase64 &&
+                    photoBase64.startsWith("http")
+                ) {
+
+                    console.warn(
+                        "Drive photo skipped for Safari compatibility"
+                    );
+
+                    photoBase64 = "";
+
                 }
 
                 const pdfBase64 =
