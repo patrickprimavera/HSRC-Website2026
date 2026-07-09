@@ -2927,6 +2927,22 @@ background-position:center;
 
                 };
 
+                // FIX GOOGLE DRIVE LINK FOR IPHONE
+                if (
+                    src &&
+                    src.includes("drive.google.com/file/d/")
+                ) {
+
+                    const fileId =
+                        src
+                            .split("/d/")[1]
+                            .split("/")[0];
+
+
+                    src =
+                        "https://drive.google.com/uc?export=view&id=" + fileId;
+
+                }
 
                 img.src = src;
 
