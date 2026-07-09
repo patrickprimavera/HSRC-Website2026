@@ -2050,6 +2050,16 @@ background-position:center;
                     savedInfo.phone ||
                     "";
 
+                console.log(
+                    "PASSPORT USER CHECK:",
+                    {
+                        savedInfo,
+                        team,
+                        fullName,
+                        contact
+                    }
+                );
+
                 // 1) Try get passport photo from current input/localStorage
                 let photoBase64 =
                     await getPassportPhotoBase64();
@@ -3476,21 +3486,22 @@ background-position:center;
                         );
 
 
-                        const sent =
-                            await sendChallengeCompletionEmail(
-                                email,
-                                approvedSteps,
-                                passportPdfLink
-                            );
+                        // EMAIL SENDING DISABLED
+                        // const sent =
+                        //     await sendChallengeCompletionEmail(
+                        //         email,
+                        //         approvedSteps,
+                        //         passportPdfLink
+                        //     );
 
 
-                        if (!sent) {
+                        // if (!sent) {
 
-                            console.warn(
-                                "Challenge email not sent."
-                            );
+                        //     console.warn(
+                        //         "Challenge email not sent."
+                        //     );
 
-                        }
+                        // }
 
 
                         hideChallengeLoading();
