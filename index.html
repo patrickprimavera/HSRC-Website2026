@@ -2884,7 +2884,15 @@ background-position:center;
                     ctx.drawImage(img, 0, 0);
                     resolve(canvas.toDataURL('image/png'));
                 };
-                img.onerror = reject;
+                img.onerror = () => {
+
+                    reject(
+                        new Error(
+                            "IMAGE FAILED TO LOAD: " + src
+                        )
+                    );
+
+                };
                 img.src = src;
             });
         }
