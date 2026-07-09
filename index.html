@@ -2371,7 +2371,16 @@ background-position:center;
             const bgSrc = 'passport.png';
             const bgImg = await loadImageAsDataUrl(bgSrc);
             // Draw to fit page
-            pdf.addImage(bgImg, 'PNG', 0, 0, pageW, pageH);
+            pdf.addImage(
+                bgImg,
+                'PNG',
+                0,
+                0,
+                pageW,
+                pageH,
+                undefined,
+                'FAST'
+            );
 
             // ===============================
             // CHALLENGE TASK TITLE
