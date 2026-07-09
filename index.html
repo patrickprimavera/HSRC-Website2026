@@ -2168,42 +2168,157 @@ background-position:center;
             }
         }
 
-        function getPassportPhotoBase64() {
+            function compressPassportPhoto(file) {
 
-            return new Promise((resolve) => {
+                return new Promise((resolve) => {
+
+                    const reader =
+                        new FileReader();
+
+
+                    reader.onload = (event) => {
+
+                        const img =
+                            new Image();
+
+
+                        img.onload = () => {
+
+                            const canvas =
+                                document.createElement("canvas");
+
+
+                            const maxSize =
+                                600;
+
+
+                            let width =
+                                img.width;
+
+
+                            let height =
+                                img.height;
+
+
+                            if (
+                                width > height
+                            ) {
+
+                                if (
+                                    width > maxSize
+                                ) {
+
+                                    height *=
+                                        maxSize / width;
+
+                                    width =
+                                        maxSize;
+
+                                }
+
+                            } else {
+
+                                if (
+                                    height > maxSize
+                                ) {
+
+                                    width *=
+                                        maxSize / height;
+
+                                    height =
+                                        maxSize;
+
+                                }
+
+                            }
+
+
+                            canvas.width =
+                                width;
+
+
+                            canvas.height =
+                                height;
+
+
+                            const ctx =
+                                canvas.getContext("2d");
+
+
+                            ctx.drawImage(
+                                img,
+                                0,
+                                0,
+                                width,
+                                height
+                            );
+
+
+                            const result =
+                                canvas.toDataURL(
+                                    "image/jpeg",
+                                    0.7
+                                );
+
+
+                            resolve(result);
+
+                        };
+
+
+                        img.src =
+                            event.target.result;
+
+                    };
+
+
+                    reader.readAsDataURL(file);
+
+                });
+
+            }
+
+            async function getPassportPhotoBase64() {
+
                 const input =
                     document.getElementById("passportPhoto");
+
+
                 // MAY BAGONG UPLOAD
                 if (
                     input &&
                     input.files &&
                     input.files[0]
                 ) {
-                    const reader =
-                        new FileReader();
-                    reader.onload = () => {
-                        localStorage.setItem(
-                            "passportPhotoBase64",
-                            reader.result
+
+                    const compressedPhoto =
+                        await compressPassportPhoto(
+                            input.files[0]
                         );
-                        resolve(reader.result);
-                    };
-                    reader.readAsDataURL(
-                        input.files[0]
+
+
+                    localStorage.setItem(
+                        "passportPhotoBase64",
+                        compressedPhoto
                     );
-                    return;
+
+
+                    return compressedPhoto;
+
                 }
+
+
                 // WALANG BAGONG UPLOAD
-                // GAMITIN YUNG SAVED PHOTO
+                // GAMITIN SAVED PHOTO
                 const savedPhoto =
                     localStorage.getItem(
                         "passportPhotoBase64"
                     );
-                resolve(
-                    savedPhoto || ""
-                );
-            });
-        }
+
+
+                return savedPhoto || "";
+
+            }
 
         async function generateChallengePassportPdfBase64(
             email,
