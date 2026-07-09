@@ -2065,11 +2065,6 @@ background-position:center;
                     photoBase64 = await loadImageUrlAsDataUrl(photoBase64);
                 }
 
-                const savedinfo =
-                    JSON.parse(
-                        localStorage.getItem("challengeUserInfo") || "{}"
-                    );
-
                 const pdfBase64 =
                     await generateChallengePassportPdfBase64(
 
@@ -2079,16 +2074,15 @@ background-position:center;
 
                         stepStatuses,
 
-                        savedinfo.team || "",
+                        team,
 
-                        savedinfo.name || "",
+                        fullName,
 
-                        savedinfo.contact || "",
+                        contact,
 
                         photoBase64
 
                     );
-
                 if (!pdfBase64) {
                     throw new Error("PDF base64 output is empty.");
                 }
@@ -2551,27 +2545,27 @@ background-position:center;
             pdf.text(
                 "Team:",
                 labelX,
-                yDetail + 45
+                yDetail + 20
             );
 
             pdf.text(
                 "Name:",
                 labelX,
-                yDetail + 25
+                yDetail + 40
             );
 
 
             pdf.text(
                 "Contact:",
                 labelX,
-                yDetail + 50
+                yDetail + 60
             );
 
 
             pdf.text(
                 "Email:",
                 labelX,
-                yDetail + 75
+                yDetail + 80
             );
 
 
@@ -2608,7 +2602,7 @@ background-position:center;
             pdf.text(
                 teamName || "",
                 valueX,
-                yDetail + 45,
+                yDetail + 20,
                 {
                     maxWidth: 140
                 }
@@ -2617,7 +2611,7 @@ background-position:center;
             pdf.text(
                 fullName || "",
                 valueX,
-                yDetail + 25,
+                yDetail + 40,
                 {
                     maxWidth: 160
                 }
@@ -2627,14 +2621,14 @@ background-position:center;
             pdf.text(
                 contact || "",
                 valueX,
-                yDetail + 50
+                yDetail + 60
             );
 
 
             pdf.text(
                 email || "",
                 valueX,
-                yDetail + 75,
+                yDetail + 80,
                 {
                     maxWidth: 160
                 }
