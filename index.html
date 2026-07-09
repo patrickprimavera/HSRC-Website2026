@@ -2027,31 +2027,28 @@ background-position:center;
             try {
 
                 const savedInfo =
+                    challengeUserInfo ||
                     JSON.parse(
                         localStorage.getItem("challengeUserInfo") || "{}"
                     );
 
 
+                const team =
+                    savedInfo.team ||
+                    savedInfo.teamName ||
+                    "";
+
+
                 const fullName =
                     savedInfo.name ||
                     savedInfo.fullName ||
-                    document.querySelector(
-                        'input[placeholder="Juan Dela Cruz"]'
-                    )?.value ||
                     "";
 
 
                 const contact =
                     savedInfo.contact ||
                     savedInfo.phone ||
-                    document.querySelector(
-                        'input[placeholder="09123XXXXX"]'
-                    )?.value ||
                     "";
-
-
-                const team =
-                    savedInfo.team || "";
 
                 // 1) Try get passport photo from current input/localStorage
                 let photoBase64 =
@@ -2551,6 +2548,11 @@ background-position:center;
                 yDetail
             );
 
+            pdf.text(
+                "Team:",
+                labelX,
+                yDetail + 45
+            );
 
             pdf.text(
                 "Name:",
@@ -2602,6 +2604,15 @@ background-position:center;
                 yDetail
             );
 
+
+            pdf.text(
+                teamName || "",
+                valueX,
+                yDetail + 45,
+                {
+                    maxWidth: 140
+                }
+            );
 
             pdf.text(
                 fullName || "",
