@@ -2027,13 +2027,28 @@ background-position:center;
             try {
 
                 const savedInfo =
-                    JSON.parse(localStorage.getItem("challengeUserInfo") || "{}");
+                    JSON.parse(
+                        localStorage.getItem("challengeUserInfo") || "{}"
+                    );
+
 
                 const fullName =
-                    savedInfo.name || "";
+                    savedInfo.name ||
+                    savedInfo.fullName ||
+                    document.querySelector(
+                        'input[placeholder="Juan Dela Cruz"]'
+                    )?.value ||
+                    "";
+
 
                 const contact =
-                    savedInfo.contact || "";
+                    savedInfo.contact ||
+                    savedInfo.phone ||
+                    document.querySelector(
+                        'input[placeholder="09123XXXXX"]'
+                    )?.value ||
+                    "";
+
 
                 const team =
                     savedInfo.team || "";
