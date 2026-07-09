@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -23,7 +22,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.1.7/dist/signature_pad.umd.min.js"></script>
+    <script src="https://cdn.jsdeli vr.net/npm/signature_pad@4.1.7/dist/signature_pad.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
 
     <script>
@@ -32,7 +31,7 @@
                 extend: {
                     colors: {
                         brand: {
-                            dark: '#144242',
+                            dark: '#144242F',
                             navy: '#1e293b',
                             gold: '#f59e0b',
                             goldHover: '#d97706',
@@ -136,8 +135,7 @@
 
             <!-- 1. Logo at Title -->
             <div class="flex items-center gap-3">
-                <img src="https://github.com/primaverapatrick07-sketch/HSRC-LOGO/blob/main/width_2048.png?raw=true"
-                    class="h-10 w-auto md:h-12">
+                <img src="logo1.png" class="h-10 w-auto md:h-12">
                 <div class="hidden sm:block">
                     <h1 class="text-sm md:text-lg font-bold text-[#1e293b] leading-tight">Human Shelter Realty Corp.
                     </h1>
@@ -313,14 +311,23 @@ background-position:center;
 
                 <div class="relative z-10 px-4 lg:px-10 py-10">
                     <div class="text-center text-white mb-8">
-                        <h2 class="text-4xl md:text-5xl font-extrabold tracking-tight">30-DAY SALES MANAGER MENTORSHIP
-                        </h2>
+                        <h2 class="text-4xl md:text-5xl font-extrabold tracking-tight">30-DAY CHALLENGE</h2>
                         <p class="mt-2 text-xl font-bold text-amber-300">PASSPORT STAMP CHECKLIST</p>
                     </div>
 
                     <div class="bg-white/95 backdrop-blur-sm rounded-3xl shadow-2xl border border-white/40 p-6 md:p-10">
                         <div class="flex flex-col md:flex-row gap-8">
                             <div class="flex-1">
+
+                                <div class="mb-4">
+                                    <label class="block text-sm font-medium text-slate-700">
+                                        Team Name (Optional)
+                                    </label>
+
+                                    <input type="text" id="challenge-team" class="w-full mt-1 p-2 border rounded-lg"
+                                        placeholder="Example: Team HSRC">
+                                </div>
+
                                 <div class="mb-4">
                                     <label class="block text-sm font-medium text-slate-700">Full Name</label>
                                     <input type="text" id="challenge-full-name"
@@ -338,21 +345,50 @@ background-position:center;
                                         class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-amber-500 text-slate-800 font-medium" />
                                 </div>
 
+                                <!-- Passport 2x2 Photo -->
+                                <div class="mb-6">
+
+                                </div>
+
+                                <div class="mb-6">
+
+
+                                    <label class="block text-sm font-bold text-slate-700 mb-2">
+                                        2x2 Photo (Optional)
+                                    </label>
+
+                                    <input id="passportPhoto" type="file" accept="image/*"
+                                        class="w-full px-4 py-3 rounded-xl border border-slate-300">
+
+                                    <p class="text-xs text-slate-500 mt-1">
+                                        This photo will appear on your HSRC Challenge Passport.
+                                    </p>
+
+                                </div>
+
                                 <div class="space-y-5">
+
                                     <!-- Step 1 -->
                                     <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
                                         <div class="flex items-center justify-between gap-3">
                                             <div class="font-extrabold text-slate-800 flex items-center gap-2">
                                                 <span
                                                     class="inline-flex items-center justify-center w-9 h-9 rounded-full bg-brand-gold text-white">1</span>
-                                                <span>Project Knowledge Seminar</span>
+                                                <span>Team Meeting</span>
                                             </div>
                                             <div class="stamp-badge" data-step="1">STAMP</div>
                                         </div>
+
+                                        <p class="mt-2 text-sm text-slate-600">
+                                            Upload a photo of you attending a team meeting with your Sales Manager or
+                                            Sales Director.
+                                        </p>
+
                                         <div class="mt-3">
                                             <input type="file" accept="image/*" data-upload-step="1" class="w-full" />
                                         </div>
                                     </div>
+
 
                                     <!-- Step 2 -->
                                     <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
@@ -360,14 +396,19 @@ background-position:center;
                                             <div class="font-extrabold text-slate-800 flex items-center gap-2">
                                                 <span
                                                     class="inline-flex items-center justify-center w-9 h-9 rounded-full bg-brand-gold text-white">2</span>
-                                                <span>Site Orientation of Focus Project</span>
+                                                <span>Product Knowledge Seminar</span>
                                             </div>
                                             <div class="stamp-badge" data-step="2">STAMP</div>
                                         </div>
-                                        <div class="mt-3">
-                                            <input type="file" accept="image/*" data-upload-step="2" class="w-full" />
-                                        </div>
+
+                                        <p class="mt-2 text-sm text-slate-600">
+                                            Upload a photo from a Product Knowledge Seminar for your chosen project
+                                            (online or face-to-face).
+                                        </p>
+
+                                        <input type="file" accept="image/*" data-upload-step="2" class="w-full mt-3" />
                                     </div>
+
 
                                     <!-- Step 3 -->
                                     <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
@@ -375,14 +416,18 @@ background-position:center;
                                             <div class="font-extrabold text-slate-800 flex items-center gap-2">
                                                 <span
                                                     class="inline-flex items-center justify-center w-9 h-9 rounded-full bg-brand-gold text-white">3</span>
-                                                <span>Branding Seminar</span>
+                                                <span>Site Orientation</span>
                                             </div>
                                             <div class="stamp-badge" data-step="3">STAMP</div>
                                         </div>
-                                        <div class="mt-3">
-                                            <input type="file" accept="image/*" data-upload-step="3" class="w-full" />
-                                        </div>
+
+                                        <p class="mt-2 text-sm text-slate-600">
+                                            Upload a photo taken during your project site orientation.
+                                        </p>
+
+                                        <input type="file" accept="image/*" data-upload-step="3" class="w-full mt-3" />
                                     </div>
+
 
                                     <!-- Step 4 -->
                                     <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
@@ -390,14 +435,18 @@ background-position:center;
                                             <div class="font-extrabold text-slate-800 flex items-center gap-2">
                                                 <span
                                                     class="inline-flex items-center justify-center w-9 h-9 rounded-full bg-brand-gold text-white">4</span>
-                                                <span>Digital Marketing Seminar</span>
+                                                <span>Branding / Digital Marketing Training</span>
                                             </div>
                                             <div class="stamp-badge" data-step="4">STAMP</div>
                                         </div>
-                                        <div class="mt-3">
-                                            <input type="file" accept="image/*" data-upload-step="4" class="w-full" />
-                                        </div>
+
+                                        <p class="mt-2 text-sm text-slate-600">
+                                            Upload a photo from a Branding or Digital Marketing training.
+                                        </p>
+
+                                        <input type="file" accept="image/*" data-upload-step="4" class="w-full mt-3" />
                                     </div>
+
 
                                     <!-- Step 5 -->
                                     <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
@@ -405,14 +454,19 @@ background-position:center;
                                             <div class="font-extrabold text-slate-800 flex items-center gap-2">
                                                 <span
                                                     class="inline-flex items-center justify-center w-9 h-9 rounded-full bg-brand-gold text-white">5</span>
-                                                <span>First Reel</span>
+                                                <span>First Reel / Video Post</span>
                                             </div>
                                             <div class="stamp-badge" data-step="5">STAMP</div>
                                         </div>
-                                        <div class="mt-3">
-                                            <input type="file" accept="image/*" data-upload-step="5" class="w-full" />
-                                        </div>
+
+                                        <p class="mt-2 text-sm text-slate-600">
+                                            Upload a screenshot of your first real estate reel or video posted on social
+                                            media.
+                                        </p>
+
+                                        <input type="file" accept="image/*" data-upload-step="5" class="w-full mt-3" />
                                     </div>
+
 
                                     <!-- Step 6 -->
                                     <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
@@ -420,14 +474,19 @@ background-position:center;
                                             <div class="font-extrabold text-slate-800 flex items-center gap-2">
                                                 <span
                                                     class="inline-flex items-center justify-center w-9 h-9 rounded-full bg-brand-gold text-white">6</span>
-                                                <span>Page Creation</span>
+                                                <span>Shadow Selling</span>
                                             </div>
                                             <div class="stamp-badge" data-step="6">STAMP</div>
                                         </div>
-                                        <div class="mt-3">
-                                            <input type="file" accept="image/*" data-upload-step="6" class="w-full" />
-                                        </div>
+
+                                        <p class="mt-2 text-sm text-slate-600">
+                                            Upload a photo while accompanying your manager during a client viewing or
+                                            presentation.
+                                        </p>
+
+                                        <input type="file" accept="image/*" data-upload-step="6" class="w-full mt-3" />
                                     </div>
+
 
                                     <!-- Step 7 -->
                                     <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
@@ -435,14 +494,18 @@ background-position:center;
                                             <div class="font-extrabold text-slate-800 flex items-center gap-2">
                                                 <span
                                                     class="inline-flex items-center justify-center w-9 h-9 rounded-full bg-brand-gold text-white">7</span>
-                                                <span>First Client Presentation</span>
+                                                <span>Client Presentation</span>
                                             </div>
                                             <div class="stamp-badge" data-step="7">STAMP</div>
                                         </div>
-                                        <div class="mt-3">
-                                            <input type="file" accept="image/*" data-upload-step="7" class="w-full" />
-                                        </div>
+
+                                        <p class="mt-2 text-sm text-slate-600">
+                                            Upload a photo of you presenting a project to a client, on-site or online.
+                                        </p>
+
+                                        <input type="file" accept="image/*" data-upload-step="7" class="w-full mt-3" />
                                     </div>
+
 
                                     <!-- Step 8 -->
                                     <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
@@ -450,56 +513,44 @@ background-position:center;
                                             <div class="font-extrabold text-slate-800 flex items-center gap-2">
                                                 <span
                                                     class="inline-flex items-center justify-center w-9 h-9 rounded-full bg-brand-gold text-white">8</span>
-                                                <span>Shadow Selling</span>
-                                            </div>
-                                            <div class="stamp-badge" data-step="8">STAMP</div>
-                                        </div>
-                                        <div class="mt-3">
-                                            <input type="file" accept="image/*" data-upload-step="8" class="w-full" />
-                                        </div>
-                                    </div>
-
-                                    <!-- Step 9 (GOAL) -->
-                                    <div class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
-                                        <div class="flex items-center justify-between gap-3">
-                                            <div class="font-extrabold text-slate-800 flex items-center gap-2">
-                                                <span
-                                                    class="inline-flex items-center justify-center w-9 h-9 rounded-full bg-brand-gold text-white">9</span>
                                                 <span>First Reservation Goal</span>
                                             </div>
-                                            <div class="stamp-badge-goal" data-step="9">GOAL</div>
+                                            <div class="stamp-badge-goal" data-step="8">GOAL</div>
                                         </div>
-                                        <div class="mt-3">
-                                            <input type="file" accept="image/*" data-upload-step="9" class="w-full" />
-                                        </div>
+
+                                        <p class="mt-2 text-sm text-slate-600">
+                                            Upload a photo or screenshot of your first signed Reservation Agreement.
+                                        </p>
+
+                                        <input type="file" accept="image/*" data-upload-step="8" class="w-full mt-3" />
                                     </div>
 
-                                    <!-- Step 10 -->
+
+                                    <!-- Starter Kit -->
                                     <div class="rounded-2xl border-4 border-dashed border-amber-200 bg-amber-50 p-4">
-                                        <div class="flex items-center justify-between gap-3">
-                                            <div class="font-extrabold text-slate-800 flex items-center gap-2">
-                                                <span
-                                                    class="inline-flex items-center justify-center w-9 h-9 rounded-full bg-amber-500 text-white">10</span>
-                                                <span class="uppercase tracking-wide">RECEIVE OUR HSRC STARTER
-                                                    KIT</span>
-                                            </div>
-                                            <div
-                                                class="text-xs font-extrabold text-amber-700 bg-white border border-amber-200 px-3 py-1 rounded-full">
-                                                STARTER KIT</div>
+
+                                        <div class="font-extrabold text-slate-800 uppercase">
+                                            🎁 Receive Your HSRC Starter Kit
                                         </div>
-                                        <ul class="mt-3 list-disc pl-5 text-sm text-slate-700 space-y-1">
-                                            <li>Sales Kit & ID</li>
-                                            <li>Company Merchandise</li>
-                                            <li>Marketing & Sales Tools</li>
-                                            <li>Welcome Materials</li>
-                                        </ul>
+
+                                        <p class="mt-2 text-sm text-slate-700">
+                                            Complete with Exclusive HSRC Merchandise.
+                                        </p>
+
                                     </div>
 
                                     <div class="pt-2">
+
+                                        <button id="challenge-submit-partial-btn" type="button"
+                                            onclick="submitChallengePartial()"
+                                            class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold px-5 py-3 rounded-xl mb-3">
+                                            Submit Uploaded Task
+                                        </button>
+
                                         <button id="challenge-submit-all-btn" type="button"
                                             onclick="submitChallengeAll()"
                                             class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold px-5 py-3 rounded-xl shadow">
-                                            Submit Challenge Steps 1–9
+                                            Submit Challenge Steps 1–8
                                         </button>
                                     </div>
                                     <div id="challenge-success-card"
@@ -560,10 +611,6 @@ background-position:center;
                                         <div class="flex items-center justify-between bg-white/5 rounded-xl px-3 py-2">
                                             <span class="text-sm font-bold">Step 8</span><span class="text-xs"
                                                 id="challenge-queue-8">Waiting...</span>
-                                        </div>
-                                        <div class="flex items-center justify-between bg-white/5 rounded-xl px-3 py-2">
-                                            <span class="text-sm font-bold">Step 9</span><span class="text-xs"
-                                                id="challenge-queue-9">Waiting...</span>
                                         </div>
                                     </div>
 
@@ -704,8 +751,7 @@ background-position:center;
                             form.</p>
                         <div
                             class="bg-black rounded-lg overflow-hidden mb-6 aspect-video flex items-center justify-center relative">
-                            <video id="orientationVideo" class="w-full h-full object-cover"
-                                poster="display.jpeg"
+                            <video id="orientationVideo" class="w-full h-full object-cover" poster="display.jpeg"
                                 controls controlsList="nodownload">
                                 <source src="final102.mp4" type="video/mp4">
                             </video>
@@ -946,24 +992,24 @@ background-position:center;
                                     <!-- Q1 -->
                                     <div class="rounded-xl bg-slate-50/60 border border-slate-200 p-4">
                                         <div class="flex items-center justify-between gap-3 mb-3">
-                                            <p class="font-bold text-slate-800 text-sm">1. In what year was Human
-                                                Shelter founded?</p>
+                                            <p class="font-bold text-slate-800 text-sm">1. When was Human Shelter Realty
+                                                Corp. established?</p>
                                         </div>
                                         <div class="space-y-2">
                                             <label class="flex items-center gap-3 cursor-pointer text-slate-700">
                                                 <input type="radio" name="quiz-q1" value="A"
                                                     class="w-4 h-4 accent-brand-gold" required>
-                                                <span> A. 1989</span>
+                                                <span> A. 1999</span>
                                             </label>
                                             <label class="flex items-center gap-3 cursor-pointer text-slate-700">
                                                 <input type="radio" name="quiz-q1" value="B"
                                                     class="w-4 h-4 accent-brand-gold">
-                                                <span> B. 1987</span>
+                                                <span> B. 1989</span>
                                             </label>
                                             <label class="flex items-center gap-3 cursor-pointer text-slate-700">
                                                 <input type="radio" name="quiz-q1" value="C"
                                                     class="w-4 h-4 accent-brand-gold">
-                                                <span> C. 1990</span>
+                                                <span> C. 2005</span>
                                             </label>
                                         </div>
                                     </div>
@@ -971,24 +1017,24 @@ background-position:center;
                                     <!-- Q2 -->
                                     <div class="rounded-xl bg-slate-50/60 border border-slate-200 p-4">
                                         <div class="flex items-center justify-between gap-3 mb-3">
-                                            <p class="font-bold text-slate-800 text-sm">2. If a property is priced at
-                                                ₱1.8 million, how is it classified?</p>
+                                            <p class="font-bold text-slate-800 text-sm">2. Which seminars should you
+                                                attend to master your focus project?</p>
                                         </div>
                                         <div class="space-y-2">
                                             <label class="flex items-center gap-3 cursor-pointer text-slate-700">
                                                 <input type="radio" name="quiz-q2" value="A"
                                                     class="w-4 h-4 accent-brand-gold" required>
-                                                <span> A. Socialized Housing</span>
+                                                <span> A. Branding Seminar and Digital Marketing Seminar</span>
                                             </label>
                                             <label class="flex items-center gap-3 cursor-pointer text-slate-700">
                                                 <input type="radio" name="quiz-q2" value="B"
                                                     class="w-4 h-4 accent-brand-gold">
-                                                <span> B. Open Market Housing</span>
+                                                <span> B. Project Knowledge Seminar (PKS) and Site Orientation</span>
                                             </label>
                                             <label class="flex items-center gap-3 cursor-pointer text-slate-700">
                                                 <input type="radio" name="quiz-q2" value="C"
                                                     class="w-4 h-4 accent-brand-gold">
-                                                <span> C. Economic Housing</span>
+                                                <span> C. Accounting Orientation and HR Orientation</span>
                                             </label>
                                         </div>
                                     </div>
@@ -996,9 +1042,9 @@ background-position:center;
                                     <!-- Q3 -->
                                     <div class="rounded-xl bg-slate-50/60 border border-slate-200 p-4">
                                         <div class="flex items-center justify-between gap-3 mb-3">
-                                            <p class="font-bold text-slate-800 text-sm">3. For debt-to-income ratio, a
-                                                buyer's monthly amortization payment should not exceed what percentage
-                                                of their gross monthly income?</p>
+                                            <p class="font-bold text-slate-800 text-sm">3. According to the 30–35% Rule,
+                                                the ideal monthly amortization should generally not exceed what
+                                                percentage of the buyer's gross monthly income?</p>
                                         </div>
                                         <div class="space-y-2">
                                             <label class="flex items-center gap-3 cursor-pointer text-slate-700">
@@ -1014,7 +1060,7 @@ background-position:center;
                                             <label class="flex items-center gap-3 cursor-pointer text-slate-700">
                                                 <input type="radio" name="quiz-q3" value="C"
                                                     class="w-4 h-4 accent-brand-gold">
-                                                <span> C. 10% to 12%</span>
+                                                <span> C. 40% to 50%</span>
                                             </label>
                                         </div>
                                     </div>
@@ -1022,24 +1068,24 @@ background-position:center;
                                     <!-- Q4 -->
                                     <div class="rounded-xl bg-slate-50/60 border border-slate-200 p-4">
                                         <div class="flex items-center justify-between gap-3 mb-3">
-                                            <p class="font-bold text-slate-800 text-sm">4. Human Shelter has branches in
-                                                the following locations, except:</p>
+                                            <p class="font-bold text-slate-800 text-sm">4. According to the orientation,
+                                                the best salespeople are those who...?</p>
                                         </div>
                                         <div class="space-y-2">
                                             <label class="flex items-center gap-3 cursor-pointer text-slate-700">
                                                 <input type="radio" name="quiz-q4" value="A"
                                                     class="w-4 h-4 accent-brand-gold" required>
-                                                <span> A. Cavite</span>
+                                                <span> A. Talk the most.</span>
                                             </label>
                                             <label class="flex items-center gap-3 cursor-pointer text-slate-700">
                                                 <input type="radio" name="quiz-q4" value="B"
                                                     class="w-4 h-4 accent-brand-gold">
-                                                <span> B. Angono</span>
+                                                <span> B. Close the sale immediately.</span>
                                             </label>
                                             <label class="flex items-center gap-3 cursor-pointer text-slate-700">
                                                 <input type="radio" name="quiz-q4" value="C"
                                                     class="w-4 h-4 accent-brand-gold">
-                                                <span> C. Tarlac</span>
+                                                <span> C. Listen the most.</span>
                                             </label>
                                         </div>
                                     </div>
@@ -1047,25 +1093,25 @@ background-position:center;
                                     <!-- Q5 -->
                                     <div class="rounded-xl bg-slate-50/60 border border-slate-200 p-4">
                                         <div class="flex items-center justify-between gap-3 mb-3">
-                                            <p class="font-bold text-slate-800 text-sm">5. Which of the following is NOT
-                                                included in the "5 Golden Questions" asked during client qualification?
+                                            <p class="font-bold text-slate-800 text-sm">5. In the SIMPL Questions, what
+                                                does the letter "S" stand for?
                                             </p>
                                         </div>
                                         <div class="space-y-2">
                                             <label class="flex items-center gap-3 cursor-pointer text-slate-700">
                                                 <input type="radio" name="quiz-q5" value="A"
                                                     class="w-4 h-4 accent-brand-gold" required>
-                                                <span> A. What is your salary?</span>
+                                                <span> A. Salary</span>
                                             </label>
                                             <label class="flex items-center gap-3 cursor-pointer text-slate-700">
                                                 <input type="radio" name="quiz-q5" value="B"
                                                     class="w-4 h-4 accent-brand-gold">
-                                                <span> B. What is your preferred financing option?</span>
+                                                <span> B. Status (Employment Status)</span>
                                             </label>
                                             <label class="flex items-center gap-3 cursor-pointer text-slate-700">
                                                 <input type="radio" name="quiz-q5" value="C"
                                                     class="w-4 h-4 accent-brand-gold">
-                                                <span> C. How much can you shell out for the down payment?</span>
+                                                <span> C. Savings</span>
                                             </label>
                                         </div>
                                     </div>
@@ -1073,26 +1119,25 @@ background-position:center;
                                     <!-- Q6 -->
                                     <div class="rounded-xl bg-slate-50/60 border border-slate-200 p-4">
                                         <div class="flex items-center justify-between gap-3 mb-3">
-                                            <p class="font-bold text-slate-800 text-sm">6. What does "equity" mean in
-                                                real estate financing?</p>
+                                            <p class="font-bold text-slate-800 text-sm">6. Which financing option is
+                                                generally mentioned as having lower interest rates and longer loan
+                                                terms?</p>
                                         </div>
                                         <div class="space-y-2">
                                             <label class="flex items-center gap-3 cursor-pointer text-slate-700">
                                                 <input type="radio" name="quiz-q6" value="A"
                                                     class="w-4 h-4 accent-brand-gold" required>
-                                                <span> A. The monthly payment made to the bank or Pag-IBIG</span>
+                                                <span> A. Bank Financing</span>
                                             </label>
                                             <label class="flex items-center gap-3 cursor-pointer text-slate-700">
                                                 <input type="radio" name="quiz-q6" value="B"
                                                     class="w-4 h-4 accent-brand-gold">
-                                                <span> B. The amount paid upfront, while the remaining balance is
-                                                    covered by the bank or Pag-IBIG</span>
+                                                <span> B. In-House Financing</span>
                                             </label>
                                             <label class="flex items-center gap-3 cursor-pointer text-slate-700">
                                                 <input type="radio" name="quiz-q6" value="C"
                                                     class="w-4 h-4 accent-brand-gold">
-                                                <span> C. Miscellaneous fees such as administrative and processing
-                                                    fees</span>
+                                                <span> C. Pag-IBIG Financing</span>
                                             </label>
                                         </div>
                                     </div>
@@ -1100,27 +1145,25 @@ background-position:center;
                                     <!-- Q7 -->
                                     <div class="rounded-xl bg-slate-50/60 border border-slate-200 p-4">
                                         <div class="flex items-center justify-between gap-3 mb-3">
-                                            <p class="font-bold text-slate-800 text-sm">7. What is the key difference
-                                                between bank financing and Pag-IBIG financing?</p>
+                                            <p class="font-bold text-slate-800 text-sm">7. A client earns ₱60,000 per
+                                                month. Based on the 30–35% Rule, what is the ideal maximum monthly
+                                                amortization?</p>
                                         </div>
                                         <div class="space-y-2">
                                             <label class="flex items-center gap-3 cursor-pointer text-slate-700">
                                                 <input type="radio" name="quiz-q7" value="A"
                                                     class="w-4 h-4 accent-brand-gold" required>
-                                                <span> A. Pag-IBIG generally offers lower interest rates and longer
-                                                    payment terms.</span>
+                                                <span> A. ₱10,000</span>
                                             </label>
                                             <label class="flex items-center gap-3 cursor-pointer text-slate-700">
                                                 <input type="radio" name="quiz-q7" value="B"
                                                     class="w-4 h-4 accent-brand-gold">
-                                                <span> B. Pag-IBIG generally offers higher interest rates and shorter
-                                                    payment terms.</span>
+                                                <span> B. Around ₱21,000</span>
                                             </label>
                                             <label class="flex items-center gap-3 cursor-pointer text-slate-700">
                                                 <input type="radio" name="quiz-q7" value="C"
                                                     class="w-4 h-4 accent-brand-gold">
-                                                <span> C. Banks have higher interest rates, while Pag-IBIG offers
-                                                    shorter payment terms.</span>
+                                                <span> C. ₱35,000</span>
                                             </label>
                                         </div>
                                     </div>
@@ -1128,24 +1171,25 @@ background-position:center;
                                     <!-- Q8 -->
                                     <div class="rounded-xl bg-slate-50/60 border border-slate-200 p-4">
                                         <div class="flex items-center justify-between gap-3 mb-3">
-                                            <p class="font-bold text-slate-800 text-sm">8. When a property receives the
-                                                morning sun, which direction is it typically facing?</p>
+                                            <p class="font-bold text-slate-800 text-sm">8. What is the main goal of
+                                                qualifying your buyer?</p>
                                         </div>
                                         <div class="space-y-2">
                                             <label class="flex items-center gap-3 cursor-pointer text-slate-700">
                                                 <input type="radio" name="quiz-q8" value="A"
                                                     class="w-4 h-4 accent-brand-gold" required>
-                                                <span> A. North</span>
+                                                <span> A. To sell the most expensive property available.</span>
                                             </label>
                                             <label class="flex items-center gap-3 cursor-pointer text-slate-700">
                                                 <input type="radio" name="quiz-q8" value="B"
                                                     class="w-4 h-4 accent-brand-gold">
-                                                <span> B. West</span>
+                                                <span> B. To recommend a property that matches the client's needs and
+                                                    budget.</span>
                                             </label>
                                             <label class="flex items-center gap-3 cursor-pointer text-slate-700">
                                                 <input type="radio" name="quiz-q8" value="C"
                                                     class="w-4 h-4 accent-brand-gold">
-                                                <span> C. East</span>
+                                                <span> C. To convince the client to buy immediately.</span>
                                             </label>
                                         </div>
                                     </div>
@@ -1153,24 +1197,24 @@ background-position:center;
                                     <!-- Q9 -->
                                     <div class="rounded-xl bg-slate-50/60 border border-slate-200 p-4">
                                         <div class="flex items-center justify-between gap-3 mb-3">
-                                            <p class="font-bold text-slate-800 text-sm">9. Which contract should a buyer
-                                                sign when purchasing a property through installment payments?</p>
+                                            <p class="font-bold text-slate-800 text-sm">9. What is the first step in the
+                                                Human Shelter Sales Process?</p>
                                         </div>
                                         <div class="space-y-2">
                                             <label class="flex items-center gap-3 cursor-pointer text-slate-700">
                                                 <input type="radio" name="quiz-q9" value="A"
                                                     class="w-4 h-4 accent-brand-gold" required>
-                                                <span> A. Deed of Sale</span>
+                                                <span> A. Find Your Prospects</span>
                                             </label>
                                             <label class="flex items-center gap-3 cursor-pointer text-slate-700">
                                                 <input type="radio" name="quiz-q9" value="B"
                                                     class="w-4 h-4 accent-brand-gold">
-                                                <span> B. Contract to Sell</span>
+                                                <span> B. Master the Project</span>
                                             </label>
                                             <label class="flex items-center gap-3 cursor-pointer text-slate-700">
                                                 <input type="radio" name="quiz-q9" value="C"
                                                     class="w-4 h-4 accent-brand-gold">
-                                                <span> C. Deed of Assignment</span>
+                                                <span> C. Present the Project</span>
                                             </label>
                                         </div>
                                     </div>
@@ -1178,24 +1222,25 @@ background-position:center;
                                     <!-- Q10 -->
                                     <div class="rounded-xl bg-slate-50/60 border border-slate-200 p-4">
                                         <div class="flex items-center justify-between gap-3 mb-3">
-                                            <p class="font-bold text-slate-800 text-sm">10. What is an advantage of
-                                                Human Shelter?</p>
+                                            <p class="font-bold text-slate-800 text-sm">10. Why is it important to stay
+                                                connected with clients even after reservation? </p>
                                         </div>
                                         <div class="space-y-2">
                                             <label class="flex items-center gap-3 cursor-pointer text-slate-700">
                                                 <input type="radio" name="quiz-q10" value="A"
                                                     class="w-4 h-4 accent-brand-gold" required>
-                                                <span> A. 37 years of industry experience</span>
+                                                <span> A. To ask them to buy another house immediately.</span>
                                             </label>
                                             <label class="flex items-center gap-3 cursor-pointer text-slate-700">
                                                 <input type="radio" name="quiz-q10" value="B"
                                                     class="w-4 h-4 accent-brand-gold">
-                                                <span> B. Reputable projects and developers</span>
+                                                <span> B. To build relationships, celebrate milestones, and earn
+                                                    referrals.</span>
                                             </label>
                                             <label class="flex items-center gap-3 cursor-pointer text-slate-700">
                                                 <input type="radio" name="quiz-q10" value="C"
                                                     class="w-4 h-4 accent-brand-gold">
-                                                <span> C. All of the above</span>
+                                                <span> C. Because it is legally required</span>
                                             </label>
                                         </div>
                                     </div>
@@ -1542,7 +1587,7 @@ background-position:center;
 
         // Google Apps Script Web App URL (provided)
         const GOOGLE_SHEET_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwHRI_tfnQDmGgMVjEBba6DHILJIZeXSmm9Q07xeMtOPpB_3FXkOzKXKhaZ1HTZkKcF/exec";
-        const CHALLENGE_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwg5S-tiTSKUJ5FUaiblw1os2tUaIhobqLl7g-TZmirSeowOMlrxxa5kyTaYRq6LwcHYQ/exec";
+        const CHALLENGE_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwXWcAt1RzpIBDzyWdJd5b9K4mzNrdb01GMHJ5ecjdXtn0j6vIrsjEmUE4-1w3yxvFGkA/exec";
 
 
         (function () {
@@ -1754,6 +1799,24 @@ background-position:center;
 
             const lowered = String(text || "").toLowerCase();
 
+            const noteId = `challenge-note-${step}`;
+            let noteEl = document.getElementById(noteId);
+
+            if (!noteEl) {
+                const input = document.querySelector(`input[data-upload-step="${step}"]`);
+
+                if (input) {
+                    noteEl = document.createElement("div");
+                    noteEl.id = noteId;
+                    noteEl.className = "text-xs text-red-500 mt-2 font-semibold";
+                    input.insertAdjacentElement("afterend", noteEl);
+                }
+            }
+
+            if (noteEl) {
+                noteEl.textContent = "";
+            }
+
             stamp.classList.remove(
                 "bg-emerald-500",
                 "bg-red-500",
@@ -1796,7 +1859,20 @@ background-position:center;
                     "ring-emerald-200"
                 );
             } else if (lowered.includes("reject")) {
+
                 stamp.textContent = "REJECTED";
+
+                if (noteEl) {
+
+                    let reason = "Not clear/valid Image";
+
+                    if (String(text).includes("Note:")) {
+                        reason = String(text).split("Note:")[1].trim();
+                    }
+
+                    noteEl.textContent = "note: " + reason;
+                }
+
                 stamp.classList.add(
                     "bg-red-500",
                     "text-white",
@@ -1837,7 +1913,7 @@ background-position:center;
             let approvedCount = 0;
             let decidedCount = 0;
 
-            for (let i = 1; i <= 9; i++) {
+            for (let i = 1; i <= 8; i++) {
                 const v = data.steps[i];
                 const txt = String(v ?? "").trim().toLowerCase();
 
@@ -1873,24 +1949,38 @@ background-position:center;
 
         function getApprovedStepsFromData(data) {
             const approved = [];
-            if (!data || !data.steps) return approved;
-
-            for (let i = 1; i <= 9; i++) {
+            const challengeStatuses = {};
+            if (!data || !data.steps) {
+                return {
+                    approved,
+                    challengeStatuses
+                };
+            }
+            for (let i = 1; i <= 8; i++) {
                 const v = data.steps[i];
-                const txt = String(v ?? "").trim().toLowerCase();
-
-                if (v === true || txt === "approved" || txt === "stamped") {
+                challengeStatuses[i] = v;
+                const txt =
+                    String(v ?? "")
+                        .trim()
+                        .toLowerCase();
+                if (
+                    v === true ||
+                    txt.includes("approved") ||
+                    txt.includes("stamped")
+                ) {
                     approved.push(i);
                 }
             }
+            return {
+                approved,
+                challengeStatuses
+            };
 
-            return approved;
         }
-
 
         function buildPassportSummary(approvedSteps) {
             const boxes = [];
-            for (let i = 1; i <= 9; i++) {
+            for (let i = 1; i <= 8; i++) {
                 const isApproved = approvedSteps.includes(i);
                 boxes.push(`${i}:${isApproved ? 'APPROVED' : 'PENDING'}`);
             }
@@ -1901,8 +1991,8 @@ background-position:center;
             const container = document.getElementById('challenge-success-card');
             if (!container) return;
 
-            const allApproved = approvedSteps.length === 9;
-            const stampsHtml = Array.from({ length: 9 }, (_, idx) => {
+            const allApproved = approvedSteps.length === 8;
+            const stampsHtml = Array.from({ length: 8 }, (_, idx) => {
                 const step = idx + 1;
                 const approved = approvedSteps.includes(step);
                 return `
@@ -1933,130 +2023,253 @@ background-position:center;
             `;
         }
 
-        async function uploadChallengePassportPdf(email, approvedSteps) {
+        async function uploadChallengePassportPdf(email, approvedSteps, stepStatuses) {
             try {
-                const pdfBase64 = await generateChallengePassportPdfBase64(email, approvedSteps);
+
+                const savedInfo =
+                    JSON.parse(localStorage.getItem("challengeUserInfo") || "{}");
+
+                const fullName =
+                    challengeUserInfo.name
+                    || savedInfo.name
+                    || document.getElementById("challenge-full-name")?.value.trim()
+                    || "";
+
+                const contact =
+                    challengeUserInfo.contact
+                    || savedInfo.contact
+                    || document.getElementById("challenge-phone")?.value.trim()
+                    || "";
+
+                // 1) Try get passport photo from current input/localStorage
+                let photoBase64 =
+                    await getPassportPhotoBase64();
+
+                // 2) If backend gave a photoUrl earlier, we store it into localStorage,
+                //    but this PDF generator needs data:image/... to overlay correctly.
+                if (!photoBase64) {
+                    photoBase64 = localStorage.getItem("passportPhotoBase64") || "";
+                }
+
+                // If we only have a plain URL (not data:image), convert to base64.
+                if (photoBase64 && !String(photoBase64).startsWith('data:image') && photoBase64.startsWith('http')) {
+                    photoBase64 = await loadImageUrlAsDataUrl(photoBase64);
+                }
+
+                const pdfBase64 =
+                    await generateChallengePassportPdfBase64(
+                        email,
+                        approvedSteps,
+                        stepStatuses,
+                        fullName,
+                        contact,
+                        photoBase64
+                    );
+
+                if (!pdfBase64) {
+                    throw new Error("PDF base64 output is empty.");
+                }
+
                 const payload = new URLSearchParams();
+
                 payload.append("action", "challenge_upload_passport_pdf");
                 payload.append("email", email);
-                payload.append("fileName", `HSRC_Passport_${(email || 'applicant').replace(/[^a-z0-9]/gi, '_')}.pdf`);
+
+                payload.append(
+                    "fileName",
+                    `HSRC_PASSPORT_${(fullName || "Applicant").replace(/[^a-z0-9]/gi, "_")}.pdf`
+                );
+
                 payload.append("mimeType", "application/pdf");
                 payload.append("base64", pdfBase64);
 
                 const resp = await fetch(CHALLENGE_WEB_APP_URL, {
                     method: "POST",
-                    headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
+                    headers: {
+                        "Content-Type":
+                            "application/x-www-form-urlencoded;charset=UTF-8"
+                    },
                     body: payload.toString()
                 });
 
                 const raw = await resp.text();
+
                 let data = null;
-                try { data = JSON.parse(raw); } catch (e) { data = null; }
+
+                try {
+                    data = JSON.parse(raw);
+                } catch (e) {
+                    data = null;
+                }
 
                 if (!resp.ok || !data || data.ok !== true) {
-                    throw new Error((data && (data.error || data.message)) || "Failed to upload passport PDF.");
+                    console.error("UPLOAD RESPONSE:", raw);
+                    throw new Error(
+                        (data && (data.error || data.message))
+                        || `Upload failed (HTTP ${resp.status})`
+                    );
                 }
 
                 return data.pdfUrl || "";
+
             } catch (err) {
-                console.error("Passport PDF upload failed:", err);
+                console.error(
+                    "Passport PDF upload failed:",
+                    err
+                );
+
+                // Show error on-screen so the user/admin can see why it failed.
+                renderPassportPdfButtonError(
+                    err && err.message ? err.message : String(err)
+                );
                 return "";
             }
         }
 
-        async function generateChallengePassportPdfBase64(email, approvedSteps) {
+        function getPassportPhotoBase64() {
+
+            return new Promise((resolve) => {
+                const input =
+                    document.getElementById("passportPhoto");
+                // MAY BAGONG UPLOAD
+                if (
+                    input &&
+                    input.files &&
+                    input.files[0]
+                ) {
+                    const reader =
+                        new FileReader();
+                    reader.onload = () => {
+                        localStorage.setItem(
+                            "passportPhotoBase64",
+                            reader.result
+                        );
+                        resolve(reader.result);
+                    };
+                    reader.readAsDataURL(
+                        input.files[0]
+                    );
+                    return;
+                }
+                // WALANG BAGONG UPLOAD
+                // GAMITIN YUNG SAVED PHOTO
+                const savedPhoto =
+                    localStorage.getItem(
+                        "passportPhotoBase64"
+                    );
+                resolve(
+                    savedPhoto || ""
+                );
+            });
+        }
+
+        async function generateChallengePassportPdfBase64(
+            email,
+            approvedSteps,
+            stepStatuses,
+            fullName,
+            contact,
+            photoBase64
+        ) {
+
             const { jsPDF } = window.jspdf;
-            const pdf = new jsPDF({ orientation: 'portrait', unit: 'pt', format: 'a4' });
 
-            const pageW = 595.28;
-            const pageH = 841.89;
+            // Basic 1-page PDF sized like an A4 portrait.
+            const pdf = new jsPDF({ orientation: 'p', unit: 'pt', format: 'a4' });
 
-            // Background
-            pdf.setFillColor(248, 250, 252);
-            pdf.rect(0, 0, pageW, pageH, 'F');
+            const pageW = pdf.internal.pageSize.getWidth();
+            const pageH = pdf.internal.pageSize.getHeight();
 
-            // Watermark logo
-            try {
-                const watermarkDataUrl = await loadImageAsDataUrl('logo3.png');
-                pdf.setGState(new pdf.GState({ opacity: 0.12 }));
-                pdf.addImage(watermarkDataUrl, 'PNG', 110, 180, 380, 380);
-                pdf.setGState(new pdf.GState({ opacity: 1 }));
-            } catch (e) {
-                console.warn("Watermark load failed:", e);
-            }
+            // 1) Fixed background template
+            const bgSrc = 'passport.png';
+            const bgImg = await loadImageAsDataUrl(bgSrc);
+            // Draw to fit page
+            pdf.addImage(bgImg, 'PNG', 0, 0, pageW, pageH);
 
-            // Header
-            pdf.setFillColor(15, 118, 110);
-            pdf.rect(0, 0, pageW, 95, 'F');
-            pdf.setTextColor(255, 255, 255);
-            pdf.setFont("helvetica", "bold");
-            pdf.setFontSize(20);
-            pdf.text("HSRC CHALLENGE PASSPORT", 40, 45);
-            pdf.setFontSize(12);
-            pdf.setFont("helvetica", "normal");
-            pdf.text("Official 30-Day Challenge Completion Record", 40, 68);
 
-            // Applicant info
-            pdf.setTextColor(31, 41, 55);
-            pdf.setFont("helvetica", "bold");
-            pdf.setFontSize(12);
-            pdf.text(`Applicant: ${email}`, 40, 130);
-            pdf.text(`Approved Steps: ${approvedSteps.join(',')}`, 40, 150);
+            // 2) Overlay text (you can tweak these coordinates later)
+            const safeName = String(fullName || '').toUpperCase();
+            const safeContact = String(contact || '');
 
-            // Stamp grid
-            const startX = 40;
-            const startY = 190;
-            const boxW = 160;
-            const boxH = 78;
-            const gapX = 16;
-            const gapY = 14;
+            pdf.setFont('helvetica', 'bold');
+            pdf.setFontSize(14);
+            pdf.setTextColor(0, 60, 60);
+            pdf.text(safeName || 'APPLICANT', 60, 90);
 
-            let idx = 0;
-            for (let row = 0; row < 3; row++) {
-                for (let col = 0; col < 3; col++) {
-                    const step = idx + 1;
-                    const approved = approvedSteps.includes(step);
-                    const x = startX + col * (boxW + gapX);
-                    const y = startY + row * (boxH + gapY);
+            pdf.setFont('helvetica', 'normal');
+            pdf.setFontSize(10);
+            pdf.setTextColor(30, 41, 59);
+            pdf.text(safeContact || '', 60, 108);
 
-                    pdf.setDrawColor(148, 163, 184);
-                    pdf.setLineWidth(1);
-                    pdf.roundedRect(x, y, boxW, boxH, 8, 8);
+            // 3) Stamps: TASK 1–8
+            // Coordinates are placeholders; adjust to match your template photo.
+            const stampBoxes = [
+                { x: 70, y: 150 },
+                { x: 240, y: 150 },
+                { x: 70, y: 220 },
+                { x: 240, y: 220 },
+                { x: 70, y: 290 },
+                { x: 240, y: 290 },
+                { x: 70, y: 360 },
+                { x: 240, y: 360 }
+            ];
 
-                    pdf.setFont("helvetica", "bold");
-                    pdf.setFontSize(11);
-                    pdf.setTextColor(51, 65, 85);
-                    pdf.text(`TASK ${step}`, x + 12, y + 22);
+            const isApproved = (step) => approvedSteps.includes(step);
 
-                    if (approved) {
-                        pdf.setTextColor(22, 163, 74);
-                        pdf.setFont("helvetica", "bold");
-                        pdf.setFontSize(14);
-                        pdf.text("APPROVED STAMP", x + 12, y + 48);
-                    } else {
-                        pdf.setTextColor(107, 114, 128);
-                        pdf.setFont("helvetica", "bold");
-                        pdf.setFontSize(12);
-                        pdf.text("PENDING", x + 12, y + 48);
-                    }
+            for (let i = 1; i <= 8; i++) {
+                const box = stampBoxes[i - 1] || { x: 70, y: 150 };
+                const approved = isApproved(i);
 
-                    idx++;
+                pdf.setDrawColor(180, 180, 180);
+                pdf.setLineWidth(1);
+                pdf.setFillColor(255, 255, 255);
+
+                if (approved) {
+                    pdf.setFillColor(234, 250, 242); // light green
+                    pdf.setDrawColor(16, 185, 129);
+                }
+
+                pdf.rect(box.x, box.y, 120, 45, 'FD');
+
+                pdf.setTextColor(0, 0, 0);
+                pdf.setFontSize(10);
+                pdf.setFont('helvetica', 'bold');
+                pdf.text(`TASK ${i}`, box.x + 8, box.y + 16);
+
+                pdf.setFontSize(12);
+                pdf.setFont('helvetica', 'bold');
+                if (approved) {
+                    pdf.setTextColor(21, 128, 61);
+                    pdf.text('APPROVED', box.x + 10, box.y + 33);
+                } else {
+                    pdf.setTextColor(100, 116, 139);
+                    pdf.text('PENDING', box.x + 14, box.y + 33);
+                }
+
+                // If stepStatuses contains rejected info, override text/color.
+                const raw = stepStatuses && stepStatuses[i] != null ? String(stepStatuses[i]) : '';
+                const lower = raw.toLowerCase();
+                if (lower.includes('rejected') || lower.includes('reject')) {
+                    pdf.setDrawColor(220, 38, 38);
+                    pdf.setFillColor(254, 226, 226); // light red
+                    pdf.rect(box.x, box.y, 120, 45, 'FD');
+                    pdf.setTextColor(153, 27, 27);
+                    pdf.setFont('helvetica', 'bold');
+                    pdf.text(`TASK ${i}`, box.x + 8, box.y + 16);
+                    pdf.text('REJECTED', box.x + 8, box.y + 33);
                 }
             }
 
-            // Footer
-            pdf.setFont("helvetica", "bold");
-            pdf.setTextColor(5, 150, 105);
-            pdf.setFontSize(12);
-            pdf.text("STATUS: ALL TASKS 1-9 APPROVED", 40, 510);
+            // 4) Optional 2x2 photo overlay (if present)
+            if (photoBase64 && String(photoBase64).startsWith('data:image')) {
+                const photoImg = await loadImageAsDataUrl(photoBase64);
+                // placeholder position
+                pdf.addImage(photoImg, 'PNG', 420, 140, 110, 130);
+            }
 
-            pdf.setFont("helvetica", "normal");
-            pdf.setTextColor(100, 116, 139);
-            pdf.setFontSize(10);
-            pdf.text("Generated by HSRC Challenge System", 40, 535);
-
-            const dataUri = pdf.output('datauristring');
-            return dataUri.split(',')[1];
+            // Output
+            const pdfBase64 = pdf.output('datauristring').split(',')[1];
+            return pdfBase64;
         }
 
         function loadImageAsDataUrl(src) {
@@ -2076,8 +2289,71 @@ background-position:center;
             });
         }
 
+        // Alias for readability: convert public image URL -> data:image/... 
+        async function loadImageUrlAsDataUrl(url) {
+            if (!url) return "";
+            return await loadImageAsDataUrl(url);
+        }
+
+
+        function renderPassportPdfButtonLoading(message = "Generating Passport PDF...") {
+            const container = document.getElementById('challenge-success-card');
+            if (!container) return;
+
+            // Ensure card is visible for immediate UX feedback
+            container.classList.remove('hidden');
+
+            const existing = document.getElementById('challenge-passport-pdf-btn');
+            if (existing) existing.remove();
+
+            const wrap = document.createElement('div');
+            wrap.id = 'challenge-passport-pdf-btn';
+            wrap.className = 'mt-4';
+
+            wrap.innerHTML = `
+                <div
+                    class="inline-flex items-center gap-2 bg-blue-100 text-blue-900 font-bold px-4 py-2 rounded-xl shadow opacity-80 cursor-not-allowed select-none">
+                    <i class="fa-solid fa-file-pdf"></i>
+                    ${message}
+                </div>
+            `;
+            container.appendChild(wrap);
+        }
+
+        function renderPassportPdfButtonError(message = "Failed to generate Passport PDF.") {
+            const container = document.getElementById('challenge-success-card');
+            if (!container) return;
+
+            container.classList.remove('hidden');
+
+            const existing = document.getElementById('challenge-passport-pdf-btn');
+            if (existing) existing.remove();
+
+            const wrap = document.createElement('div');
+            wrap.id = 'challenge-passport-pdf-btn';
+            wrap.className = 'mt-4';
+
+            const safeMsg = String(message || '').replace(/</g, '<').replace(/>/g, '>');
+
+            wrap.innerHTML = `
+                <div
+                    class="inline-flex items-start gap-2 bg-red-50 text-red-900 font-bold px-4 py-2 rounded-xl shadow border border-red-200">
+                    <i class="fa-solid fa-triangle-exclamation mt-0.5"></i>
+                    <div>
+                        <div class="text-sm">${safeMsg}</div>
+                        <div class="text-xs font-semibold text-red-700 mt-1">
+                            Please try again after admin review.
+                        </div>
+                    </div>
+                </div>
+            `;
+            container.appendChild(wrap);
+        }
+
+
         function renderPassportPdfButton(pdfUrl) {
             if (!pdfUrl) return;
+
             const container = document.getElementById('challenge-success-card');
             if (!container) return;
 
@@ -2108,7 +2384,7 @@ background-position:center;
                 applicant_email: applicantEmail,
                 approved_steps: approvedSteps.join(','),
                 passport_summary: passportSummary,
-                completion_message: "Congratulations! Approved na ang lahat ng Task 1-9 mo sa HSRC 30-Day Challenge.",
+                completion_message: "Congratulations! Approved na ang lahat ng Task 1-8 mo sa HSRC 30-Day Challenge.",
                 passport_pdf_link: passportPdfLink || ""
             };
 
@@ -2152,19 +2428,38 @@ background-position:center;
 
             const payload = new URLSearchParams();
             payload.append("action", "challenge_submit_step");
+
             payload.append("email", email);
+
+            challengeUserInfo = {
+                name: document.getElementById("challenge-full-name")?.value.trim() || "",
+                contact: document.getElementById("challenge-phone")?.value.trim() || ""
+            };
+
+            localStorage.setItem(
+                "challengeUserInfo",
+                JSON.stringify(challengeUserInfo)
+            );
+
+            payload.append(
+                "team",
+                document.getElementById("challenge-team").value.trim()
+            );
+
+            payload.append(
+                "fullName",
+                document.getElementById("challenge-full-name").value.trim()
+            );
+
+            payload.append(
+                "contact",
+                document.getElementById("challenge-phone").value.trim()
+            );
+
             payload.append("stepNumber", String(stepNumber));
             payload.append("fileName", file.name);
             payload.append("mimeType", file.type || "image/png");
             payload.append("base64", base64);
-
-            console.log("[Challenge Submit] sending:", {
-                url: CHALLENGE_WEB_APP_URL,
-                action: "challenge_submit_step",
-                email,
-                stepNumber,
-                fileName: file.name
-            });
 
             try {
                 const submitResp = await fetch(CHALLENGE_WEB_APP_URL, {
@@ -2208,41 +2503,293 @@ background-position:center;
             }
         }
 
+        async function submitChallengePartial() {
+
+            setChallengeActionButtonsDisabled(true);
+
+            let uploaded = 0;
+
+            try {
+
+                for (let s = 1; s <= 8; s++) {
+
+                    const input =
+                        document.querySelector(`input[data-upload-step="${s}"]`);
+
+                    if (
+                        !input ||
+                        !input.files ||
+                        input.files.length === 0
+                    ) {
+                        continue;
+                    }
+
+
+                    showChallengeLoading(
+                        `Uploading Step ${s}...`
+                    );
+
+
+                    const ok =
+                        await submitChallengeStep(s);
+
+
+                    if (ok) {
+                        uploaded++;
+                    }
+
+                }
+
+
+                if (uploaded === 0) {
+
+                    hideChallengeLoading();
+
+                    setChallengeActionButtonsDisabled(false);
+
+                    alert(
+                        "Please upload at least one challenge screenshot."
+                    );
+
+                    return;
+
+                }
+
+
+                // SAVE 2x2 PHOTO
+                const photoBase64 =
+                    await getPassportPhotoBase64();
+
+
+
+                if (
+                    photoBase64 &&
+                    photoBase64.startsWith("data:image")
+                ) {
+
+                    const photoPayload =
+                        new URLSearchParams();
+
+
+                    photoPayload.append(
+                        "action",
+                        "challenge_upload_photo"
+                    );
+
+
+                    photoPayload.append(
+                        "email",
+                        getChallengeEmail()
+                    );
+
+
+                    photoPayload.append(
+                        "base64",
+                        photoBase64.split(",")[1]
+                    );
+
+
+                    photoPayload.append(
+                        "mimeType",
+                        photoBase64
+                            .split(";")[0]
+                            .replace("data:", "")
+                    );
+
+
+                    await fetch(
+                        CHALLENGE_WEB_APP_URL,
+                        {
+                            method: "POST",
+                            body: photoPayload
+                        }
+                    );
+
+                }
+
+
+                hideChallengeLoading();
+
+                setChallengeActionButtonsDisabled(false);
+
+
+                alert(
+                    `${uploaded} task(s) uploaded successfully.`
+                );
+
+
+            } catch (e) {
+
+                console.error(e);
+
+                hideChallengeLoading();
+
+                setChallengeActionButtonsDisabled(false);
+
+                alert(
+                    "Upload failed."
+                );
+
+            }
+
+        }
+
+
+
         async function submitChallengeAll() {
             const email = getChallengeEmail();
+
+            // CHECK REQUIRED STEPS 1-8 BEFORE FINAL SUBMIT
+            for (let step = 1; step <= 8; step++) {
+
+                const fileInput =
+                    document.querySelector(
+                        `input[data-upload-step="${step}"]`
+                    );
+
+
+                const alreadyUploaded =
+                    document
+                        .getElementById(`challenge-step-${step}-status`)
+                        ?.textContent
+                        ?.toLowerCase()
+                        ?.includes("uploaded");
+
+
+                if (
+                    (!fileInput || fileInput.files.length === 0)
+                    &&
+                    !alreadyUploaded
+                ) {
+
+                    alert(
+                        `Please complete Step ${step} before submitting your challenge.`
+                    );
+
+                    return;
+                }
+
+            }
+
             if (!email) {
                 alert("Please enter your email address first.");
                 return;
             }
 
+            challengeUserInfo = {
+                ...challengeUserInfo,
+
+                name:
+                    document.getElementById("challenge-full-name")?.value.trim() || "",
+
+                contact:
+                    document.getElementById("challenge-phone")?.value.trim() || ""
+            };
+
+
+            localStorage.setItem(
+                "challengeUserInfo",
+                JSON.stringify(challengeUserInfo)
+            );
+
             setChallengeActionButtonsDisabled(true);
-            showChallengeLoading("Uploading Step 1 of 9...");
+            showChallengeLoading("Uploading Step 1 of 8...");
 
             try {
-                for (let s = 1; s <= 9; s++) {
-                    const input = document.querySelector(`input[data-upload-step="${s}"]`);
-                    if (!input || !input.files || input.files.length === 0) {
-                        hideChallengeLoading();
-                        setChallengeActionButtonsDisabled(false);
-                        alert(`Missing screenshot for Step ${s}.`);
-                        return;
+                let hasUpload = false;
+
+                for (let s = 1; s <= 8; s++) {
+
+                    const input =
+                        document.querySelector(`input[data-upload-step="${s}"]`);
+
+                    if (
+                        input &&
+                        input.files &&
+                        input.files.length > 0
+                    ) {
+                        hasUpload = true;
+
+                        showChallengeLoading(
+                            `Uploading Step ${s} of 8...`
+                        );
+
+                        const ok =
+                            await submitChallengeStep(s);
+
+                        if (!ok) {
+
+                            hideChallengeLoading();
+
+                            setChallengeActionButtonsDisabled(false);
+
+                            return;
+
+                        }
                     }
+
                 }
 
-                for (let s = 1; s <= 9; s++) {
-                    showChallengeLoading(`Uploading Step ${s} of 9...`);
-                    const ok = await submitChallengeStep(s);
 
-                    if (!ok) {
-                        hideChallengeLoading();
-                        setChallengeActionButtonsDisabled(false);
-                        return;
-                    }
+                if (!hasUpload) {
+
+                    hideChallengeLoading();
+
+                    setChallengeActionButtonsDisabled(false);
+
+                    alert(
+                        "Please upload at least one challenge screenshot."
+                    );
+
+                    return;
+
+                }
+
+                const photoBase64 =
+                    await getPassportPhotoBase64();
+
+                if (
+                    photoBase64 &&
+                    photoBase64.startsWith("data:image")
+                ) {
+
+                    const photoPayload =
+                        new URLSearchParams();
+
+                    photoPayload.append(
+                        "action",
+                        "challenge_upload_photo"
+                    );
+
+                    photoPayload.append(
+                        "email",
+                        email
+                    );
+
+                    photoPayload.append(
+                        "base64",
+                        photoBase64.split(",")[1]
+                    );
+
+                    photoPayload.append(
+                        "mimeType",
+                        photoBase64
+                            .split(";")[0]
+                            .replace("data:", "")
+                    );
+
+                    await fetch(
+                        CHALLENGE_WEB_APP_URL,
+                        {
+                            method: "POST",
+                            body: photoPayload
+                        }
+                    );
                 }
 
                 hideChallengeLoading();
                 setChallengeActionButtonsDisabled(false);
-                alert("All 9 challenge steps uploaded successfully.");
+                alert("All 8 challenge steps uploaded successfully.");
             } catch (err) {
                 console.error("submitChallengeAll error:", err);
                 hideChallengeLoading();
@@ -2251,8 +2798,11 @@ background-position:center;
             }
         }
 
+
         let challengePollingTimer = null;
         let challengePollingResolved = false;
+
+        let challengeUserInfo = {};
 
         async function startChallengePolling() {
             const email = getChallengeEmail();
@@ -2270,6 +2820,10 @@ background-position:center;
 
             setChallengeActionButtonsDisabled(true);
             showChallengeLoading("Checking approval status, please wait...");
+
+            // UX: show the Passport PDF button area immediately after clicking "Start Checking Approval"
+            // (it will be replaced with the real Open Passport PDF link once admin results arrive)
+            renderPassportPdfButtonLoading("Generating Passport PDF...");
 
             const stopChallengePolling = () => {
                 if (challengePollingTimer) {
@@ -2303,34 +2857,67 @@ background-position:center;
                         return false;
                     }
 
+                    // SAVE EXISTING PASSPORT PHOTO FROM GOOGLE DRIVE
+                    if (data.photoUrl) {
+
+                        localStorage.setItem(
+                            "passportPhotoBase64",
+                            data.photoUrl
+                        );
+
+                    }
+
                     let hasAnyDecision = false;
                     let approvedSteps = [];
 
-                    for (let i = 1; i <= 9; i++) {
+                    for (let i = 1; i <= 8; i++) {
+
                         const rawStatus = data.steps[i];
-                        const txt = String(rawStatus ?? "").trim().toLowerCase();
+                        const txt = String(rawStatus ?? "").trim();
+                        const lower = txt.toLowerCase();
 
                         if (
                             rawStatus === true ||
-                            txt === "approved" ||
-                            txt === "stamped"
+                            lower.includes("approved") ||
+                            lower.includes("stamped")
                         ) {
+
                             setChallengeQueueStatus(i, "Approved ✓ (STAMPED)");
                             approvedSteps.push(i);
                             hasAnyDecision = true;
 
                         } else if (
-                            rawStatus === false ||
-                            txt === "rejected" ||
-                            txt === "reject" ||
-                            txt.includes("reject") ||
-                            txt.includes("disapprove")
+                            lower.includes("rejected") ||
+                            lower.includes("reject")
                         ) {
-                            setChallengeQueueStatus(i, "Rejected ✗ (REJECTED)");
+
+                            let note = "";
+
+                            if (txt.includes("-")) {
+                                note = txt.split("-").slice(1).join("-").trim();
+                            }
+
+                            if (note) {
+                                setChallengeQueueStatus(
+                                    i,
+                                    "Rejected ✗\nNote: " + note
+                                );
+                            } else {
+                                setChallengeQueueStatus(
+                                    i,
+                                    "Rejected ✗"
+                                );
+                            }
+
                             hasAnyDecision = true;
 
                         } else {
-                            setChallengeQueueStatus(i, "Waiting for admin check...");
+
+                            setChallengeQueueStatus(
+                                i,
+                                "Pending"
+                            );
+
                         }
                     }
 
@@ -2339,17 +2926,64 @@ background-position:center;
                         challengePollingResolved = true;
                         stopChallengePolling();
 
-                        if (approvedSteps.length > 0) {
-                            renderChallengePassportPreview(approvedSteps);
-                            document.getElementById("challenge-success-card")?.classList.remove("hidden");
+                        // SHOW PASSPORT RESULT AFTER ADMIN CHECK
+                        renderChallengePassportPreview(
+                            approvedSteps
+                        );
 
-                            const passportPdfLink = await uploadChallengePassportPdf(email, approvedSteps);
-                            renderPassportPdfButton(passportPdfLink);
+                        document
+                            .getElementById(
+                                "challenge-success-card"
+                            )
+                            ?.classList
+                            .remove(
+                                "hidden"
+                            );
 
-                            const sent = await sendChallengeCompletionEmail(email, approvedSteps, passportPdfLink);
-                            if (!sent) {
-                                console.warn("Challenge email not sent.");
-                            }
+
+                        console.log("START PDF GENERATE");
+
+                    const passportPdfLink =
+                            await uploadChallengePassportPdf(
+                                email,
+                                approvedSteps,
+                                data.steps
+                            );
+
+                        if (!passportPdfLink) {
+                            // If PDF failed to generate/upload, do not leave the UI in a stuck state.
+                            // Replace loading button with an error message.
+                            renderPassportPdfButtonLoading(
+                                "Failed to generate Passport PDF. Please try again."
+                            );
+                            throw new Error("Passport PDF link is empty.");
+                        }
+
+                        console.log(
+                            "PASSPORT PDF LINK:",
+                            passportPdfLink
+                        );
+
+                        renderPassportPdfButton(
+                            passportPdfLink
+                        );
+
+
+
+                        const sent =
+                            await sendChallengeCompletionEmail(
+                                email,
+                                approvedSteps,
+                                passportPdfLink
+                            );
+
+
+                        if (!sent) {
+
+                            console.warn(
+                                "Challenge email not sent."
+                            );
+
                         }
 
                         hideChallengeLoading();
@@ -2728,16 +3362,16 @@ background-position:center;
             const quizTotalQuestions = 10;
             const passThreshold = 6;
             const correctAnswers = {
-                'quiz-q1': 'A',
-                'quiz-q2': 'C',
+                'quiz-q1': 'B',
+                'quiz-q2': 'B',
                 'quiz-q3': 'B',
-                'quiz-q4': 'B',
-                'quiz-q5': 'C',
-                'quiz-q6': 'B',
-                'quiz-q7': 'A',
-                'quiz-q8': 'C',
+                'quiz-q4': 'C',
+                'quiz-q5': 'B',
+                'quiz-q6': 'C',
+                'quiz-q7': 'B',
+                'quiz-q8': 'B',
                 'quiz-q9': 'B',
-                'quiz-q10': 'C',
+                'quiz-q10': 'B',
             };
 
             // Mark as generated immediately to prevent edge-case double triggers
