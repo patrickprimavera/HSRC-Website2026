@@ -2134,6 +2134,11 @@ background-position:center;
                 return data.pdfUrl || "";
 
             } catch (err) {
+
+                alert(
+                    "PDF ERROR: " + err.message
+                );
+
                 console.error(
                     "Passport PDF upload failed:",
                     err
@@ -2294,7 +2299,7 @@ background-position:center;
                 pdf.setLineWidth(1);
 
                 pdf.roundedRect(
-                    box.x, box.y, box.w, box.h,3,3 );
+                    box.x, box.y, box.w, box.h, 3, 3);
 
 
                 // TASK NUMBER
@@ -2444,12 +2449,12 @@ background-position:center;
 
 
                 pdf.roundedRect(
-                525, // X
-                115, // Y
-                130, // width
-                170, // height
-                
-                5,5);
+                    525, // X
+                    115, // Y
+                    130, // width
+                    170, // height
+
+                    5, 5);
 
 
 
