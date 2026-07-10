@@ -2067,9 +2067,24 @@ background-position:center;
                     ) || "";
 
 
+                // 2) If wala sa device, kunin galing Google Sheet status
+                if (
+                    (!photoBase64 ||
+                        !photoBase64.startsWith("data:image")) &&
+                    window.challengeStatusData &&
+                    window.challengeStatusData.photoUrl
+                ) {
+
+                    photoBase64 =
+                        window.challengeStatusData.photoUrl;
+
+                }
+
+
+                // 3) Last option manual upload/current input
                 if (
                     !photoBase64 ||
-                    !photoBase64.startsWith("data:image")
+                    !String(photoBase64).startsWith("data:image")
                 ) {
 
                     photoBase64 =
@@ -2355,6 +2370,19 @@ background-position:center;
             photoBase64
         ) {
 
+            // SAFETY FIX FOR JSPDF TEXT
+            email = String(email || "");
+            teamName = String(teamName || "");
+            fullName = String(fullName || "");
+            contact = String(contact || "");
+
+            approvedSteps =
+                approvedSteps || [];
+
+            stepStatuses =
+                stepStatuses || {};
+
+
             const { jsPDF } = window.jspdf;
 
             // Basic 1-page PDF sized like an A4 portrait.
@@ -2614,7 +2642,7 @@ background-position:center;
 
 
                 pdf.roundedRect(
-                    560 , // X
+                    560, // X
                     120, // Y
                     130, // width
                     160, // height
@@ -2778,7 +2806,7 @@ background-position:center;
 
 
             pdf.text(
-                contact || "",
+                String(contact || ""),
                 valueX,
                 yDetail + 60
             );
@@ -3573,6 +3601,43 @@ background-position:center;
                         data = await resp.json();
                     } catch (err) {
                         data = null;
+                    }
+
+                    // SAVE PASSPORT USER INFO FOR IPHONE
+                    if (data) {
+
+                        challengeUserInfo = {
+                            team:
+                                data.team ||
+                                data.teamName ||
+                                "",
+
+                            name:
+                                data.name ||
+                                data.fullName ||
+                                "",
+
+                            contact:
+                                data.contact ||
+                                data.phone ||
+                                "",
+
+                            email:
+                                email || ""
+                        };
+
+
+                        localStorage.setItem(
+                            "challengeUserInfo",
+                            JSON.stringify(challengeUserInfo)
+                        );
+
+
+                        console.log(
+                            "IPHONE SAVED PASSPORT INFO:",
+                            challengeUserInfo
+                        );
+
                     }
 
                     if (!data || !data.steps) {
