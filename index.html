@@ -2614,10 +2614,10 @@ background-position:center;
 
 
                 pdf.roundedRect(
-                    525, // X
-                    115, // Y
+                    560 , // X
+                    120, // Y
                     130, // width
-                    170, // height
+                    160, // height
 
                     5, 5);
 
@@ -2628,10 +2628,10 @@ background-position:center;
                 pdf.addImage(
                     photoBase64,
                     "PNG",
-                    530, // X move left/right
-                    120, // Y move up/down
+                    565, // X move left/right
+                    125, // Y move up/down
                     120, // width ng photo
-                    160 // height ng photo
+                    150 // height ng photo
                 );
 
 
@@ -2687,8 +2687,8 @@ background-position:center;
             );
 
 
-            let yDetail = 315;
-            let labelX = 500;
+            let yDetail = 325;
+            let labelX = 515;
             let valueX = 590;
 
 
@@ -2893,11 +2893,14 @@ background-position:center;
 
                     try {
 
+                        const canvas =
+                            document.createElement("canvas");
+
                         canvas.width =
-                            img.width * 3;
+                            img.width * 2;
 
                         canvas.height =
-                            img.height * 3;
+                            img.height * 2;
 
 
                         const ctx =
