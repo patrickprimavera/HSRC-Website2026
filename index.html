@@ -3671,6 +3671,18 @@ background-position:center;
                         // Save full status data for passport.
                         window.challengeStatusData = data;
 
+                        if (
+                            data.photoBase64 &&
+                            data.photoBase64 !== ""
+                        ) {
+
+                            localStorage.setItem(
+                                "passportPhotoBase64" + email,
+                                "data:image/png;base64," + data.photoBase64
+                            );
+
+                        }
+
                         console.log(
                             "STATUS DATA PHOTO CHECK:",
                             data
@@ -3823,8 +3835,8 @@ background-position:center;
                                 <h2 class="text-2xl font-bold text-red-700">Some tasks were rejected</h2>
                                 <p class="mt-2 text-red-600 font-semibold">
                                     ${rejectedSteps.length === 1
-                                        ? `❌ Task ${rejectedSteps[0]} Rejected`
-                                        : `❌ Task ${rejectedSteps.slice(0, -1).join(', ')}, and ${rejectedSteps[rejectedSteps.length - 1]} Rejected`}
+                                    ? `❌ Task ${rejectedSteps[0]} Rejected`
+                                    : `❌ Task ${rejectedSteps.slice(0, -1).join(', ')}, and ${rejectedSteps[rejectedSteps.length - 1]} Rejected`}
                                 </p>
                                 <p class="mt-2 text-red-700">
                                     Your submitted information for the rejected task(s) was not approved. Please update the required details and resubmit these tasks.
