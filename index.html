@@ -2076,7 +2076,7 @@ background-position:center;
                 // 1) Try get passport photo from current input/localStorage
                 let photoBase64 =
                     localStorage.getItem(
-                        "passportPhotoBase64"
+                        "passportPhotoBase64" + email
                     ) || "";
 
 
@@ -2089,15 +2089,13 @@ background-position:center;
                 ) {
 
                     photoBase64 =
-                        await loadImageAsDataUrl(
-                            convertDriveImageUrl(
-                                window.challengeStatusData.photoUrl
-                            )
+                        convertDriveImageUrl(
+                            window.challengeStatusData.photoUrl
                         );
 
 
                     localStorage.setItem(
-                        "passportPhotoBase64",
+                        "passportPhotoBase64", + email,
                         photoBase64
                     );
 
@@ -2230,7 +2228,7 @@ background-position:center;
 
             }
         }
-    
+
 
         function compressPassportPhoto(file) {
 
@@ -2362,7 +2360,7 @@ background-position:center;
 
 
                 localStorage.setItem(
-                    "passportPhotoBase64",
+                    "passportPhotoBase64", + email,
                     compressedPhoto
                 );
 
@@ -2375,7 +2373,7 @@ background-position:center;
             // SAVED SA DEVICE
             let savedPhoto =
                 localStorage.getItem(
-                    "passportPhotoBase64"
+                    "passportPhotoBase64" + email
                 );
 
 
@@ -2405,7 +2403,7 @@ background-position:center;
 
 
                 localStorage.setItem(
-                    "passportPhotoBase64",
+                    "passportPhotoBase64", + email,
                     savedPhoto
                 );
 
@@ -2680,10 +2678,7 @@ background-position:center;
             // APPLICANT PHOTO WITH BORDER
             // ===============================
 
-            if (
-                photoBase64 &&
-                String(photoBase64).startsWith("data:image")
-            ) {
+            if (photoBase64) {
 
 
                 // PHOTO BORDER
@@ -3250,7 +3245,7 @@ background-position:center;
             payload.append("fileName", file.name);
             payload.append("mimeType", file.type || "image/png");
             payload.append("base64", base64);
-            localStorage.setItem("passportPhotoBase64", "data:" + (file.type || "image/png") + ";base64," + base64
+            localStorage.setItem("passportPhotoBase64" + email, "data:" + (file.type || "image/png") + ";base64," + base64
             );
 
             try {
@@ -3716,11 +3711,11 @@ background-position:center;
                     // SAVE EXISTING PASSPORT PHOTO FROM GOOGLE DRIVE
                     if (
                         data.photoUrl &&
-                        !localStorage.getItem("passportPhotoBase64")
+                        !localStorage.getItem("passportPhotoBase64" + email)
                     ) {
 
                         localStorage.setItem(
-                            "passportPhotoBase64",
+                            "passportPhotoBase64" + email,
                             data.photoUrl
                         );
 
