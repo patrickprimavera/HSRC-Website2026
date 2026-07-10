@@ -2383,76 +2383,74 @@ background-position:center;
 
         async function getPassportPhotoBase64() {
 
-            const input =
-                document.getElementById("passportPhoto");
+            // NOTE: Uses outer-scoped `email` variable from uploadChallengePassportPdf().
 
+            const input = document.getElementById("passportPhoto");
 
-            // MAY BAGONG UPLOAD
-            if (
-                input &&
-                input.files &&
-                input.files[0]
-            ) {
+            // MAY BAGONG UPLOAD (use compressed dataURL)
+            if (input && input.files && input.files[0]) {
+                const compressedPhoto = await compressPassportPhoto(input.files[0]);
 
-                const compressedPhoto =
-                    await compressPassportPhoto(
-                        input.files[0]
-                    );
-
-                // Save photo per email so returning users (different device) can rebuild the same passport photo.
                 localStorage.setItem(
                     "passportPhotoBase64" + email,
                     compressedPhoto
                 );
 
                 return compressedPhoto;
-
             }
-
 
             // SAVED SA DEVICE
-            let savedPhoto =
-                localStorage.getItem(
-                    "passportPhotoBase64" + email
-                );
+            let savedPhoto = localStorage.getItem(
+                "passportPhotoBase64" + email
+            );
 
-
-            if (
-                savedPhoto &&
-                savedPhoto.startsWith("data:image")
-            ) {
+            // If already base64/dataURL, return directly
+            if (savedPhoto && String(savedPhoto).startsWith("data:image")) {
                 return savedPhoto;
             }
 
+            // If saved value is a URL (ex: drive), fetch/convert to base64
+            if (savedPhoto && String(savedPhoto).startsWith("http")) {
+                const directUrl = convertDriveImageUrl(savedPhoto);
+                const dataUrl = await fetchImageAsDataUrl(directUrl);
+                if (dataUrl && String(dataUrl).startsWith("data:image")) {
+                    localStorage.setItem("passportPhotoBase64" + email, dataUrl);
+                    return dataUrl;
+                }
+            }
 
             // IPHONE / NEW DEVICE FIX
-            // kunin photo galing server status
-            if (
-                window.challengeStatusData &&
-                (
-                    window.challengeStatusData.photo ||
-                    window.challengeStatusData.photoBase64 ||
-                    window.challengeStatusData.passportPhoto
-                )
-            ) {
+            // kunin photo galing server status (handle multiple field names + drive url)
+            if (window.challengeStatusData) {
+                let candidate = "";
 
-                savedPhoto =
-                    window.challengeStatusData.photo ||
-                    window.challengeStatusData.photoBase64 ||
-                    window.challengeStatusData.passportPhoto;
+                if (window.challengeStatusData.photo) candidate = window.challengeStatusData.photo;
+                else if (window.challengeStatusData.photoBase64) candidate = window.challengeStatusData.photoBase64;
+                else if (window.challengeStatusData.passportPhoto) candidate = window.challengeStatusData.passportPhoto;
+                else if (window.challengeStatusData.photoUrl) candidate = window.challengeStatusData.photoUrl;
 
+                if (candidate) {
+                    // If candidate is base64 already, return
+                    if (String(candidate).startsWith("data:image")) {
+                        localStorage.setItem("passportPhotoBase64" + email, candidate);
+                        return candidate;
+                    }
 
-                // Save server photo url (or base64) per email so it can be used for PDF generation on any device.
-                localStorage.setItem(
-                    "passportPhotoBase64" + email,
-                    savedPhoto
-                );
+                    // If candidate is a drive/share URL, convert to direct fetch URL and to dataURL
+                    if (String(candidate).startsWith("http")) {
+                        const directUrl = convertDriveImageUrl(candidate);
+                        const dataUrl = await fetchImageAsDataUrl(directUrl);
+                        if (dataUrl && String(dataUrl).startsWith("data:image")) {
+                            localStorage.setItem("passportPhotoBase64" + email, dataUrl);
+                            return dataUrl;
+                        }
+                    }
 
-
-                return savedPhoto;
-
+                    // Fallback: store whatever we got
+                    localStorage.setItem("passportPhotoBase64" + email, candidate);
+                    return candidate;
+                }
             }
-
 
             return "";
 
