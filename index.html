@@ -2027,13 +2027,49 @@ background-position:center;
 
             if (!url) return "";
 
-            const match = url.match(/\/d\/([^/]+)/);
+            // Handles common Drive link formats and returns a "direct" image URL.
+            // Goal: make it fetchable by <img> / jsPDF image rendering across devices.
+            const s = String(url);
 
-            if (match && match[1]) {
-                return "https://lh3.googleusercontent.com/d/" + match[1];
+            // /d/<fileId>/...
+            let m = s.match(/\/d\/([^/]+)/);
+            if (m && m[1]) {
+                const fileId = m[1];
+                // Use uc endpoint with export=download for direct fetch.
+                return `https://drive.google.com/uc?export=download&id=${fileId}`;
             }
 
-            return url;
+            // id=<fileId> (uc?id=... or similar)
+            m = s.match(/[?&]id=([^&]+)/);
+            if (m && m[1]) {
+                const fileId = m[1];
+                return `https://drive.google.com/uc?export=download&id=${fileId}`;
+            }
+
+            // Already maybe direct
+            return s;
+        }
+
+        async function fetchImageAsDataUrl(imageUrl) {
+
+            if (!imageUrl) return "";
+
+            try {
+                const resp = await fetch(imageUrl, { mode: 'cors' });
+                if (!resp.ok) return "";
+
+                const blob = await resp.blob();
+                if (!blob) return "";
+
+                return await new Promise((resolve) => {
+                    const reader = new FileReader();
+                    reader.onloadend = () => resolve(String(reader.result || ''));
+                    reader.readAsDataURL(blob);
+                });
+            } catch (e) {
+                return "";
+            }
+
         }
 
         async function uploadChallengePassportPdf(email, approvedSteps, stepStatuses) {
@@ -2081,9 +2117,16 @@ background-position:center;
                     window.challengeStatusData.photoUrl
                 ) {
 
-                    photoBase64 =
+                    // Convert Drive sharing URL to a direct fetchable URL.
+                    const directUrl =
                         convertDriveImageUrl(
                             window.challengeStatusData.photoUrl
+                        );
+
+                    // Convert direct URL -> dataURL so jsPDF can reliably embed it.
+                    photoBase64 =
+                        await fetchImageAsDataUrl(
+                            directUrl
                         );
 
                 }
@@ -2719,9 +2762,14 @@ background-position:center;
                     });
 
 
+                    // Choose correct image type based on dataURL header.
+                    // jsPDF is picky: passing "JPEG" for PNG images can result in missing photo.
+                    const dataUrlType = String(photoBase64 || '').match(/^data:image\/([^;]+);/i)?.[1] || 'jpeg';
+                    const pdfImgType = dataUrlType.toUpperCase().includes('PNG') ? 'PNG' : 'JPEG';
+
                     pdf.addImage(
                         img,
-                        "JPEG",
+                        pdfImgType,
                         565,
                         125,
                         120,
