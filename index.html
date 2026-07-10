@@ -2109,50 +2109,17 @@ background-position:center;
                     }
                 );
 
-                // 1) ALWAYS USE GOOGLE SHEET / DRIVE PHOTO FIRST
-                let photoBase64 = "";
+                // GET ORIGINAL USER 2X2 PHOTO
+                // SAME LOGIC NG TEAM / NAME / CONTACT
 
-                if (
-                    window.challengeStatusData &&
-                    window.challengeStatusData.photoUrl
-                ) {
-
-                    // Convert Drive sharing URL to a direct fetchable URL.
-                    const directUrl =
-                        convertDriveImageUrl(
-                            window.challengeStatusData.photoUrl
-                        );
-
-                    // Convert direct URL -> dataURL so jsPDF can reliably embed it.
-                    photoBase64 =
-                        await fetchImageAsDataUrl(
-                            directUrl
-                        );
-
-                }
+                let photoBase64 =
+                    await getPassportPhotoBase64(email);
 
 
-                // 2) IF NO SERVER PHOTO, USE SAVED DEVICE PHOTO
-                if (!photoBase64) {
-
-                    photoBase64 =
-                        localStorage.getItem(
-                            "passportPhotoBase64"
-                        ) || "";
-
-                }
-
-
-                // 3) Last option manual upload/current input
-                if (
-                    !photoBase64 ||
-                    !String(photoBase64).startsWith("data:image")
-                ) {
-
-                    photoBase64 =
-                        await getPassportPhotoBase64();
-
-                }
+                console.log(
+                    "FINAL PASSPORT PHOTO:",
+                    photoBase64
+                );
 
                 const pdfBase64 =
                     await generateChallengePassportPdfBase64(
@@ -2381,13 +2348,13 @@ background-position:center;
 
         }
 
-        async function getPassportPhotoBase64() {
+        async function getPassportPhotoBase64(email) {
 
             const input =
                 document.getElementById("passportPhoto");
 
 
-            // MAY BAGONG UPLOAD
+            // 1. MAY BAGONG UPLOAD LANG
             if (
                 input &&
                 input.files &&
@@ -2401,7 +2368,7 @@ background-position:center;
 
 
                 localStorage.setItem(
-                    "passportPhotoBase64", + email,
+                    "passportPhotoBase64_" + email,
                     compressedPhoto
                 );
 
@@ -2411,43 +2378,40 @@ background-position:center;
             }
 
 
-            // SAVED SA DEVICE
-            let savedPhoto =
-                localStorage.getItem(
-                    "passportPhotoBase64" + email
-                );
 
-
-            if (
-                savedPhoto &&
-                savedPhoto.startsWith("data:image")
-            ) {
-                return savedPhoto;
-            }
-
-
-            // IPHONE / NEW DEVICE FIX
-            // kunin photo galing server status
+            // 2. GOOGLE SHEET / GOOGLE DRIVE PHOTO
+            // ITO ANG PARA SA BUMALIK AFTER 2-3 DAYS
             if (
                 window.challengeStatusData &&
-                (
-                    window.challengeStatusData.photo ||
-                    window.challengeStatusData.photoBase64 ||
-                    window.challengeStatusData.passportPhoto
-                )
+                window.challengeStatusData.photoUrl
             ) {
 
-                savedPhoto =
-                    window.challengeStatusData.photo ||
-                    window.challengeStatusData.photoBase64 ||
-                    window.challengeStatusData.passportPhoto;
+                const drivePhoto =
+                    convertDriveImageUrl(
+                        window.challengeStatusData.photoUrl
+                    );
 
 
                 localStorage.setItem(
-                    "passportPhotoBase64", + email,
-                    savedPhoto
+                    "passportPhotoBase64_" + email,
+                    drivePhoto
                 );
 
+
+                return drivePhoto;
+
+            }
+
+
+
+            // 3. SAME DEVICE CACHE
+            let savedPhoto =
+                localStorage.getItem(
+                    "passportPhotoBase64_" + email
+                );
+
+
+            if (savedPhoto) {
 
                 return savedPhoto;
 
