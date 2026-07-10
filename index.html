@@ -2073,17 +2073,10 @@ background-position:center;
                     }
                 );
 
-                // 1) Try get passport photo from current input/localStorage
-                let photoBase64 =
-                    localStorage.getItem(
-                        "passportPhotoBase64" + email
-                    ) || "";
+                // 1) ALWAYS USE GOOGLE SHEET / DRIVE PHOTO FIRST
+                let photoBase64 = "";
 
-
-                // 2) If wala sa device, kunin galing Google Sheet status
                 if (
-                    (!photoBase64 ||
-                        !photoBase64.startsWith("data:image")) &&
                     window.challengeStatusData &&
                     window.challengeStatusData.photoUrl
                 ) {
@@ -2093,11 +2086,16 @@ background-position:center;
                             window.challengeStatusData.photoUrl
                         );
 
+                }
 
-                    localStorage.setItem(
-                        "passportPhotoBase64", + email,
-                        photoBase64
-                    );
+
+                // 2) IF NO SERVER PHOTO, USE SAVED DEVICE PHOTO
+                if (!photoBase64) {
+
+                    photoBase64 =
+                        localStorage.getItem(
+                            "passportPhotoBase64"
+                        ) || "";
 
                 }
 
@@ -2680,42 +2678,65 @@ background-position:center;
 
             if (photoBase64) {
 
+                try {
 
-                // PHOTO BORDER
+                    // PHOTO BORDER
 
-                pdf.setDrawColor(
-                    0,
-                    80,
-                    70
-                );
+                    pdf.setDrawColor(
+                        0,
+                        80,
+                        70
+                    );
 
+                    pdf.setLineWidth(
+                        2
+                    );
 
-                pdf.setLineWidth(
-                    2
-                );
-
-
-                pdf.roundedRect(
-                    560, // X
-                    120, // Y
-                    130, // width
-                    160, // height
-
-                    5, 5);
-
+                    pdf.roundedRect(
+                        560,
+                        120,
+                        130,
+                        160,
+                        5,
+                        5
+                    );
 
 
-                // PHOTO
+                    // PHOTO LOAD FIX (ANDROID / IPHONE / DESKTOP)
 
-                pdf.addImage(
-                    photoBase64,
-                    "PNG",
-                    565, // X move left/right
-                    125, // Y move up/down
-                    120, // width ng photo
-                    150 // height ng photo
-                );
+                    const img = new Image();
 
+                    img.crossOrigin = "anonymous";
+
+                    img.src = photoBase64;
+
+
+                    await new Promise((resolve) => {
+
+                        img.onload = resolve;
+                        img.onerror = resolve;
+
+                    });
+
+
+                    pdf.addImage(
+                        img,
+                        "JPEG",
+                        565,
+                        125,
+                        120,
+                        150
+                    );
+
+
+                } catch (e) {
+
+                    console.log(
+                        "PASSPORT PHOTO SKIPPED:",
+                        e
+                    );
+
+                }
 
             }
 
@@ -2965,96 +2986,37 @@ background-position:center;
 
         }
 
-        function loadImageAsDataUrl(src) {
+        async function loadImageAsDataUrl(src) {
 
-            return new Promise((resolve, reject) => {
+            if (!src) {
 
-                const img = new Image();
+                return "";
 
-                img.onload = () => {
-
-                    try {
-
-                        const canvas =
-                            document.createElement("canvas");
-
-                        canvas.width =
-                            img.width * 2;
-
-                        canvas.height =
-                            img.height * 2;
+            }
 
 
-                        const ctx =
-                            canvas.getContext("2d");
+            // IF ALREADY BASE64 IMAGE
+            if (
+                String(src).startsWith("data:image")
+            ) {
+
+                return src;
+
+            }
 
 
-                        ctx.imageSmoothingEnabled =
-                            true;
+            // IF GOOGLE DRIVE / ONLINE IMAGE
+            // DO NOT CONVERT USING CANVAS
+            if (
+                String(src).startsWith("http")
+            ) {
 
-                        ctx.imageSmoothingQuality =
-                            "high";
+                return src;
 
-
-                        ctx.drawImage(
-                            img,
-                            0,
-                            0,
-                            canvas.width,
-                            canvas.height
-                        );
+            }
 
 
-                        resolve(
-                            canvas.toDataURL(
-                                "image/png",
-                                1.0
-                            )
-                        );
-
-                    } catch (e) {
-
-                        reject(
-                            new Error(
-                                "CANVAS IMAGE FAILED: " + e.message
-                            )
-                        );
-
-                    }
-
-                };
-
-
-                img.onerror = () => {
-
-                    reject(
-                        new Error(
-                            "IMAGE NOT FOUND OR CANNOT LOAD: " + src
-                        )
-                    );
-
-                };
-
-                // FIX GOOGLE DRIVE LINK FOR IPHONE
-                if (
-                    src &&
-                    src.includes("drive.google.com/file/d/")
-                ) {
-
-                    const fileId =
-                        src
-                            .split("/d/")[1]
-                            .split("/")[0];
-
-
-                    src =
-                        "https://drive.google.com/uc?export=view&id=" + fileId;
-
-                }
-
-                img.src = src;
-
-            });
+            return src;
 
         }
 
