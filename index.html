@@ -2109,17 +2109,50 @@ background-position:center;
                     }
                 );
 
-                // GET ORIGINAL USER 2X2 PHOTO
-                // SAME LOGIC NG TEAM / NAME / CONTACT
+                // 1) ALWAYS USE GOOGLE SHEET / DRIVE PHOTO FIRST
+                let photoBase64 = "";
 
-                let photoBase64 =
-                    await getPassportPhotoBase64(email);
+                if (
+                    window.challengeStatusData &&
+                    window.challengeStatusData.photoUrl
+                ) {
+
+                    // Convert Drive sharing URL to a direct fetchable URL.
+                    const directUrl =
+                        convertDriveImageUrl(
+                            window.challengeStatusData.photoUrl
+                        );
+
+                    // Convert direct URL -> dataURL so jsPDF can reliably embed it.
+                    photoBase64 =
+                        await fetchImageAsDataUrl(
+                            directUrl
+                        );
+
+                }
 
 
-                console.log(
-                    "FINAL PASSPORT PHOTO:",
-                    photoBase64
-                );
+                // 2) IF NO SERVER PHOTO, USE SAVED DEVICE PHOTO
+                if (!photoBase64) {
+
+                    photoBase64 =
+                        localStorage.getItem(
+                            "passportPhotoBase64"
+                        ) || "";
+
+                }
+
+
+                // 3) Last option manual upload/current input
+                // If still no photo (or not a valid dataURL), rebuild from saved per-email data.
+                if (
+                    !photoBase64 ||
+                    !String(photoBase64).startsWith("data:image")
+                ) {
+
+                    photoBase64 = await getPassportPhotoBase64();
+
+                }
 
                 const pdfBase64 =
                     await generateChallengePassportPdfBase64(
@@ -2348,13 +2381,13 @@ background-position:center;
 
         }
 
-        async function getPassportPhotoBase64(email) {
+        async function getPassportPhotoBase64() {
 
             const input =
                 document.getElementById("passportPhoto");
 
 
-            // 1. MAY BAGONG UPLOAD LANG
+            // MAY BAGONG UPLOAD
             if (
                 input &&
                 input.files &&
@@ -2366,52 +2399,55 @@ background-position:center;
                         input.files[0]
                     );
 
-
+                // Save photo per email so returning users (different device) can rebuild the same passport photo.
                 localStorage.setItem(
-                    "passportPhotoBase64_" + email,
+                    "passportPhotoBase64" + email,
                     compressedPhoto
                 );
-
 
                 return compressedPhoto;
 
             }
 
 
-
-            // 2. GOOGLE SHEET / GOOGLE DRIVE PHOTO
-            // ITO ANG PARA SA BUMALIK AFTER 2-3 DAYS
-            if (
-                window.challengeStatusData &&
-                window.challengeStatusData.photoUrl
-            ) {
-
-                const drivePhoto =
-                    convertDriveImageUrl(
-                        window.challengeStatusData.photoUrl
-                    );
-
-
-                localStorage.setItem(
-                    "passportPhotoBase64_" + email,
-                    drivePhoto
+            // SAVED SA DEVICE
+            let savedPhoto =
+                localStorage.getItem(
+                    "passportPhotoBase64" + email
                 );
 
 
-                return drivePhoto;
-
+            if (
+                savedPhoto &&
+                savedPhoto.startsWith("data:image")
+            ) {
+                return savedPhoto;
             }
 
 
+            // IPHONE / NEW DEVICE FIX
+            // kunin photo galing server status
+            if (
+                window.challengeStatusData &&
+                (
+                    window.challengeStatusData.photo ||
+                    window.challengeStatusData.photoBase64 ||
+                    window.challengeStatusData.passportPhoto
+                )
+            ) {
 
-            // 3. SAME DEVICE CACHE
-            let savedPhoto =
-                localStorage.getItem(
-                    "passportPhotoBase64_" + email
+                savedPhoto =
+                    window.challengeStatusData.photo ||
+                    window.challengeStatusData.photoBase64 ||
+                    window.challengeStatusData.passportPhoto;
+
+
+                // Save server photo url (or base64) per email so it can be used for PDF generation on any device.
+                localStorage.setItem(
+                    "passportPhotoBase64" + email,
+                    savedPhoto
                 );
 
-
-            if (savedPhoto) {
 
                 return savedPhoto;
 
@@ -3683,8 +3719,10 @@ background-position:center;
                     }
 
                     // SAVE EXISTING PASSPORT PHOTO FROM GOOGLE DRIVE
+                    // Save existing passport photo url ONLY if it is truthy.
                     if (
                         data.photoUrl &&
+                        String(data.photoUrl).trim() !== "" &&
                         !localStorage.getItem("passportPhotoBase64" + email)
                     ) {
 
