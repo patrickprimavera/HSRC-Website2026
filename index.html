@@ -3593,7 +3593,10 @@ background-position:center;
 
                 hideChallengeLoading();
                 setChallengeActionButtonsDisabled(false);
-                alert("All 8 challenge steps uploaded successfully.");
+
+                alert(
+                    "✅ Submission Completed!\n\nYour form and challenge steps have been submitted successfully.\n\nPlease wait 2–3 days for admin approval.\n\nEnter your registered email address and click \"Start Checking Approval\" to check your Task 1–8 status."
+                );
             } catch (err) {
                 console.error("submitChallengeAll error:", err);
                 hideChallengeLoading();
@@ -3609,6 +3612,9 @@ background-position:center;
         let challengeUserInfo = {};
 
         async function startChallengePolling() {
+            // Guard: prevent duplicate passport PDF generation/upload during repeated polling cycles
+            window.__challengePassportGenerated = window.__challengePassportGenerated || false;
+
             const email = getChallengeEmail();
             const savedInfo =
                 JSON.parse(
@@ -3788,95 +3794,93 @@ background-position:center;
                     }
 
 
-                    if (approvedSteps.length === 8) {
+                    // If ANY task is rejected, show rejected message and stop.
+                    const rejectedSteps = [];
+                    for (let i = 1; i <= 8; i++) {
+                        const s = data.steps?.[i];
+                        const txt = String(s ?? "").trim().toLowerCase();
+                        if (
+                            s === true ||
+                            txt.includes("approved") ||
+                            txt.includes("stamped")
+                        ) {
+                            continue;
+                        }
+                        if (txt.includes("rejected") || txt.includes("reject")) {
+                            rejectedSteps.push(i);
+                        }
+                    }
 
+                    if (rejectedSteps.length > 0) {
                         challengePollingResolved = true;
-
                         stopChallengePolling();
 
+                        const container = document.getElementById('challenge-success-card');
+                        if (container) {
+                            container.classList.remove('hidden');
+                            container.innerHTML = `
+                                <div class="text-5xl mb-3">❌</div>
+                                <h2 class="text-2xl font-bold text-red-700">Some tasks were rejected</h2>
+                                <p class="mt-2 text-red-600 font-semibold">
+                                    ${rejectedSteps.length === 1
+                                        ? `❌ Task ${rejectedSteps[0]} Rejected`
+                                        : `❌ Task ${rejectedSteps.slice(0, -1).join(', ')}, and ${rejectedSteps[rejectedSteps.length - 1]} Rejected`}
+                                </p>
+                                <p class="mt-2 text-red-700">
+                                    Your submitted information for the rejected task(s) was not approved. Please update the required details and resubmit these tasks.
+                                </p>
+                                <div class="mt-5 text-xs text-slate-600">
+                                    After resubmission, click <b>Start Checking Approval</b> again.
+                                </div>
+                            `;
+                        }
+
+                        hideChallengeLoading();
+                        setChallengeActionButtonsDisabled(false);
+                        return true;
+                    }
+
+                    if (approvedSteps.length === 8) {
+                        // Prevent multiple PDF generate/upload
+                        if (window.__challengePassportGenerated) {
+                            challengePollingResolved = true;
+                            stopChallengePolling();
+                            hideChallengeLoading();
+                            setChallengeActionButtonsDisabled(false);
+                            return true;
+                        }
+
+                        window.__challengePassportGenerated = true;
+                        challengePollingResolved = true;
+                        stopChallengePolling();
 
                         // SHOW PASSPORT RESULT ONLY IF ALL TASKS APPROVED
-
-                        renderChallengePassportPreview(
-                            approvedSteps
-                        );
-
+                        renderChallengePassportPreview(approvedSteps);
 
                         document
-                            .getElementById(
-                                "challenge-success-card"
-                            )
+                            .getElementById("challenge-success-card")
                             ?.classList
-                            .remove(
-                                "hidden"
-                            );
+                            .remove("hidden");
 
-
-                        console.log("START PDF GENERATE");
-
-
-                        const passportPdfLink =
-                            await uploadChallengePassportPdf(
-                                email,
-                                approvedSteps,
-                                data.steps
-                            );
-
+                        const passportPdfLink = await uploadChallengePassportPdf(
+                            email,
+                            approvedSteps,
+                            data.steps
+                        );
 
                         if (!passportPdfLink) {
-
                             renderPassportPdfButtonError(
                                 "Passport PDF generation failed. Please try again."
                             );
-
                             hideChallengeLoading();
-
                             setChallengeActionButtonsDisabled(false);
-
                             return true;
-
                         }
 
-
-                        console.log(
-                            "PASSPORT PDF LINK:",
-                            passportPdfLink
-                        );
-
-
-                        renderPassportPdfButton(
-                            passportPdfLink
-                        );
-
-
-                        // EMAIL SENDING DISABLED
-                        // const sent =
-                        //     await sendChallengeCompletionEmail(
-                        //         email,
-                        //         approvedSteps,
-                        //         passportPdfLink
-                        //     );
-
-
-                        // if (!sent) {
-
-                        //     console.warn(
-                        //         "Challenge email not sent."
-                        //     );
-
-                        // }
-
-
+                        renderPassportPdfButton(passportPdfLink);
                         hideChallengeLoading();
-
                         setChallengeActionButtonsDisabled(false);
-
-                        alert(
-                            "Admin result has been received."
-                        );
-
                         return true;
-
                     }
 
                     showChallengeLoading("Waiting for admin approval result...");
