@@ -2023,6 +2023,19 @@ background-position:center;
             `;
         }
 
+        function convertDriveImageUrl(url) {
+
+            if (!url) return "";
+
+            const match = url.match(/\/d\/([^/]+)/);
+
+            if (match && match[1]) {
+                return "https://lh3.googleusercontent.com/d/" + match[1];
+            }
+
+            return url;
+        }
+
         async function uploadChallengePassportPdf(email, approvedSteps, stepStatuses) {
             try {
 
@@ -2076,7 +2089,17 @@ background-position:center;
                 ) {
 
                     photoBase64 =
-                        window.challengeStatusData.photoUrl;
+                        await loadImageAsDataUrl(
+                            convertDriveImageUrl(
+                                window.challengeStatusData.photoUrl
+                            )
+                        );
+
+
+                    localStorage.setItem(
+                        "passportPhotoBase64",
+                        photoBase64
+                    );
 
                 }
 
@@ -2207,6 +2230,7 @@ background-position:center;
 
             }
         }
+    
 
         function compressPassportPhoto(file) {
 
@@ -2348,15 +2372,50 @@ background-position:center;
             }
 
 
-            // WALANG BAGONG UPLOAD
-            // GAMITIN SAVED PHOTO
-            const savedPhoto =
+            // SAVED SA DEVICE
+            let savedPhoto =
                 localStorage.getItem(
                     "passportPhotoBase64"
                 );
 
 
-            return savedPhoto || "";
+            if (
+                savedPhoto &&
+                savedPhoto.startsWith("data:image")
+            ) {
+                return savedPhoto;
+            }
+
+
+            // IPHONE / NEW DEVICE FIX
+            // kunin photo galing server status
+            if (
+                window.challengeStatusData &&
+                (
+                    window.challengeStatusData.photo ||
+                    window.challengeStatusData.photoBase64 ||
+                    window.challengeStatusData.passportPhoto
+                )
+            ) {
+
+                savedPhoto =
+                    window.challengeStatusData.photo ||
+                    window.challengeStatusData.photoBase64 ||
+                    window.challengeStatusData.passportPhoto;
+
+
+                localStorage.setItem(
+                    "passportPhotoBase64",
+                    savedPhoto
+                );
+
+
+                return savedPhoto;
+
+            }
+
+
+            return "";
 
         }
 
@@ -3599,6 +3658,15 @@ background-position:center;
                     let data = null;
                     try {
                         data = await resp.json();
+
+                        // Save full status data for passport.
+                        window.challengeStatusData = data;
+
+                        console.log(
+                            "STATUS DATA PHOTO CHECK:",
+                            data
+                        );
+
                     } catch (err) {
                         data = null;
                     }
