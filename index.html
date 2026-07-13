@@ -125,6 +125,64 @@
                 transform: translateY(0);
             }
         }
+
+        /* ===== Submission Guide ===== */
+
+        .submission-note {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-left: 6px solid #0f766e;
+            border-radius: 14px;
+            padding: 16px;
+            margin-bottom: 18px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, .08);
+        }
+
+        .submission-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 14px;
+        }
+
+        .submission-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .submission-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .submission-item.blue {
+            background: #eff6ff;
+            border-left: 5px solid #3b82f6;
+        }
+
+        .submission-item.green {
+            background: #ecfdf5;
+            border-left: 5px solid #10b981;
+        }
+
+        .submission-icon {
+            font-size: 22px;
+            line-height: 1;
+        }
+
+        .submission-item strong {
+            color: #111827;
+            font-size: 15px;
+        }
+
+        .submission-item div {
+            color: #4b5563;
+            font-size: 13px;
+            line-height: 1.6;
+        }
     </style>
 </head>
 
@@ -311,8 +369,8 @@ background-position:center;
 
                 <div class="relative z-10 px-4 lg:px-10 py-10">
                     <div class="text-center text-white mb-8">
-                        <h2 class="text-4xl md:text-5xl font-extrabold tracking-tight">30-DAY CHALLENGE</h2>
-                        <p class="mt-2 text-xl font-bold text-amber-300">PASSPORT STAMP CHECKLIST</p>
+                        <h2 class="text-4xl md:text-5xl font-extrabold tracking-tight">30-DAY MENTORSHIP</h2>
+                        <p class="mt-2 text-xl font-bold text-amber-300">PASSPORT CHECKLIST</p>
                     </div>
 
                     <div class="bg-white/95 backdrop-blur-sm rounded-3xl shadow-2xl border border-white/40 p-6 md:p-10">
@@ -540,6 +598,33 @@ background-position:center;
                                     </div>
 
                                     <div class="pt-2">
+
+                                        <div class="submission-note">
+
+                                            <div class="submission-title">
+                                                📌 Submission Guide
+                                            </div>
+
+                                            <div class="submission-item blue">
+                                                <span class="submission-icon">🔵</span>
+                                                <div>
+                                                    <strong>Submit Uploaded Task</strong><br>
+                                                    Save or update only the completed task(s) you've uploaded. You may
+                                                    click this anytime.
+                                                </div>
+                                            </div>
+
+                                            <div class="submission-item green">
+                                                <span class="submission-icon">🟢</span>
+                                                <div>
+                                                    <strong>Submit Challenge Steps 1–8</strong><br>
+                                                    Click only after completing and submitting <b>all required tasks
+                                                        (Task 1–Task 8)</b>. Your submission will then be sent for admin
+                                                    review.
+                                                </div>
+                                            </div>
+
+                                        </div>
 
                                         <button id="challenge-submit-partial-btn" type="button"
                                             onclick="submitChallengePartial()"
@@ -1587,7 +1672,7 @@ background-position:center;
 
         // Google Apps Script Web App URL (provided)
         const GOOGLE_SHEET_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwHRI_tfnQDmGgMVjEBba6DHILJIZeXSmm9Q07xeMtOPpB_3FXkOzKXKhaZ1HTZkKcF/exec";
-        const CHALLENGE_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyonPg9IPv7APzx_fyqUMRH79HTSPuEeEQEHPVRa3-ewUNkWBvhLbftYFFyRGm6yXWQNA/exec";
+        const CHALLENGE_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyMOvWs_J_4154St4k3JteuNottUdZ92g-l0EUNQbiKdfEbUOKFnIzfUjjufV8ZRH25IQ/exec";
 
 
         (function () {
@@ -3298,11 +3383,166 @@ background-position:center;
             }
         }
 
+        let __challengeSubmittingPartial = false;
+        let __challengeSubmittingAll = false;
+
+        function getChallengeRequiredSteps() {
+            return Array.from({ length: 8 }, (_, i) => i + 1);
+        }
+
+        function parseChallengeStepsFromStatusData(data) {
+            const steps = (data && data.steps) ? data.steps : {};
+            return steps;
+        }
+
+        function computeUploadProgressFromSteps(stepsObj) {
+            // CHANGED (BUG #1): consider a step completed when its status contains ANY of:
+            // approved/stamped (existing) OR uploaded/submitted/done/complete/completed.
+            // Still supports boolean true (existing).
+            const completed = [];
+
+            const completedTokens = [
+                "approved",
+                "stamped",
+                "uploaded",
+                "submitted",
+                "done",
+                "complete",
+                "completed"
+            ];
+
+            for (let i = 1; i <= 8; i++) {
+                const v = stepsObj ? stepsObj[i] : undefined;
+                const txt = String(v ?? "").trim().toLowerCase();
+
+                const isCompleted = v === true ||
+                    completedTokens.some((token) => txt.includes(token));
+
+                if (isCompleted) completed.push(i);
+            }
+
+            const all = getChallengeRequiredSteps();
+            const remaining = all.filter((s) => !completed.includes(s));
+            return { completedCount: completed.length, remaining, completed };
+        }
+
+        function showChallengeProgressPopup({ completedCount, remaining }) {
+            // CHANGED (BUG #2): make popup reusable by only hiding on OK.
+            // Keep the DOM intact; do not overwrite/rebuild the popup content on OK.
+            const container = document.getElementById('challenge-success-card');
+            if (!container) return;
+
+            // Store original HTML once (for backward compatibility / future reuse).
+            if (!container.dataset.originalHtml) {
+                container.dataset.originalHtml = container.innerHTML;
+            }
+
+            container.classList.remove('hidden');
+
+            const remainingHtml = (remaining && remaining.length)
+                ? `<ul class="mt-2 text-left text-sm font-semibold text-slate-800">
+                        ${remaining.map(s => `<li>• Task ${s}</li>`).join('')}
+                   </ul>`
+                : `<p class="mt-2 text-sm font-semibold text-green-700">All tasks completed.</p>`;
+
+            container.innerHTML = `
+                <div class="text-5xl mb-3">✅</div>
+                <h2 class="text-2xl font-bold text-green-700">Completed ${completedCount} / 8 Tasks</h2>
+                <p class="mt-2 text-slate-700 font-semibold">Remaining Tasks</p>
+                ${remainingHtml}
+                <div class="mt-5">
+                    <button id="challenge-progress-ok-btn" type="button" class="w-full bg-amber-500 hover:bg-amber-600 text-white font-bold px-5 py-3 rounded-xl shadow">
+                        OK
+                    </button>
+                </div>
+            `;
+
+            const okBtn = document.getElementById('challenge-progress-ok-btn');
+            if (okBtn) {
+                okBtn.addEventListener('click', () => {
+                    // BUG #2 fix: do not destroy popup HTML.
+                    container.classList.add('hidden');
+                }, { once: true });
+            }
+        }
+
+        function showChallengeAllCompletedPopup() {
+            const container = document.getElementById('challenge-success-card');
+            if (!container) return;
+
+            // CHANGED (BUG #2): make popup reusable by only hiding on OK.
+            // Keep DOM intact; do not overwrite/rebuild on OK.
+            if (!container.dataset.originalHtml) {
+                container.dataset.originalHtml = container.innerHTML;
+            }
+
+            container.classList.remove('hidden');
+            container.innerHTML = `
+                <div class="text-5xl mb-3">🎉</div>
+                <h2 class="text-2xl font-bold text-green-700">Challenge Submitted Successfully!</h2>
+                <p class="mt-2 text-green-700 font-semibold">Congratulations!</p>
+                <p class="mt-2 text-green-600 font-semibold">
+                    You have successfully completed and submitted all required Challenge Tasks (Task 1–Task 8).
+                </p>
+                <p class="mt-3 text-slate-700 font-semibold">⏳ Please allow approximately 2–3 business days for our team to review and approve your submission.</p>
+                <p class="mt-2 text-slate-700">After the review period:</p>
+                <p class="mt-2 text-slate-700">Kindly remember: Please save this information or take a screenshot for future reference, as these are the steps you will need to follow after 2–3 days.</p>
+                <ul class="mt-2 text-left text-sm font-semibold text-slate-800">
+                    <li>• Enter the same email address you used during registration</li>
+                    <li>• If you access the website using a different device, please upload again the same 2×2 photo you initially submitted.</li>
+                    <li>• Click “Start Checking Approval”</li>
+                    <li>• Once approved, your HSRC Challenge Passport will be generated automatically</li>
+                </ul>
+                <p class="mt-3 text-slate-700 font-semibold">Thank you for completing the HSRC 30-Days   Challenge.</p>
+                <div class="mt-5">
+                    <button id="challenge-all-completed-ok-btn" type="button" class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold px-5 py-3 rounded-xl shadow">
+                        OK
+                    </button>
+                </div>
+            `;
+
+            const okBtn = document.getElementById('challenge-all-completed-ok-btn');
+            if (okBtn) {
+                okBtn.addEventListener('click', () => {
+                    // BUG #2 fix: do not destroy popup HTML.
+                    container.classList.add('hidden');
+                }, { once: true });
+            }
+        }
+
+        async function fetchChallengeStatusForEmail(email) {
+            const fd = new FormData();
+            fd.append("action", "challenge_get_status");
+            fd.append("email", email);
+
+            const resp = await fetch(CHALLENGE_WEB_APP_URL, {
+                method: "POST",
+                body: fd
+            });
+
+            let data = null;
+            try {
+                data = await resp.json();
+            } catch (e) {
+                data = null;
+            }
+            return data;
+        }
+
         async function submitChallengePartial() {
 
+            if (__challengeSubmittingPartial) return;
+            __challengeSubmittingPartial = true;
+
+
+            // Prevent duplicate submissions while in progress
+            const submitBtn = document.getElementById('challenge-submit-partial-btn');
+            if (submitBtn) submitBtn.disabled = true;
             setChallengeActionButtonsDisabled(true);
 
+
             let uploaded = 0;
+
 
             try {
 
@@ -3412,10 +3652,38 @@ background-position:center;
                     `${uploaded} task(s) uploaded successfully.`
                 );
 
+                // ===== Feature 1: Smart Task Completion Detection (after partial submit) =====
+                try {
+                    const emailAfter = getChallengeEmail();
+                    if (emailAfter) {
+                        const statusData = await fetchChallengeStatusForEmail(emailAfter);
+                        if (statusData && statusData.steps) {
+                            const stepsObj = parseChallengeStepsFromStatusData(statusData);
+                            const progress = computeUploadProgressFromSteps(stepsObj);
+
+                            const isAllCompleted = progress.remaining.length === 0;
+
+                            if (!isAllCompleted) {
+                                // Keep user workflow: show progress popup + allow continue uploading
+                                showChallengeProgressPopup({
+                                    completedCount: progress.completedCount,
+                                    remaining: progress.remaining
+                                });
+                            } else {
+                                // All required tasks are completed -> show success popup immediately
+                                showChallengeAllCompletedPopup();
+                            }
+                        }
+                    }
+                } catch (e2) {
+                    // Backward compatibility: if status fetch fails, do not break upload workflow
+                    console.warn('[Feature 1] Progress detection failed:', e2);
+                }
 
             } catch (e) {
 
                 console.error(e);
+
 
                 hideChallengeLoading();
 
@@ -3432,7 +3700,14 @@ background-position:center;
 
 
         async function submitChallengeAll() {
+            if (__challengeSubmittingAll) return;
+            __challengeSubmittingAll = true;
+
+            const allBtn = document.getElementById('challenge-submit-all-btn');
+            if (allBtn) allBtn.disabled = true;
+
             const email = getChallengeEmail();
+
 
             // CHECK REQUIRED STEPS 1-8 BEFORE FINAL SUBMIT
             for (let step = 1; step <= 8; step++) {
@@ -3483,12 +3758,6 @@ background-position:center;
                 contact:
                     document.getElementById("challenge-phone")?.value.trim() || ""
             };
-
-
-            localStorage.setItem(
-                "challengeUserInfo",
-                JSON.stringify(challengeUserInfo)
-            );
 
 
             localStorage.setItem(
@@ -3637,12 +3906,14 @@ background-position:center;
 
             challengePollingResolved = false;
 
+            // ===== Feature 2 + 3: Premium staged loading (and pending stop) =====
             setChallengeActionButtonsDisabled(true);
-            showChallengeLoading("Checking approval status, please wait...");
+            showChallengeLoading("Checking your submission...");
 
             // UX: show the Passport PDF button area immediately after clicking "Start Checking Approval"
             // (it will be replaced with the real Open Passport PDF link once admin results arrive)
             renderPassportPdfButtonLoading("Generating Passport PDF...");
+
 
             const stopChallengePolling = () => {
                 if (challengePollingTimer) {
@@ -3653,7 +3924,11 @@ background-position:center;
 
             const checkStatus = async () => {
                 try {
-                    showChallengeLoading("Checking approval status, please wait...");
+                    showChallengeLoading("Checking your submission...");
+
+                    // Premium loading checkpoints
+                    // (Best-effort: server call will confirm what exists)
+
 
                     const fd = new FormData();
                     fd.append("action", "challenge_get_status");
@@ -3730,9 +4005,17 @@ background-position:center;
                     }
 
                     if (!data || !data.steps) {
-                        showChallengeLoading("Waiting for admin approval result...");
-                        return false;
+                        showChallengeLoading("⏳ Checking Admin Approval...");
+                        // ===== Feature 2: stop infinite loading if server doesn't return expected status =====
+                        // If we can't determine submission state, stop polling for safety.
+                        challengePollingResolved = true;
+                        stopChallengePolling();
+                        hideChallengeLoading();
+                        setChallengeActionButtonsDisabled(false);
+                        alert("⏳ Approval Still Pending\n\nYour challenge submission has been received successfully.\nOur team is currently reviewing your uploaded challenge tasks.\nPlease allow approximately 2–3 business days for the approval process.\n\nAfter the review period, enter the same email address used during registration, then click Start Checking Approval again.\n\nThank you for your patience.");
+                        return true;
                     }
+
 
                     // SAVE EXISTING PASSPORT PHOTO FROM GOOGLE DRIVE
                     // Save existing passport photo url ONLY if it is truthy.
@@ -3895,8 +4178,22 @@ background-position:center;
                         return true;
                     }
 
+                    // ===== Feature 2 + 3: Pending admin approval => stop infinite loader immediately =====
+                    // At this point we have data.steps but not all are approved.
+                    // Preserve existing polling behavior for approved case, but for pending we stop.
+                    if (approvedSteps.length !== 8) {
+                        challengePollingResolved = true;
+                        stopChallengePolling();
+                        hideChallengeLoading();
+                        setChallengeActionButtonsDisabled(false);
+
+                        alert("⏳ Approval Still Pending\n\nYour challenge submission has been received successfully.\nOur team is currently reviewing your uploaded challenge tasks.\nPlease allow approximately 2–3 business days for the approval process.\n\nAfter the review period, enter the same email address used during registration, then click Start Checking Approval again to view your approval status.\n\nThank you for your patience.");
+                        return true;
+                    }
+
                     showChallengeLoading("Waiting for admin approval result...");
                     return false;
+
                 } catch (e) {
                     console.error("Polling error:", e);
                     challengePollingResolved = true;
