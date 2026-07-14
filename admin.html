@@ -305,6 +305,147 @@
   <script>
     const CHALLENGE_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyMOvWs_J_4154St4k3JteuNottUdZ92g-l0EUNQbiKdfEbUOKFnIzfUjjufV8ZRH25IQ/exec";
 
+    // ===== Minimal UI activation state (cards + quick filters) =====
+    // IMPORTANT: This code does not change any backend/business logic.
+    const BBai_QUICK_FILTER_STORAGE_KEY = "bbaiAdminQuickFilter";
+    window.__bbaiActiveQuickFilter = localStorage.getItem(BBai_QUICK_FILTER_STORAGE_KEY) || "All";
+
+    function bbaiGetRowStatusFromTr(tr) {
+      if (!tr) return "Pending";
+      // Status text is inside the span created in renderRows(): <span class="...">{status}</span>
+      const statusSpan = tr.querySelector('td.border > span, td > span');
+      // Fallback: search for any span matching pill styles
+      const pill = tr.querySelector('span.text-green-600, span.text-red-600, span.text-amber-600');
+      const el = pill || statusSpan;
+      const txt = (el && el.textContent) ? String(el.textContent).trim() : "";
+      const s = String(txt || "").trim();
+      return s || "Pending";
+    }
+
+    function bbaiUpdateDashboardCardsFromRenderedRows() {
+      const tbody = document.getElementById("adminTableBody");
+      if (!tbody) return;
+
+      const totalUsersSet = new Set();
+      let pending = 0;
+      let approved = 0;
+      let rejected = 0;
+
+      const trs = tbody.querySelectorAll("tr");
+      trs.forEach((tr) => {
+        // Each rendered tr corresponds to one step of one submission
+        const tds = tr.querySelectorAll("td");
+        if (!tds || tds.length < 5) return;
+
+        const emailTd = tds[1];
+        const email = emailTd ? String(emailTd.textContent || "").trim() : "";
+        if (email) totalUsersSet.add(email);
+
+        const status = bbaiGetRowStatusFromTr(tr);
+        if (status === "Approved") approved++;
+        else if (status === "Rejected") rejected++;
+        else pending++;
+      });
+
+      const elTotal = document.getElementById("bbai-total-users");
+      const elPending = document.getElementById("bbai-pending-count");
+      const elApproved = document.getElementById("bbai-approved-count");
+      const elRejected = document.getElementById("bbai-rejected-count");
+
+      if (elTotal) elTotal.textContent = String(totalUsersSet.size);
+      if (elPending) elPending.textContent = String(pending);
+      if (elApproved) elApproved.textContent = String(approved);
+      if (elRejected) elRejected.textContent = String(rejected);
+    }
+
+    function bbaiApplyQuickFilter() {
+      const tbody = document.getElementById("adminTableBody");
+      if (!tbody) return;
+
+      const active = window.__bbaiActiveQuickFilter || "All";
+      const trs = tbody.querySelectorAll("tr");
+      trs.forEach((tr) => {
+        const tds = tr.querySelectorAll("td");
+        if (!tds || tds.length < 5) return; // includes empty-row
+
+        const status = bbaiGetRowStatusFromTr(tr);
+        let shouldShow = true;
+        if (active === "Pending") shouldShow = status === "Pending";
+        else if (active === "Approved") shouldShow = status === "Approved";
+        else if (active === "Rejected") shouldShow = status === "Rejected";
+        else shouldShow = true; // All
+
+        tr.style.display = shouldShow ? "" : "none";
+      });
+
+      // Update aria-pressed state for chips
+      const chips = document.querySelectorAll("button[data-filter-chip]");
+      chips.forEach((chip) => {
+        const v = chip.getAttribute("data-filter-chip") || "All";
+        chip.setAttribute("aria-pressed", String(v === active));
+      });
+    }
+
+    function bbaiSetupQuickFilterChips() {
+      const chips = document.querySelectorAll("button[data-filter-chip]");
+      if (!chips || !chips.length) return;
+
+      chips.forEach((chip) => {
+        chip.addEventListener("click", () => {
+          const v = chip.getAttribute("data-filter-chip") || "All";
+          window.__bbaiActiveQuickFilter = v;
+          localStorage.setItem(BBai_QUICK_FILTER_STORAGE_KEY, v);
+
+          bbaiApplyQuickFilter();
+        });
+      });
+
+      // Apply stored filter on load
+      bbaiApplyQuickFilter();
+    }
+
+    // Monkey-patch renderRows to refresh cards + reapply filter after rendering.
+    // Does not modify business logic inside renderRows().
+    (function bbaiPatchRenderRowsOnce() {
+      // renderRows is declared later; patch after first definition.
+      const patch = () => {
+        if (window.__bbaiRenderRowsPatched) return;
+        if (typeof window.renderRows !== "function") return;
+
+        const origFn = window.renderRows;
+        window.renderRows = function patchedRenderRows(rows) {
+          const out = origFn(rows);
+          // After DOM is rendered, update UI.
+          try {
+            bbaiUpdateDashboardCardsFromRenderedRows();
+            bbaiApplyQuickFilter();
+          } catch (e) {}
+          return out;
+        };
+        window.__bbaiRenderRowsPatched = true;
+      };
+
+
+      // Wait for renderRows to exist.
+      const t = setInterval(() => {
+        patch();
+        if (window.__bbaiRenderRowsPatched) clearInterval(t);
+      }, 50);
+
+      // Also set up chips once DOM is ready.
+      document.addEventListener("DOMContentLoaded", () => {
+        bbaiSetupQuickFilterChips();
+        // Initial cards (if table already has rows)
+        try {
+          bbaiUpdateDashboardCardsFromRenderedRows();
+        } catch (e) {}
+        try {
+          bbaiApplyQuickFilter();
+        } catch (e) {}
+      });
+    })();
+
+
     function showLoading(show) {
       const overlay = document.getElementById('loadingOverlay');
       if (overlay) {
