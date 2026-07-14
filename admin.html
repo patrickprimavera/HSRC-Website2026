@@ -190,46 +190,92 @@
             Admin Key
           </label>
 
-          <input id="adminKey" type="password" placeholder="Enter admin key" class="w-full border rounded-lg p-3">
+          <input id="adminKey" type="password" placeholder="Enter admin key" class="w-full border rounded-lg p-3 bbai-input"/>
         </div>
-
 
         <div>
           <label class="block font-bold mb-2">
             Email
           </label>
 
-          <input id="emailFilter" type="email" placeholder="user@email.com" class="w-full border rounded-lg p-3">
+          <input id="emailFilter" type="email" placeholder="user@email.com" class="w-full border rounded-lg p-3 bbai-input"/>
         </div>
-
 
         <div>
           <label class="block font-bold mb-2">
             Team Name
           </label>
 
-          <input id="teamFilter" type="text" placeholder="Gold Keeper" class="w-full border rounded-lg p-3">
+          <input id="teamFilter" type="text" placeholder="Gold Keeper" class="w-full border rounded-lg p-3 bbai-input"/>
         </div>
 
-
         <div class="flex gap-2">
-
           <button onclick="loadSubmissions()"
-            class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-3 rounded-lg font-bold text-sm">
+            class="bbai-btn bg-blue-600 hover:bg-blue-700 text-white px-4 py-3 rounded-lg font-bold text-sm">
+            <i class="fa-solid fa-bolt mr-2" aria-hidden="true"></i>
             Load
           </button>
 
-
           <button onclick="clearFilter()"
-            class="bg-slate-300 hover:bg-slate-400 px-4 py-3 rounded-lg font-bold text-sm">
+            class="bbai-btn bg-slate-300 hover:bg-slate-400 px-4 py-3 rounded-lg font-bold text-sm">
+            <i class="fa-solid fa-eraser mr-2" aria-hidden="true"></i>
             Clear
           </button>
-
         </div>
 
-
       </div>
+
       <p id="statusText" class="mt-3 text-sm text-slate-500">Ready.</p>
+
+      <!-- Quick filter chips (UI only; client-side only) -->
+      <div class="mt-4">
+        <div class="bbai-filter-label mb-2">Quick Filters</div>
+        <div class="flex flex-wrap gap-2" role="group" aria-label="Filter submissions">
+          <button type="button" data-filter-chip="All" class="bbai-btn inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 font-extrabold text-sm text-slate-700" aria-pressed="true">All</button>
+          <button type="button" data-filter-chip="Pending" class="bbai-btn inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 font-extrabold text-sm text-slate-700" aria-pressed="false">🟡 Pending</button>
+          <button type="button" data-filter-chip="Approved" class="bbai-btn inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 font-extrabold text-sm text-slate-700" aria-pressed="false">🟢 Approved</button>
+          <button type="button" data-filter-chip="Rejected" class="bbai-btn inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 font-extrabold text-sm text-slate-700" aria-pressed="false">🔴 Rejected</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dashboard summary cards (UI-only; computed from already-rendered rows) -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+      <div class="bbai-card p-5 bbai-animate-in">
+        <div class="flex items-center justify-between">
+          <div class="text-3xl" aria-hidden="true">👥</div>
+          <div class="w-10 h-10 rounded-2xl bg-emerald-50 flex items-center justify-center" aria-hidden="true"><i class="fa-solid fa-users text-emerald-600"></i></div>
+        </div>
+        <div class="mt-3 text-3xl font-extrabold text-slate-800" id="bbai-total-users">0</div>
+        <div class="text-sm font-bold text-slate-500 mt-1">Total Users</div>
+      </div>
+
+      <div class="bbai-card p-5 bbai-animate-in">
+        <div class="flex items-center justify-between">
+          <div class="text-3xl" aria-hidden="true">🟡</div>
+          <div class="w-10 h-10 rounded-2xl bg-amber-50 flex items-center justify-center" aria-hidden="true"><i class="fa-solid fa-hourglass-half text-amber-600"></i></div>
+        </div>
+        <div class="mt-3 text-3xl font-extrabold text-slate-800" id="bbai-pending-count">0</div>
+        <div class="text-sm font-bold text-slate-500 mt-1">Pending</div>
+      </div>
+
+      <div class="bbai-card p-5 bbai-animate-in">
+        <div class="flex items-center justify-between">
+          <div class="text-3xl" aria-hidden="true">🟢</div>
+          <div class="w-10 h-10 rounded-2xl bg-emerald-50 flex items-center justify-center" aria-hidden="true"><i class="fa-solid fa-check-circle text-emerald-600"></i></div>
+        </div>
+        <div class="mt-3 text-3xl font-extrabold text-slate-800" id="bbai-approved-count">0</div>
+        <div class="text-sm font-bold text-slate-500 mt-1">Approved</div>
+      </div>
+
+      <div class="bbai-card p-5 bbai-animate-in">
+        <div class="flex items-center justify-between">
+          <div class="text-3xl" aria-hidden="true">🔴</div>
+          <div class="w-10 h-10 rounded-2xl bg-red-50 flex items-center justify-center" aria-hidden="true"><i class="fa-solid fa-xmark-circle text-red-600"></i></div>
+        </div>
+        <div class="mt-3 text-3xl font-extrabold text-slate-800" id="bbai-rejected-count">0</div>
+        <div class="text-sm font-bold text-slate-500 mt-1">Rejected</div>
+      </div>
     </div>
 
     <div class="bbai-card p-4 md:p-6 overflow-x-auto">
@@ -255,7 +301,6 @@
         <tbody id="adminTableBody"></tbody>
       </table>
     </div>
-  </div>
 
   <script>
     const CHALLENGE_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyMOvWs_J_4154St4k3JteuNottUdZ92g-l0EUNQbiKdfEbUOKFnIzfUjjufV8ZRH25IQ/exec";
