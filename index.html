@@ -1671,7 +1671,7 @@ background-position:center;
 
         // Google Apps Script Web App URL (provided)
         const GOOGLE_SHEET_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwHRI_tfnQDmGgMVjEBba6DHILJIZeXSmm9Q07xeMtOPpB_3FXkOzKXKhaZ1HTZkKcF/exec";
-        const CHALLENGE_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyMOvWs_J_4154St4k3JteuNottUdZ92g-l0EUNQbiKdfEbUOKFnIzfUjjufV8ZRH25IQ/exec";
+        const CHALLENGE_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyTDRbTeD_QVQ6cbcrcxn2DacKWRnn8kuXHWh9hKKuXLm-cRXFaF2n2MLN19OTxG_73QQ/exec";
 
 
         (function () {
@@ -4179,11 +4179,28 @@ background-position:center;
                             container.innerHTML = `
                                 <div class="text-5xl mb-3">❌</div>
                                 <h2 class="text-2xl font-bold text-red-700">Some tasks were rejected</h2>
-                                <p class="mt-2 text-red-600 font-semibold">
-                                    ${rejectedSteps.length === 1
-                                    ? `❌ Task ${rejectedSteps[0]} Rejected`
-                                    : `❌ Task ${rejectedSteps.slice(0, -1).join(', ')}, and ${rejectedSteps[rejectedSteps.length - 1]} Rejected`}
-                                </p>
+                                <div class="mt-2 text-red-600 font-semibold">
+                                    ${rejectedSteps
+                                        .map((taskStep) => {
+                                            const raw = data.steps?.[taskStep];
+                                            const txt = String(raw ?? "").trim();
+
+                                            let reason = "Not specified";
+                                            if (txt.includes("-")) {
+                                                const afterHyphen = txt.split("-").slice(1).join("-").trim();
+                                                if (afterHyphen) reason = afterHyphen;
+                                            }
+
+                                            return `
+                                                <div class="mb-2">
+                                                    <div>❌ Task ${taskStep}</div>
+                                                    <div class="text-red-700">Reason: ${reason}</div>
+                                                </div>
+                                            `;
+                                        })
+                                        .join('')
+                                    }
+                                </div>
                                 <p class="mt-2 text-red-700">
                                     Your submitted information for the rejected task(s) was not approved. Please update the required details and resubmit these tasks.
                                 </p>

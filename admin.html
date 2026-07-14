@@ -303,7 +303,7 @@
     </div>
 
   <script>
-    const CHALLENGE_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyMOvWs_J_4154St4k3JteuNottUdZ92g-l0EUNQbiKdfEbUOKFnIzfUjjufV8ZRH25IQ/exec";
+    const CHALLENGE_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyTDRbTeD_QVQ6cbcrcxn2DacKWRnn8kuXHWh9hKKuXLm-cRXFaF2n2MLN19OTxG_73QQ/exec";
 
     // ===== Minimal UI activation state (cards + quick filters) =====
     // IMPORTANT: This code does not change any backend/business logic.
@@ -538,22 +538,200 @@
             <td class="border p-2 font-bold">Step ${step}</td>
             <td class="border p-2">${fileUrl ? `<a href="${fileUrl}" target="_blank" class="text-blue-600 underline">Open File</a>` : `<span class="text-slate-400">No file</span>`}</td>
             <td class="border p-2"><span class="${status === "Approved" ? "text-green-600 font-bold" : status === "Rejected" ? "text-red-600 font-bold" : "text-amber-600 font-bold"}">${status}</span></td>
-            <td class="border p-2"><div class="flex gap-2"><button class="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-xs" onclick="updateStepStatus('${email}', ${step}, 'Approved')">Approve</button><button class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-xs" onclick="updateStepStatus('${email}', ${step}, 'Rejected - Not clear/valid Image')">Reject</button></div></td>`;
+            <td class="border p-2"><div class="flex gap-2"><button class="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-xs" onclick="updateStepStatus('${email}', ${step}, 'Approved')">Approve</button><button class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-xs" onclick="openRejectModal('${email}', ${step})">Reject</button></div></td>`;
+
           tbody.appendChild(tr);
         }
       });
     }
 
+    let __bbaiRejectModalState = {
+      open: false,
+      email: "",
+      stepNumber: null
+    };
+
+    function bbaiRejectModalGetSelectedReason() {
+      const modal = document.getElementById('bbaiRejectModal');
+      if (!modal) return { reason: "", otherText: "" };
+
+      const selected = modal.querySelector('input[name="bbaiRejectReason"]:checked');
+      const reason = selected ? selected.value : "";
+      const otherTextEl = document.getElementById('bbaiRejectOtherText');
+      const otherText = otherTextEl ? String(otherTextEl.value || '').trim() : '';
+      return { reason, otherText };
+    }
+
+    function bbaiRejectModalUpdateRejectButtonState() {
+      const modal = document.getElementById('bbaiRejectModal');
+      if (!modal) return;
+
+      const rejectBtn = document.getElementById('bbaiRejectConfirmBtn');
+      if (!rejectBtn) return;
+
+      const { reason, otherText } = bbaiRejectModalGetSelectedReason();
+
+      const isOther = reason === 'Other';
+      const enabled = (reason && reason !== 'Other') || (isOther && otherText.length > 0);
+      rejectBtn.disabled = !enabled;
+
+      // small visual cue
+      rejectBtn.classList.toggle('opacity-60', !enabled);
+      rejectBtn.classList.toggle('cursor-not-allowed', !enabled);
+    }
+
+    function bbaiOpenRejectModal(email, stepNumber) {
+      __bbaiRejectModalState.open = true;
+      __bbaiRejectModalState.email = email;
+      __bbaiRejectModalState.stepNumber = stepNumber;
+
+      const modalOverlay = document.getElementById('bbaiRejectModalOverlay');
+      const modal = document.getElementById('bbaiRejectModal');
+      if (!modalOverlay || !modal) return;
+
+      // reset inputs
+      const reasonRadios = modal.querySelectorAll('input[name="bbaiRejectReason"]');
+      reasonRadios.forEach((r) => { r.checked = false; });
+
+      const otherWrap = document.getElementById('bbaiRejectOtherWrap');
+      if (otherWrap) otherWrap.classList.add('hidden');
+
+      const otherTextEl = document.getElementById('bbaiRejectOtherText');
+      if (otherTextEl) otherTextEl.value = '';
+
+      modalOverlay.classList.remove('hidden');
+      modal.classList.remove('opacity-0');
+      modal.classList.add('opacity-100');
+
+      // initial button state
+      bbaiRejectModalUpdateRejectButtonState();
+
+      // focus the first radio for accessibility
+      const firstRadio = modal.querySelector('input[name="bbaiRejectReason"]');
+      if (firstRadio) firstRadio.focus();
+
+      // lock scroll minimally
+      document.body.style.overflow = 'hidden';
+    }
+
+    function bbaiCloseRejectModal() {
+      __bbaiRejectModalState.open = false;
+      __bbaiRejectModalState.email = "";
+      __bbaiRejectModalState.stepNumber = null;
+
+      const modalOverlay = document.getElementById('bbaiRejectModalOverlay');
+      const modal = document.getElementById('bbaiRejectModal');
+      if (!modalOverlay || !modal) return;
+
+      modal.classList.add('opacity-0');
+      modal.classList.remove('opacity-100');
+
+      modalOverlay.classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+
+    function openRejectModal(email, stepNumber) {
+      bbaiOpenRejectModal(email, stepNumber);
+    }
+
+    function bbaiAttachRejectModalHandlersOnce() {
+
+      const modal = document.getElementById('bbaiRejectModal');
+      if (!modal) return;
+      if (window.__bbaiRejectModalHandlersAttached) return;
+      window.__bbaiRejectModalHandlersAttached = true;
+
+      // clicking outside closes
+      const overlay = document.getElementById('bbaiRejectModalOverlay');
+      if (overlay) {
+        overlay.addEventListener('click', (e) => {
+          if (e.target && e.target.id === 'bbaiRejectModalOverlay') {
+            bbaiCloseRejectModal();
+          }
+        });
+      }
+
+      // ESC closes
+      document.addEventListener('keydown', (e) => {
+        if (e && e.key === 'Escape') {
+          const overlay = document.getElementById('bbaiRejectModalOverlay');
+          if (overlay && !overlay.classList.contains('hidden')) {
+            bbaiCloseRejectModal();
+          }
+        }
+      });
+
+      // reason selection shows Other textarea + enables button
+      const reasonRadios = modal.querySelectorAll('input[name="bbaiRejectReason"]');
+      reasonRadios.forEach((radio) => {
+        radio.addEventListener('change', () => {
+          const otherWrap = document.getElementById('bbaiRejectOtherWrap');
+          if (otherWrap) {
+            otherWrap.classList.toggle('hidden', radio.value !== 'Other');
+          }
+          bbaiRejectModalUpdateRejectButtonState();
+        });
+      });
+
+      const otherTextEl = document.getElementById('bbaiRejectOtherText');
+      if (otherTextEl) {
+        otherTextEl.addEventListener('input', () => {
+          bbaiRejectModalUpdateRejectButtonState();
+        });
+      }
+
+      const cancelBtn = document.getElementById('bbaiRejectCancelBtn');
+      if (cancelBtn) cancelBtn.addEventListener('click', bbaiCloseRejectModal);
+
+      const rejectBtn = document.getElementById('bbaiRejectConfirmBtn');
+      if (rejectBtn) {
+        rejectBtn.addEventListener('click', async () => {
+          const { reason, otherText } = bbaiRejectModalGetSelectedReason();
+          if (!reason) return;
+
+          let statusStr = '';
+          if (reason === 'Other') {
+            if (!otherText) return;
+            statusStr = 'Rejected - ' + otherText;
+          } else {
+            // mapping
+            const map = {
+              'Wrong File': 'Wrong File',
+              'Blurry Image': 'Blurry Image',
+              'Invalid Document': 'Invalid Document',
+              'Incomplete Requirement': 'Incomplete Requirement',
+              'Duplicate Upload': 'Duplicate Upload',
+              'Incorrect File Type': 'Incorrect File Type',
+              'Missing Signature': 'Missing Signature'
+            };
+
+            const mapped = map[reason] || reason;
+            statusStr = 'Rejected - ' + mapped;
+          }
+
+          const email = __bbaiRejectModalState.email;
+          const stepNumber = __bbaiRejectModalState.stepNumber;
+
+          bbaiCloseRejectModal();
+          // call EXISTING updateStepStatus with selected status string
+          await updateStepStatus(email, stepNumber, statusStr);
+
+        });
+      }
+    }
+
     async function updateStepStatus(email, stepNumber, status) {
       const adminKey = document.getElementById("adminKey").value.trim();
       if (!adminKey) { alert("Admin key is required."); return; }
-      if (status === "Rejected") {
-        status = "Rejected - Not clear/valid Image";
-      }
+
+
+      if (typeof status !== "string") status = String(status);
+
 
       // I-trigger ang loading screen
       showLoading(true);
       setStatus(`Updating...`);
+
 
       const payload = new URLSearchParams();
       payload.append("action", "admin_update_step_status");
@@ -584,13 +762,101 @@
     }
   </script>
 
-  <div id="loadingOverlay" class="hidden fixed inset-0 bg-white bg-opacity-75 flex items-center justify-center z-50">
+    <div id="loadingOverlay" class="hidden fixed inset-0 bg-white bg-opacity-75 flex items-center justify-center z-50">
     <div class="bg-white p-6 rounded-lg shadow-xl text-center">
       <div class="bbai-spinner" aria-hidden="true"></div>
       <div class="text-base font-extrabold text-slate-800">Loading submissions...</div>
       <div class="text-xs text-slate-500 mt-1">Please wait</div>
     </div>
   </div>
+
+  <!-- Reject Modal (UI only; replaces only Reject button workflow) -->
+  <div id="bbaiRejectModalOverlay" class="hidden fixed inset-0 bg-slate-900 bg-opacity-40 flex items-center justify-center z-[100]">
+    <div
+      id="bbaiRejectModal"
+      class="opacity-0 transition-opacity duration-200 ease-out w-full max-w-lg"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="bbaiRejectModalTitle"
+    >
+      <div class="bbai-card p-5 md:p-6">
+        <div class="flex items-start justify-between gap-3">
+          <div>
+            <div class="text-lg md:text-xl font-extrabold text-slate-800" id="bbaiRejectModalTitle">Reject Challenge Step</div>
+            <div class="text-sm text-slate-500 mt-1">Please select the reason for rejection.</div>
+          </div>
+          <button type="button" id="bbaiRejectCancelX" class="text-slate-400 hover:text-slate-700" aria-label="Close">✕</button>
+        </div>
+
+        <div class="mt-4 space-y-3">
+          <label class="flex items-center gap-3 cursor-pointer select-none">
+            <input type="radio" name="bbaiRejectReason" value="Wrong File" class="accent-emerald-600" />
+            <span class="font-bold text-slate-800 text-sm">Wrong File</span>
+          </label>
+          <label class="flex items-center gap-3 cursor-pointer select-none">
+            <input type="radio" name="bbaiRejectReason" value="Blurry Image" class="accent-emerald-600" />
+            <span class="font-bold text-slate-800 text-sm">Blurry Image</span>
+          </label>
+          <label class="flex items-center gap-3 cursor-pointer select-none">
+            <input type="radio" name="bbaiRejectReason" value="Invalid Document" class="accent-emerald-600" />
+            <span class="font-bold text-slate-800 text-sm">Invalid Document</span>
+          </label>
+          <label class="flex items-center gap-3 cursor-pointer select-none">
+            <input type="radio" name="bbaiRejectReason" value="Incomplete Requirement" class="accent-emerald-600" />
+            <span class="font-bold text-slate-800 text-sm">Incomplete Requirement</span>
+          </label>
+          <label class="flex items-center gap-3 cursor-pointer select-none">
+            <input type="radio" name="bbaiRejectReason" value="Duplicate Upload" class="accent-emerald-600" />
+            <span class="font-bold text-slate-800 text-sm">Duplicate Upload</span>
+          </label>
+          <label class="flex items-center gap-3 cursor-pointer select-none">
+            <input type="radio" name="bbaiRejectReason" value="Incorrect File Type" class="accent-emerald-600" />
+            <span class="font-bold text-slate-800 text-sm">Incorrect File Type</span>
+          </label>
+          <label class="flex items-center gap-3 cursor-pointer select-none">
+            <input type="radio" name="bbaiRejectReason" value="Missing Signature" class="accent-emerald-600" />
+            <span class="font-bold text-slate-800 text-sm">Missing Signature</span>
+          </label>
+          <label class="flex items-center gap-3 cursor-pointer select-none">
+            <input type="radio" name="bbaiRejectReason" value="Other" class="accent-emerald-600" />
+            <span class="font-bold text-slate-800 text-sm">Other</span>
+          </label>
+
+
+          <div id="bbaiRejectOtherWrap" class="hidden">
+            <label class="block font-bold text-sm text-slate-800 mb-2">Other reason</label>
+            <textarea
+              id="bbaiRejectOtherText"
+              class="w-full bbai-input p-3 text-sm"
+              rows="4"
+              placeholder="Type the rejection reason..."
+            ></textarea>
+          </div>
+        </div>
+
+        <div class="mt-5 flex items-center justify-end gap-3">
+          <button type="button" id="bbaiRejectCancelBtn" class="bbai-btn bg-slate-200 hover:bg-slate-300 text-slate-800 px-4 py-2 rounded-lg font-bold text-sm">Cancel</button>
+          <button type="button" id="bbaiRejectConfirmBtn" disabled class="bbai-btn bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-bold text-sm opacity-60 cursor-not-allowed">Reject</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // attach modal handlers after DOM is ready
+    document.addEventListener('DOMContentLoaded', () => {
+      try {
+        if (typeof bbaiAttachRejectModalHandlersOnce === 'function') {
+          bbaiAttachRejectModalHandlersOnce();
+        }
+        const xBtn = document.getElementById('bbaiRejectCancelX');
+        if (xBtn) xBtn.addEventListener('click', () => {
+          if (typeof bbaiCloseRejectModal === 'function') bbaiCloseRejectModal();
+        });
+      } catch (e) {}
+    });
+  </script>
+
 
   <script>
     (function(){
