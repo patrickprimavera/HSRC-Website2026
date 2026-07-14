@@ -1,24 +1,15 @@
-# TODO - Premium UI upgrade (admin.html)
+# TODO - Version 3.0 Phase 1 (UI Enhancement Only)
 
-## Plan (UI-only)
-- [ ] Add premium statistic summary cards above the table/search panel (computed client-side from already-loaded rows; no new fetch).
-- [ ] Add a right-side user details panel (opens when clicking ANY rendered row) showing applicant details + overall progress.
-- [ ] Add animated step progress bar inside the side panel using the same already-loaded status data.
-- [ ] Render passport thumbnail + click-to-open preview modal (UI-only).
-- [ ] Replace the plain “Open File” link text with a premium “📄 View File” button without changing the URL or target.
-- [ ] Add approve confirmation modal; on confirm, call existing updateStepStatus() exactly as existing onclick does.
-- [ ] Add reject modal with dropdown + conditional textbox; on confirm, call existing updateStepStatus() exactly as existing onclick does.
-- [ ] Add quick filter chips (All/Pending/Approved/Rejected) filtering the existing already-rendered rows client-side (no reload).
-- [ ] Improve empty state with modern icon/description.
-- [ ] Improve table UI: sticky header, hover, alternate colors, rounded container, smooth animations (CSS only).
-- [ ] Redesign buttons: Approve/Reject/View File/Search/Clear/Loading (CSS only, keep onclick/IDs).
-- [ ] Add responsive behavior: side panel full screen on mobile.
-- [ ] Accessibility: spacing, readable fonts, contrast.
-- [ ] Verification checklist: search/load/clear/approve/reject/view file/loading overlay all still work; IDs/functions unchanged; no backend changes.
-
-## Implementation notes / guardrails
-- Must NOT modify JS business logic or existing functions: loadSubmissions(), renderRows(), updateStepStatus(), normalizeStatus(), clearFilter(), showLoading(), setStatus().
-- Must NOT modify fetch requests or payload/action values.
-- Must NOT rename IDs, JS variables, or functions.
-- Must NOT remove existing event listeners or HTML elements referenced by JS.
+## Plan steps
+- [ ] Create CSS-only premium dashboard background (no images) in admin.html
+- [ ] Enhance existing cards (glassmorphism) via CSS only; do not change HTML/IDs/classes used by JS
+- [ ] Improve status badge appearance (pill badges) via CSS only
+- [ ] Enhance existing button appearance (Load/Clear/Approve/Reject/Quick Filters) via CSS only
+- [ ] Add lightweight animation for dashboard numbers (without changing calculations)
+- [ ] Make filter bar sticky using CSS only
+- [ ] Add CSS highlight style for matches in Email/Team search results
+- [ ] Improve loading overlay appearance (CSS only; keep showLoading JS)
+- [ ] Improve table UI: row hover, alternating stripes, sticky header, spacing transitions (no renderRows changes)
+- [ ] Add micro-animations for cards/buttons/table/badges
+- [ ] Final verification list: ensure no JS/business logic changes and no ID/class changes used by JS
 

@@ -14,27 +14,82 @@
     :root{
       --primary:#0F766E;
       --accent:#10B981; /* emerald */
-      --bg:#F8FAFC;
-      --card:#ffffff;
+      --accent2:#06B6D4; /* cyan */
+      --bg1:#ffffff;
+      --bg2:#E6FFFB;
+      --bg3:#E7F3FF;
+      --card: rgba(255,255,255,.72);
+      --card-solid:#ffffff;
       --radius:16px;
-      --shadow:0 10px 30px rgba(15, 118, 110, .08);
-      --shadow-sm:0 6px 18px rgba(2, 6, 23, .06);
+      --shadow:0 14px 40px rgba(15, 118, 110, .10);
+      --shadow-sm:0 8px 24px rgba(2, 6, 23, .06);
+      --ring: 0 0 0 1px rgba(15,118,110,.14);
+      --ring-strong: 0 0 0 4px rgba(16,185,129,.18);
     }
 
     html,body{height:100%;}
 
+    /* Premium corporate background (CSS only; no images) */
     body{
-      background: var(--bg) !important;
       color:#0f172a;
+      background: radial-gradient(900px 600px at 0% 0%, rgba(6,182,212,.18) 0%, rgba(255,255,255,0) 60%),
+                  radial-gradient(850px 650px at 100% 0%, rgba(16,185,129,.15) 0%, rgba(255,255,255,0) 58%),
+                  radial-gradient(700px 520px at 100% 100%, rgba(59,130,246,.10) 0%, rgba(255,255,255,0) 60%),
+                  linear-gradient(135deg, var(--bg1) 0%, var(--bg2) 40%, var(--bg3) 100%) !important;
+      position:relative;
+      overflow-x:hidden;
     }
 
+    body::before{
+      content:"";
+      position:fixed;
+      inset:-60px;
+      pointer-events:none;
+      background:
+        radial-gradient(420px 280px at 6% 12%, rgba(6,182,212,.22) 0%, rgba(6,182,212,0) 65%),
+        radial-gradient(360px 260px at 94% 12%, rgba(16,185,129,.18) 0%, rgba(16,185,129,0) 62%),
+        radial-gradient(420px 320px at 90% 92%, rgba(59,130,246,.12) 0%, rgba(59,130,246,0) 65%);
+      filter: blur(22px);
+      opacity:.55;
+      transform: translateZ(0);
+      z-index:-1;
+    }
+
+    body::after{
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      background: linear-gradient(180deg, rgba(255,255,255,.65) 0%, rgba(255,255,255,.25) 100%);
+      opacity:.35;
+      z-index:-1;
+    }
+
+    /* Glassmorphism cards */
     .bbai-card{
-      background:var(--card);
+      background: var(--card);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
       border-radius:var(--radius);
-      box-shadow:var(--shadow-sm);
-      border:1px solid rgba(15,118,110,.10);
+      box-shadow: var(--shadow-sm);
+      border:1px solid rgba(15,118,110,.14);
+      position:relative;
+      overflow:hidden;
+      isolation:isolate;
     }
 
+    .bbai-card::before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background: radial-gradient(500px 240px at 20% 0%, rgba(6,182,212,.14) 0%, rgba(255,255,255,0) 60%),
+                  radial-gradient(520px 260px at 100% 0%, rgba(16,185,129,.14) 0%, rgba(255,255,255,0) 62%);
+      opacity:.55;
+      filter: blur(18px);
+      z-index:-1;
+    }
+
+    /* Header */
     .bbai-header{
       display:flex;
       align-items:flex-start;
@@ -48,44 +103,67 @@
       gap:8px;
       padding:8px 12px;
       border-radius:999px;
-      background:rgba(15,118,110,.08);
+      background:rgba(255,255,255,.55);
       border:1px solid rgba(15,118,110,.16);
       color:#0f766e;
-      font-weight:800;
+      font-weight:900;
       font-size:12px;
       letter-spacing:.02em;
       white-space:nowrap;
+      box-shadow: 0 6px 18px rgba(2, 6, 23, .05);
     }
 
+    /* Buttons */
     .bbai-btn{
       border-radius:12px;
-      box-shadow:0 6px 16px rgba(2,6,23,.08);
-      transition:transform .15s ease, box-shadow .15s ease, filter .15s ease;
+      box-shadow:0 8px 22px rgba(2,6,23,.10);
+      transition:transform .18s ease, box-shadow .18s ease, filter .18s ease, background-color .18s ease;
+      position:relative;
+      overflow:hidden;
     }
 
-    .bbai-btn:hover{ transform: translateY(-1px); box-shadow:0 10px 22px rgba(2,6,23,.12); }
+    .bbai-btn::after{
+      content:"";
+      position:absolute;
+      inset:-40px;
+      background: radial-gradient(120px 80px at 20% 30%, rgba(255,255,255,.35) 0%, rgba(255,255,255,0) 60%);
+      opacity:0;
+      transition: opacity .2s ease;
+    }
 
-    .bbai-filter-label{font-weight:800; color:#0f172a; font-size:13px;}
+    .bbai-btn:hover{ 
+      transform: translateY(-1px);
+      box-shadow:0 14px 30px rgba(2,6,23,.14);
+      filter:saturate(1.05);
+    }
+    .bbai-btn:hover::after{ opacity:1; }
+
+    .bbai-btn:active{ transform: translateY(0px) scale(.99); }
+
+    .bbai-filter-label{font-weight:900; color:#0f172a; font-size:13px;}
 
     .bbai-input{
       border-radius:12px !important;
-      border:1px solid rgba(15,118,110,.18) !important;
+      border:1px solid rgba(15,118,110,.22) !important;
       box-shadow: inset 0 1px 0 rgba(255,255,255,.7);
-      transition:border-color .15s ease, box-shadow .15s ease;
-      background:#fff;
+      transition:border-color .15s ease, box-shadow .15s ease, transform .15s ease;
+      background:rgba(255,255,255,.9);
     }
     .bbai-input:focus{
       outline:none;
-      border-color:rgba(15,118,110,.55) !important;
-      box-shadow:0 0 0 3px rgba(15,118,110,.18);
+      border-color:rgba(15,118,110,.62) !important;
+      box-shadow:0 0 0 4px rgba(16,185,129,.16);
+      transform: translateY(-1px);
     }
 
     .bbai-table-wrap{
       border-radius:var(--radius);
-      background:#fff;
-      border:1px solid rgba(15,118,110,.10);
+      background: rgba(255,255,255,.72);
+      border:1px solid rgba(15,118,110,.14);
       box-shadow:var(--shadow-sm);
       overflow:hidden;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
     }
 
     /* Sticky header */
@@ -95,49 +173,47 @@
       position:sticky;
       top:0;
       z-index:2;
-      background:#f1f5f9 !important;
-      font-weight:900;
+      background: rgba(241,245,249,.72) !important;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      font-weight:950;
       font-size:12px;
       color:#334155;
       letter-spacing:.02em;
+      border-bottom: 1px solid rgba(15,118,110,.14) !important;
     }
 
     table{border-collapse:separate; border-spacing:0;}
-    tbody tr{transition: background-color .15s ease, transform .15s ease;}
-    tbody tr:hover{ background: rgba(15,118,110,.045); }
 
-    /* Turn status span into badge pill */
-    td .text-green-600,
-    td .text-red-600,
-    td .text-amber-600{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      padding:6px 10px;
-      border-radius:999px;
-      font-weight:900 !important;
-      letter-spacing:.02em;
-      background: rgba(15,118,110,.06);
+    /* Table UI */
+    tbody tr{
+      transition: background-color .18s ease, transform .18s ease, box-shadow .18s ease, opacity .25s ease;
+      opacity:1;
     }
-    /* Approved green */
-    td span.text-green-600{ background: rgba(16,185,129,.12) !important; }
-    /* Rejected red */
-    td span.text-red-600{ background: rgba(239,68,68,.10) !important; }
-    /* Pending amber */
-    td span.text-amber-600{ background: rgba(245,158,11,.14) !important; }
-
-    /* Action button polish (JS-generated classes remain; we enhance via wrapper) */
-    .bbai-action-row button{
-      border-radius:12px;
-      transition: transform .15s ease, filter .15s ease, box-shadow .15s ease;
-      box-shadow:0 6px 16px rgba(2,6,23,.10);
+    tbody tr:hover{ 
+      background: rgba(15,118,110,.055);
+      transform: translateY(-1px);
     }
-    .bbai-action-row button:hover{ transform: translateY(-1px); filter:saturate(1.05); }
 
-    /* Empty state row */
-    .bbai-empty-row{ background: rgba(15,118,110,.02); }
+    tbody tr:nth-child(odd){ background: rgba(255,255,255,.35); }
+    tbody tr:nth-child(even){ background: rgba(255,255,255,.18); }
 
     /* Loading overlay spinner */
+    #loadingOverlay{
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      transition: opacity .18s ease;
+      background: rgba(255,255,255,.62);
+    }
+    #loadingOverlay > div{
+      background: rgba(255,255,255,.78) !important;
+      border: 1px solid rgba(15,118,110,.14);
+      box-shadow: 0 18px 60px rgba(2,6,23,.16);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-radius: 16px;
+    }
+
     #loadingOverlay .bbai-spinner{
       width:44px;height:44px;
       border-radius:999px;
@@ -145,15 +221,114 @@
       border-top-color:#0F766E;
       animation: bbai-spin 0.85s linear infinite;
       margin:0 auto 12px auto;
+      box-shadow: 0 0 0 6px rgba(16,185,129,.10);
     }
     @keyframes bbai-spin{ to{ transform: rotate(360deg);} }
+
+    #loadingOverlay:not(.hidden){
+      animation: bbai-loading-fade .22s ease-out both;
+    }
+    @keyframes bbai-loading-fade{ from{opacity:0; transform: translateY(4px);} to{opacity:1; transform: translateY(0);} }
+
+    /* Status badges (pending/approved/rejected) */
+    td .text-green-600,
+    td .text-red-600,
+    td .text-amber-600{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:7px 12px;
+      border-radius:999px;
+      font-weight:950 !important;
+      letter-spacing:.02em;
+      background: rgba(15,118,110,.06);
+      border: 1px solid rgba(15,118,110,.10);
+      box-shadow: 0 10px 22px rgba(2,6,23,.06);
+      transform: translateZ(0);
+      position:relative;
+      overflow:hidden;
+    }
+    td .text-green-600::after,
+    td .text-red-600::after,
+    td .text-amber-600::after{
+      content:"";
+      position:absolute;
+      inset:-30px;
+      background: radial-gradient(110px 70px at 25% 30%, rgba(255,255,255,.30) 0%, rgba(255,255,255,0) 60%);
+      opacity:.0;
+      transition: opacity .18s ease;
+    }
+    td .text-green-600:hover::after,
+    td .text-red-600:hover::after,
+    td .text-amber-600:hover::after{ opacity:.85; }
+
+    td span.text-green-600{ background: rgba(16,185,129,.14) !important; border-color: rgba(16,185,129,.22) !important; }
+    td span.text-red-600{ background: rgba(239,68,68,.12) !important; border-color: rgba(239,68,68,.22) !important; }
+    td span.text-amber-600{ background: rgba(245,158,11,.16) !important; border-color: rgba(245,158,11,.26) !important; }
+
+    /* Dashboard number micro animation (CSS only; affects existing IDs) */
+    #bbai-total-users,
+    #bbai-pending-count,
+    #bbai-approved-count,
+    #bbai-rejected-count{
+      transform: translateZ(0);
+      animation: bbai-count-pop .45s ease-out both;
+    }
+    @keyframes bbai-count-pop{
+      0%{ transform: translateY(6px) scale(.98); opacity:.0; }
+      60%{ transform: translateY(-2px) scale(1.01); opacity:1; }
+      100%{ transform: translateY(0px) scale(1); opacity:1; }
+    }
 
     /* Subtle fade-in */
     @keyframes bbai-fade-up{ from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);} }
     .bbai-animate-in{ animation: bbai-fade-up .35s ease-out both; }
 
+    /* Sticky filter bar (CSS only). Uses existing layout by targeting the filter panel card. */
+    .bbai-card.mb-6:nth-of-type(2){
+      /* The second bbai-card is the filter panel. Keep layout intact; only stick it. */
+    }
+
+    /* Some browsers need a wrapper; use absolute minimal CSS-only sticky. */
+    .bbai-card.p-6.mb-6:nth-of-type(2){
+      position: sticky;
+      top: 12px;
+      z-index: 5;
+    }
+
+    /* Search highlight */
+    .bbai-search-highlight{
+      background: rgba(250, 204, 21, .35) !important;
+      border: 1px solid rgba(250, 204, 21, .55) !important;
+      border-radius: 6px;
+      padding: 0 .15em;
+      color: inherit;
+      box-shadow: 0 10px 24px rgba(250, 204, 21, .10);
+    }
+
+    /* Action button polish (buttons inside table) */
+    td button{
+      transition: transform .18s ease, filter .18s ease, box-shadow .18s ease;
+      box-shadow: 0 10px 22px rgba(2,6,23,.10);
+      border-radius: 12px !important;
+    }
+    td button:hover{ transform: translateY(-1px); filter:saturate(1.05); box-shadow: 0 16px 34px rgba(2,6,23,.16); }
+
+    /* Empty state row */
+    .bbai-empty-row{ background: rgba(15,118,110,.02); }
+
     @media (max-width: 640px){
       .bbai-header{ flex-direction:column; align-items:flex-start; }
+      .bbai-card.p-6.mb-6:nth-of-type(2){ position: static; }
+    }
+
+    /* Table row fade-in (micro) */
+    tbody tr{
+      animation: bbai-row-in .25s ease-out both;
+    }
+    @keyframes bbai-row-in{
+      from{ opacity:.0; transform: translateY(4px); }
+      to{ opacity:1; transform: translateY(0px); }
     }
   </style>
 
