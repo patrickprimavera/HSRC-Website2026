@@ -705,7 +705,7 @@ background-position:center;
                                             class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold px-5 py-3 rounded-xl shadow mt-1">
                                             Start Checking Approval
                                         </button>
-                                        <button type="button" onclick="goBackToHome()"
+<button type="button" onclick="restartPortal()"
                                             class="mt-3 w-full bg-slate-700 hover:bg-slate-800 text-white font-bold px-5 py-3 rounded-xl shadow">
                                             Back to Home
                                         </button>
@@ -1613,7 +1613,7 @@ background-position:center;
                             </div>
 
                             <div class="border-t border-slate-200 pt-6 flex justify-center">
-                                <button type="button" onclick="resetToWelcomeScreen()"
+                                <button type="button" onclick="restartPortal()"
                                     class="px-6 py-3 bg-brand-navy hover:bg-slate-700 text-white font-bold rounded-lg shadow transition text-sm flex items-center justify-center gap-2">
                                     <i class="fa-solid fa-house"></i> Back to Home
                                 </button>
@@ -4346,6 +4346,71 @@ background-position:center;
             if (signaturePad) signaturePad.clear();
         }
 
+        function restartPortal() {
+            // 1) Stop every active timer/interval if necessary.
+            try {
+                if (typeof challengePollingTimer !== 'undefined' && challengePollingTimer) {
+                    clearInterval(challengePollingTimer);
+                    challengePollingTimer = null;
+                }
+            } catch (e) { }
+
+            // 2) Remove temporary UI state.
+            try {
+                hideChallengeLoading && hideChallengeLoading();
+
+                const overlay = document.getElementById('challenge-global-loading-overlay');
+                if (overlay) overlay.classList.add('hidden');
+
+                const successCard = document.getElementById('challenge-success-card');
+                if (successCard) successCard.classList.add('hidden');
+
+                const passportBtn = document.getElementById('challenge-passport-pdf-btn');
+                if (passportBtn) passportBtn.remove();
+
+                const pendingOk = document.getElementById('challenge-pending-approval-ok-btn');
+                if (pendingOk) pendingOk.remove();
+
+                document.body.classList.remove('scroll-locked');
+            } catch (e) { }
+
+            // 3) Scroll to the top.
+            try {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } catch (e) {
+                window.scrollTo(0, 0);
+            }
+
+            // 4) Reset temporary navigation state (best-effort).
+            try {
+                currentStep = 1;
+                isVideo1Finished = false;
+                isVideo2Finished = false;
+                hasSeeking1 = false;
+                hasSeeking2 = false;
+                isKnowledgeResultGenerated = false;
+                isKnowledgePassed = false;
+
+                targetTime1 = 0;
+                targetTime2 = 0;
+            } catch (e) { }
+
+            // 5) Re-enable disabled buttons if necessary.
+            try {
+                setChallengeActionButtonsDisabled && setChallengeActionButtonsDisabled(false);
+
+                const nextBtnEl = document.getElementById('nextBtn');
+                if (nextBtnEl) {
+                    nextBtnEl.disabled = true;
+                    nextBtnEl.classList.add('opacity-50', 'cursor-not-allowed');
+                    nextBtnEl.classList.remove('opacity-100');
+                }
+            } catch (e) { }
+
+            // 6) Perform a FULL website reload.
+            window.location.reload(true);
+        }
+
         function resetToWelcomeScreen() {
             form.reset();
             clearSignature();
@@ -4719,7 +4784,7 @@ background-position:center;
                 return;
             }
 
-            // Not passed
+// Not passed
             isKnowledgePassed = false;
             if (hintEl) {
                 hintEl.textContent = `Sorry, hindi ka nakapasa. Minimum passing score: ${passThreshold}/${quizTotalQuestions}. Your score: ${score}.`;
@@ -4727,9 +4792,9 @@ background-position:center;
                 hintEl.classList.add('text-red-600', 'font-bold');
             }
 
-            // Reset entire website back to landing with notification
-            resetToWelcomeScreen();
             alert(`Sorry, hindi ka nakapasa. Minimum passing score: ${passThreshold}/${quizTotalQuestions}. Your score: ${score}. Ire-redirect ka pabalik sa landing page.`);
+            restartPortal();
+
         }
 
         nextBtn.addEventListener('click', () => {
