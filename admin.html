@@ -332,8 +332,11 @@
     }
   </style>
 
-  <div class="max-w-6xl mx-auto p-4 md:p-8">
-    <div class="bbai-card p-6 mb-6 bbai-animate-in">
+    <div class="max-w-6xl mx-auto p-4 md:p-8">
+
+    <div id="bbaiChallengeAdminContent">
+      <div class="bbai-card p-6 mb-6 bbai-animate-in">
+
       <div class="bbai-header">
         <div>
           <h1 class="text-2xl md:text-3xl font-extrabold text-slate-800">HSRC Challenge Admin</h1>
@@ -451,11 +454,130 @@
         <div class="mt-3 text-3xl font-extrabold text-slate-800" id="bbai-rejected-count">0</div>
         <div class="text-sm font-bold text-slate-500 mt-1">Rejected</div>
       </div>
+
+      <!-- New card (UI only) -->
+      <div class="bbai-card p-5 bbai-animate-in cursor-pointer" role="button" tabindex="0" aria-label="Open Project Portfolio Manager" onclick="bbaiToggleProjectPortfolio()" onkeydown="if(event.key==='Enter'||event.key===' '){bbaiToggleProjectPortfolio();}">
+        <div class="flex items-center justify-between">
+          <div class="text-3xl" aria-hidden="true">🏡</div>
+          <div class="w-10 h-10 rounded-2xl bg-emerald-50 flex items-center justify-center" aria-hidden="true"><i class="fa-solid fa-house-chimney-window text-emerald-600"></i></div>
+        </div>
+        <div class="mt-2 text-lg font-extrabold text-slate-800">🏡 Portfolio Manager</div>
+        <div class="text-sm font-bold text-slate-500 mt-1">Manage real estate projects for newly recruited agents.</div>
+      </div>
+    </div>
+    </div> <!-- /#bbaiChallengeAdminContent -->
+
+    <div id="bbaiProjectPortfolioSection" class="hidden">
+      <div class="bbai-card p-6 mb-6 bbai-animate-in">
+
+        <div class="flex items-center justify-start gap-3">
+          <button type="button" class="bbai-btn bg-slate-200 hover:bg-slate-300 text-slate-800 px-4 py-2 rounded-lg font-bold text-sm" onclick="bbaiBackToChallengeAdmin()">&larr; Back to Challenge Admin</button>
+        </div>
+
+        <h2 class="text-xl md:text-2xl font-extrabold text-slate-800 mt-4">
+          🏡 Project Portfolio Manager
+        </h2>
+
+        <div class="mt-4">
+          <div class="bbai-card p-4 md:p-5" style="background: rgba(255,255,255,.62);">
+            <div class="flex items-center justify-between gap-3">
+              <div>
+                <div class="text-lg font-extrabold text-slate-800">Project Portfolio</div>
+                <div id="bbaiProjectPortfolioMessage" class="mt-2 text-sm text-slate-500">No projects available yet.</div>
+              </div>
+                    <div id="bbaiProjectPortfolioLoading" class="hidden text-sm text-slate-600 font-bold">Loading projects...</div>
+                    <div id="bbaiProjectEditNotice" class="hidden mt-3 text-sm font-bold text-amber-700 bg-amber-50 border border-amber-200 rounded-lg p-3"></div>
+
+            </div>
+
+            <div id="bbaiProjectsGrid" class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+
+            <div class="mt-4">
+              <button type="button" class="bbai-btn bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-3 rounded-lg font-bold text-sm" onclick="bbaiOpenAddProjectForm()">
+                <span class="mr-2" aria-hidden="true">[ + ]</span>
+                + Add New Project
+              </button>
+            </div>
+
+
+            <!-- Add/Edit Project Form (UI only) -->
+            <div id="bbaiAddProjectFormWrap" class="hidden mt-6">
+              <div class="bbai-card p-5 md:p-6" style="background: rgba(255,255,255,.62);">
+                <div class="flex items-start justify-between gap-3">
+                  <div>
+                    <div id="bbaiProjectFormHeading" class="text-lg font-extrabold text-slate-800">➕ Add New Project</div>
+                    <p id="bbaiProjectFormSubheading" class="mt-1 text-sm text-slate-500">UI placeholder — no data will be saved.</p>
+                  </div>
+                </div>
+
+        <form onsubmit="event.preventDefault();" class="mt-4">
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label class="block font-bold mb-2">Project Name <span class="text-red-500">*</span></label>
+                      <input id="bbaiProjectName" type="text" class="w-full border rounded-lg p-3 bbai-input" placeholder="e.g. North Vista Heights" required />
+                    </div>
+
+                    <div>
+                      <label class="block font-bold mb-2">Project Location <span class="text-red-500">*</span></label>
+                      <input id="bbaiProjectLocation" type="text" class="w-full border rounded-lg p-3 bbai-input" placeholder="e.g. Bulacan" required />
+                    </div>
+
+                    <div>
+                      <label class="block font-bold mb-2">Developer <span class="text-red-500">*</span></label>
+                      <input id="bbaiProjectDeveloper" type="text" class="w-full border rounded-lg p-3 bbai-input" placeholder="e.g. Acme Developments" required />
+                    </div>
+
+                    <div>
+                      <label class="block font-bold mb-2">Starting Price <span class="text-red-500">*</span></label>
+                      <input id="bbaiProjectStartingPrice" type="text" class="w-full border rounded-lg p-3 bbai-input" placeholder="₱2.8M" required />
+                    </div>
+
+                    <div>
+                      <label class="block font-bold mb-2">Assigned Branch <span class="text-red-500">*</span></label>
+                      <select id="bbaiAssignedBranch" class="w-full border rounded-lg p-3 bbai-input" required>
+                        <option value="" selected>Select Assigned Branch</option>
+                        <option value="North Branch (Bulacan, Pampanga, Tarlac, Bataan)">North Branch (Bulacan, Pampanga, Tarlac, Bataan)</option>
+                        <option value="East Branch (NCR, Rizal)">East Branch (NCR, Rizal)</option>
+                        <option value="South Branch (Laguna, Batangas, Quezon)">South Branch (Laguna, Batangas, Quezon)</option>
+                        <option value="Southwest Branch (Cavite)">Southwest Branch (Cavite)</option>
+                      </select>
+                    </div>
+
+                    <div class="md:col-span-1">
+                      <label class="block font-bold mb-2">Project Image (UI only)</label>
+                      <input id="bbaiProjectImage" type="file" accept="image/*" class="w-full border rounded-lg p-3 bbai-input" />
+                      <p class="mt-1 text-xs text-slate-500">Select an image. It will not be uploaded in Phase 2.</p>
+                      <div id="bbaiProjectEditImagePreviewWrap" class="hidden mt-3">
+                        <div class="font-bold text-xs text-slate-700 mb-1">Current Image</div>
+                        <div id="bbaiProjectEditImagePreview" class="w-full h-24 bg-slate-100 rounded-xl overflow-hidden border border-slate-200 flex items-center justify-center">
+                          <span class="text-slate-400 text-xs font-bold">No image</span>
+                        </div>
+                        <div class="mt-2 text-xs text-amber-700 font-bold bg-amber-50 border border-amber-200 rounded-lg p-2">
+                          Leave Project Image empty to keep the current image.
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+
+                  <div class="mt-6 flex flex-col sm:flex-row sm:items-center sm:justify-end gap-2">
+                    <button type="button" class="bbai-btn bg-slate-200 hover:bg-slate-300 text-slate-800 px-5 py-3 rounded-lg font-bold text-sm" onclick="bbaiCloseAddProjectForm()">Cancel</button>
+                    <button id="bbaiSaveProjectBtn" type="button" class="bbai-btn bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-3 rounded-lg font-bold text-sm" onclick="bbaiHandleSaveProjectUIPlaceholder()">Save Project</button>
+
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div class="bbai-card p-4 md:p-6 overflow-x-auto">
+    <div id="bbaiChallengeSubmissionsTableWrap" class="bbai-card p-4 md:p-6 overflow-x-auto">
       <table class="w-full table-fixed border-collapse">
-        <colgroup>
+
+      <colgroup>
           <col style="width:15%">
           <col style="width:25%">
           <col style="width:10%">
@@ -463,6 +585,7 @@
           <col style="width:15%">
           <col style="width:20%">
         </colgroup>
+
         <thead class="bg-slate-100">
           <tr>
             <th class="border p-2">Team Name</th>
@@ -476,9 +599,13 @@
         <tbody id="adminTableBody"></tbody>
       </table>
     </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
   <script>
-    const CHALLENGE_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyTDRbTeD_QVQ6cbcrcxn2DacKWRnn8kuXHWh9hKKuXLm-cRXFaF2n2MLN19OTxG_73QQ/exec";
+    const CHALLENGE_WEB_APP_URL = "https://script.google.com/macros/s/AKfycby_mHDQJquTvzY46SBuZmELNg03bk14WwG6JBkkUwe9FHikLgX24v0iKVsEzHq8K1Z7DA/exec";
 
     // ===== Minimal UI activation state (cards + quick filters) =====
     // IMPORTANT: This code does not change any backend/business logic.
@@ -621,6 +748,45 @@
     })();
 
 
+    function bbaiToggleProjectPortfolio(){
+      const challengeAdmin = document.getElementById('bbaiChallengeAdminContent');
+      const portfolioSection = document.getElementById('bbaiProjectPortfolioSection');
+      const submissionsTableWrap = document.getElementById('bbaiChallengeSubmissionsTableWrap');
+      if(!challengeAdmin || !portfolioSection) return;
+
+      // Hide Challenge Admin, show Portfolio Manager
+      challengeAdmin.classList.add('hidden');
+      if(submissionsTableWrap) submissionsTableWrap.classList.add('hidden');
+      portfolioSection.classList.remove('hidden');
+
+      // Ensure add-project form starts hidden when opening manager
+      const wrap = document.getElementById('bbaiAddProjectFormWrap');
+      if (wrap) wrap.classList.add('hidden');
+
+      // Scroll to the top so Portfolio Manager is the only visible admin view
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      // Load saved projects for the portfolio view
+      bbaiLoadProjectsIntoPortfolio().catch(()=>{});
+    }
+
+
+    function bbaiBackToChallengeAdmin(){
+      const submissionsTableWrap = document.getElementById('bbaiChallengeSubmissionsTableWrap');
+
+      const challengeAdmin = document.getElementById('bbaiChallengeAdminContent');
+      const portfolioSection = document.getElementById('bbaiProjectPortfolioSection');
+      if(!challengeAdmin || !portfolioSection) return;
+
+      portfolioSection.classList.add('hidden');
+      if(submissionsTableWrap) submissionsTableWrap.classList.remove('hidden');
+      challengeAdmin.classList.remove('hidden');
+
+      // Scroll to the top to restore the original view
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+
     function showLoading(show) {
       const overlay = document.getElementById('loadingOverlay');
       if (overlay) {
@@ -658,6 +824,759 @@
       }
       return "Pending";
     }
+
+    function bbaiOpenAddProjectForm(){
+      // Ensure we are always in ADD mode when opening the form from +Add button
+      bbaiResetProjectFormToAddModeDefaults();
+
+      const wrap = document.getElementById('bbaiAddProjectFormWrap');
+
+      const portfolioMessageEl = document.getElementById('bbaiProjectPortfolioMessage');
+      const portfolioLoadingEl = document.getElementById('bbaiProjectPortfolioLoading');
+      const projectsGridEl = document.getElementById('bbaiProjectsGrid');
+      const addBtn = document.querySelector('button[onclick="bbaiOpenAddProjectForm()"]');
+
+      if (!wrap) return;
+
+      // Hide saved projects areas
+      if (portfolioMessageEl) portfolioMessageEl.classList.add('hidden');
+      if (portfolioLoadingEl) portfolioLoadingEl.classList.add('hidden');
+      if (projectsGridEl) projectsGridEl.classList.add('hidden');
+
+      // Hide + Add button while form is open
+      if (addBtn) addBtn.classList.add('hidden');
+
+      // Show ONLY the form
+      wrap.classList.remove('hidden');
+
+      // Keep "Back" button visible automatically (it's outside this wrap)
+
+      // Scroll to top of Portfolio Manager
+      const portfolioSection = document.getElementById('bbaiProjectPortfolioSection');
+      if (portfolioSection) portfolioSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      else window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function bbaiCloseAddProjectForm(){
+      // Cancel should always exit any edit/add mode and restore the projects UI.
+      bbaiCloseEditOrAddProjectFormAndRestoreUI();
+
+      // Backward-compatible fallback (in case wrapper function is not available for some reason)
+      const wrap = document.getElementById('bbaiAddProjectFormWrap');
+
+      const portfolioMessageEl = document.getElementById('bbaiProjectPortfolioMessage');
+      const portfolioLoadingEl = document.getElementById('bbaiProjectPortfolioLoading');
+      const projectsGridEl = document.getElementById('bbaiProjectsGrid');
+      const addBtn = document.querySelector('button[onclick="bbaiOpenAddProjectForm()"]');
+
+      if (!wrap) return;
+
+      // Hide form
+      wrap.classList.add('hidden');
+
+      // Restore saved projects UI
+      if (projectsGridEl) projectsGridEl.classList.remove('hidden');
+      if (portfolioMessageEl) portfolioMessageEl.classList.remove('hidden');
+      // Loading/message area should be restored to normal state; safest is hide loading
+      if (portfolioLoadingEl) portfolioLoadingEl.classList.add('hidden');
+
+      // Restore + Add button
+      if (addBtn) addBtn.classList.remove('hidden');
+
+      // Refresh project list so latest list appears
+      bbaiLoadProjectsIntoPortfolio().catch(()=>{});
+
+      // Scroll to top
+      const portfolioSection = document.getElementById('bbaiProjectPortfolioSection');
+      if (portfolioSection) portfolioSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      else window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+
+    // ===== Project Portfolio (Add/Edit UI state) =====
+    window.__bbaiEditingProjectId = window.__bbaiEditingProjectId ?? "";
+    window.__bbaiIsEditMode = window.__bbaiIsEditMode ?? false;
+    window.__bbaiProjectEditCurrentImageSrc = window.__bbaiProjectEditCurrentImageSrc ?? "";
+
+    function bbaiSetEditModeState({ isEditMode, projectId } = {}) {
+      window.__bbaiIsEditMode = !!isEditMode;
+      window.__bbaiEditingProjectId = projectId ?? window.__bbaiEditingProjectId;
+    }
+
+    function bbaiResetProjectFormToAddModeDefaults() {
+      // Clear stored edit identity
+      bbaiSetEditModeState({ isEditMode: false, projectId: "" });
+
+      // Hide current image preview
+      const previewWrap = document.getElementById('bbaiProjectEditImagePreviewWrap');
+      if (previewWrap) previewWrap.classList.add('hidden');
+
+      // Clear preview container
+      const previewEl = document.getElementById('bbaiProjectEditImagePreview');
+      if (previewEl) {
+        previewEl.innerHTML = '<span class="text-slate-400 text-xs font-bold">No image</span>';
+      }
+
+      // Reset heading/subheading
+      const headingEl = document.getElementById('bbaiProjectFormHeading');
+      const subheadingEl = document.getElementById('bbaiProjectFormSubheading');
+      if (headingEl) headingEl.textContent = '➕ Add New Project';
+      if (subheadingEl) subheadingEl.textContent = 'UI placeholder — no data will be saved.';
+
+      // Reset Save button to Save Project handler/text
+      const saveBtn = document.getElementById('bbaiSaveProjectBtn');
+      if (saveBtn) {
+        saveBtn.textContent = 'Save Project';
+        saveBtn.setAttribute('onclick', 'bbaiHandleSaveProjectUIPlaceholder()');
+      }
+
+      // Reset fields
+      const inputsToReset = [
+        'bbaiProjectName',
+        'bbaiProjectLocation',
+        'bbaiProjectDeveloper',
+        'bbaiProjectStartingPrice',
+        'bbaiAssignedBranch',
+        'bbaiProjectImage'
+      ];
+
+      inputsToReset.forEach((id) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        if (el.tagName === 'SELECT') {
+          el.selectedIndex = 0;
+        } else if (el.type === 'file') {
+          el.value = '';
+        } else {
+          el.value = '';
+        }
+      });
+
+      // Clear edit notice
+      const noticeEl = document.getElementById('bbaiProjectEditNotice');
+      if (noticeEl) {
+        noticeEl.classList.add('hidden');
+        noticeEl.textContent = '';
+      }
+    }
+
+    function bbaiShowEditModeEditNotice(message) {
+      const noticeEl = document.getElementById('bbaiProjectEditNotice');
+      if (!noticeEl) return;
+      noticeEl.textContent = message;
+      noticeEl.classList.remove('hidden');
+    }
+
+    function bbaiOpenEditProjectForm(project) {
+      if (!project) return;
+
+      // Hide saved projects areas
+      const wrap = document.getElementById('bbaiAddProjectFormWrap');
+      const portfolioMessageEl = document.getElementById('bbaiProjectPortfolioMessage');
+      const portfolioLoadingEl = document.getElementById('bbaiProjectPortfolioLoading');
+      const projectsGridEl = document.getElementById('bbaiProjectsGrid');
+      const addBtn = document.querySelector('button[onclick="bbaiOpenAddProjectForm()"]');
+
+      if (!wrap) return;
+
+      if (portfolioMessageEl) portfolioMessageEl.classList.add('hidden');
+      if (portfolioLoadingEl) portfolioLoadingEl.classList.add('hidden');
+      if (projectsGridEl) projectsGridEl.classList.add('hidden');
+      if (addBtn) addBtn.classList.add('hidden');
+
+      // Set edit mode state/projectId
+      const projectId = project.projectId ?? project.id ?? '';
+      bbaiSetEditModeState({ isEditMode: true, projectId: projectId });
+
+      // Update heading/subheading
+      const headingEl = document.getElementById('bbaiProjectFormHeading');
+      const subheadingEl = document.getElementById('bbaiProjectFormSubheading');
+      if (headingEl) headingEl.textContent = '✏️ Edit Project';
+      if (subheadingEl) subheadingEl.textContent = 'Update UI fields. Backend update is enabled in the next phase.';
+
+      // Update Save button to Update Project handler/text
+      const saveBtn = document.getElementById('bbaiSaveProjectBtn');
+      if (saveBtn) {
+        saveBtn.textContent = 'Update Project';
+        saveBtn.setAttribute('onclick', 'bbaiHandleUpdateProjectUIPlaceholder()');
+      }
+
+      // Hide edit notice initially
+      const noticeEl = document.getElementById('bbaiProjectEditNotice');
+      if (noticeEl) {
+        noticeEl.classList.add('hidden');
+        noticeEl.textContent = '';
+      }
+
+      // Show ONLY the form
+      wrap.classList.remove('hidden');
+
+      // Pre-fill fields
+      const projectName = project.projectName ?? '';
+      const projectLocation = project.projectLocation ?? project.location ?? '';
+      const developer = project.developer ?? '';
+      const startingPrice = project.startingPrice ?? '';
+      const assignedBranch = project.assignedBranch ?? '';
+
+      const nameEl = document.getElementById('bbaiProjectName');
+      const locEl = document.getElementById('bbaiProjectLocation');
+      const devEl = document.getElementById('bbaiProjectDeveloper');
+      const priceEl = document.getElementById('bbaiProjectStartingPrice');
+      const branchEl = document.getElementById('bbaiAssignedBranch');
+
+      if (nameEl) nameEl.value = String(projectName ?? '');
+      if (locEl) locEl.value = String(projectLocation ?? '');
+      if (devEl) devEl.value = String(developer ?? '');
+      if (priceEl) priceEl.value = String(startingPrice ?? '');
+      if (branchEl) {
+        const branchValue = String(assignedBranch || '');
+        // Best-effort match by value
+        let matched = false;
+        Array.from(branchEl.options || []).forEach((opt) => {
+          if (String(opt.value) === branchValue) {
+            branchEl.value = branchValue;
+            matched = true;
+          }
+        });
+        if (!matched) {
+          // Leave at default placeholder
+          branchEl.selectedIndex = 0;
+        }
+      }
+
+      // Image preview: do NOT prefill file input
+      const imageData = (project.imageData || '').trim();
+      const imageUrl = (project.imageUrl || '').trim();
+      const preferredSrc = imageData ? imageData : imageUrl;
+
+      const previewWrap = document.getElementById('bbaiProjectEditImagePreviewWrap');
+      const previewEl = document.getElementById('bbaiProjectEditImagePreview');
+      if (previewWrap && previewEl) {
+        if (preferredSrc) {
+          previewWrap.classList.remove('hidden');
+          previewEl.innerHTML = `<img src="${bbaiEscapeHtml(preferredSrc)}" alt="Current project image" class="w-full h-full object-contain" style="object-position:center;" onerror="this.style.display='none'; this.parentElement.style.background='#f1f5f9'" />`;
+        } else {
+          previewWrap.classList.add('hidden');
+          previewEl.innerHTML = '<span class="text-slate-400 text-xs font-bold">No image</span>';
+        }
+      }
+
+      // Ensure file input is empty (do not prefill)
+      const fileEl = document.getElementById('bbaiProjectImage');
+      if (fileEl) fileEl.value = '';
+
+      // Scroll to top of Portfolio Manager
+      const portfolioSection = document.getElementById('bbaiProjectPortfolioSection');
+      if (portfolioSection) portfolioSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      else window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    async function bbaiHandleUpdateProjectUIPlaceholder() {
+      // Must NEVER call bbaiHandleSaveProjectUIPlaceholder() / admin_add_project.
+      if (window.__bbaiUpdateProjectInFlight) return;
+
+      if (!window.__bbaiIsEditMode) {
+        setStatus('Not in edit mode.', true);
+        return;
+      }
+
+      const projectId = String(window.__bbaiEditingProjectId || '').trim();
+      if (!projectId) {
+        const msg = 'Missing projectId for update.';
+        bbaiShowEditModeEditNotice(msg);
+        setStatus(msg, true);
+        return;
+      }
+
+      const adminKey = document.getElementById('adminKey')?.value?.trim() || '';
+      const projectName = document.getElementById('bbaiProjectName')?.value?.trim() || '';
+      const projectLocation = document.getElementById('bbaiProjectLocation')?.value?.trim() || '';
+      const developer = document.getElementById('bbaiProjectDeveloper')?.value?.trim() || '';
+      const startingPrice = document.getElementById('bbaiProjectStartingPrice')?.value?.trim() || '';
+      const assignedBranch = document.getElementById('bbaiAssignedBranch')?.value?.trim() || '';
+
+      if (!projectName) { alert('Project Name is required.'); return; }
+      if (!projectLocation) { alert('Project Location is required.'); return; }
+      if (!developer) { alert('Developer is required.'); return; }
+      if (!startingPrice) { alert('Starting Price is required.'); return; }
+      if (!assignedBranch) { alert('Assigned Branch is required.'); return; }
+      if (!adminKey) { alert('Admin key is required.'); return; }
+
+      const btn = document.getElementById('bbaiSaveProjectBtn');
+      const originalText = btn ? (btn.textContent || 'Update Project') : 'Update Project';
+
+      window.__bbaiUpdateProjectInFlight = true;
+      if (btn) {
+        btn.disabled = true;
+        btn.textContent = 'Updating...';
+      }
+      showLoading(true);
+      setStatus('Updating project...');
+
+      try {
+        // Optional replacement image handling:
+        // - no file selected => empty strings (backend preserves existing image)
+        // - file selected => read as base64 + send name/type
+        let imageBase64 = '';
+        let imageFileName = '';
+        let imageMimeType = '';
+
+        const fileInput = document.getElementById('bbaiProjectImage');
+        const selectedFile = (fileInput && fileInput.files && fileInput.files[0]) ? fileInput.files[0] : null;
+
+        if (selectedFile) {
+          imageFileName = selectedFile.name || '';
+          imageMimeType = selectedFile.type || '';
+          imageBase64 = await new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => resolve(String(reader.result || ''));
+            reader.onerror = () => reject(reader.error || new Error('Failed to read image.'));
+            reader.readAsDataURL(selectedFile);
+          });
+        }
+
+        const payload = new URLSearchParams();
+        payload.append('action', 'admin_update_project');
+        payload.append('adminKey', adminKey);
+
+        // TOP-LEVEL update fields expected by parseRequest(e) / admin_update_project
+        payload.append('projectId', projectId);
+        payload.append('projectName', projectName);
+        payload.append('projectLocation', projectLocation);
+        payload.append('developer', developer);
+        payload.append('startingPrice', startingPrice);
+        payload.append('assignedBranch', assignedBranch);
+        payload.append('imageBase64', imageBase64);
+        payload.append('imageFileName', imageFileName);
+        payload.append('imageMimeType', imageMimeType);
+
+        const resp = await fetch(CHALLENGE_WEB_APP_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
+          body: payload.toString()
+        });
+
+        const data = await resp.json();
+        if (!data || data.ok !== true) {
+          const msg = (data && (data.error || data.message))
+            ? (data.error || data.message)
+            : 'Failed to update project.';
+          alert(msg);
+          bbaiShowEditModeEditNotice(msg);
+          setStatus(msg, true);
+          return;
+        }
+
+        alert('Project updated successfully.');
+        setStatus('Project updated successfully.');
+
+        // Exit edit mode + return to portfolio list + refresh using existing loader.
+        bbaiCloseEditOrAddProjectFormAndRestoreUI();
+
+      } catch (err) {
+        const msg = (err && err.message) ? err.message : String(err);
+        alert(msg);
+        bbaiShowEditModeEditNotice(msg);
+        setStatus(msg, true);
+      } finally {
+        showLoading(false);
+        window.__bbaiUpdateProjectInFlight = false;
+        if (btn) {
+          btn.disabled = false;
+          btn.textContent = originalText;
+        }
+      }
+    }
+
+    function bbaiCloseEditOrAddProjectFormAndRestoreUI() {
+      // Used by Cancel.
+      const wrap = document.getElementById('bbaiAddProjectFormWrap');
+      const projectsGridEl = document.getElementById('bbaiProjectsGrid');
+      const portfolioMessageEl = document.getElementById('bbaiProjectPortfolioMessage');
+      const portfolioLoadingEl = document.getElementById('bbaiProjectPortfolioLoading');
+      const addBtn = document.querySelector('button[onclick="bbaiOpenAddProjectForm()"]');
+
+      if (!wrap) return;
+
+      wrap.classList.add('hidden');
+
+      // Restore saved projects UI + Add button
+      if (projectsGridEl) projectsGridEl.classList.remove('hidden');
+      if (portfolioMessageEl) portfolioMessageEl.classList.remove('hidden');
+      if (portfolioLoadingEl) portfolioLoadingEl.classList.add('hidden');
+      if (addBtn) addBtn.classList.remove('hidden');
+
+      // Reset form back to ADD mode
+      bbaiResetProjectFormToAddModeDefaults();
+
+      // Refresh project list using existing loading function
+      bbaiLoadProjectsIntoPortfolio().catch(()=>{});
+
+      // Scroll to top
+      const portfolioSection = document.getElementById('bbaiProjectPortfolioSection');
+      if (portfolioSection) portfolioSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      else window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function bbaiEscapeHtml(str) {
+
+      return String(str ?? '').replace(/[&<>"']/g, (c) => ({
+        '&': '&amp;',
+        '<': '<',
+        '>': '>',
+        '"': '"',
+        "'": '&#39;'
+      }[c]));
+    }
+
+    function bbaiOnEditProjectCardClick(event) {
+      try {
+        const btn = event && event.currentTarget ? event.currentTarget : null;
+        if (!btn) return;
+
+        const rawIndex = btn.dataset ? btn.dataset.bbaiProjectIndex : '';
+        const projectIndex = Number(rawIndex);
+        if (!Number.isInteger(projectIndex) || projectIndex < 0) {
+          throw new Error('Invalid project index.');
+        }
+
+        const projects = Array.isArray(window.__bbaiPortfolioProjects) ? window.__bbaiPortfolioProjects : [];
+        const project = projects[projectIndex];
+        if (!project) {
+          throw new Error('Project not found for selected index.');
+        }
+
+        if (typeof bbaiOpenEditProjectForm === 'function') {
+          bbaiOpenEditProjectForm(project);
+        }
+      } catch (e) {
+        console.error('Edit Project click failed:', e);
+        alert('Failed to open edit form for this project.');
+      }
+    }
+
+    function bbaiSetPortfolioLoading(isLoading) {
+      const loadingEl = document.getElementById('bbaiProjectPortfolioLoading');
+
+      const msgEl = document.getElementById('bbaiProjectPortfolioMessage');
+      const gridEl = document.getElementById('bbaiProjectsGrid');
+
+      if (loadingEl) loadingEl.classList.toggle('hidden', !isLoading);
+      if (msgEl) msgEl.classList.toggle('hidden', isLoading);
+      if (gridEl) gridEl.classList.toggle('opacity-60', isLoading);
+    }
+
+    function bbaiRenderProjects(projects) {
+      const gridEl = document.getElementById('bbaiProjectsGrid');
+      const msgEl = document.getElementById('bbaiProjectPortfolioMessage');
+      if (!gridEl || !msgEl) return;
+
+      window.__bbaiPortfolioProjects = Array.isArray(projects) ? projects : [];
+
+      gridEl.innerHTML = '';
+
+      if (!projects || projects.length === 0) {
+        msgEl.classList.remove('hidden');
+        msgEl.textContent = 'No projects available yet.';
+        return;
+      }
+
+      msgEl.classList.add('hidden');
+
+      const cardsHtml = projects.map((p, index) => {
+        const projectId = p.projectId ?? p.id ?? '';
+        const projectName = bbaiEscapeHtml(p.projectName || '');
+        const location = bbaiEscapeHtml(p.projectLocation || p.location || '');
+        const developer = bbaiEscapeHtml(p.developer || '');
+        const startingPrice = bbaiEscapeHtml(p.startingPrice || '');
+
+
+
+        const imageData = (p.imageData || '').trim();
+        const imageUrl = (p.imageUrl || '').trim();
+        const preferredImageSrc = imageData ? imageData : imageUrl;
+
+        const imageArea = preferredImageSrc
+          ? `<div class="w-full h-36 bg-slate-100 rounded-xl overflow-hidden border border-slate-200">
+               <img src="${bbaiEscapeHtml(preferredImageSrc)}" alt="${projectName}" class="w-full h-full object-contain" style="object-position:center;" onerror="this.style.display='none';this.parentElement.style.background='#f1f5f9'" />
+             </div>`
+          : `<div class="w-full h-36 bg-slate-100 rounded-xl border border-slate-200 flex items-center justify-center text-slate-400 text-xs font-bold">No image</div>`;
+
+        return `
+          <div class="bbai-card p-4 md:p-5" style="background: rgba(255,255,255,.65);">
+            ${imageArea}
+            <div class="mt-3">
+              <div class="text-md md:text-lg font-extrabold text-slate-800">${projectName || '-'}</div>
+              <div class="mt-1 text-sm font-bold text-slate-600">${location || '-'}${developer ? ' • ' + developer : ''}</div>
+
+              <div class="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+                <div class="sm:col-span-2">
+                  <div class="font-bold text-slate-600">Starting Price</div>
+                  <div class="font-extrabold text-slate-800">${startingPrice || '-'}</div>
+                </div>
+              </div>
+
+              <div class="mt-4">
+                <button type="button"
+                  class="bbai-btn bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg font-bold text-sm w-full"
+                  data-bbai-project-index="${index}"
+                  onclick="bbaiOnEditProjectCardClick(event)">
+                  ✏️ Edit Project
+                </button>
+
+              </div>
+            </div>
+          </div>
+        `;
+
+      });
+
+      gridEl.innerHTML = cardsHtml.join('');
+    }
+
+    async function bbaiLoadProjectsIntoPortfolio() {
+      const adminKey = document.getElementById('adminKey')?.value?.trim() || '';
+      const portfolioSection = document.getElementById('bbaiProjectPortfolioSection');
+      const msgEl = document.getElementById('bbaiProjectPortfolioMessage');
+
+      if (!portfolioSection) return;
+      if (!msgEl) return;
+
+      // Independent loading state
+      bbaiSetPortfolioLoading(true);
+      msgEl.classList.add('hidden');
+
+      if (!adminKey) {
+        bbaiSetPortfolioLoading(false);
+        msgEl.classList.remove('hidden');
+        msgEl.textContent = 'Please enter the Admin Key first.';
+        return;
+      }
+
+      const payload = new URLSearchParams();
+      payload.append('action', 'admin_get_projects');
+      payload.append('adminKey', adminKey);
+
+      try {
+        const resp = await fetch(CHALLENGE_WEB_APP_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
+          body: payload.toString()
+        });
+
+        const data = await resp.json();
+
+        if (!data || data.ok !== true) {
+          bbaiSetPortfolioLoading(false);
+          const errMsg = (data && (data.error || data.message)) ? (data.error || data.message) : 'Failed to load projects.';
+          msgEl.classList.remove('hidden');
+          msgEl.textContent = errMsg;
+          const gridEl = document.getElementById('bbaiProjectsGrid');
+          if (gridEl) gridEl.innerHTML = '';
+          return;
+        }
+
+        bbaiSetPortfolioLoading(false);
+        const projects = data.projects || [];
+        bbaiRenderProjects(projects);
+      } catch (err) {
+        bbaiSetPortfolioLoading(false);
+        const gridEl = document.getElementById('bbaiProjectsGrid');
+        if (gridEl) gridEl.innerHTML = '';
+        msgEl.classList.remove('hidden');
+        msgEl.textContent = 'Loading error: ' + (err && err.message ? err.message : String(err));
+      }
+    }
+
+    async function bbaiHandleSaveProjectUIPlaceholder(){
+
+      // Save Project -> admin_add_project backend (Phase 3C)
+
+
+
+
+      const btn = document.querySelector('button[onclick="bbaiHandleSaveProjectUIPlaceholder()"]');
+      const originalText = btn ? (btn.textContent || 'Save Project') : 'Save Project';
+
+      const wrap = document.getElementById('bbaiAddProjectFormWrap');
+      const addBtn = document.querySelector('button[onclick="bbaiOpenAddProjectForm()"]');
+      const projectsGridEl = document.getElementById('bbaiProjectsGrid');
+      const portfolioMessageEl = document.getElementById('bbaiProjectPortfolioMessage');
+      const portfolioLoadingEl = document.getElementById('bbaiProjectPortfolioLoading');
+
+
+      const adminKey = document.getElementById('adminKey')?.value?.trim() || '';
+      const projectName = document.getElementById('bbaiProjectName')?.value?.trim() || '';
+      const location = document.getElementById('bbaiProjectLocation')?.value?.trim() || '';
+      const developer = document.getElementById('bbaiProjectDeveloper')?.value?.trim() || '';
+      const startingPrice = document.getElementById('bbaiProjectStartingPrice')?.value?.trim() || '';
+      const assignedBranch = document.getElementById('bbaiAssignedBranch')?.value?.trim() || '';
+
+
+      // Basic validation
+      if (!projectName) {
+        alert('Project Name is required.');
+        return;
+      }
+      if (!location) {
+        alert('Project Location is required.');
+        return;
+      }
+      if (!developer) {
+        alert('Developer is required.');
+        return;
+      }
+      if (!startingPrice) {
+        alert('Starting Price is required.');
+        return;
+      }
+      if (!assignedBranch) {
+        alert('Assigned Branch is required.');
+        return;
+      }
+
+
+      // Admin key required (use same input as other Challenge Admin requests)
+      if (!adminKey) {
+        alert('Admin key is required.');
+        return;
+      }
+
+      // Disable button + saving state
+      if (btn) {
+        btn.disabled = true;
+        btn.textContent = 'Saving...';
+      }
+
+      showLoading(true);
+      setStatus('Saving project...');
+
+      // Read optional image (reuses existing #bbaiProjectImage input)
+      let imageBase64 = '';
+      let imageFileName = '';
+      let imageMimeType = '';
+
+      try {
+        const fileInput = document.getElementById('bbaiProjectImage');
+        const selectedFile = (fileInput && fileInput.files && fileInput.files[0]) ? fileInput.files[0] : null;
+
+        if (selectedFile) {
+          imageFileName = selectedFile.name || '';
+          imageMimeType = selectedFile.type || '';
+
+          imageBase64 = await new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => resolve(String(reader.result || ''));
+            reader.onerror = () => reject(reader.error || new Error('Failed to read image.'));
+            reader.readAsDataURL(selectedFile);
+          });
+        }
+      } catch (imgErr) {
+        // Keep existing error behavior: alert + status error, keep form open
+        const msg = 'Network/request error: ' + (imgErr && imgErr.message ? imgErr.message : String(imgErr));
+        alert(msg);
+        setStatus(msg, true);
+        return;
+      }
+
+      const payload = new URLSearchParams();
+      payload.append('action', 'admin_add_project');
+      payload.append('adminKey', adminKey);
+
+      // TOP-LEVEL fields (no nested payload)
+      payload.append('projectName', projectName);
+      payload.append('projectLocation', location);
+      payload.append('developer', developer);
+      payload.append('startingPrice', startingPrice);
+      payload.append('assignedBranch', assignedBranch);
+
+      // Optional image fields (empty strings when no image selected)
+      payload.append('imageBase64', imageBase64);
+      payload.append('imageFileName', imageFileName);
+      payload.append('imageMimeType', imageMimeType);
+
+
+      try {
+        const resp = await fetch(CHALLENGE_WEB_APP_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
+          body: payload.toString()
+        });
+
+
+        const data = await resp.json();
+        if (!data || data.ok !== true) {
+          const msg = (data && data.error) ? data.error : (data && data.message) ? data.message : 'Failed to save project.';
+          alert(msg);
+          setStatus(msg, true);
+          return;
+        }
+
+        alert('Project saved successfully.');
+        setStatus('Project saved successfully.');
+
+        // Refresh project portfolio list without reloading admin.html
+        bbaiLoadProjectsIntoPortfolio().catch(()=>{});
+
+
+        // Reset form
+        const formWrap = document.getElementById('bbaiAddProjectFormWrap');
+        const inputsToReset = [
+          'bbaiProjectName',
+          'bbaiProjectLocation',
+          'bbaiProjectDeveloper',
+          'bbaiProjectStartingPrice',
+          'bbaiAssignedBranch',
+          'bbaiProjectImage'
+        ];
+
+
+        inputsToReset.forEach((id) => {
+          const el = document.getElementById(id);
+          if (!el) return;
+          if (el.tagName === 'SELECT') {
+            el.selectedIndex = 0;
+          } else if (el.type === 'file') {
+            el.value = '';
+          } else {
+            el.value = '';
+          }
+        });
+
+
+        // Close/hide add project form
+        if (formWrap) formWrap.classList.add('hidden');
+
+        // Restore saved projects UI + Add button
+        if (projectsGridEl) projectsGridEl.classList.remove('hidden');
+        if (portfolioMessageEl) portfolioMessageEl.classList.remove('hidden');
+        if (portfolioLoadingEl) portfolioLoadingEl.classList.add('hidden');
+        if (addBtn) addBtn.classList.remove('hidden');
+
+        // Ensure Portfolio Manager is visible (do not reload page)
+        const portfolioSection = document.getElementById('bbaiProjectPortfolioSection');
+        if (portfolioSection) portfolioSection.classList.remove('hidden');
+
+        // Scroll to top
+        if (portfolioSection) portfolioSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        else window.scrollTo({ top: 0, behavior: 'smooth' });
+
+
+      } catch (err) {
+        // On error: keep Add Project form visible with entered data (no UI reset)
+        const msg = 'Network/request error: ' + (err && err.message ? err.message : String(err));
+        alert(msg);
+        setStatus(msg, true);
+      } finally {
+        showLoading(false);
+        if (btn) {
+          btn.disabled = false;
+          btn.textContent = originalText;
+        }
+      }
+
+    }
+
 
     async function loadSubmissions() {
       const adminKey = document.getElementById("adminKey").value.trim();

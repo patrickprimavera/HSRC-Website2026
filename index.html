@@ -1612,6 +1612,16 @@ background-position:center;
                                 </div>
                             </div>
 
+                            <div id="project-summary-section" class="mb-8 border border-slate-200 rounded-xl bg-white p-5">
+                                <div class="flex items-center gap-2 mb-3">
+                                    <i class="fa-solid fa-diagram-project text-brand-gold"></i>
+                                    <h5 class="text-lg font-extrabold text-brand-dark">PROJECT SUMMARY</h5>
+                                </div>
+                                <div id="project-summary-content" class="text-sm text-slate-600">
+                                    Projects will appear here based on your selected branch.
+                                </div>
+                            </div>
+
                             <div class="border-t border-slate-200 pt-6 flex justify-center">
                                 <button type="button" onclick="restartPortal()"
                                     class="px-6 py-3 bg-brand-navy hover:bg-slate-700 text-white font-bold rounded-lg shadow transition text-sm flex items-center justify-center gap-2">
@@ -1670,8 +1680,8 @@ background-position:center;
         const EMAILJS_CHALLENGE_TEMPLATE_ID = "template_challenge_completion";
 
         // Google Apps Script Web App URL (provided)
-        const GOOGLE_SHEET_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzkeMstNNvCc1xx7pAMOdwmxqsVra2qJpTgzuw_tZdK0c499Z1RamKHc5pgqb8fhtdm/exec";
-        const CHALLENGE_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyTDRbTeD_QVQ6cbcrcxn2DacKWRnn8kuXHWh9hKKuXLm-cRXFaF2n2MLN19OTxG_73QQ/exec";
+        const GOOGLE_SHEET_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwGOX4FPOSalmffxEdKsnivN5BeIHDcJu05Ij8THu329kQVHz0etKUe0v61tqoM2XXS/exec";
+        const CHALLENGE_WEB_APP_URL = "https://script.google.com/macros/s/AKfycby_mHDQJquTvzY46SBuZmELNg03bk14WwG6JBkkUwe9FHikLgX24v0iKVsEzHq8K1Z7DA/exec";
 
 
         (function () {
@@ -2475,10 +2485,15 @@ background-position:center;
             if (input && input.files && input.files[0]) {
                 const compressedPhoto = await compressPassportPhoto(input.files[0]);
 
-                localStorage.setItem(
-                    "passportPhotoBase64" + email,
-                    compressedPhoto
-                );
+                try {
+                    localStorage.setItem(
+                        "passportPhotoBase64" + email,
+                        compressedPhoto
+                    );
+                } catch (storageErr) {
+                    // Optional cache only: ignore QuotaExceededError and continue normal flow
+                    console.warn("passport photo cache skipped:", storageErr);
+                }
 
                 return compressedPhoto;
             }
@@ -2498,7 +2513,12 @@ background-position:center;
                 const directUrl = convertDriveImageUrl(savedPhoto);
                 const dataUrl = await fetchImageAsDataUrl(directUrl);
                 if (dataUrl && String(dataUrl).startsWith("data:image")) {
-                    localStorage.setItem("passportPhotoBase64" + email, dataUrl);
+                    try {
+                        localStorage.setItem("passportPhotoBase64" + email, dataUrl);
+                    } catch (storageErr) {
+                        // Optional cache only: ignore QuotaExceededError and continue normal flow
+                        console.warn("passport photo cache skipped:", storageErr);
+                    }
                     return dataUrl;
                 }
             }
@@ -2516,7 +2536,12 @@ background-position:center;
                 if (candidate) {
                     // If candidate is base64 already, return
                     if (String(candidate).startsWith("data:image")) {
-                        localStorage.setItem("passportPhotoBase64" + email, candidate);
+                        try {
+                            localStorage.setItem("passportPhotoBase64" + email, candidate);
+                        } catch (storageErr) {
+                            // Optional cache only: ignore QuotaExceededError and continue normal flow
+                            console.warn("passport photo cache skipped:", storageErr);
+                        }
                         return candidate;
                     }
 
@@ -2525,13 +2550,23 @@ background-position:center;
                         const directUrl = convertDriveImageUrl(candidate);
                         const dataUrl = await fetchImageAsDataUrl(directUrl);
                         if (dataUrl && String(dataUrl).startsWith("data:image")) {
-                            localStorage.setItem("passportPhotoBase64" + email, dataUrl);
+                            try {
+                                localStorage.setItem("passportPhotoBase64" + email, dataUrl);
+                            } catch (storageErr) {
+                                // Optional cache only: ignore QuotaExceededError and continue normal flow
+                                console.warn("passport photo cache skipped:", storageErr);
+                            }
                             return dataUrl;
                         }
                     }
 
                     // Fallback: store whatever we got
-                    localStorage.setItem("passportPhotoBase64" + email, candidate);
+                    try {
+                        localStorage.setItem("passportPhotoBase64" + email, candidate);
+                    } catch (storageErr) {
+                        // Optional cache only: ignore QuotaExceededError and continue normal flow
+                        console.warn("passport photo cache skipped:", storageErr);
+                    }
                     return candidate;
                 }
             }
@@ -3337,16 +3372,12 @@ background-position:center;
             payload.append("fileName", file.name);
             payload.append("mimeType", file.type || "image/png");
             payload.append("base64", base64);
-            localStorage.setItem("passportPhotoBase64" + email, "data:" + (file.type || "image/png") + ";base64," + base64
-            );
+            // Do not persist large task image base64 in localStorage (quota risk).
 
             try {
                 const submitResp = await fetch(CHALLENGE_WEB_APP_URL, {
                     method: "POST",
-                    headers: {
-                        "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
-                    },
-                    body: payload.toString()
+                    body: payload
                 });
 
                 const rawText = await submitResp.text();
@@ -3543,6 +3574,7 @@ background-position:center;
 
 
             let uploaded = 0;
+            let hadSuccessfulUpload = false;
 
 
             try {
@@ -3644,6 +3676,8 @@ background-position:center;
                 }
 
 
+                hadSuccessfulUpload = uploaded > 0;
+
                 hideChallengeLoading();
 
                 setChallengeActionButtonsDisabled(false);
@@ -3690,10 +3724,22 @@ background-position:center;
 
                 setChallengeActionButtonsDisabled(false);
 
-                alert(
-                    "Upload failed."
-                );
+                if (!hadSuccessfulUpload) {
+                    alert(
+                        "Upload failed."
+                    );
+                } else {
+                    console.warn("[submitChallengePartial] Post-upload status refresh failed after successful upload:", e);
+                }
 
+            } finally {
+                __challengeSubmittingPartial = false;
+                const partialBtn = document.getElementById('challenge-submit-partial-btn');
+                if (partialBtn) {
+                    partialBtn.disabled = false;
+                    partialBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                }
+                hideChallengeLoading();
             }
 
         }
@@ -3707,43 +3753,10 @@ background-position:center;
             // Prevent duplicate-click guard: no-op if already uploading.
             // Also ensures UI/buttons are reliably locked during the async work.
             const allBtn = document.getElementById('challenge-submit-all-btn');
-            if (allBtn && allBtn.disabled) return;
             if (allBtn) allBtn.disabled = true;
 
             const email = getChallengeEmail();
 
-
-            // CHECK REQUIRED STEPS 1-8 BEFORE FINAL SUBMIT
-            for (let step = 1; step <= 8; step++) {
-
-                const fileInput =
-                    document.querySelector(
-                        `input[data-upload-step="${step}"]`
-                    );
-
-
-                const alreadyUploaded =
-                    document
-                        .getElementById(`challenge-step-${step}-status`)
-                        ?.textContent
-                        ?.toLowerCase()
-                        ?.includes("uploaded");
-
-
-                if (
-                    (!fileInput || fileInput.files.length === 0)
-                    &&
-                    !alreadyUploaded
-                ) {
-
-                    alert(
-                        `Please complete Step ${step} before submitting your challenge.`
-                    );
-
-                    return;
-                }
-
-            }
 
             if (!email) {
                 alert("Please enter your email address first.");
@@ -3773,53 +3786,76 @@ background-position:center;
             showChallengeLoading("Uploading Step 1 of 8...");
 
             try {
-                let hasUpload = false;
-
-                for (let s = 1; s <= 8; s++) {
-
-                    const input =
-                        document.querySelector(`input[data-upload-step="${s}"]`);
-
-                    if (
-                        input &&
-                        input.files &&
-                        input.files.length > 0
-                    ) {
-                        hasUpload = true;
-
-                        showChallengeLoading(
-                            `Uploading Step ${s} of 8...`
-                        );
-
-                        const ok =
-                            await submitChallengeStep(s);
-
-                        if (!ok) {
-
-                            hideChallengeLoading();
-
-                            setChallengeActionButtonsDisabled(false);
-
-                            return;
-
-                        }
-                    }
-
+                let statusData = null;
+                try {
+                    statusData = await fetchChallengeStatusForEmail(email);
+                } catch (e) {
+                    statusData = null;
                 }
 
+                const stepsObj = parseChallengeStepsFromStatusData(statusData);
+                const progress = computeUploadProgressFromSteps(stepsObj);
 
-                if (!hasUpload) {
+                let uploadedNow = 0;
 
+                for (let s = 1; s <= 8; s++) {
+                    const input = document.querySelector(`input[data-upload-step="${s}"]`);
+                    const hasNewFile = !!(input && input.files && input.files.length > 0);
+
+                    if (hasNewFile) {
+                        showChallengeLoading(`Uploading Step ${s} of 8...`);
+                        const ok = await submitChallengeStep(s);
+
+                        if (!ok) {
+                            hideChallengeLoading();
+                            setChallengeActionButtonsDisabled(false);
+                            return;
+                        }
+                        uploadedNow++;
+                    }
+                }
+
+                if (uploadedNow === 0 && progress.completedCount === 0) {
                     hideChallengeLoading();
-
                     setChallengeActionButtonsDisabled(false);
-
-                    alert(
-                        "Please upload at least one challenge screenshot."
-                    );
-
+                    alert("Please upload at least one challenge screenshot.");
                     return;
+                }
 
+                let statusAfter = null;
+                let statusRefreshFailed = false;
+                try {
+                    statusAfter = await fetchChallengeStatusForEmail(email);
+                } catch (e) {
+                    statusAfter = null;
+                    statusRefreshFailed = true;
+                    console.warn("[submitChallengeAll] Post-upload status refresh failed:", e);
+                }
+
+                if (!statusAfter || !statusAfter.steps) {
+                    statusRefreshFailed = true;
+                }
+
+                if (statusRefreshFailed) {
+                    hideChallengeLoading();
+                    setChallengeActionButtonsDisabled(false);
+                    alert(
+                        "✅ Uploads completed successfully.\n\nHowever, submission status verification could not be completed right now.\nPlease click \"Submit Challenge Steps 1–8\" again (no need to re-upload successful files) or use \"Start Checking Approval\" to verify status."
+                    );
+                    return;
+                }
+
+                const stepsAfter = parseChallengeStepsFromStatusData(statusAfter);
+                const progressAfter = computeUploadProgressFromSteps(stepsAfter);
+
+                if (progressAfter.remaining.length > 0) {
+                    hideChallengeLoading();
+                    setChallengeActionButtonsDisabled(false);
+                    showChallengeProgressPopup({
+                        completedCount: progressAfter.completedCount,
+                        remaining: progressAfter.remaining
+                    });
+                    return;
                 }
 
                 const photoBase64 =
@@ -3875,6 +3911,14 @@ background-position:center;
                 hideChallengeLoading();
                 setChallengeActionButtonsDisabled(false);
                 alert("Failed to submit challenge steps.");
+            } finally {
+                __challengeSubmittingAll = false;
+                const submitAllBtn = document.getElementById('challenge-submit-all-btn');
+                if (submitAllBtn) {
+                    submitAllBtn.disabled = false;
+                    submitAllBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+                }
+                hideChallengeLoading();
             }
         }
 
@@ -4014,10 +4058,15 @@ background-position:center;
                             data.photoBase64 !== ""
                         ) {
 
-                            localStorage.setItem(
-                                "passportPhotoBase64" + email,
-                                "data:image/png;base64," + data.photoBase64
-                            );
+                            try {
+                                localStorage.setItem(
+                                    "passportPhotoBase64" + email,
+                                    "data:image/png;base64," + data.photoBase64
+                                );
+                            } catch (storageErr) {
+                                // Optional cache only: ignore QuotaExceededError and continue normal flow
+                                console.warn("passport photo cache skipped:", storageErr);
+                            }
 
                         }
 
@@ -4088,10 +4137,15 @@ background-position:center;
                         !localStorage.getItem("passportPhotoBase64" + email)
                     ) {
 
-                        localStorage.setItem(
-                            "passportPhotoBase64" + email,
-                            data.photoUrl
-                        );
+                        try {
+                            localStorage.setItem(
+                                "passportPhotoBase64" + email,
+                                data.photoUrl
+                            );
+                        } catch (storageErr) {
+                            // Optional cache only: ignore QuotaExceededError and continue normal flow
+                            console.warn("passport photo cache skipped:", storageErr);
+                        }
 
                     }
 
@@ -4411,6 +4465,165 @@ background-position:center;
             window.location.reload(true);
         }
 
+        function mapProjectSummaryBranchForApi(selectedBranch) {
+            const branchMap = {
+                "North Branch": "North Branch (Bulacan, Pampanga, Tarlac, Bataan)",
+                "East Branch": "East Branch (NCR, Rizal)",
+                "South Branch": "South Branch (Laguna, Batangas, Quezon)",
+                "Southwest Branch": "Southwest Branch (Cavite)"
+            };
+            return branchMap[selectedBranch] || selectedBranch || "";
+        }
+
+        function normalizeProjectSummaryProjects(responseData) {
+            if (!responseData) return [];
+            if (Array.isArray(responseData)) return responseData;
+            if (Array.isArray(responseData.projects)) return responseData.projects;
+            if (Array.isArray(responseData.data)) return responseData.data;
+            if (responseData.result && Array.isArray(responseData.result.projects)) return responseData.result.projects;
+            return [];
+        }
+
+        function renderProjectSummaryLoading() {
+            const container = document.getElementById('project-summary-content');
+            if (!container) return;
+            container.innerHTML = `
+                <div class="flex items-center gap-2 text-slate-600">
+                    <span class="inline-block h-4 w-4 rounded-full border-2 border-brand-gold border-t-transparent animate-spin"></span>
+                    <span>Loading projects for your selected branch...</span>
+                </div>
+            `;
+        }
+
+        function renderProjectSummaryError() {
+            const container = document.getElementById('project-summary-content');
+            if (!container) return;
+            container.innerHTML = `<p class="text-red-600 font-semibold">Unable to load projects at the moment.</p>`;
+        }
+
+        function renderProjectSummaryEmpty() {
+            const container = document.getElementById('project-summary-content');
+            if (!container) return;
+            container.innerHTML = `<p class="text-slate-600">No projects are currently available for your selected branch.</p>`;
+        }
+
+        function renderProjectSummaryList(projects) {
+            const container = document.getElementById('project-summary-content');
+            if (!container) return;
+
+            const toSafeText = (value) => {
+                if (value === null || value === undefined) return "-";
+                const text = String(value).trim();
+                return text !== "" ? text : "-";
+            };
+
+            const escapeHtml = (value) => String(value ?? "").replace(/[&<>"']/g, (char) => {
+                switch (char) {
+                    case "&":
+                        return "&amp;";
+                    case "<":
+                        return "<";
+                    case ">":
+                        return ">";
+                    case '"':
+                        return '"';
+                    case "'":
+                        return "&#39;";
+                    default:
+                        return char;
+                }
+            });
+
+            const cards = (projects || []).map((project) => {
+                const projectName = toSafeText(project?.projectName);
+                const projectLocation = toSafeText(project?.projectLocation);
+                const developer = toSafeText(project?.developer);
+                const startingPrice = toSafeText(project?.startingPrice);
+
+                // backend already returns a full data:image/...;base64,... URL
+                const imageSrcRaw = project?.imageData ? String(project.imageData).trim() : "";
+                const hasImage = imageSrcRaw !== "";
+                const imageSrc = escapeHtml(imageSrcRaw);
+
+                const imageArea = hasImage
+                    ? `
+                        <div class="w-full h-44 bg-slate-100 border-b border-slate-200 overflow-hidden">
+                            <img
+                                src="${imageSrc}"
+                                alt="${escapeHtml(projectName)}"
+                                class="w-full h-full object-cover"
+                                loading="lazy"
+                                onerror="this.style.display='none'; this.nextElementSibling?.classList.remove('hidden');"
+                            />
+                            <div class="hidden w-full h-full items-center justify-center text-slate-400 text-xs font-bold bg-slate-100">
+                                No image available
+                            </div>
+                        </div>
+                    `
+                    : `
+                        <div class="w-full h-44 bg-slate-100 border-b border-slate-200 flex items-center justify-center text-slate-400 text-xs font-bold">
+                            No image available
+                        </div>
+                    `;
+
+                return `
+                    <article class="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+                        ${imageArea}
+                        <div class="p-4 space-y-2">
+                            <p class="text-sm text-slate-700"><span class="font-extrabold text-slate-900">Project:</span> ${escapeHtml(projectName)}</p>
+                            <p class="text-sm text-slate-700"><span class="font-extrabold text-slate-900">Location:</span> ${escapeHtml(projectLocation)}</p>
+                            <p class="text-sm text-slate-700"><span class="font-extrabold text-slate-900">Developer:</span> ${escapeHtml(developer)}</p>
+                            <p class="text-sm text-slate-700"><span class="font-extrabold text-slate-900">Starting Price:</span> ${escapeHtml(startingPrice)}</p>
+                        </div>
+                    </article>
+                `;
+            }).join("");
+
+            container.innerHTML = `<div class="grid grid-cols-1 md:grid-cols-2 gap-4">${cards}</div>`;
+        }
+
+        async function loadProjectSummaryForSelectedBranch() {
+            const selectedBranch = document.getElementById('BL-select')?.value || "";
+            const mappedBranch = mapProjectSummaryBranchForApi(selectedBranch);
+            const container = document.getElementById('project-summary-content');
+
+            if (!container || !mappedBranch) {
+                renderProjectSummaryEmpty();
+                return;
+            }
+
+            renderProjectSummaryLoading();
+
+            try {
+                const payload = new URLSearchParams();
+                payload.append('action', 'get_projects_by_branch');
+                payload.append('branch', mappedBranch);
+
+                const response = await fetch(CHALLENGE_WEB_APP_URL, {
+                    method: 'POST',
+                    headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
+                    body: payload.toString()
+                });
+
+                const data = await response.json();
+
+                if (!response.ok || !data) {
+                    renderProjectSummaryError();
+                    return;
+                }
+
+                const projects = normalizeProjectSummaryProjects(data);
+                if (!projects.length) {
+                    renderProjectSummaryEmpty();
+                    return;
+                }
+
+                renderProjectSummaryList(projects);
+            } catch (error) {
+                renderProjectSummaryError();
+            }
+        }
+
         function resetToWelcomeScreen() {
             form.reset();
             clearSignature();
@@ -4477,6 +4690,11 @@ background-position:center;
             document.getElementById('generation-success').classList.add('hidden');
             document.getElementById('step-5-form-fields').classList.remove('hidden');
             document.getElementById('form-footer-nav').classList.remove('hidden');
+
+            const projectSummaryContent = document.getElementById('project-summary-content');
+            if (projectSummaryContent) {
+                projectSummaryContent.innerHTML = 'Projects will appear here based on your selected branch.';
+            }
 
             document.getElementById('form-screen').classList.add('hidden');
             document.getElementById('form-screen').classList.remove('fade-in-section');
@@ -4664,6 +4882,7 @@ background-position:center;
 
         // Hanapin ang function na ito at palitan ang loob:
         function validateCurrentStepInputs() {
+            let isValid = true;
             // ... (Huwag galawin ang ibang logic) ...
 
             // Keep existing behavior for Step 4 signature checkbox
@@ -4988,6 +5207,8 @@ background-position:center;
             document.getElementById('generation-loading').classList.add('hidden');
             document.getElementById('form-footer-nav').classList.add('hidden');
             document.getElementById('generation-success').classList.remove('hidden');
+
+            loadProjectSummaryForSelectedBranch();
         }
 
         function renderPreferredScheduleOptions(branchName) {
