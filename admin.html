@@ -490,6 +490,47 @@
 
             </div>
 
+            <div class="mt-4 flex items-center justify-end">
+              <button type="button" class="bbai-btn bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-3 rounded-lg font-bold text-sm" onclick="bbaiOpenAddProjectForm()">
+                <span class="mr-2" aria-hidden="true">[ + ]</span>
+                + Add New Project
+              </button>
+            </div>
+
+            <div class="mt-4 grid grid-cols-1 lg:grid-cols-4 gap-3 items-end">
+              <div class="lg:col-span-2">
+                <label for="bbaiProjectSearchInput" class="block font-bold mb-2">Search Project</label>
+                <input id="bbaiProjectSearchInput" type="text" class="w-full border rounded-lg p-3 bbai-input" placeholder="Search by project name" />
+              </div>
+
+              <div>
+                <label for="bbaiProjectBranchFilter" class="block font-bold mb-2">Branch</label>
+                <select id="bbaiProjectBranchFilter" class="w-full border rounded-lg p-3 bbai-input">
+                  <option value="">All Branches</option>
+                  <option value="North Branch (Bulacan, Pampanga, Tarlac, Bataan)">North Branch (Bulacan, Pampanga, Tarlac, Bataan)</option>
+                  <option value="East Branch (NCR, Rizal)">East Branch (NCR, Rizal)</option>
+                  <option value="South Branch (Laguna, Batangas, Quezon)">South Branch (Laguna, Batangas, Quezon)</option>
+                  <option value="Southwest Branch (Cavite, Parañaque)">Southwest Branch (Cavite, Parañaque)</option>
+                </select>
+              </div>
+
+              <div>
+                <label for="bbaiProjectSortFilter" class="block font-bold mb-2">Sort</label>
+                <select id="bbaiProjectSortFilter" class="w-full border rounded-lg p-3 bbai-input">
+                  <option value="">Default</option>
+                  <option value="name_asc">Project Name: A–Z</option>
+                  <option value="name_desc">Project Name: Z–A</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="mt-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+              <div id="bbaiProjectCounter" class="text-sm text-slate-600 font-bold">Showing 0 of 0 Projects.</div>
+              <button id="bbaiProjectClearFiltersBtn" type="button" class="bbai-btn bg-slate-200 hover:bg-slate-300 text-slate-800 px-4 py-2 rounded-lg font-bold text-sm">
+                Clear Filters
+              </button>
+            </div>
+
             <div id="bbaiProjectsGrid" class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4"></div>
 
             <div class="mt-4">
@@ -737,6 +778,7 @@
       // Also set up chips once DOM is ready.
       document.addEventListener("DOMContentLoaded", () => {
         bbaiSetupQuickFilterChips();
+        bbaiSetupProjectPortfolioFilterControls();
         // Initial cards (if table already has rows)
         try {
           bbaiUpdateDashboardCardsFromRenderedRows();
@@ -1266,31 +1308,19 @@
       if (gridEl) gridEl.classList.toggle('opacity-60', isLoading);
     }
 
-    function bbaiRenderProjects(projects) {
-      const gridEl = document.getElementById('bbaiProjectsGrid');
-      const msgEl = document.getElementById('bbaiProjectPortfolioMessage');
-      if (!gridEl || !msgEl) return;
+    window.__bbaiPortfolioFilters = window.__bbaiPortfolioFilters ?? {
+      search: '',
+      branch: '',
+      sort: ''
+    };
 
-      window.__bbaiPortfolioProjects = Array.isArray(projects) ? projects : [];
-
-      gridEl.innerHTML = '';
-
-      if (!projects || projects.length === 0) {
-        msgEl.classList.remove('hidden');
-        msgEl.textContent = 'No projects available yet.';
-        return;
-      }
-
-      msgEl.classList.add('hidden');
-
-      const cardsHtml = projects.map((p, index) => {
-        const projectId = p.projectId ?? p.id ?? '';
+    function bbaiBuildProjectCardsHtml(projects) {
+      return projects.map((p) => {
+        const originalIndex = Number(p && p.__bbaiOriginalIndex);
         const projectName = bbaiEscapeHtml(p.projectName || '');
         const location = bbaiEscapeHtml(p.projectLocation || p.location || '');
         const developer = bbaiEscapeHtml(p.developer || '');
         const startingPrice = bbaiEscapeHtml(p.startingPrice || '');
-
-
 
         const imageData = (p.imageData || '').trim();
         const imageUrl = (p.imageUrl || '').trim();
@@ -1319,7 +1349,7 @@
               <div class="mt-4">
                 <button type="button"
                   class="bbai-btn bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg font-bold text-sm w-full"
-                  data-bbai-project-index="${index}"
+                  data-bbai-project-index="${Number.isInteger(originalIndex) ? originalIndex : 0}"
                   onclick="bbaiOnEditProjectCardClick(event)">
                   ✏️ Edit Project
                 </button>
@@ -1328,10 +1358,134 @@
             </div>
           </div>
         `;
+      }).join('');
+    }
 
+    function bbaiUpdateProjectCounter(showingCount, totalCount) {
+      const counterEl = document.getElementById('bbaiProjectCounter');
+      if (!counterEl) return;
+      counterEl.textContent = `Showing ${showingCount} of ${totalCount} Projects.`;
+    }
+
+    function bbaiGetFilteredAndSortedProjects() {
+      const allProjects = Array.isArray(window.__bbaiPortfolioProjects) ? window.__bbaiPortfolioProjects : [];
+      const searchValue = String(window.__bbaiPortfolioFilters?.search || '').trim().toLowerCase();
+      const branchValue = String(window.__bbaiPortfolioFilters?.branch || '').trim();
+      const sortValue = String(window.__bbaiPortfolioFilters?.sort || '').trim();
+
+      let result = allProjects.filter((p) => {
+        const name = String((p && p.projectName) || '').toLowerCase();
+        const branch = String((p && p.assignedBranch) || '').trim();
+
+        const matchesName = !searchValue || name.includes(searchValue);
+        const matchesBranch = !branchValue || branch === branchValue;
+
+        return matchesName && matchesBranch;
       });
 
-      gridEl.innerHTML = cardsHtml.join('');
+      if (sortValue === 'name_asc' || sortValue === 'name_desc') {
+        result = result.slice().sort((a, b) => {
+          const aName = String((a && a.projectName) || '').toLowerCase();
+          const bName = String((b && b.projectName) || '').toLowerCase();
+          if (aName < bName) return sortValue === 'name_asc' ? -1 : 1;
+          if (aName > bName) return sortValue === 'name_asc' ? 1 : -1;
+          return 0;
+        });
+      }
+
+      return result;
+    }
+
+    function bbaiApplyProjectPortfolioFiltersAndRender() {
+      const gridEl = document.getElementById('bbaiProjectsGrid');
+      const msgEl = document.getElementById('bbaiProjectPortfolioMessage');
+      if (!gridEl || !msgEl) return;
+
+      const allProjects = Array.isArray(window.__bbaiPortfolioProjects) ? window.__bbaiPortfolioProjects : [];
+      const filteredProjects = bbaiGetFilteredAndSortedProjects();
+
+      gridEl.innerHTML = '';
+      bbaiUpdateProjectCounter(filteredProjects.length, allProjects.length);
+
+      if (!allProjects.length) {
+        msgEl.classList.remove('hidden');
+        msgEl.textContent = 'No projects available yet.';
+        return;
+      }
+
+      if (!filteredProjects.length) {
+        msgEl.classList.remove('hidden');
+        msgEl.textContent = 'No projects match the current filters.';
+        return;
+      }
+
+      msgEl.classList.add('hidden');
+      gridEl.innerHTML = bbaiBuildProjectCardsHtml(filteredProjects);
+    }
+
+    function bbaiResetProjectPortfolioFilters() {
+      window.__bbaiPortfolioFilters = { search: '', branch: '', sort: '' };
+
+      const searchEl = document.getElementById('bbaiProjectSearchInput');
+      const branchEl = document.getElementById('bbaiProjectBranchFilter');
+      const sortEl = document.getElementById('bbaiProjectSortFilter');
+
+      if (searchEl) searchEl.value = '';
+      if (branchEl) branchEl.value = '';
+      if (sortEl) sortEl.value = '';
+
+      bbaiApplyProjectPortfolioFiltersAndRender();
+    }
+
+    function bbaiSetupProjectPortfolioFilterControls() {
+      if (window.__bbaiPortfolioFilterControlsAttached) return;
+      window.__bbaiPortfolioFilterControlsAttached = true;
+
+      const searchEl = document.getElementById('bbaiProjectSearchInput');
+      const branchEl = document.getElementById('bbaiProjectBranchFilter');
+      const sortEl = document.getElementById('bbaiProjectSortFilter');
+      const clearBtn = document.getElementById('bbaiProjectClearFiltersBtn');
+
+      if (searchEl) {
+        searchEl.addEventListener('input', () => {
+          window.__bbaiPortfolioFilters.search = searchEl.value || '';
+          bbaiApplyProjectPortfolioFiltersAndRender();
+        });
+      }
+
+      if (branchEl) {
+        branchEl.addEventListener('change', () => {
+          window.__bbaiPortfolioFilters.branch = branchEl.value || '';
+          bbaiApplyProjectPortfolioFiltersAndRender();
+        });
+      }
+
+      if (sortEl) {
+        sortEl.addEventListener('change', () => {
+          window.__bbaiPortfolioFilters.sort = sortEl.value || '';
+          bbaiApplyProjectPortfolioFiltersAndRender();
+        });
+      }
+
+      if (clearBtn) {
+        clearBtn.addEventListener('click', () => {
+          bbaiResetProjectPortfolioFilters();
+        });
+      }
+    }
+
+    function bbaiRenderProjects(projects) {
+      const gridEl = document.getElementById('bbaiProjectsGrid');
+      const msgEl = document.getElementById('bbaiProjectPortfolioMessage');
+      if (!gridEl || !msgEl) return;
+
+      const normalizedProjects = Array.isArray(projects)
+        ? projects.map((p, index) => ({ ...(p || {}), __bbaiOriginalIndex: index }))
+        : [];
+
+      window.__bbaiPortfolioProjects = normalizedProjects;
+
+      bbaiApplyProjectPortfolioFiltersAndRender();
     }
 
     async function bbaiLoadProjectsIntoPortfolio() {
