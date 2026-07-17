@@ -646,7 +646,7 @@
     </div>
 
   <script>
-    const CHALLENGE_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxB90944Im67ks7ceM8YuyT-D3uhRLrEwuR9_yWMoGJm5F4EHR_Yxja8P3uAxWeeJTekA/exec";
+    const CHALLENGE_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxvVPknJZ90K1-C47PW-gPjxAtx9G2E3CsGNSJSwJIEPMFCbiAAIIPiL6pTABPRzXCwEQ/exec";
 
     // ===== Minimal UI activation state (cards + quick filters) =====
     // IMPORTANT: This code does not change any backend/business logic.
@@ -1332,6 +1332,8 @@
              </div>`
           : `<div class="w-full h-36 bg-slate-100 rounded-xl border border-slate-200 flex items-center justify-center text-slate-400 text-xs font-bold">No image</div>`;
 
+        const rawProjectId = String(p && (p.projectId || p.id) ? (p.projectId || p.id) : '').trim();
+
         return `
           <div class="bbai-card p-4 md:p-5" style="background: rgba(255,255,255,.65);">
             ${imageArea}
@@ -1346,7 +1348,7 @@
                 </div>
               </div>
 
-              <div class="mt-4">
+              <div class="mt-4 flex flex-col gap-2">
                 <button type="button"
                   class="bbai-btn bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg font-bold text-sm w-full"
                   data-bbai-project-index="${Number.isInteger(originalIndex) ? originalIndex : 0}"
@@ -1354,6 +1356,12 @@
                   ✏️ Edit Project
                 </button>
 
+                <button type="button"
+                  class="bbai-btn bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-bold text-sm w-full"
+                  data-bbai-project-id="${bbaiEscapeHtml(rawProjectId)}"
+                  onclick="bbaiOnDeleteProjectCardClick(event)">
+                  🗑️ Delete Project
+                </button>
               </div>
             </div>
           </div>
@@ -1968,6 +1976,201 @@
       }
     }
 
+    function bbaiOpenDeleteProjectModalByTarget(project) {
+      // project: { projectId, projectName }
+      const overlay = document.getElementById('bbaiDeleteProjectModalOverlay');
+      const modal = document.getElementById('bbaiDeleteProjectModal');
+      const nameEl = document.getElementById('bbaiDeleteProjectName');
+      const errorEl = document.getElementById('bbaiDeleteProjectError');
+      const confirmBtn = document.getElementById('bbaiDeleteProjectConfirmBtn');
+
+      if (!overlay || !modal || !nameEl || !errorEl || !confirmBtn) return;
+
+      const projectId = String(project && project.projectId ? project.projectId : '').trim();
+      const projectName = String(project && project.projectName ? project.projectName : '').trim();
+
+      if (!projectId) {
+        errorEl.classList.remove('hidden');
+        errorEl.textContent = 'Invalid project.';
+        return;
+      }
+
+      window.__bbaiDeleteTargetProjectId = projectId;
+      window.__bbaiDeleteTargetProjectName = projectName;
+
+      nameEl.textContent = projectName || projectId;
+
+      errorEl.classList.add('hidden');
+      errorEl.textContent = '';
+
+      confirmBtn.disabled = false;
+      confirmBtn.classList.remove('opacity-60', 'cursor-not-allowed');
+
+      overlay.classList.remove('hidden');
+      modal.classList.remove('opacity-0');
+      modal.classList.add('opacity-100');
+
+      document.body.style.overflow = 'hidden';
+    }
+
+    function bbaiCloseDeleteProjectModal() {
+      const overlay = document.getElementById('bbaiDeleteProjectModalOverlay');
+      const modal = document.getElementById('bbaiDeleteProjectModal');
+      if (!overlay || !modal) return;
+
+      modal.classList.add('opacity-0');
+      modal.classList.remove('opacity-100');
+
+      overlay.classList.add('hidden');
+
+      const confirmBtn = document.getElementById('bbaiDeleteProjectConfirmBtn');
+      if (confirmBtn) {
+        confirmBtn.disabled = false;
+        confirmBtn.classList.remove('opacity-60', 'cursor-not-allowed');
+      }
+
+      window.__bbaiDeleteInFlight = false;
+
+      document.body.style.overflow = '';
+    }
+
+    function bbaiOnDeleteProjectCardClick(event) {
+      try {
+        const btn = event && event.currentTarget ? event.currentTarget : null;
+        if (!btn) return;
+
+        const projectId = String(btn.dataset ? (btn.dataset.bbaiProjectId || '') : '').trim();
+        if (!projectId) {
+          alert('Unable to delete: missing projectId.');
+          return;
+        }
+
+        const projects = Array.isArray(window.__bbaiPortfolioProjects) ? window.__bbaiPortfolioProjects : [];
+        const target = projects.find((p) => String(p && (p.projectId || p.id || '')).trim() === projectId);
+
+        if (!target) {
+          alert('Unable to delete: project not found.');
+          return;
+        }
+
+        bbaiOpenDeleteProjectModalByTarget({
+          projectId: projectId,
+          projectName: target.projectName || ''
+        });
+      } catch (e) {
+        console.error('Delete Project click failed:', e);
+        alert('Failed to open delete confirmation.');
+      }
+    }
+
+    function bbaiAttachDeleteModalHandlersOnce() {
+      if (window.__bbaiDeleteModalHandlersAttached) return;
+      window.__bbaiDeleteModalHandlersAttached = true;
+
+      const overlay = document.getElementById('bbaiDeleteProjectModalOverlay');
+      const cancelBtn = document.getElementById('bbaiDeleteProjectCancelBtn');
+      const cancelX = document.getElementById('bbaiDeleteProjectCancelX');
+      const confirmBtn = document.getElementById('bbaiDeleteProjectConfirmBtn');
+      const errorEl = document.getElementById('bbaiDeleteProjectError');
+
+      if (!overlay || !cancelBtn || !confirmBtn || !errorEl) return;
+
+      overlay.addEventListener('click', (e) => {
+        if (e && e.target && e.target.id === 'bbaiDeleteProjectModalOverlay') {
+          bbaiCloseDeleteProjectModal();
+        }
+      });
+
+      const closeFn = () => bbaiCloseDeleteProjectModal();
+
+      cancelBtn.addEventListener('click', closeFn);
+      if (cancelX) cancelX.addEventListener('click', closeFn);
+
+      document.addEventListener('keydown', (e) => {
+        if (e && e.key === 'Escape') {
+          const isOpen = overlay && !overlay.classList.contains('hidden');
+          if (isOpen) bbaiCloseDeleteProjectModal();
+        }
+      });
+
+      confirmBtn.addEventListener('click', async () => {
+        if (window.__bbaiDeleteInFlight) return;
+
+        const overlayEl = document.getElementById('bbaiDeleteProjectModalOverlay');
+        if (!overlayEl || overlayEl.classList.contains('hidden')) return;
+
+        const projectId = String(window.__bbaiDeleteTargetProjectId || '').trim();
+        const projectName = String(window.__bbaiDeleteTargetProjectName || '').trim();
+        const adminKey = document.getElementById('adminKey')?.value?.trim() || '';
+
+        if (!adminKey) {
+          errorEl.classList.remove('hidden');
+          errorEl.textContent = 'Admin key is required.';
+          return;
+        }
+
+        if (!projectId) {
+          errorEl.classList.remove('hidden');
+          errorEl.textContent = 'Invalid projectId.';
+          return;
+        }
+
+        window.__bbaiDeleteInFlight = true;
+
+        confirmBtn.disabled = true;
+        confirmBtn.classList.add('opacity-60', 'cursor-not-allowed');
+
+        errorEl.classList.add('hidden');
+        errorEl.textContent = '';
+
+        try {
+          const payload = new URLSearchParams();
+          payload.append('action', 'admin_delete_project');
+          payload.append('adminKey', adminKey);
+          payload.append('projectId', projectId);
+
+          const resp = await fetch(CHALLENGE_WEB_APP_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
+            body: payload.toString()
+          });
+
+          const data = await resp.json();
+          if (!data || data.ok !== true) {
+            const backendErr = (data && (data.error || data.message)) ? (data.error || data.message) : 'Delete failed.';
+            errorEl.classList.remove('hidden');
+            errorEl.textContent = backendErr;
+            return;
+          }
+
+          bbaiCloseDeleteProjectModal();
+
+          // Refresh projects list using existing loader (preserves current search/filter/sort behavior)
+          bbaiLoadProjectsIntoPortfolio().catch(()=>{});
+
+        } catch (err) {
+          const msg = (err && err.message) ? err.message : String(err);
+          errorEl.classList.remove('hidden');
+          errorEl.textContent = msg;
+        } finally {
+          window.__bbaiDeleteInFlight = false;
+          if (!confirmBtn.disabled) {
+            confirmBtn.disabled = false;
+            confirmBtn.classList.remove('opacity-60', 'cursor-not-allowed');
+          } else {
+            // If modal stays open, re-enable
+            const isStillOpen = overlay && !overlay.classList.contains('hidden');
+            if (isStillOpen) {
+              confirmBtn.disabled = false;
+              confirmBtn.classList.remove('opacity-60', 'cursor-not-allowed');
+            }
+          }
+        }
+      });
+    }
+
+    // ====== Existing rejection handler code continues below ======
+
     async function updateStepStatus(email, stepNumber, status) {
       const adminKey = document.getElementById("adminKey").value.trim();
       if (!adminKey) { alert("Admin key is required."); return; }
@@ -2015,6 +2218,40 @@
       <div class="bbai-spinner" aria-hidden="true"></div>
       <div class="text-base font-extrabold text-slate-800">Loading submissions...</div>
       <div class="text-xs text-slate-500 mt-1">Please wait</div>
+    </div>
+  </div>
+
+  <!-- Delete Project Modal (UI only) -->
+  <div id="bbaiDeleteProjectModalOverlay" class="hidden fixed inset-0 bg-slate-900 bg-opacity-40 flex items-center justify-center z-[100]">
+    <div
+      id="bbaiDeleteProjectModal"
+      class="opacity-0 transition-opacity duration-200 ease-out w-full max-w-lg"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="bbaiDeleteProjectModalTitle"
+    >
+      <div class="bbai-card p-5 md:p-6">
+        <div class="flex items-start justify-between gap-3">
+          <div>
+            <div class="text-lg md:text-xl font-extrabold text-slate-800" id="bbaiDeleteProjectModalTitle">Delete Project</div>
+            <div class="text-sm text-slate-500 mt-1">This action cannot be undone.</div>
+          </div>
+          <button type="button" id="bbaiDeleteProjectCancelX" class="text-slate-400 hover:text-slate-700" aria-label="Close">✕</button>
+        </div>
+
+        <div class="mt-4">
+          <div class="text-sm text-slate-700 font-bold">Project to delete:</div>
+          <div id="bbaiDeleteProjectName" class="mt-2 text-lg font-extrabold text-red-700 break-words">—</div>
+          <div id="bbaiDeleteProjectError" class="hidden mt-3 text-sm font-bold text-red-700 bg-red-50 border border-red-200 rounded-lg p-3"></div>
+        </div>
+
+        <div class="mt-5 flex items-center justify-end gap-3">
+          <button type="button" id="bbaiDeleteProjectCancelBtn" class="bbai-btn bg-slate-200 hover:bg-slate-300 text-slate-800 px-4 py-2 rounded-lg font-bold text-sm">Cancel</button>
+          <button type="button" id="bbaiDeleteProjectConfirmBtn" class="bbai-btn bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-bold text-sm opacity-100">
+            Confirm Delete
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -2096,6 +2333,9 @@
       try {
         if (typeof bbaiAttachRejectModalHandlersOnce === 'function') {
           bbaiAttachRejectModalHandlersOnce();
+        }
+        if (typeof bbaiAttachDeleteModalHandlersOnce === 'function') {
+          bbaiAttachDeleteModalHandlersOnce();
         }
         const xBtn = document.getElementById('bbaiRejectCancelX');
         if (xBtn) xBtn.addEventListener('click', () => {
