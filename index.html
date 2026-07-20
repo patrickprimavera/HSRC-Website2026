@@ -840,7 +840,7 @@ background-position:center;
                         <div class="bg-black rounded-lg overflow-hidden mb-6 aspect-video">
                             <video id="orientationVideo" class="w-full h-full object-contain" poster="display.jpeg"
                                 controls controlsList="nodownload">
-                                <source src="final102.mp4" type="video/mp4">
+                                <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
                             </video>
                         </div>
 
@@ -856,10 +856,9 @@ background-position:center;
                         <div id="orientationVideo2-wrapper" class="hidden">
                             <div
                                 class="bg-black rounded-lg overflow-hidden mb-6 aspect-video flex items-center justify-center relative">
-                                <video id="orientationVideo2" class="w-full h-full object-cover"
-                                    poster="display1.png"
+                                <video id="orientationVideo2" class="w-full h-full object-cover" poster="display1.png"
                                     controls controlsList="nodownload">
-                                    <source src="Final10.mp4" type="video/mp4">
+                                    <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
                                 </video>
                             </div>
                         </div>
@@ -945,13 +944,27 @@ background-position:center;
                                 </div>
                             </div>
 
-                            <!-- NEW: REFERRER NAME FIELD (HIDDEN BY DEFAULT) -->
-                            <div id="referrer-name-container" class="hidden transition-all duration-300">
-                                <label class="block text-sm font-bold text-slate-700 mb-1">If Yes, please indicate the
-                                    full name of your referrer/recruiter: <span class="text-red-500">*</span></label>
-                                <input type="text" id="referrer-name" name="referrerName"
-                                    class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brand-gold text-brand-dark font-medium"
-                                    placeholder="e.g. HSRC Margz Bernabe">
+                            <div id="referrer-name-container" class="hidden transition-all duration-300 space-y-4">
+
+                                <div>
+                                    <label class="block text-sm font-bold text-slate-700 mb-1">
+                                        If Yes, Please indicate the Fullname of your referrer/recruiter: <span
+                                            class="text-red-500">*</span>
+                                    </label>
+                                    <input type="text" id="sales-manager-name" name="salesManagerName"
+                                        class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brand-gold text-brand-dark font-medium"
+                                        placeholder="">
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm font-bold text-slate-700 mb-1">
+                                        Team Name <span class="text-red-500">*</span>
+                                    </label>
+                                    <input type="text" id="team-name" name="teamName"
+                                        class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brand-gold text-brand-dark font-medium"
+                                        placeholder="">
+                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -1628,7 +1641,8 @@ background-position:center;
 
                             <div class="border-t border-slate-200 pt-6">
                                 <!-- START Branch Project Guide -->
-                                <div class="w-full mt-2 mb-2 max-w-[700px] mx-auto bg-white rounded-xl border border-slate-200 shadow-sm px-6 py-5">
+                                <div
+                                    class="w-full mt-2 mb-2 max-w-[700px] mx-auto bg-white rounded-xl border border-slate-200 shadow-sm px-6 py-5">
                                     <section id="branch-project-guide-section" class="w-full">
                                         <div class="flex items-center gap-2 mb-3">
                                             <i class="fa-solid fa-map-location-dot text-brand-gold"></i>
@@ -1683,6 +1697,7 @@ background-position:center;
                                             display: flex;
                                             justify-content: center;
                                         }
+
                                         .branchProjectGuideImageBtn {
                                             width: 100%;
                                             display: block;
@@ -1692,32 +1707,39 @@ background-position:center;
                                             cursor: pointer;
                                             text-align: left;
                                         }
+
                                         .branchProjectGuideImage {
                                             width: 100%;
                                             height: 240px;
                                             object-fit: contain;
                                             border-radius: 14px;
                                             border: 1px solid #e5e7eb;
-                                            box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+                                            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
                                             transition: transform 0.2s ease, box-shadow 0.2s ease;
                                             display: block;
                                         }
+
                                         .branchProjectGuideImageBtn:focus-visible {
                                             outline: 3px solid rgba(245, 158, 11, 0.65);
                                             outline-offset: 2px;
                                         }
+
                                         .branchProjectGuideImageBtn:hover .branchProjectGuideImage {
                                             transform: translateY(-1px);
-                                            box-shadow: 0 14px 35px rgba(0,0,0,0.10);
+                                            box-shadow: 0 14px 35px rgba(0, 0, 0, 0.10);
                                         }
+
                                         /* Keep arrows subtle and in style */
-                                        .branchProjectGuidePrev, .branchProjectGuideNext {
+                                        .branchProjectGuidePrev,
+                                        .branchProjectGuideNext {
                                             color: #1e293b;
                                         }
+
                                         @media (min-width: 768px) {
                                             .branchProjectGuideImage {
                                                 height: 320px;
                                             }
+
                                             .swiper-pagination {
                                                 display: none;
                                             }
@@ -1726,10 +1748,10 @@ background-position:center;
                                 </div>
 
                                 <div class="border-t border-slate-200 pt-6 flex justify-center">
-                                <button type="button" onclick="restartPortal()"
-                                    class="px-6 py-3 bg-brand-navy hover:bg-slate-700 text-white font-bold rounded-lg shadow transition text-sm flex items-center justify-center gap-2">
-                                    <i class="fa-solid fa-house"></i> Back to Home
-                                </button>
+                                    <button type="button" onclick="restartPortal()"
+                                        class="px-6 py-3 bg-brand-navy hover:bg-slate-700 text-white font-bold rounded-lg shadow transition text-sm flex items-center justify-center gap-2">
+                                        <i class="fa-solid fa-house"></i> Back to Home
+                                    </button>
                                 </div>
                                 <!-- END Branch Project Guide -->
                             </div>
@@ -1774,6 +1796,487 @@ background-position:center;
     </footer>
 
     <!-- LOGIC FUNCTIONS SCRIPT -->
+
+    <!-- ============================= -->
+    <!-- Humania AI Floating Widget -->
+    <!-- ============================= -->
+    <div id="humania-ai-widget-root" class="humania-ai-widget-root" aria-live="polite">
+        <!-- Toggle buttons -->
+        <button id="humania-ai-minimize-btn" type="button" class="humania-ai-toggle humania-ai-toggle-minimize"
+            aria-label="Open Humania AI widget">
+            <span class="humania-ai-toggle-icon" aria-hidden="true">🤖</span>
+        </button>
+
+        <!-- Panel -->
+        <div id="humania-ai-panel" class="humania-ai-panel humania-ai-panel-closed" role="dialog"
+            aria-label="Humania AI Recruitment Assistant">
+            <div class="humania-ai-header">
+                <div class="humania-ai-header-left">
+                    <div class="humania-ai-bot-icon" aria-hidden="true">🤖</div>
+                    <div class="humania-ai-titles">
+                        <div id="humania-ai-widget-title" class="humania-ai-title">Humania AI</div>
+                        <div class="humania-ai-subtitle">Your 24/7 Recruitment Assistant</div>
+                    </div>
+                </div>
+
+                <div class="humania-ai-header-actions">
+                    <button id="humania-ai-close-btn" type="button" class="humania-ai-btn humania-ai-btn-icon"
+                        aria-label="Close Humania AI widget">
+                        <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+                    </button>
+                    <button id="humania-ai-minimize-btn-2" type="button" class="humania-ai-btn humania-ai-btn-icon"
+                        aria-label="Minimize Humania AI widget">
+                        <i class="fa-solid fa-minus" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="humania-ai-body">
+                <div class="humania-ai-message">
+                    <p>Hello!</p>
+                    <p>
+                        Welcome to Human Shelter Realty Corporation.
+                    </p>
+                    <p>
+                        I'm Humania AI.
+                    </p>
+                    <p class="humania-ai-message-sub">
+                        I'm here to answer your questions about:
+                    </p>
+                    <div class="humania-ai-topics">
+                        <span>🏡 Real Estate Career</span>
+                        <span>📍 Branches</span>
+                        <span>📚 Training</span>
+                        <span>💰 Commission</span>
+                        <span>📝 Registration</span>
+                        <span>📅 Orientation</span>
+                    </div>
+                </div>
+
+                <!-- Quick Questions -->
+                <div class="humania-ai-quick-questions" aria-label="Quick Questions">
+                    <button type="button" class="humania-ai-quick-btn">Real Estate Career</button>
+                    <button type="button" class="humania-ai-quick-btn">Branches</button>
+                    <button type="button" class="humania-ai-quick-btn">Training</button>
+                    <button type="button" class="humania-ai-quick-btn">Commission</button>
+                    <button type="button" class="humania-ai-quick-btn">Registration</button>
+                    <button type="button" class="humania-ai-quick-btn">Orientation</button>
+                </div>
+
+                <!-- Chat input UI (UI only; no functionality) -->
+                <div class="humania-ai-chat-input">
+                    <input id="humania-ai-chat-input" type="text" class="humania-ai-chat-field"
+                        placeholder="Ask me anything..." />
+                    <button id="humania-ai-send-btn" type="button" class="humania-ai-send-btn"
+                        aria-label="Send message (UI only)">
+                        <i class="fa-solid fa-paper-plane" aria-hidden="true"></i>
+                        <span class="humania-ai-send-text">Send</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- subtle footer hint -->
+            <div class="humania-ai-footer">
+                <span class="humania-ai-footer-text">Recruitment Assistant UI • No backend connected</span>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        /* Humania AI Widget (self-contained) */
+        .humania-ai-widget-root {
+            position: fixed;
+            right: 16px;
+            bottom: 16px;
+            z-index: 1000000;
+            font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+        }
+
+        .humania-ai-toggle {
+            width: 56px;
+            height: 56px;
+            border-radius: 9999px;
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            background: rgba(20, 66, 66, 0.25);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            color: #ecfeff;
+            box-shadow: 0 10px 28px rgba(0, 0, 0, 0.18);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform .18s ease, box-shadow .18s ease, opacity .18s ease;
+        }
+
+        .humania-ai-toggle:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 34px rgba(0, 0, 0, 0.22);
+        }
+
+        .humania-ai-toggle-icon {
+            font-size: 22px;
+            line-height: 1;
+        }
+
+        /* Panel */
+        .humania-ai-panel {
+            position: absolute;
+            right: 0;
+            bottom: 66px;
+            width: 360px;
+            max-width: calc(100vw - 32px);
+            border-radius: 18px;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            background: rgba(20, 66, 66, 0.16);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+            overflow: hidden;
+            transform-origin: bottom right;
+        }
+
+        .humania-ai-panel-closed {
+            opacity: 0;
+            transform: scale(0.96) translateY(10px);
+            pointer-events: none;
+            transition: opacity .18s ease, transform .22s ease;
+        }
+
+        .humania-ai-panel-open {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+            pointer-events: auto;
+            transition: opacity .18s ease, transform .22s ease;
+        }
+
+        /* Header */
+        .humania-ai-header {
+            padding: 14px 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .humania-ai-header-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 0;
+        }
+
+        .humania-ai-bot-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(245, 158, 11, 0.22);
+            border: 1px solid rgba(245, 158, 11, 0.35);
+            box-shadow: 0 8px 20px rgba(245, 158, 11, 0.12);
+            font-size: 18px;
+        }
+
+        .humania-ai-titles {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            min-width: 0;
+        }
+
+        .humania-ai-title {
+            font-weight: 900;
+            color: #f5f5f5;
+            font-size: 14.5px;
+            letter-spacing: 0.2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .humania-ai-subtitle {
+            color: rgba(236, 254, 255, 0.9);
+            font-weight: 700;
+            font-size: 12.5px;
+        }
+
+        .humania-ai-header-actions {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-shrink: 0;
+        }
+
+        .humania-ai-btn {
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            background: rgba(255, 255, 255, 0.08);
+            color: #e2e8f0;
+            width: 34px;
+            height: 34px;
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform .18s ease, background .18s ease, border-color .18s ease;
+        }
+
+        .humania-ai-btn:hover {
+            transform: translateY(-1px);
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.34);
+        }
+
+        .humania-ai-btn-icon i {
+            font-size: 14px;
+            line-height: 1;
+        }
+
+        /* Body */
+        .humania-ai-body {
+            padding: 12px 14px 14px 14px;
+            color: #e2e8f0;
+        }
+
+        .humania-ai-message {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            border-radius: 14px;
+            padding: 10px 12px;
+            margin-bottom: 12px;
+        }
+
+        .humania-ai-message p {
+            margin: 0 0 6px 0;
+            font-size: 13.5px;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.93);
+        }
+
+        .humania-ai-message p:last-child {
+            margin-bottom: 0;
+        }
+
+        .humania-ai-message-sub {
+            font-weight: 800 !important;
+            margin-top: 8px !important;
+            color: rgba(236, 254, 255, 0.95) !important;
+        }
+
+        .humania-ai-topics {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .humania-ai-topics span {
+            font-size: 12.5px;
+            font-weight: 800;
+            color: rgba(255, 255, 255, 0.92);
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            padding: 6px 8px;
+            border-radius: 999px;
+        }
+
+        .humania-ai-quick-questions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .humania-ai-quick-btn {
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            background: rgba(255, 255, 255, 0.07);
+            color: #f8fafc;
+            padding: 10px 10px;
+            text-align: center;
+            font-weight: 900;
+            font-size: 12.5px;
+            cursor: pointer;
+            transition: transform .16s ease, background .16s ease, border-color .16s ease;
+        }
+
+        .humania-ai-quick-btn:hover {
+            transform: translateY(-1px);
+            background: rgba(255, 255, 255, 0.10);
+            border-color: rgba(255, 255, 255, 0.28);
+        }
+
+        .humania-ai-chat-input {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 0 2px 0;
+        }
+
+        .humania-ai-chat-field {
+            flex: 1;
+            height: 40px;
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            background: rgba(255, 255, 255, 0.08);
+            color: #f8fafc;
+            padding: 0 12px;
+            font-weight: 700;
+            outline: none;
+        }
+
+        .humania-ai-chat-field::placeholder {
+            color: rgba(226, 232, 240, 0.8);
+            font-weight: 700;
+        }
+
+        .humania-ai-send-btn {
+            height: 40px;
+            min-width: 92px;
+            border-radius: 14px;
+            border: 1px solid rgba(245, 158, 11, 0.45);
+            background: rgba(245, 158, 11, 0.25);
+            color: #fff;
+            cursor: pointer;
+            font-weight: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: transform .16s ease, background .16s ease;
+        }
+
+        .humania-ai-send-btn:hover {
+            transform: translateY(-1px);
+            background: rgba(245, 158, 11, 0.30);
+        }
+
+        .humania-ai-send-text {
+            font-size: 12.5px;
+        }
+
+        .humania-ai-footer {
+            padding: 10px 14px 12px 14px;
+            border-top: 1px solid rgba(255, 255, 255, 0.14);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .humania-ai-footer-text {
+            font-size: 11.5px;
+            color: rgba(226, 232, 240, 0.85);
+            font-weight: 800;
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .humania-ai-panel {
+                width: 320px;
+            }
+
+            .humania-ai-quick-questions {
+                grid-template-columns: 1fr;
+            }
+
+            .humania-ai-send-btn {
+                min-width: 76px;
+            }
+
+            .humania-ai-send-text {
+                display: none;
+            }
+        }
+
+        /* Accessibility: focus ring */
+        #humania-ai-minimize-btn:focus-visible,
+        #humania-ai-close-btn:focus-visible,
+        #humania-ai-minimize-btn-2:focus-visible,
+        .humania-ai-quick-btn:focus-visible,
+        #humania-ai-send-btn:focus-visible,
+        #humania-ai-chat-input:focus-visible {
+            outline: 3px solid rgba(245, 158, 11, 0.65);
+            outline-offset: 2px;
+        }
+    </style>
+
+    <script>
+        (function () {
+            // Widget DOM
+            var root = document.getElementById('humania-ai-widget-root');
+            var panel = document.getElementById('humania-ai-panel');
+            var minimizeBtn = document.getElementById('humania-ai-minimize-btn');
+            var closeBtn = document.getElementById('humania-ai-close-btn');
+            var minimizeBtn2 = document.getElementById('humania-ai-minimize-btn-2');
+            var quickButtons = root ? root.querySelectorAll('.humania-ai-quick-btn') : [];
+            var sendBtn = document.getElementById('humania-ai-send-btn');
+            var chatInput = document.getElementById('humania-ai-chat-input');
+
+            if (!root || !panel || !minimizeBtn) return;
+
+            function openWidget() {
+                // hide floating button, show panel
+                minimizeBtn.style.display = 'none';
+                panel.classList.remove('humania-ai-panel-closed');
+                panel.classList.add('humania-ai-panel-open');
+                panel.classList.remove('humania-ai-panel-minimized');
+            }
+
+            function closeWidget() {
+                panel.classList.remove('humania-ai-panel-open');
+                panel.classList.add('humania-ai-panel-closed');
+                minimizeBtn.style.display = 'flex';
+            }
+
+            function minimizeWidget() {
+                // spec: minimize button shows floating button
+                panel.classList.remove('humania-ai-panel-open');
+                panel.classList.add('humania-ai-panel-closed');
+                minimizeBtn.style.display = 'flex';
+            }
+
+            // Initial state: minimized floating button visible
+            // Ensure panel is closed on load
+            panel.classList.remove('humania-ai-panel-open');
+            panel.classList.add('humania-ai-panel-closed');
+
+            // Toggle handlers (UI-only; open/close only)
+            minimizeBtn.addEventListener('click', function () {
+                openWidget();
+            });
+
+            if (closeBtn) {
+                closeBtn.addEventListener('click', function () {
+                    closeWidget();
+                });
+            }
+
+            if (minimizeBtn2) {
+                minimizeBtn2.addEventListener('click', function () {
+                    minimizeWidget();
+                });
+            }
+
+            // Quick question buttons: UI only (no business logic)
+            quickButtons.forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    // no-op: keep UI independent
+                    // Optional: focus input without altering site logic
+                    if (chatInput) chatInput.focus();
+                });
+            });
+
+            // Send button: UI only (no-op)
+            if (sendBtn) {
+                sendBtn.addEventListener('click', function () {
+                    // no functionality required
+                    if (chatInput) chatInput.focus();
+                });
+            }
+        })();
+    </script>
     <script>
         // Branch Project Guide (Swiper + Fullscreen Lightbox)
         (function () {
@@ -1929,7 +2432,7 @@ background-position:center;
         const EMAILJS_CHALLENGE_TEMPLATE_ID = "template_challenge_completion";
 
         // Google Apps Script Web App URL (provided)
-        const GOOGLE_SHEET_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyCQHIlCeylF1QW-T_1t3_JORflGi-ov4NyhF0XWyRi5QcBbTNj97ffUGipy1UAkn8/exec";
+        const GOOGLE_SHEET_WEB_APP_URL = "https://script.google.com/macros/s/AKfycby9apBZvfHlijKbT7411ySUPovFnJEwqdputMQVFQO12o3604dc3Sr_ySuPp82p97Ij/exec";
         const CHALLENGE_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxdu2fNY9IdpwkdHsHcE0PP_pgljDuGcSd4BaVFbkbOe6aq-mQk3TsJCOEW-TXD3NBeLQ/exec";
 
 
@@ -4600,19 +5103,31 @@ background-position:center;
         function toggleReferrerField() {
 
             const container = document.getElementById('referrer-name-container');
-            const input = document.getElementById('referrer-name');
+
+            const salesManagerInput = document.getElementById('sales-manager-name');
+            const teamNameInput = document.getElementById('team-name');
+
             const yesRadio = document.querySelector('input[name="isReferred"][value="Yes"]');
 
             if (yesRadio && yesRadio.checked) {
+
                 container.classList.remove('hidden');
-                input.setAttribute('required', 'true');
+
+                salesManagerInput.required = true;
+                teamNameInput.required = true;
+
             } else {
+
                 container.classList.add('hidden');
-                input.removeAttribute('required');
-                input.value = ""; // I-clear ang text field kapag nag-"No"
+
+                salesManagerInput.required = false;
+                teamNameInput.required = false;
+
+                salesManagerInput.value = "";
+                teamNameInput.value = "";
+
             }
 
-            // Re-validate step indicators/buttons kapag may nagbago
             updateFormStep();
         }
 
@@ -4913,7 +5428,6 @@ background-position:center;
 
             // I-reset ang referrer container styling
             document.getElementById('referrer-name-container').classList.add('hidden');
-            document.getElementById('referrer-name').removeAttribute('required');
 
             statusMsg.className = "p-4 bg-red-50 text-red-700 rounded-lg flex items-center gap-2 mb-4 border border-red-200";
             statusMsg.innerHTML = '<i class="fa-solid fa-lock"></i> <span id="status-text">You need to watch the first orientation video completely to unlock the second video.</span>';
@@ -5360,9 +5874,15 @@ background-position:center;
             const fbInput = document.getElementById('fb-account').value;
             const addressInput = document.getElementById('full-address').value;
 
-            // Get Referrer fields
-            const isReferredInput = document.querySelector('input[name="isReferred"]:checked')?.value || "No";
-            const referrerNameInput = document.getElementById('referrer-name').value || "N/A";
+            // Get Referral fields
+            const isReferredInput =
+                document.querySelector('input[name="isReferred"]:checked')?.value || "No";
+
+            const salesManagerInput =
+                document.getElementById("sales-manager-name")?.value || "N/A";
+
+            const teamNameInput =
+                document.getElementById("team-name")?.value || "N/A";
 
             const signatureBase64 = signaturePad ? signaturePad.toDataURL("image/png") : "";
 
@@ -5383,7 +5903,8 @@ background-position:center;
 
             // Appended new fields for Google Sheets
             sheetFormData.append('isReferred', isReferredInput);
-            sheetFormData.append('referrerName', referrerNameInput);
+            sheetFormData.append('salesManagerName', salesManagerInput);
+            sheetFormData.append('teamName', teamNameInput);
 
             // Setup Target Emails safely if multiple recipients
             let targetEmail = BLInfo.email;
@@ -5396,31 +5917,95 @@ background-position:center;
                 fetch(GOOGLE_SHEET_WEB_APP_URL, {
                     method: 'POST',
                     body: sheetFormData
-                })
-                    .then(response => response.json()) // Basahin bilang JSON Object
+                }).then(response => response.json())
                     .then(data => {
-                        // Siguraduhing may valid na URL na maipapasa para laging clickable ang button
-                        let driveSignatureLink = (data && data.pdfUrl) ? data.pdfUrl : "https://drive.google.com/";
-                        let certificateLink = (data && data.certUrl) ? data.certUrl : "https://drive.google.com/";
 
-                        // Ipinasa nang ligtas patungo sa EmailJS handler mo
-                        sendSystemEmails(selectedBdo, targetEmail, BLInfo.zoomLink, fullNameInput, applicantEmail, phoneInput, positionInput, genderInput, birthdateInput, tinInput, fbInput, addressInput, chosenSchedule, driveSignatureLink, isReferredInput, referrerNameInput, certificateLink);
+                        let driveSignatureLink = (data && data.pdfUrl)
+                            ? data.pdfUrl
+                            : "https://drive.google.com/";
+
+                        let certificateLink = (data && data.certUrl)
+                            ? data.certUrl
+                            : "https://drive.google.com/";
+
+                        sendSystemEmails(
+                            selectedBdo,
+                            targetEmail,
+                            BLInfo.zoomLink,
+                            fullNameInput,
+                            applicantEmail,
+                            phoneInput,
+                            positionInput,
+                            genderInput,
+                            birthdateInput,
+                            tinInput,
+                            fbInput,
+                            addressInput,
+                            chosenSchedule,
+                            driveSignatureLink,
+                            isReferredInput,
+                            salesManagerInput,
+                            teamNameInput,
+                            certificateLink
+                        );
+
                     })
                     .catch(error => {
-                        console.error('Sheet Error:', error);
-                        // Fallback kapag nag-error ang network para hindi mag-freeze ang link text sa button
+
+                        console.error("Sheet Error:", error);
+
                         let fallbackUrl = "https://drive.google.com/";
-                        sendSystemEmails(selectedBdo, targetEmail, BLInfo.zoomLink, fullNameInput, applicantEmail, phoneInput, positionInput, genderInput, birthdateInput, tinInput, fbInput, addressInput, chosenSchedule, fallbackUrl, isReferredInput, referrerNameInput, fallbackUrl);
+
+                        sendSystemEmails(
+                            selectedBdo,
+                            targetEmail,
+                            BLInfo.zoomLink,
+                            fullNameInput,
+                            applicantEmail,
+                            phoneInput,
+                            positionInput,
+                            genderInput,
+                            birthdateInput,
+                            tinInput,
+                            fbInput,
+                            addressInput,
+                            chosenSchedule,
+                            fallbackUrl,
+                            isReferredInput,
+                            salesManagerInput,
+                            teamNameInput,
+                            fallbackUrl
+                        );
+
                     });
             } else {
                 console.error("Web App URL is missing or empty.");
                 let fallbackUrl = "https://drive.google.com/";
-                sendSystemEmails(selectedBdo, targetEmail, BLInfo.zoomLink, fullNameInput, applicantEmail, phoneInput, positionInput, genderInput, birthdateInput, tinInput, fbInput, addressInput, chosenSchedule, "No Web App URL Configured", isReferredInput, referrerNameInput, fallbackUrl);
+                sendSystemEmails(selectedBdo, targetEmail, BLInfo.zoomLink, fullNameInput, applicantEmail, phoneInput, positionInput, genderInput, birthdateInput, tinInput, fbInput, addressInput, chosenSchedule, "No Web App URL Configured", isReferredInput, salesManagerInput, teamNameInput, fallbackUrl);
             }
         }
-        function sendSystemEmails(selectedBdo, targetEmail, zoomLink, name, email, phone, position, gender, bdate, tin, fb, address, schedule, signatureLink, isReferred, referrerName, certificateLink) {
+        function sendSystemEmails(
+            selectedBdo,
+            targetEmail,
+            zoomLink,
+            name,
+            email,
+            phone,
+            position,
+            gender,
+            bdate,
+            tin,
+            fb,
+            address,
+            schedule,
+            signatureLink,
+            isReferred,
+            salesManagerName,
+            teamName,
+            certificateLink
+        ) {
             const BLTemplateParams = {
-                BL_name: selectedBdo, BL_email: targetEmail, recruit_name: name, recruit_email: email, recruit_phone: phone, position_applying: position, gender: gender, birthdate: bdate, tin_number: tin, fb_account: fb, full_address: address, selected_schedule: schedule, zoom_link: zoomLink, signature_link: signatureLink, is_referred: isReferred, referrer_name: referrerName, certificate_link: certificateLink // Assuming the same link for simplicity; adjust if different
+                BL_name: selectedBdo, BL_email: targetEmail, recruit_name: name, recruit_email: email, recruit_phone: phone, position_applying: position, gender: gender, birthdate: bdate, tin_number: tin, fb_account: fb, full_address: address, selected_schedule: schedule, zoom_link: zoomLink, signature_link: signatureLink, is_referred: isReferred, sales_manager_name: salesManagerName, team_name: teamName, certificate_link: certificateLink // Assuming the same link for simplicity; adjust if different
             };
             const applicantTemplateParams = {
                 recruit_name: name,
