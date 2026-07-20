@@ -705,7 +705,7 @@ background-position:center;
                                             class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold px-5 py-3 rounded-xl shadow mt-1">
                                             Start Checking Approval
                                         </button>
-<button type="button" onclick="restartPortal()"
+                                        <button type="button" onclick="restartPortal()"
                                             class="mt-3 w-full bg-slate-700 hover:bg-slate-800 text-white font-bold px-5 py-3 rounded-xl shadow">
                                             Back to Home
                                         </button>
@@ -837,7 +837,7 @@ background-position:center;
                         <div class="bg-black rounded-lg overflow-hidden mb-6 aspect-video">
                             <video id="orientationVideo" class="w-full h-full object-contain" poster="display.jpeg"
                                 controls controlsList="nodownload">
-                                <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                                <source src="final102.mp4" type="video/mp4">
                             </video>
                         </div>
 
@@ -854,9 +854,9 @@ background-position:center;
                             <div
                                 class="bg-black rounded-lg overflow-hidden mb-6 aspect-video flex items-center justify-center relative">
                                 <video id="orientationVideo2" class="w-full h-full object-cover"
-                                    poster="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=1000&q=80"
+                                    poster="display1.png"
                                     controls controlsList="nodownload">
-                                    <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                                    <source src="Final10.mp4" type="video/mp4">
                                 </video>
                             </div>
                         </div>
@@ -1126,9 +1126,9 @@ background-position:center;
                                     <!-- Q3 -->
                                     <div class="rounded-xl bg-slate-50/60 border border-slate-200 p-4">
                                         <div class="flex items-center justify-between gap-3 mb-3">
-                                            <p class="font-bold text-slate-800 text-sm">3. According to the 30–35% Rule,
-                                                the ideal monthly amortization should generally not exceed what
-                                                percentage of the buyer's gross monthly income?</p>
+                                            <p class="font-bold text-slate-800 text-sm">3. What percentage of the
+                                                buyer’s gross monthly income should generally be the maximum monthly
+                                                amortization?</p>
                                         </div>
                                         <div class="space-y-2">
                                             <label class="flex items-center gap-3 cursor-pointer text-slate-700">
@@ -1612,7 +1612,8 @@ background-position:center;
                                 </div>
                             </div>
 
-                            <div id="project-summary-section" class="mb-8 border border-slate-200 rounded-xl bg-white p-5">
+                            <div id="project-summary-section"
+                                class="mb-8 border border-slate-200 rounded-xl bg-white p-5">
                                 <div class="flex items-center gap-2 mb-3">
                                     <i class="fa-solid fa-diagram-project text-brand-gold"></i>
                                     <h5 class="text-lg font-extrabold text-brand-dark">PROJECT SUMMARY</h5>
@@ -1709,10 +1710,10 @@ background-position:center;
         let isKnowledgePassed = false;
 
         const BLDatabase = {
-            "North Branch": { email: "", zoomLink: "https://us02web.zoom.us/j/3205013581" },
-            "East Branch": { email: "", zoomLink: "https://us02web.zoom.us/j/3205013581" },
-            "South Branch": { email: "", zoomLink: "https://us02web.zoom.us/j/3205013581" },
-            "Southwest Branch": { email: "", zoomLink: "https://us02web.zoom.us/j/3205013581" },
+            "North Branch": { email: "hsrcjenzen@gmail.com, emmasabanal25@gmail.com", zoomLink: "https://us02web.zoom.us/j/3205013581" },
+            "East Branch": { email: "marvin.hsrc@gmail.com, bocauehsrc@gmail.com", zoomLink: "https://us02web.zoom.us/j/3205013581" },
+            "South Branch": { email: "mhaiflorido.humanshelter@gmail.com, hsrcmasteliro051989@gmail.com", zoomLink: "https://us02web.zoom.us/j/3205013581" },
+            "Southwest Branch": { email: "cavitehsrc@gmail.com", zoomLink: "https://us02web.zoom.us/j/3205013581" },
         };
 
         const video = document.getElementById('orientationVideo');
@@ -4235,25 +4236,25 @@ background-position:center;
                                 <h2 class="text-2xl font-bold text-red-700">Some tasks were rejected</h2>
                                 <div class="mt-2 text-red-600 font-semibold">
                                     ${rejectedSteps
-                                        .map((taskStep) => {
-                                            const raw = data.steps?.[taskStep];
-                                            const txt = String(raw ?? "").trim();
+                                    .map((taskStep) => {
+                                        const raw = data.steps?.[taskStep];
+                                        const txt = String(raw ?? "").trim();
 
-                                            let reason = "Not specified";
-                                            if (txt.includes("-")) {
-                                                const afterHyphen = txt.split("-").slice(1).join("-").trim();
-                                                if (afterHyphen) reason = afterHyphen;
-                                            }
+                                        let reason = "Not specified";
+                                        if (txt.includes("-")) {
+                                            const afterHyphen = txt.split("-").slice(1).join("-").trim();
+                                            if (afterHyphen) reason = afterHyphen;
+                                        }
 
-                                            return `
+                                        return `
                                                 <div class="mb-2">
                                                     <div>❌ Task ${taskStep}</div>
                                                     <div class="text-red-700">Reason: ${reason}</div>
                                                 </div>
                                             `;
-                                        })
-                                        .join('')
-                                    }
+                                    })
+                                    .join('')
+                                }
                                 </div>
                                 <p class="mt-2 text-red-700">
                                     Your submitted information for the rejected task(s) was not approved. Please update the required details and resubmit these tasks.
@@ -5003,7 +5004,7 @@ background-position:center;
                 return;
             }
 
-// Not passed
+            // Not passed
             isKnowledgePassed = false;
             if (hintEl) {
                 hintEl.textContent = `Sorry, hindi ka nakapasa. Minimum passing score: ${passThreshold}/${quizTotalQuestions}. Your score: ${score}.`;
