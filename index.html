@@ -186,6 +186,44 @@
             font-size: 13px;
             line-height: 1.6;
         }
+
+        @keyframes modalShow {
+
+            from {
+
+                opacity: 0;
+                transform: scale(.92);
+
+            }
+
+            to {
+
+                opacity: 1;
+                transform: scale(1);
+
+            }
+
+        }
+
+        @keyframes modalShow {
+
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(.96);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+
+        }
+
+        .modal-show {
+
+            animation: modalShow .22s ease;
+
+        }
     </style>
 </head>
 
@@ -196,7 +234,8 @@
 
             <!-- 1. Logo at Title -->
             <div class="flex items-center gap-3">
-                <img src="logo1.png" class="h-10 w-auto md:h-12">
+                <img id="siteLogo" src="logo1.png" class="h-10 w-auto md:h-12 cursor-pointer"
+                    title="Restart Application">
                 <div class="hidden sm:block">
                     <h1 class="text-sm md:text-lg font-bold text-[#1e293b] leading-tight">Human Shelter Realty Corp.
                     </h1>
@@ -6151,6 +6190,130 @@ background-position:center;
         });
     </script>
 
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const siteLogo = document.getElementById("siteLogo");
+
+            if (!siteLogo) return;
+
+            siteLogo.addEventListener("click", function () {
+
+                const restartModal = document.getElementById("restartModal");
+                const confirmRestart = document.getElementById("confirmRestart");
+                const cancelRestart = document.getElementById("cancelRestart");
+
+                siteLogo.addEventListener("click", () => {
+
+                    restartModal.classList.remove("hidden");
+                    restartModal.classList.add("flex");
+
+                });
+
+                cancelRestart.addEventListener("click", () => {
+
+                    restartModal.classList.remove("flex");
+                    restartModal.classList.add("hidden");
+
+                });
+
+                confirmRestart.addEventListener("click", () => {
+
+                    confirmRestart.innerHTML =
+                        '<i class="fa-solid fa-spinner fa-spin mr-2"></i>Restarting...';
+
+                    confirmRestart.disabled = true;
+
+                    setTimeout(() => {
+
+                        restartPortal();
+
+                    }, 500);
+
+                });
+
+            });
+
+        });
+
+        document.addEventListener("keydown", (e) => {
+
+            if (e.key === "Escape") {
+
+                restartModal.classList.remove("flex");
+                restartModal.classList.add("hidden");
+
+            }
+
+        });
+
+        restartModal.addEventListener("click", (e) => {
+
+            if (e.target === restartModal) {
+
+                restartModal.classList.remove("flex");
+                restartModal.classList.add("hidden");
+
+            }
+            restartModal.classList.add("modal-show");
+        });
+    </script>
+    <!-- Premium Restart Modal -->
+    <div id="restartModal"
+        class="fixed inset-0 z-[9999] hidden items-center justify-center bg-black/40 backdrop-blur-md">
+
+        <div
+            class="relative w-[92%] max-w-md overflow-hidden rounded-3xl bg-white shadow-[0_30px_80px_rgba(0,0,0,.35)] animate-[modalShow_.25s_ease]">
+
+            <!-- Brand Top Line -->
+            <div class="h-1.5 bg-gradient-to-r from-[#164849] via-[#1f6b6d] to-[#f4b942]"></div>
+
+            <div class="p-8">
+
+                <div class="flex justify-center mb-5">
+                    <img src="logo1.png" class="h-14 select-none">
+                </div>
+
+                <h2 class="text-2xl font-bold text-center text-slate-800">
+                    Restart your application?
+                </h2>
+
+                <p class="mt-3 text-center text-slate-500 leading-7">
+                    Your progress will be permanently cleared if you continue.
+                </p>
+
+                <div
+                    class="mt-5 rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-center text-sm text-amber-700">
+
+                    <i class="fa-solid fa-triangle-exclamation mr-2"></i>
+
+                    Restarting will remove all entered information.
+
+                </div>
+
+                <div class="mt-8 flex gap-3">
+
+                    <button id="cancelRestart"
+                        class="flex-1 rounded-2xl border border-slate-400 bg-white py-3.5 font-semibold text-slate-700 transition hover:-translate-y-0.5 hover:bg-slate-50 transition-all duration-200">
+
+                        Cancel
+
+                    </button>
+
+                    <button id="confirmRestart"
+                        class="flex-1 rounded-2xl bg-gradient-to-r from-[#164849] to-[#1d6a6d] py-3.5 font-semibold text-white shadow-lg transition hover:-translate-y-0.5 hover:shadow-xl transition-all duration-200">
+
+                        Restart →
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
 </body>
 
 </html>
