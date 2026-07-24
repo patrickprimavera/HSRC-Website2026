@@ -1,15 +1,15 @@
-# TODO - Version 3.0 Phase 1 (UI Enhancement Only)
+# Plan: Shuffle Step 4 Knowledge Check Questions
 
-## Plan steps
-- [ ] Create CSS-only premium dashboard background (no images) in admin.html
-- [ ] Enhance existing cards (glassmorphism) via CSS only; do not change HTML/IDs/classes used by JS
-- [ ] Improve status badge appearance (pill badges) via CSS only
-- [ ] Enhance existing button appearance (Load/Clear/Approve/Reject/Quick Filters) via CSS only
-- [ ] Add lightweight animation for dashboard numbers (without changing calculations)
-- [ ] Make filter bar sticky using CSS only
-- [ ] Add CSS highlight style for matches in Email/Team search results
-- [ ] Improve loading overlay appearance (CSS only; keep showLoading JS)
-- [ ] Improve table UI: row hover, alternating stripes, sticky header, spacing transitions (no renderRows changes)
-- [ ] Add micro-animations for cards/buttons/table/badges
-- [ ] Final verification list: ensure no JS/business logic changes and no ID/class changes used by JS
+## Task
+Shuffle the order of the existing 10 Knowledge Check questions in Step 4 when the step is displayed.
 
+## Steps
+- [x] 1. Analyze the code structure
+- [x] 2. Identify the step display logic that shows Step 4
+- [x] 3. Add `shuffleQuestions();` call when Step 4 becomes active
+- [x] 4. Verify the change works
+
+## Details
+- The `shuffleQuestions()` function exists at line 2328 but is never called
+- Step 4 is displayed via the step navigation logic at line ~6066-6067
+- The edit: Insert `shuffleQuestions();` right after Step 4's `active` class is added in the step display logic

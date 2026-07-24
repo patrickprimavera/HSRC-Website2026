@@ -702,6 +702,15 @@ background-position:center;
                                         </div>
                                     </div>
 
+                                    <div class="mt-4">
+                                        <button id="challenge-toggle-rejection-btn" type="button"
+                                            onclick="toggleChallengeRejectionDetails()"
+                                            class="w-full bg-red-500/10 hover:bg-red-500/20 text-red-400 font-bold px-5 py-2 rounded-xl shadow border border-red-500/20 text-xs hidden transition-all duration-300">
+                                            <i class="fa-solid fa-eye-slash"></i> <span
+                                                id="challenge-toggle-rejection-text">Show Rejection Details</span>
+                                        </button>
+                                    </div>
+
                                     <div class="mt-5">
                                         <button id="challenge-start-polling-btn" type="button"
                                             onclick="startChallengePolling()"
@@ -840,7 +849,7 @@ background-position:center;
                         <div class="bg-black rounded-lg overflow-hidden mb-6 aspect-video">
                             <video id="orientationVideo" class="w-full h-full object-contain" poster="display.jpeg"
                                 controls controlsList="nodownload">
-                                <source src="final102.mp4" type="video/mp4">
+                                <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
                             </video>
                         </div>
 
@@ -858,7 +867,7 @@ background-position:center;
                                 class="bg-black rounded-lg overflow-hidden mb-6 aspect-video flex items-center justify-center relative">
                                 <video id="orientationVideo2" class="w-full h-full object-cover" poster="display1.png"
                                     controls controlsList="nodownload">
-                                    <source src="Final10.mp4" type="video/mp4">
+                                    <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
                                 </video>
                             </div>
                         </div>
@@ -1088,262 +1097,8 @@ background-position:center;
                                     </div>
                                 </div>
 
-                                <div class="p-5 space-y-5">
-                                    <!-- Q1 -->
-                                    <div class="rounded-xl bg-slate-50/60 border border-slate-200 p-4">
-                                        <div class="flex items-center justify-between gap-3 mb-3">
-                                            <p class="font-bold text-slate-800 text-sm">1. When was Human Shelter Realty
-                                                Corp. established?</p>
-                                        </div>
-                                        <div class="space-y-2">
-                                            <label class="flex items-center gap-3 cursor-pointer text-slate-700">
-                                                <input type="radio" name="quiz-q1" value="A"
-                                                    class="w-4 h-4 accent-brand-gold" required>
-                                                <span> A. 1999</span>
-                                            </label>
-                                            <label class="flex items-center gap-3 cursor-pointer text-slate-700">
-                                                <input type="radio" name="quiz-q1" value="B"
-                                                    class="w-4 h-4 accent-brand-gold">
-                                                <span> B. 1989</span>
-                                            </label>
-                                            <label class="flex items-center gap-3 cursor-pointer text-slate-700">
-                                                <input type="radio" name="quiz-q1" value="C"
-                                                    class="w-4 h-4 accent-brand-gold">
-                                                <span> C. 2005</span>
-                                            </label>
-                                        </div>
-                                    </div>
-
-                                    <!-- Q2 -->
-                                    <div class="rounded-xl bg-slate-50/60 border border-slate-200 p-4">
-                                        <div class="flex items-center justify-between gap-3 mb-3">
-                                            <p class="font-bold text-slate-800 text-sm">2. Which seminars should you
-                                                attend to master your focus project?</p>
-                                        </div>
-                                        <div class="space-y-2">
-                                            <label class="flex items-center gap-3 cursor-pointer text-slate-700">
-                                                <input type="radio" name="quiz-q2" value="A"
-                                                    class="w-4 h-4 accent-brand-gold" required>
-                                                <span> A. Branding Seminar and Digital Marketing Seminar</span>
-                                            </label>
-                                            <label class="flex items-center gap-3 cursor-pointer text-slate-700">
-                                                <input type="radio" name="quiz-q2" value="B"
-                                                    class="w-4 h-4 accent-brand-gold">
-                                                <span> B. Project Knowledge Seminar (PKS) and Site Orientation</span>
-                                            </label>
-                                            <label class="flex items-center gap-3 cursor-pointer text-slate-700">
-                                                <input type="radio" name="quiz-q2" value="C"
-                                                    class="w-4 h-4 accent-brand-gold">
-                                                <span> C. Accounting Orientation and HR Orientation</span>
-                                            </label>
-                                        </div>
-                                    </div>
-
-                                    <!-- Q3 -->
-                                    <div class="rounded-xl bg-slate-50/60 border border-slate-200 p-4">
-                                        <div class="flex items-center justify-between gap-3 mb-3">
-                                            <p class="font-bold text-slate-800 text-sm">3. What percentage of the
-                                                buyer’s gross monthly income should generally be the maximum monthly
-                                                amortization?</p>
-                                        </div>
-                                        <div class="space-y-2">
-                                            <label class="flex items-center gap-3 cursor-pointer text-slate-700">
-                                                <input type="radio" name="quiz-q3" value="A"
-                                                    class="w-4 h-4 accent-brand-gold" required>
-                                                <span> A. 20% to 25%</span>
-                                            </label>
-                                            <label class="flex items-center gap-3 cursor-pointer text-slate-700">
-                                                <input type="radio" name="quiz-q3" value="B"
-                                                    class="w-4 h-4 accent-brand-gold">
-                                                <span> B. 30% to 35%</span>
-                                            </label>
-                                            <label class="flex items-center gap-3 cursor-pointer text-slate-700">
-                                                <input type="radio" name="quiz-q3" value="C"
-                                                    class="w-4 h-4 accent-brand-gold">
-                                                <span> C. 40% to 50%</span>
-                                            </label>
-                                        </div>
-                                    </div>
-
-                                    <!-- Q4 -->
-                                    <div class="rounded-xl bg-slate-50/60 border border-slate-200 p-4">
-                                        <div class="flex items-center justify-between gap-3 mb-3">
-                                            <p class="font-bold text-slate-800 text-sm">4. According to the orientation,
-                                                the best salespeople are those who...?</p>
-                                        </div>
-                                        <div class="space-y-2">
-                                            <label class="flex items-center gap-3 cursor-pointer text-slate-700">
-                                                <input type="radio" name="quiz-q4" value="A"
-                                                    class="w-4 h-4 accent-brand-gold" required>
-                                                <span> A. Talk the most.</span>
-                                            </label>
-                                            <label class="flex items-center gap-3 cursor-pointer text-slate-700">
-                                                <input type="radio" name="quiz-q4" value="B"
-                                                    class="w-4 h-4 accent-brand-gold">
-                                                <span> B. Close the sale immediately.</span>
-                                            </label>
-                                            <label class="flex items-center gap-3 cursor-pointer text-slate-700">
-                                                <input type="radio" name="quiz-q4" value="C"
-                                                    class="w-4 h-4 accent-brand-gold">
-                                                <span> C. Listen the most.</span>
-                                            </label>
-                                        </div>
-                                    </div>
-
-                                    <!-- Q5 -->
-                                    <div class="rounded-xl bg-slate-50/60 border border-slate-200 p-4">
-                                        <div class="flex items-center justify-between gap-3 mb-3">
-                                            <p class="font-bold text-slate-800 text-sm">5. In the SIMPL Questions, what
-                                                does the letter "S" stand for?
-                                            </p>
-                                        </div>
-                                        <div class="space-y-2">
-                                            <label class="flex items-center gap-3 cursor-pointer text-slate-700">
-                                                <input type="radio" name="quiz-q5" value="A"
-                                                    class="w-4 h-4 accent-brand-gold" required>
-                                                <span> A. Salary</span>
-                                            </label>
-                                            <label class="flex items-center gap-3 cursor-pointer text-slate-700">
-                                                <input type="radio" name="quiz-q5" value="B"
-                                                    class="w-4 h-4 accent-brand-gold">
-                                                <span> B. Status (Employment Status)</span>
-                                            </label>
-                                            <label class="flex items-center gap-3 cursor-pointer text-slate-700">
-                                                <input type="radio" name="quiz-q5" value="C"
-                                                    class="w-4 h-4 accent-brand-gold">
-                                                <span> C. Savings</span>
-                                            </label>
-                                        </div>
-                                    </div>
-
-                                    <!-- Q6 -->
-                                    <div class="rounded-xl bg-slate-50/60 border border-slate-200 p-4">
-                                        <div class="flex items-center justify-between gap-3 mb-3">
-                                            <p class="font-bold text-slate-800 text-sm">6. Which financing option is
-                                                generally mentioned as having lower interest rates and longer loan
-                                                terms?</p>
-                                        </div>
-                                        <div class="space-y-2">
-                                            <label class="flex items-center gap-3 cursor-pointer text-slate-700">
-                                                <input type="radio" name="quiz-q6" value="A"
-                                                    class="w-4 h-4 accent-brand-gold" required>
-                                                <span> A. Bank Financing</span>
-                                            </label>
-                                            <label class="flex items-center gap-3 cursor-pointer text-slate-700">
-                                                <input type="radio" name="quiz-q6" value="B"
-                                                    class="w-4 h-4 accent-brand-gold">
-                                                <span> B. In-House Financing</span>
-                                            </label>
-                                            <label class="flex items-center gap-3 cursor-pointer text-slate-700">
-                                                <input type="radio" name="quiz-q6" value="C"
-                                                    class="w-4 h-4 accent-brand-gold">
-                                                <span> C. Pag-IBIG Financing</span>
-                                            </label>
-                                        </div>
-                                    </div>
-
-                                    <!-- Q7 -->
-                                    <div class="rounded-xl bg-slate-50/60 border border-slate-200 p-4">
-                                        <div class="flex items-center justify-between gap-3 mb-3">
-                                            <p class="font-bold text-slate-800 text-sm">7. A client earns ₱60,000 per
-                                                month. Based on the 30–35% Rule, what is the ideal maximum monthly
-                                                amortization?</p>
-                                        </div>
-                                        <div class="space-y-2">
-                                            <label class="flex items-center gap-3 cursor-pointer text-slate-700">
-                                                <input type="radio" name="quiz-q7" value="A"
-                                                    class="w-4 h-4 accent-brand-gold" required>
-                                                <span> A. ₱10,000</span>
-                                            </label>
-                                            <label class="flex items-center gap-3 cursor-pointer text-slate-700">
-                                                <input type="radio" name="quiz-q7" value="B"
-                                                    class="w-4 h-4 accent-brand-gold">
-                                                <span> B. Around ₱21,000</span>
-                                            </label>
-                                            <label class="flex items-center gap-3 cursor-pointer text-slate-700">
-                                                <input type="radio" name="quiz-q7" value="C"
-                                                    class="w-4 h-4 accent-brand-gold">
-                                                <span> C. ₱35,000</span>
-                                            </label>
-                                        </div>
-                                    </div>
-
-                                    <!-- Q8 -->
-                                    <div class="rounded-xl bg-slate-50/60 border border-slate-200 p-4">
-                                        <div class="flex items-center justify-between gap-3 mb-3">
-                                            <p class="font-bold text-slate-800 text-sm">8. What is the main goal of
-                                                qualifying your buyer?</p>
-                                        </div>
-                                        <div class="space-y-2">
-                                            <label class="flex items-center gap-3 cursor-pointer text-slate-700">
-                                                <input type="radio" name="quiz-q8" value="A"
-                                                    class="w-4 h-4 accent-brand-gold" required>
-                                                <span> A. To sell the most expensive property available.</span>
-                                            </label>
-                                            <label class="flex items-center gap-3 cursor-pointer text-slate-700">
-                                                <input type="radio" name="quiz-q8" value="B"
-                                                    class="w-4 h-4 accent-brand-gold">
-                                                <span> B. To recommend a property that matches the client's needs and
-                                                    budget.</span>
-                                            </label>
-                                            <label class="flex items-center gap-3 cursor-pointer text-slate-700">
-                                                <input type="radio" name="quiz-q8" value="C"
-                                                    class="w-4 h-4 accent-brand-gold">
-                                                <span> C. To convince the client to buy immediately.</span>
-                                            </label>
-                                        </div>
-                                    </div>
-
-                                    <!-- Q9 -->
-                                    <div class="rounded-xl bg-slate-50/60 border border-slate-200 p-4">
-                                        <div class="flex items-center justify-between gap-3 mb-3">
-                                            <p class="font-bold text-slate-800 text-sm">9. What is the first step in the
-                                                Human Shelter Sales Process?</p>
-                                        </div>
-                                        <div class="space-y-2">
-                                            <label class="flex items-center gap-3 cursor-pointer text-slate-700">
-                                                <input type="radio" name="quiz-q9" value="A"
-                                                    class="w-4 h-4 accent-brand-gold" required>
-                                                <span> A. Find Your Prospects</span>
-                                            </label>
-                                            <label class="flex items-center gap-3 cursor-pointer text-slate-700">
-                                                <input type="radio" name="quiz-q9" value="B"
-                                                    class="w-4 h-4 accent-brand-gold">
-                                                <span> B. Master the Project</span>
-                                            </label>
-                                            <label class="flex items-center gap-3 cursor-pointer text-slate-700">
-                                                <input type="radio" name="quiz-q9" value="C"
-                                                    class="w-4 h-4 accent-brand-gold">
-                                                <span> C. Present the Project</span>
-                                            </label>
-                                        </div>
-                                    </div>
-
-                                    <!-- Q10 -->
-                                    <div class="rounded-xl bg-slate-50/60 border border-slate-200 p-4">
-                                        <div class="flex items-center justify-between gap-3 mb-3">
-                                            <p class="font-bold text-slate-800 text-sm">10. Why is it important to stay
-                                                connected with clients even after reservation? </p>
-                                        </div>
-                                        <div class="space-y-2">
-                                            <label class="flex items-center gap-3 cursor-pointer text-slate-700">
-                                                <input type="radio" name="quiz-q10" value="A"
-                                                    class="w-4 h-4 accent-brand-gold" required>
-                                                <span> A. To ask them to buy another house immediately.</span>
-                                            </label>
-                                            <label class="flex items-center gap-3 cursor-pointer text-slate-700">
-                                                <input type="radio" name="quiz-q10" value="B"
-                                                    class="w-4 h-4 accent-brand-gold">
-                                                <span> B. To build relationships, celebrate milestones, and earn
-                                                    referrals.</span>
-                                            </label>
-                                            <label class="flex items-center gap-3 cursor-pointer text-slate-700">
-                                                <input type="radio" name="quiz-q10" value="C"
-                                                    class="w-4 h-4 accent-brand-gold">
-                                                <span> C. Because it is legally required</span>
-                                            </label>
-                                        </div>
-                                    </div>
+                                <div class="p-5 space-y-5" id="knowledge-check-questions">
+                                    <!-- Questions rendered dynamically by shuffleQuestions() -->
                                 </div>
                             </div>
 
@@ -2459,6 +2214,154 @@ background-position:center;
         let signaturePad;
         let isKnowledgeResultGenerated = false;
         let isKnowledgePassed = false;
+        let currentCorrectAnswers = {};
+
+        // All 10 Knowledge Check questions with their correct answers embedded
+        const questionsData = [
+            {
+                text: 'When was Human Shelter Realty Corp. established?',
+                options: [
+                    { value: 'A', label: 'A. 1999' },
+                    { value: 'B', label: 'B. 1989' },
+                    { value: 'C', label: 'C. 2005' }
+                ],
+                correct: 'B'
+            },
+            {
+                text: 'Which seminars should you attend to master your focus project?',
+                options: [
+                    { value: 'A', label: 'A. Branding Seminar and Digital Marketing Seminar' },
+                    { value: 'B', label: 'B. Project Knowledge Seminar (PKS) and Site Orientation' },
+                    { value: 'C', label: 'C. Accounting Orientation and HR Orientation' }
+                ],
+                correct: 'B'
+            },
+            {
+                text: 'What percentage of the buyer\u2019s gross monthly income should generally be the maximum monthly amortization?',
+                options: [
+                    { value: 'A', label: 'A. 20% to 25%' },
+                    { value: 'B', label: 'B. 30% to 35%' },
+                    { value: 'C', label: 'C. 40% to 50%' }
+                ],
+                correct: 'B'
+            },
+            {
+                text: 'According to the orientation, the best salespeople are those who...?',
+                options: [
+                    { value: 'A', label: 'A. Talk the most.' },
+                    { value: 'B', label: 'B. Close the sale immediately.' },
+                    { value: 'C', label: 'C. Listen the most.' }
+                ],
+                correct: 'C'
+            },
+            {
+                text: 'In the SIMPL Questions, what does the letter "S" stand for?',
+                options: [
+                    { value: 'A', label: 'A. Salary' },
+                    { value: 'B', label: 'B. Status (Employment Status)' },
+                    { value: 'C', label: 'C. Savings' }
+                ],
+                correct: 'B'
+            },
+            {
+                text: 'Which financing option is generally mentioned as having lower interest rates and longer loan terms?',
+                options: [
+                    { value: 'A', label: 'A. Bank Financing' },
+                    { value: 'B', label: 'B. In-House Financing' },
+                    { value: 'C', label: 'C. Pag-IBIG Financing' }
+                ],
+                correct: 'C'
+            },
+            {
+                text: 'A client earns \u20B160,000 per month. Based on the 30\u201335% Rule, what is the ideal maximum monthly amortization?',
+                options: [
+                    { value: 'A', label: 'A. \u20B110,000' },
+                    { value: 'B', label: 'B. Around \u20B121,000' },
+                    { value: 'C', label: 'C. \u20B135,000' }
+                ],
+                correct: 'B'
+            },
+            {
+                text: 'What is the main goal of qualifying your buyer?',
+                options: [
+                    { value: 'A', label: 'A. To sell the most expensive property available.' },
+                    { value: 'B', label: 'B. To recommend a property that matches the client\'s needs and budget.' },
+                    { value: 'C', label: 'C. To convince the client to buy immediately.' }
+                ],
+                correct: 'B'
+            },
+            {
+                text: 'What is the first step in the Human Shelter Sales Process?',
+                options: [
+                    { value: 'A', label: 'A. Find Your Prospects' },
+                    { value: 'B', label: 'B. Master the Project' },
+                    { value: 'C', label: 'C. Present the Project' }
+                ],
+                correct: 'B'
+            },
+            {
+                text: 'Why is it important to stay connected with clients even after reservation?',
+                options: [
+                    { value: 'A', label: 'A. To ask them to buy another house immediately.' },
+                    { value: 'B', label: 'B. To build relationships, celebrate milestones, and earn referrals.' },
+                    { value: 'C', label: 'C. Because it is legally required' }
+                ],
+                correct: 'B'
+            }
+        ];
+
+        /**
+         * Fisher-Yates shuffle algorithm
+         */
+        function shuffleArray(arr) {
+            const a = [...arr];
+            for (let i = a.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [a[i], a[j]] = [a[j], a[i]];
+            }
+            return a;
+        }
+
+        /**
+         * Shuffle the 10 questions and re-render them in the container.
+         * Builds a dynamic currentCorrectAnswers map keyed by quiz-q{i}.
+         */
+        function shuffleQuestions() {
+            const container = document.getElementById('knowledge-check-questions');
+            if (!container) return;
+
+            const shuffled = shuffleArray(questionsData);
+            const newAnswers = {};
+
+            let html = '';
+            shuffled.forEach((q, idx) => {
+                const qNum = idx + 1;
+                const name = 'quiz-q' + qNum;
+                newAnswers[name] = q.correct;
+
+                const optionsHtml = q.options.map(opt => `
+                    <label class="flex items-center gap-3 cursor-pointer text-slate-700">
+                        <input type="radio" name="${name}" value="${opt.value}"
+                            class="w-4 h-4 accent-brand-gold" required>
+                        <span> ${opt.label}</span>
+                    </label>
+                `).join('');
+
+                html += `
+                    <div class="rounded-xl bg-slate-50/60 border border-slate-200 p-4">
+                        <div class="flex items-center justify-between gap-3 mb-3">
+                            <p class="font-bold text-slate-800 text-sm">${qNum}. ${q.text}</p>
+                        </div>
+                        <div class="space-y-2">
+                            ${optionsHtml}
+                        </div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+            currentCorrectAnswers = newAnswers;
+        }
 
         const BLDatabase = {
             "North Branch": { email: "hsrcjenzen@gmail.com, emmasabanal25@gmail.com", zoomLink: "https://us02web.zoom.us/j/3205013581" },
@@ -2640,11 +2543,29 @@ background-position:center;
             const el = document.getElementById(`challenge-queue-${step}`);
             if (el) el.textContent = text;
 
+            // Store rejection reason globally for sidebar toggle
+            if (!window.__challengeRejectionReasons) {
+                window.__challengeRejectionReasons = {};
+            }
+
             const stamp = document.querySelector(`[data-step="${step}"]`);
             if (!stamp) return;
 
             const lowered = String(text || "").toLowerCase();
 
+            // Also update the rejection note in the sidebar queue
+            let queueNoteEl = document.getElementById(`challenge-queue-note-${step}`);
+            if (!queueNoteEl) {
+                const queueStepEl = document.getElementById(`challenge-queue-${step}`);
+                if (queueStepEl && queueStepEl.parentElement) {
+                    queueNoteEl = document.createElement('span');
+                    queueNoteEl.id = `challenge-queue-note-${step}`;
+                    queueNoteEl.className = 'hidden text-xs text-red-400 italic ml-1 challenge-queue-rejection-note';
+                    queueStepEl.parentElement.appendChild(queueNoteEl);
+                }
+            }
+
+            // Update the note under file input (existing behavior)
             const noteId = `challenge-note-${step}`;
             let noteEl = document.getElementById(noteId);
 
@@ -2661,6 +2582,10 @@ background-position:center;
 
             if (noteEl) {
                 noteEl.textContent = "";
+            }
+            if (queueNoteEl) {
+                queueNoteEl.textContent = '';
+                queueNoteEl.classList.add('hidden');
             }
 
             stamp.classList.remove(
@@ -2708,16 +2633,25 @@ background-position:center;
 
                 stamp.textContent = "REJECTED";
 
-                if (noteEl) {
-
-                    let reason = "Not clear/valid Image";
-
-                    if (String(text).includes("Note:")) {
-                        reason = String(text).split("Note:")[1].trim();
-                    }
-
-                    noteEl.textContent = "note: " + reason;
+                let reason = "Not clear/valid Image";
+                if (String(text).includes("Note:")) {
+                    reason = String(text).split("Note:")[1].trim();
                 }
+
+                if (noteEl) {
+                    noteEl.textContent = "note: " + reason;
+                    noteEl.classList.remove('hidden');
+                }
+
+                // Populate sidebar queue rejection note
+                if (queueNoteEl) {
+                    queueNoteEl.textContent = '⚠ ' + reason;
+                    queueNoteEl.classList.remove('hidden');
+                }
+
+                // Store rejection reason globally for toggle visibility
+                window.__challengeRejectionReasons = window.__challengeRejectionReasons || {};
+                window.__challengeRejectionReasons[step] = reason;
 
                 stamp.classList.add(
                     "bg-red-500",
@@ -4680,6 +4614,53 @@ background-position:center;
 
         let challengeUserInfo = {};
 
+        /**
+         * Toggle visibility of rejection detail notes in the sidebar approval queue.
+         */
+        function toggleChallengeRejectionDetails() {
+            const notes = document.querySelectorAll('.challenge-queue-rejection-note');
+            const btn = document.getElementById('challenge-toggle-rejection-btn');
+            const btnText = document.getElementById('challenge-toggle-rejection-text');
+            const icon = btn ? btn.querySelector('i') : null;
+
+            if (!notes.length || !btn) return;
+
+            const firstNote = notes[0];
+            const isHidden = firstNote.classList.contains('hidden');
+
+            notes.forEach(function (note) {
+                if (isHidden) {
+                    note.classList.remove('hidden');
+                } else {
+                    note.classList.add('hidden');
+                }
+            });
+
+            if (btnText) {
+                btnText.textContent = isHidden ? 'Hide Rejection Details' : 'Show Rejection Details';
+            }
+            if (icon) {
+                icon.className = isHidden ? 'fa-solid fa-eye' : 'fa-solid fa-eye-slash';
+            }
+        }
+
+        /**
+         * Check if any rejection reasons exist and show/hide the toggle button accordingly.
+         */
+        function updateChallengeRejectionToggleButton() {
+            const btn = document.getElementById('challenge-toggle-rejection-btn');
+            if (!btn) return;
+
+            const reasons = window.__challengeRejectionReasons || {};
+            const hasRejections = Object.keys(reasons).length > 0;
+
+            if (hasRejections) {
+                btn.classList.remove('hidden');
+            } else {
+                btn.classList.add('hidden');
+            }
+        }
+
         async function startChallengePolling() {
             // Guard: prevent duplicate passport PDF generation/upload during repeated polling cycles
             window.__challengePassportGenerated = window.__challengePassportGenerated || false;
@@ -4830,6 +4811,9 @@ background-position:center;
                     } catch (err) {
                         data = null;
                     }
+
+                    // Update rejection toggle button based on processed statuses
+                    updateChallengeRejectionToggleButton();
 
                     // SAVE PASSPORT USER INFO FOR IPHONE
                     if (data) {
@@ -5688,18 +5672,6 @@ background-position:center;
 
             const quizTotalQuestions = 10;
             const passThreshold = 6;
-            const correctAnswers = {
-                'quiz-q1': 'B',
-                'quiz-q2': 'B',
-                'quiz-q3': 'B',
-                'quiz-q4': 'C',
-                'quiz-q5': 'B',
-                'quiz-q6': 'C',
-                'quiz-q7': 'B',
-                'quiz-q8': 'B',
-                'quiz-q9': 'B',
-                'quiz-q10': 'B',
-            };
 
             // Mark as generated immediately to prevent edge-case double triggers
             isKnowledgeResultGenerated = true;
@@ -5710,7 +5682,7 @@ background-position:center;
             for (let i = 1; i <= quizTotalQuestions; i++) {
                 const name = `quiz-q${i}`;
                 const selected = document.querySelector(`input[name="${name}"]:checked`);
-                if (selected && selected.value === correctAnswers[name]) score++;
+                if (selected && selected.value === currentCorrectAnswers[name]) score++;
             }
 
             const scoreEl = document.getElementById('knowledge-check-score');
@@ -6082,6 +6054,11 @@ background-position:center;
         function updateFormStep() {
             document.querySelectorAll('.step-content').forEach(content => { content.classList.remove('active'); });
             document.getElementById(`step-${currentStep}`).classList.add('active');
+
+            // Shuffle the 10 Knowledge Check questions every time Step 4 is displayed
+            if (currentStep === 4) {
+                shuffleQuestions();
+            }
 
 
             const progressPercent = ((currentStep - 1) / (totalSteps - 1)) * 100;
