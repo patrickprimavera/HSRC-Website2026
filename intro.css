@@ -20,7 +20,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: 'Manrope', sans-serif;
+    font-family: "Century Gothic", CenturyGothic, AppleGothic, "Segoe UI", Arial, sans-serif;
+    font-weight: 700;
+    letter-spacing: 3px;
 }
 
 /* =========================
