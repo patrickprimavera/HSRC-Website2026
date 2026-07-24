@@ -24,6 +24,7 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.1.7/dist/signature_pad.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+    <link rel="stylesheet" href="intro.css">
 
     <script>
         tailwind.config = {
@@ -228,6 +229,86 @@
 </head>
 
 <body class="bg-slate-50 min-h-screen flex flex-col justify-between" data-onboard="locked">
+
+    <!-- PREMIUM INTRO START -->
+    <!-- ========================= -->
+    <!-- HS PREMIUM INTRO OVERLAY -->
+    <!-- ========================= -->
+
+    <div id="hs-intro-overlay">
+
+        <!-- Background -->
+        <div class="hs-intro-bg"></div>
+        <div class="hs-intro-dark"></div>
+
+        <!-- Floating Gallery -->
+        <div class="hs-gallery">
+
+            <div class="hs-card card1"><img src="intro/lobby.jpg"></div>
+
+            <div class="hs-card card2"><img src="intro/office.jpg"></div>
+
+            <div class="hs-card card3"><img src="intro/team.jpg"></div>
+
+            <div class="hs-card card4"><img src="intro/awarding.jpg"></div>
+
+            <div class="hs-card card5"><img src="intro/agents.jpg"></div>
+
+            <div class="hs-card card6"><img src="intro/teameast.jpg"></div>
+
+            <div class="hs-card card7"><img src="intro/teamnorth.jpg"></div>
+
+            <div class="hs-card card8"><img src="intro/teamsouth.jpg"></div>
+
+            <div class="hs-card card9"><img src="intro/teamsouthwest.jpg"></div>
+
+        </div>
+
+        <!-- Center -->
+        <div class="hs-center">
+
+            <img src="logo10.png" class="hs-logo" alt="Human Shelter Logo">
+
+            <h1>
+
+                HUMAN SHELTER
+
+                <span>
+
+                    REALTY CORPORATION
+
+                </span>
+
+            </h1>
+
+            <p>
+
+                Building Homes.
+                Building Dreams.
+                Since 1989.
+
+            </p>
+
+            <div class="hs-loading-text">
+
+                Preparing Your Experience...
+
+            </div>
+
+            <div class="hs-progress">
+
+                <div class="hs-progress-fill"></div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ========================= -->
+
+
+    <!-- PREMIUM INTRO END -->
 
     <header class="bg-[#faf7f0] border-b border-[#eadeca] shadow-sm sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
@@ -6314,6 +6395,7 @@ background-position:center;
         </div>
 
     </div>
+    <script src="intro.js"></script>
 </body>
 
 </html>

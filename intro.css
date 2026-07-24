@@ -1,0 +1,1163 @@
+/* ======================================================
+   HUMAN SHELTER PREMIUM INTRO
+   Version: 1.0
+====================================================== */
+
+:root {
+    --hs-primary: #164849;
+    --hs-secondary: #1d5f60;
+    --hs-accent: #d4af37;
+    --hs-white: #ffffff;
+    --hs-overlay: rgba(7, 20, 20, .78);
+}
+
+#hs-intro-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 999999;
+    overflow: hidden;
+    background: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Manrope', sans-serif;
+}
+
+/* =========================
+   HQ BACKGROUND
+========================= */
+
+.hs-intro-bg {
+
+    position: absolute;
+    inset: 0;
+
+    background-image: url("intro/hq.jpg");
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+
+    transform: scale(1.12);
+
+    filter:
+        blur(1.8px) brightness(.82) saturate(1.08);
+
+    animation:
+        cinematicZoom 16s ease-in-out infinite alternate;
+
+    will-change: transform;
+
+}
+
+/* =========================
+   DARK OVERLAY
+========================= */
+
+.hs-intro-dark {
+
+    position: absolute;
+    inset: 0;
+
+    background:
+
+        radial-gradient(circle at center,
+            rgba(22, 72, 73, .12),
+            rgba(0, 0, 0, .68)),
+
+        linear-gradient(to bottom,
+            rgba(0, 0, 0, .20),
+            rgba(0, 0, 0, .52));
+
+    backdrop-filter: blur(4px);
+
+}
+
+.hs-intro-dark::before {
+
+    content: "";
+
+    position: absolute;
+
+    width: 900px;
+    height: 900px;
+
+    left: -220px;
+    top: -220px;
+
+    border-radius: 50%;
+
+    background:
+
+        radial-gradient(circle,
+
+            rgba(255, 255, 255, .10),
+
+            transparent 70%);
+
+    animation:
+
+        ambientLight 14s ease-in-out infinite alternate;
+
+}
+
+/* =========================
+   CENTER
+========================= */
+
+.hs-center {
+
+    position: relative;
+
+    z-index: 5;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    text-align: center;
+
+    color: white;
+
+    width: min(90%, 760px);
+
+    transition:
+
+        opacity 1s ease,
+
+        transform 1s ease;
+
+}
+
+.hide .hs-center {
+
+    opacity: 0;
+
+    transform:
+
+        translateY(-20px) scale(.96);
+
+}
+
+
+.hide .hs-card {
+
+    opacity: 0;
+
+    transform:
+
+        scale(1.12) translateY(-25px);
+
+    transition:
+
+        all 1.1s ease;
+
+}
+
+/* =========================
+   LOGO
+========================= */
+
+.hs-logo {
+
+    width: 280px;
+
+    max-width: 70vw;
+
+    margin-bottom: 38px;
+
+    opacity: 0;
+
+    transform: translateY(25px) scale(.88);
+
+    animation:
+        logoReveal 1.2s cubic-bezier(.22, .61, .36, 1) .35s forwards;
+
+    filter:
+        drop-shadow(0 12px 35px rgba(0, 0, 0, .45)) drop-shadow(0 0 22px rgba(255, 255, 255, .12));
+
+    transition:
+        transform .6s ease,
+        filter .6s ease;
+
+}
+
+.hs-logo:hover {
+
+    transform: scale(1.03);
+
+    filter:
+        drop-shadow(0 16px 45px rgba(255, 255, 255, .18));
+
+}
+
+/* =========================
+   TITLE
+========================= */
+
+.hs-center h1 {
+
+    font-size: 54px;
+
+    font-weight: 800;
+
+    letter-spacing: 2px;
+
+    line-height: 1.1;
+
+    opacity: 0;
+
+    animation:
+
+        fadeUp .9s ease .8s forwards;
+
+}
+
+.hs-center h1 span {
+
+    display: block;
+
+    font-size: 28px;
+
+    font-weight: 600;
+
+    margin-top: 8px;
+
+    letter-spacing: 5px;
+
+    color: #d7d7d7;
+
+}
+
+/* =========================
+   TAGLINE
+========================= */
+
+.hs-center p {
+
+    margin-top: 26px;
+
+    font-size: 20px;
+
+    color: #ececec;
+
+    letter-spacing: 1px;
+
+    opacity: 0;
+
+    animation:
+
+        fadeUp .9s ease 1.2s forwards;
+
+}
+
+/* =========================
+   LOADING TEXT
+========================= */
+
+.hs-loading-text {
+
+    margin-top: 50px;
+
+    font-size: 17px;
+
+    color: #ffffff;
+
+    letter-spacing: 2px;
+
+    opacity: .9;
+
+}
+
+/* =========================
+   PROGRESS BAR
+========================= */
+
+.hs-progress {
+
+    width: 320px;
+
+    max-width: 85vw;
+
+    height: 5px;
+
+    border-radius: 30px;
+
+    margin-top: 22px;
+
+    overflow: hidden;
+
+    background:
+
+        rgba(255, 255, 255, .15);
+
+}
+
+.hs-progress-fill {
+
+    width: 0;
+
+    height: 100%;
+
+    border-radius: 30px;
+
+    background:
+
+        linear-gradient(90deg,
+            var(--hs-primary),
+            var(--hs-accent));
+
+}
+
+/* =========================
+   FLOATING GALLERY
+========================= */
+
+.hs-gallery {
+
+    position: absolute;
+
+    inset: 0;
+
+    pointer-events: none;
+
+}
+
+/* CARD */
+
+.hs-card {
+
+    position: absolute;
+
+    overflow: hidden;
+
+    border-radius: 30px;
+
+    background:
+        linear-gradient(180deg,
+            rgba(255, 255, 255, .18),
+            rgba(255, 255, 255, .06));
+
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+
+    border:
+        1px solid rgba(255, 255, 255, .22);
+
+    box-shadow:
+
+        0 30px 70px rgba(0, 0, 0, .38),
+
+        inset 0 1px 0 rgba(255, 255, 255, .35),
+
+        inset 0 -1px 0 rgba(255, 255, 255, .05);
+
+    transition:
+
+        transform .7s ease,
+
+        box-shadow .7s ease,
+
+        border-color .7s ease;
+
+}
+
+.hs-card::before {
+
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+
+        linear-gradient(120deg,
+
+            transparent 20%,
+
+            rgba(255, 255, 255, .25) 50%,
+
+            transparent 80%);
+
+    transform:
+
+        translateX(-140%);
+
+    animation:
+
+        glassSweep 8s linear infinite;
+
+}
+
+.hs-card:hover {
+
+    transform:
+
+        translateY(-14px) scale(1.04);
+
+    border-color:
+
+        rgba(255, 255, 255, .42);
+
+    box-shadow:
+
+        0 40px 80px rgba(0, 0, 0, .42);
+
+}
+
+.hs-card img {
+
+    width: 100%;
+
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+
+    transition:
+
+        transform 1s ease;
+
+}
+
+.hs-card:hover img {
+
+    transform:
+
+        scale(1.08);
+
+}
+
+.hs-card:hover img {
+
+    transform: scale(1.08);
+
+}
+
+/* =========================
+   CARD POSITIONS
+========================= */
+
+.card1 {
+    top: 8%;
+    left: 4%;
+    width: 180px;
+}
+
+.card2 {
+    top: 4%;
+    right: 6%;
+    width: 185px;
+}
+
+.card3 {
+    top: 20%;
+    left: 20%;
+    width: 170px;
+}
+
+.card4 {
+    bottom: 6%;
+    right: 10%;
+    width: 235px;
+}
+
+.card5 {
+    bottom: 18%;
+    left: 2%;
+    width: 185px;
+}
+
+.card6 {
+    top: 14%;
+    right: 30%;
+    width: 210px;
+}
+
+.card7 {
+    bottom: 5%;
+    left: 34%;
+    width: 195px;
+}
+
+.card8 {
+    bottom: 26%;
+    right: 65%;
+    width: 175px;
+}
+
+.card9 {
+    top: 72%;
+    right: 30%;
+    width: 150px;
+}
+
+
+/* ===========================
+   CARD APPEAR
+=========================== */
+
+.hs-card {
+    opacity: 0;
+    transform: translateY(40px) scale(.92);
+
+    animation:
+        cardReveal 1.2s ease forwards,
+        floatCard 8s ease-in-out infinite;
+
+}
+
+.card1 {
+    animation: cardReveal .8s ease .2s forwards, float1 8s ease-in-out infinite;
+}
+
+.card2 {
+    animation: cardReveal .8s ease .4s forwards, float2 10s ease-in-out infinite;
+}
+
+.card3 {
+    animation: cardReveal .8s ease .6s forwards, float3 7s ease-in-out infinite;
+}
+
+.card4 {
+    animation: cardReveal .8s ease .8s forwards, float4 9s ease-in-out infinite;
+}
+
+.card5 {
+    animation: cardReveal .8s ease 1s forwards, float5 11s ease-in-out infinite;
+}
+
+.card6 {
+    animation: cardReveal .8s ease 1.2s forwards, float6 8s ease-in-out infinite;
+}
+
+.card7 {
+    animation: cardReveal .8s ease 1.4s forwards, float7 10s ease-in-out infinite;
+}
+
+.card8 {
+    animation: cardReveal .8s ease 1.6s forwards, float8 7s ease-in-out infinite;
+}
+
+.card9 {
+    animation: cardReveal .8s ease 1.8s forwards, float9 9s ease-in-out infinite;
+}
+
+
+/* ===========================
+   GOLD LIGHT
+=========================== */
+
+.hs-logo {
+
+    position: relative;
+
+}
+
+.hs-logo::after {
+
+    content: "";
+
+    position: absolute;
+
+    inset: -20%;
+
+    background:
+
+        linear-gradient(120deg,
+            transparent,
+            rgba(255, 255, 255, .7),
+            transparent);
+
+    transform: translateX(-180%);
+
+    animation:
+
+        logoLight 3.5s linear infinite;
+
+}
+
+
+/* ===========================
+   TITLE GLOW
+=========================== */
+
+.hs-center h1 {
+
+    text-shadow:
+
+        0 0 40px rgba(255, 255, 255, .12);
+
+}
+
+
+/* ===========================
+   PROGRESS
+=========================== */
+
+.hs-progress-fill {
+
+    animation:
+
+        loadingBar 4s linear forwards;
+
+}
+
+
+/* ===========================
+   FLOATING DEPTH
+=========================== */
+
+.card1 {
+    animation-duration: 9s;
+}
+
+.card2 {
+    animation-duration: 10s;
+}
+
+.card3 {
+    animation-duration: 8s;
+}
+
+.card4 {
+    animation-duration: 11s;
+}
+
+.card5 {
+    animation-duration: 9.5s;
+}
+
+.card6 {
+    animation-duration: 8.5s;
+}
+
+.card7 {
+    animation-duration: 10.5s;
+}
+
+.card8 {
+    animation-duration: 9.3s;
+}
+
+.card9 {
+    animation-duration: 12s;
+}
+
+
+/* ===========================
+   FADE OUT
+=========================== */
+
+#hs-intro-overlay.hide {
+
+    animation:
+
+        introExit 1.3s cubic-bezier(.22, .61, .36, 1) forwards;
+
+}
+
+
+/* ===========================
+   KEYFRAMES
+=========================== */
+
+@keyframes hsZoom {
+
+    from {
+
+        transform: scale(1.08);
+
+    }
+
+    to {
+
+        transform: scale(1.18);
+
+    }
+
+}
+
+@keyframes logoReveal {
+
+    0% {
+
+        opacity: 0;
+
+        transform:
+
+            translateY(35px) scale(.82);
+
+    }
+
+    70% {
+
+        opacity: 1;
+
+        transform:
+
+            translateY(-6px) scale(1.03);
+
+    }
+
+    100% {
+
+        opacity: 1;
+
+        transform:
+
+            translateY(0) scale(1);
+
+    }
+
+}
+
+@keyframes fadeUp {
+
+    from {
+
+        opacity: 0;
+
+        transform: translateY(30px);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform: translateY(0);
+
+    }
+
+}
+
+@keyframes floatCard {
+
+    0% {
+
+        transform: translateY(0px);
+
+    }
+
+    50% {
+
+        transform: translateY(-14px);
+
+    }
+
+    100% {
+
+        transform: translateY(0px);
+
+    }
+
+}
+
+@keyframes loadingBar {
+
+    from {
+
+        width: 0;
+
+    }
+
+    to {
+
+        width: 100%;
+
+    }
+
+}
+
+@keyframes cardReveal {
+
+    from {
+
+        opacity: 0;
+
+        transform: translateY(40px) scale(.92);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform: translateY(0) scale(1);
+
+    }
+
+}
+
+@keyframes introHide {
+
+    to {
+
+        opacity: 0;
+
+        visibility: hidden;
+
+        pointer-events: none;
+
+    }
+
+}
+
+@keyframes logoLight {
+
+    to {
+
+        transform: translateX(220%);
+
+    }
+
+}
+
+@keyframes cinematicZoom {
+
+    0% {
+
+        transform:
+            scale(1.10);
+
+    }
+
+    100% {
+
+        transform:
+            scale(1.18);
+
+    }
+
+}
+
+@keyframes ambientLight {
+
+    0% {
+
+        transform:
+            translate(0, 0);
+
+        opacity: .25;
+
+    }
+
+    100% {
+
+        transform:
+            translate(180px, 90px);
+
+        opacity: .55;
+
+    }
+
+}
+
+@keyframes glassSweep {
+
+    0% {
+
+        transform:
+
+            translateX(-140%);
+
+    }
+
+    100% {
+
+        transform:
+
+            translateX(180%);
+
+    }
+
+}
+
+@keyframes float1 {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes float2 {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(12px);
+    }
+}
+
+@keyframes float3 {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    50% {
+        transform: translateX(8px);
+    }
+}
+
+@keyframes float4 {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-14px);
+    }
+}
+
+@keyframes float5 {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    50% {
+        transform: translateX(-10px);
+    }
+}
+
+@keyframes float6 {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(8px);
+    }
+}
+
+@keyframes float7 {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-8px);
+    }
+}
+
+@keyframes float8 {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    50% {
+        transform: translateX(10px);
+    }
+}
+
+@keyframes float9 {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(6px);
+    }
+}
+
+@keyframes introExit {
+
+    0% {
+
+        opacity: 1;
+
+        transform: scale(1);
+
+        filter: blur(0);
+
+    }
+
+    50% {
+
+        opacity: .85;
+
+        transform: scale(1.02);
+
+    }
+
+    100% {
+
+        opacity: 0;
+
+        transform: scale(1.06);
+
+        filter: blur(12px);
+
+        visibility: hidden;
+
+    }
+
+}
+
+/* ===========================
+   MOBILE
+=========================== */
+
+@media(max-width:991px) {
+
+    .hs-card {
+
+        width: 145px;
+
+    }
+
+    .hs-center h1 {
+
+        font-size: 38px;
+
+    }
+
+    .hs-center h1 span {
+
+        font-size: 20px;
+
+    }
+
+    .hs-center p {
+
+        font-size: 16px;
+
+    }
+
+    .hs-logo {
+
+        width: 115px;
+
+    }
+
+}
+
+
+@media(max-width:640px) {
+    /* Mobile Card Positions */
+
+    .card1 {
+        top: 18%;
+        left: 40%;
+    }
+
+    .card2 {
+        top: 1%;
+        right: 10%;
+    }
+
+    .card3 {
+        top: 20%;
+        left: 76%;
+        transform: translateX(-50%);
+    }
+
+    .card4 {
+        bottom: 75%;
+        right: 69%;
+    }
+
+    .card5 {
+        bottom: 20%;
+        left: 2%;
+    }
+
+    .card6 {
+        top: 75%;
+        right: 5%;
+    }
+
+    .card7 {
+        bottom: 4%;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .card8 {
+        bottom: 18%;
+        right: 40%;
+    }
+
+    .card9 {
+        top: 85%;
+        right: 65%;
+    }
+
+    .hs-card {
+
+        width: 85px;
+
+    }
+
+    .hs-center {
+
+        width: 92%;
+
+    }
+
+    .hs-center h1 {
+
+        font-size: 30px;
+
+        letter-spacing: 1px;
+
+    }
+
+    .hs-center h1 span {
+
+        font-size: 16px;
+
+        letter-spacing: 2px;
+
+    }
+
+    .hs-center p {
+
+        font-size: 15px;
+
+    }
+
+    .hs-loading-text {
+
+        font-size: 14px;
+
+    }
+
+    .hs-progress {
+
+        width: 230px;
+
+    }
+
+    .hs-logo {
+
+        width: 150px;
+
+    }
+
+}
