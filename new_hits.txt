@@ -1,0 +1,533 @@
+17:    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+25:    <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.1.7/dist/signature_pad.umd.min.js"></script>
+26:    <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+34:                            dark: '#144242F',
+35:                            navy: '#1e293b',
+54:            min-height: 100vh;
+59:        .step-content {
+64:        .step-content.active {
+71:                transform: translateY(10px);
+75:                opacity: 1;
+85:            background: #f1f1f1;
+89:            background: #cbd5e1;
+113:            outline: 3px solid rgba(245, 158, 11, 0.65);
+124:                opacity: 1;
+133:            border: 1px solid #e5e7eb;
+135:            border-radius: 14px;
+136:            padding: 16px;
+137:            margin-bottom: 18px;
+138:            box-shadow: 0 4px 12px rgba(0, 0, 0, .08);
+142:            font-size: 16px;
+144:            color: #0f172a;
+145:            margin-bottom: 14px;
+151:            gap: 12px;
+152:            padding: 12px;
+153:            border-radius: 10px;
+154:            margin-bottom: 10px;
+168:            border-left: 5px solid #10b981;
+173:            line-height: 1;
+177:            color: #111827;
+178:            font-size: 15px;
+183:            font-size: 13px;
+184:            line-height: 1.6;
+194:            <!-- 1. Logo at Title -->
+196:                <img src="logo1.png" class="h-10 w-auto md:h-12">
+198:                    <h1 class="text-sm md:text-lg font-bold text-[#1e293b] leading-tight">Human Shelter Realty Corp.
+199:                    </h1>
+200:                    <p class="text-[10px] md:text-xs font-semibold text-[#1e293b]">Start Your Success Journey</p>
+209:                    class="flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-white font-bold px-3 py-1.5 md:px-4 md:py-2 rounded-xl shadow transition text-xs md:text-sm">
+219:                <a href="tel:09173206778" class="text-amber-600 text-xl md:text-2xl">
+250:            class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10 items-center min-h-screen px-4 lg:px-30 relative z-55">
+259:                <h1 class="text-5xl lg:text-7xl font-extrabold leading-tight">
+264:                </h1>
+274:                <div class="mt-8 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-6">
+284:                    <span class="relative z-10 inline-flex items-center gap-2">
+286:                        <i class="fa-solid fa-arrow-down animate-bounce ml-1"></i>
+296:                <div class="absolute top-2 left-10 bg-white rounded-2xl px-4 pl-3 shadow-xl z-20">
+313:                <div class="absolute bottom-4 right-10 bg-white rounded-2xl px-6 py-4 shadow-xl">
+330:        <div class="mt-12 bg-white rounded-[40px] shadow-2xl p-8 relative z-0">
+335:                    class="w-full shrink-0 md:w-auto md:flex-1 snap-center animate-fade-in transition duration-500 ease-in-out hover:scale-105 hover:bg-amber-100 bg-white p-6 rounded-lg shadow-md border-b-4 border-amber-400">
+336:                    <h3 class="font-bold text-xl text-[#166534]">Make an Impact</h3>
+341:                    class="w-full shrink-0 md:w-auto md:flex-1 snap-center animate-fade-in transition duration-500 ease-in-out hover:scale-105 hover:bg-amber-100 bg-white p-6 rounded-lg shadow-md border-b-4 border-amber-400">
+342:                    <h3 class="font-bold text-xl text-[#166534]">Grow With Us</h3>
+347:                    class="w-full shrink-0 md:w-auto md:flex-1 snap-center animate-fade-in transition duration-500 ease-in-out hover:scale-105 hover:bg-amber-100 bg-white p-6 rounded-lg shadow-md border-b-4 border-amber-400">
+348:                    <h3 class="font-bold text-xl text-[#166534]">Build a Legacy</h3>
+358:    <main class="container mx-auto px-4 py-6 max-w-4xl flex-grow flex flex-col items-center justify-center gap-10">
+370:                <div class="relative z-10 px-4 lg:px-10 py-10">
+376:                    <div class="bg-white/95 backdrop-blur-sm rounded-3xl shadow-2xl border border-white/40 p-6 md:p-10">
+378:                            <div class="flex-1">
+385:                                    <input type="text" id="challenge-team" class="w-full mt-1 p-2 border rounded-lg"
+392:                                        class="w-full mt-1 p-2 border rounded-lg" placeholder="Juan Dela Cruz">
+396:                                    <input type="tel" id="challenge-phone" class="w-full mt-1 p-2 border rounded-lg"
+397:                                        placeholder="09123XXXXX">
+421:                                    <p class="text-xs text-slate-500 mt-1">
+429:                                    <!-- Step 1 -->
+434:                                                    class="inline-flex items-center justify-center w-9 h-9 rounded-full bg-brand-gold text-white">1</span>
+437:                                            <div class="stamp-badge" data-step="1">STAMP</div>
+441:                                            Upload a photo of you attending a team meeting with your Sales Manager or
+446:                                            <input type="file" accept="image/*" data-upload-step="1" class="w-full" />
+451:                                    <!-- Step 2 -->
+459:                                            <div class="stamp-badge" data-step="2">STAMP</div>
+463:                                            Upload a photo from a Product Knowledge Seminar for your chosen project
+467:                                        <input type="file" accept="image/*" data-upload-step="2" class="w-full mt-3" />
+471:                                    <!-- Step 3 -->
+479:                                            <div class="stamp-badge" data-step="3">STAMP</div>
+483:                                            Upload a photo taken during your project site orientation.
+486:                                        <input type="file" accept="image/*" data-upload-step="3" class="w-full mt-3" />
+490:                                    <!-- Step 4 -->
+498:                                            <div class="stamp-badge" data-step="4">STAMP</div>
+502:                                            Upload a photo from a Branding or Digital Marketing training.
+505:                                        <input type="file" accept="image/*" data-upload-step="4" class="w-full mt-3" />
+509:                                    <!-- Step 5 -->
+517:                                            <div class="stamp-badge" data-step="5">STAMP</div>
+521:                                            Upload a screenshot of your first real estate reel or video posted on social
+525:                                        <input type="file" accept="image/*" data-upload-step="5" class="w-full mt-3" />
+529:                                    <!-- Step 6 -->
+537:                                            <div class="stamp-badge" data-step="6">STAMP</div>
+541:                                            Upload a photo while accompanying your manager during a client viewing or
+545:                                        <input type="file" accept="image/*" data-upload-step="6" class="w-full mt-3" />
+549:                                    <!-- Step 7 -->
+557:                                            <div class="stamp-badge" data-step="7">STAMP</div>
+561:                                            Upload a photo of you presenting a project to a client, on-site or online.
+564:                                        <input type="file" accept="image/*" data-upload-step="7" class="w-full mt-3" />
+568:                                    <!-- Step 8 -->
+576:                                            <div class="stamp-badge-goal" data-step="8">GOAL</div>
+580:                                            Upload a photo or screenshot of your first signed Reservation Agreement.
+583:                                        <input type="file" accept="image/*" data-upload-step="8" class="w-full mt-3" />
+611:                                                    <strong>Submit Uploaded Task</strong><br>
+612:                                                    Save or update only the completed task(s) you've uploaded. You may
+620:                                                    <strong>Submit Challenge Steps 1–8</strong><br>
+622:                                                        (Task 1–Task 8)</b>. Your submission will then be sent for admin
+632:                                            Submit Uploaded Task
+638:                                            Submit Challenge Steps 1–8
+660:                                    class="bg-slate-900/90 text-white rounded-2xl p-5 border border-white/10 shadow-xl">
+669:                                            <span class="text-sm font-bold">Step 1</span><span class="text-xs"
+670:                                                id="challenge-queue-1">Waiting...</span>
+673:                                            <span class="text-sm font-bold">Step 2</span><span class="text-xs"
+677:                                            <span class="text-sm font-bold">Step 3</span><span class="text-xs"
+681:                                            <span class="text-sm font-bold">Step 4</span><span class="text-xs"
+685:                                            <span class="text-sm font-bold">Step 5</span><span class="text-xs"
+689:                                            <span class="text-sm font-bold">Step 6</span><span class="text-xs"
+693:                                            <span class="text-sm font-bold">Step 7</span><span class="text-xs"
+697:                                            <span class="text-sm font-bold">Step 8</span><span class="text-xs"
+705:                                            class="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-bold px-5 py-3 rounded-xl shadow mt-1">
+723:            class="w-full max-w-3xl bg-[#003f42] text-white rounded-2xl p-8 md:p-12 shadow-2xl border border-white/20 text-center py-14 transition-all duration-500 mt-8">
+725:                class="bg-brand-gold/10 text-brand-gold/100 text-xs font-bold px-7 py-1.5 rounded-full tracking-widest uppercase mb-4 inline-block border border-brand-gold/30">
+736:            <div class="w-20 h-1 bg-brand-gold mx-auto mb-8 rounded-full"></div>
+737:            <p class="text-slate-300 text-base md:text-1xl leading-relaxed max-w-2xl mx-auto mb-6">
+738:                Since 1989, Human Shelter Realty Corporation has been more than just a brokerage; we are a community of
+741:            <p class="text-slate-300 text-base md:text-1xl leading-relaxed max-w-2xl mx-auto mb-0 font-medium">
+750:                    Get Started & Apply Now <i class="fa-solid fa-arrow-down animate-bounce ml-1"></i>
+765:                        Application in 5 Easy Steps. Let's Begin.</p>
+770:                    <div class="absolute top-7 left-4 right-4 h-1 bg-slate-200 -z-10"></div>
+772:                        class="absolute top-7 left-4 h-1 bg-brand-gold -z-10 transition-all duration-500"
+775:                    <div class="step-indicator flex flex-col items-center relative z-10 w-[70px] shrink-0"
+776:                        data-step="1">
+778:                            class="w-10 h-10 rounded-full bg-brand-gold text-white flex items-center justify-center font-bold shadow-md border-4 border-white text-xs">
+779:                            1</div>
+784:                    <div class="step-indicator flex flex-col items-center relative z-10 w-[70px] shrink-0"
+785:                        data-step="2">
+787:                            class="w-10 h-10 rounded-full bg-slate-300 text-slate-500 flex items-center justify-center font-bold shadow-md border-4 border-white text-xs">
+794:                    <div class="step-indicator flex flex-col items-center relative z-10 w-[70px] shrink-0"
+795:                        data-step="3">
+797:                            class="w-10 h-10 rounded-full bg-slate-300 text-slate-500 flex items-center justify-center font-bold shadow-md border-4 border-white text-xs">
+804:                    <div class="step-indicator flex flex-col items-center relative z-10 w-[70px] shrink-0"
+805:                        data-step="4">
+807:                            class="w-10 h-10 rounded-full bg-slate-300 text-slate-500 flex items-center justify-center font-bold shadow-md border-4 border-white text-xs">
+814:                    <div class="step-indicator flex flex-col items-center relative z-10 w-[70px] shrink-0"
+815:                        data-step="5">
+817:                            class="w-10 h-10 rounded-full bg-slate-300 text-slate-500 flex items-center justify-center font-bold shadow-md border-4 border-white text-xs">
+830:                    <!-- STEP 1 -->
+831:                    <div id="step-1" class="step-content active p-8">
+833:                            <i class="fa-solid fa-play-circle text-brand-gold"></i> Step 1: Watch Orientation
+847:                                class="text-center text-sm sm:text-base font-extrabold text-white bg-brand-dark/90 backdrop-blur-sm border border-white/10 rounded-xl py-3 px-4 shadow">
+852:                        <!-- ADDED: Second Orientation Video requirement (shown only after video 1 ends) -->
+857:                                    poster="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=1000&q=80"
+873:                    <!-- STEP 2 -->
+874:                    <div id="step-2" class="step-content p-8">
+876:                            <i class="fa-solid fa-user-tie text-brand-gold"></i> Step 2: Application Preferences
+927:                            <div class="border-t border-slate-100 pt-4">
+930:                                <div class="flex gap-6 mt-1">
+947:                                <label class="block text-sm font-bold text-slate-700 mb-1">If Yes, please indicate the
+956:                    <!-- STEP 3 -->
+957:                    <div id="step-3" class="step-content p-8">
+959:                            <i class="fa-solid fa-id-card text-brand-gold"></i> Step 3: Contact Information
+969:                                2012
+975:                            <div class="md:col-span-1">
+976:                                <label class="block text-sm font-medium text-slate-700 mb-1">
+984:                            <div class="md:col-span-1">
+985:                                <label class="block text-sm font-medium text-slate-700 mb-1">
+999:                                <label class="block text-sm font-medium text-slate-700 mb-1">
+1008:                                <label class="block text-sm font-medium text-slate-700 mb-1">
+1017:                                <label class="block text-sm font-medium text-slate-700 mb-1">
+1026:                                <label class="block text-sm font-medium text-slate-700 mb-1">
+1035:                                <label class="block text-sm font-medium text-slate-700 mb-1">
+1044:                                <label class="block text-sm font-medium text-slate-700 mb-1">
+1055:                    <!-- STEP 4 -->
+1056:                    <div id="step-4" class="step-content p-8">
+1059:                                <i class="fa-solid fa-file-contract text-brand-gold"></i> Step 4: Knowledge Check
+1063:                                <div class="px-5 py-4 border-b border-slate-100 flex items-start gap-3">
+1065:                                        class="w-10 h-10 rounded-xl bg-brand-dark/5 flex items-center justify-center border border-slate-200">
+1070:                                        <p class="text-xs text-slate-500 mt-1">Complete the short quiz below to confirm
+1076:                                    <!-- Q1 -->
+1079:                                            <p class="font-bold text-slate-800 text-sm">1. When was Human Shelter Realty
+1084:                                                <input type="radio" name="quiz-q1" value="A"
+1086:                                                <span> A. 1999</span>
+1089:                                                <input type="radio" name="quiz-q1" value="B"
+1091:                                                <span> B. 1989</span>
+1094:                                                <input type="radio" name="quiz-q1" value="C"
+1240:                                                <span> A. ₱10,000</span>
+1245:                                                <span> B. Around ₱21,000</span>
+1284:                                            <p class="font-bold text-slate-800 text-sm">9. What is the first step in the
+1306:                                    <!-- Q10 -->
+1309:                                            <p class="font-bold text-slate-800 text-sm">10. Why is it important to stay
+1314:                                                <input type="radio" name="quiz-q10" value="A"
+1319:                                                <input type="radio" name="quiz-q10" value="B"
+1325:                                                <input type="radio" name="quiz-q10" value="C"
+1345:                                    <span id="knowledge-check-score">-- / 10</span>
+1358:                                        <p class="text-green-700 mt-1">
+1370:                                        <p class="text-red-700 mt-1">
+1371:                                            A minimum score of 6 out of 10 is required to proceed.
+1382:                                        class="font-extrabold text-brand-dark text-base border-b border-slate-200 pb-1 mb-2">
+1389:                                    <div class="space-y-3 pl-1">
+1440:                                        class="font-extrabold text-brand-dark text-base border-b border-slate-200 pb-1 mb-2">
+1442:                                    <ul class="list-disc pl-5 space-y-1 text-xs">
+1456:                                        class="font-extrabold text-brand-dark text-base border-b border-slate-200 pb-1 mb-2">
+1464:                                        class="font-extrabold text-brand-dark text-base border-b border-slate-200 pb-1 mb-2">
+1494:                                        class="text-xs font-bold text-red-500 hover:text-red-700 transition flex items-center gap-1 bg-red-50 px-2 py-1 rounded border border-red-200 shadow-sm"
+1500:                                    class="bg-slate-100 border-2 border-dashed border-slate-400 rounded-xl overflow-hidden relative shadow-inner">
+1511:                    <!-- STEP 5 -->
+1512:                    <div id="step-5" class="step-content p-8">
+1513:                        <div id="step-5-form-fields" class="space-y-6">
+1515:                                <i class="fa-solid fa-comments text-brand-gold"></i> Step 5: Set Your Schedule
+1531:                                        Selected Location: <span id="step5-selected-location"
+1537:                                <div id="preferredScheduleOptions" class="grid grid-cols-1 gap-3">
+1538:                                    <!-- Options will be injected dynamically based on Step 2 Location -->
+1544:                        <div id="generation-loading" class="hidden text-center py-12">
+1546:                                class="inline-block animate-spin rounded-full h-12 w-12 border-4 border-brand-gold border-t-transparent mb-4">
+1548:                            <h4 class="text-xl font-bold text-brand-dark">Uploading Profile & Signature to Google
+1550:                            <p class="text-slate-500 text-sm mt-1">Submitting your signature and profile to our
+1558:                                    class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-100 text-green-600 text-3xl mb-4">
+1658:                class="mx-auto mb-4 h-14 w-14 rounded-full border-4 border-emerald-500 border-t-transparent animate-spin">
+1675:        const EMAILJS_TEMPLATE_ID = "template_4ows166";
+1679:        // Suggested variables: to_email, applicant_email, approved_steps, passport_summary, completion_message
+1683:        const GOOGLE_SHEET_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwGOX4FPOSalmffxEdKsnivN5BeIHDcJu05Ij8THu329kQVHz0etKUe0v61tqoM2XXS/exec";
+1684:        const CHALLENGE_WEB_APP_URL = "https://script.google.com/macros/s/AKfycby_mHDQJquTvzY46SBuZmELNg03bk14WwG6JBkkUwe9FHikLgX24v0iKVsEzHq8K1Z7DA/exec";
+1691:        let currentStep = 1;
+1692:        const totalSteps = 5;
+1694:        // Step 1 gating for TWO videos
+1695:        let isVideo1Finished = false;
+1698:        let targetTime1 = 0;
+1703:        let hasSeeking1 = false;
+1712:            "North Branch": { email: "hsrcjenzen@gmail.com, emmasabanal25@gmail.com", zoomLink: "https://us02web.zoom.us/j/3205013581" },
+1713:            "East Branch": { email: "", zoomLink: "https://us02web.zoom.us/j/3205013581" },
+1714:            "South Branch": { email: "mhaiflorido.humanshelter@gmail.com, hsrcmasteliro051989@gmail.com", zoomLink: "https://us02web.zoom.us/j/3205013581" },
+1715:            "Southwest Branch": { email: "cavitehsrc@gmail.com,", zoomLink: "https://us02web.zoom.us/j/3205013581" },
+1887:        function setChallengeQueueStatus(step, text) {
+1888:            const el = document.getElementById(`challenge-queue-${step}`);
+1891:            const stamp = document.querySelector(`[data-step="${step}"]`);
+1896:            const noteId = `challenge-note-${step}`;
+1900:                const input = document.querySelector(`input[data-upload-step="${step}"]`);
+1926:                "scale-105",
+1951:                    "scale-105",
+1964:                        reason = String(text).split("Note:")[1].trim();
+1978:                    "scale-105",
+1991:                if (String(step) === "9" && stamp.classList.contains("stamp-badge-goal")) {
+2001:            if (!data || !data.steps) {
+2010:            for (let i = 1; i <= 8; i++) {
+2011:                const v = data.steps[i];
+2035:        function setChallengeStepStatusText(step, text) {
+2036:            const el = document.querySelector(`[data-status-text="${step}"]`);
+2044:        function getApprovedStepsFromData(data) {
+2047:            if (!data || !data.steps) {
+2053:            for (let i = 1; i <= 8; i++) {
+2054:                const v = data.steps[i];
+2075:        function buildPassportSummary(approvedSteps) {
+2077:            for (let i = 1; i <= 8; i++) {
+2078:                const isApproved = approvedSteps.includes(i);
+2084:        function renderChallengePassportPreview(approvedSteps) {
+2088:            const allApproved = approvedSteps.length === 8;
+2090:                const step = idx + 1;
+2091:                const approved = approvedSteps.includes(step);
+2094:                        <div class="text-xs font-bold text-slate-600">TASK ${step}</div>
+2095:                        <div class="mt-1 text-[10px] font-extrabold ${approved ? 'text-green-700' : 'text-slate-400'}">
+2114:                        ${allApproved ? 'STATUS: ALL TASKS 1–8 APPROVED ✅' : 'STATUS: IN PROGRESS'}
+2130:            if (m && m[1]) {
+2131:                const fileId = m[1];
+2138:            if (m && m[1]) {
+2139:                const fileId = m[1];
+2159:                    const reader = new FileReader();
+2161:                    reader.readAsDataURL(blob);
+2169:        async function uploadChallengePassportPdf(email, approvedSteps, stepStatuses) {
+2206:                // 1) ALWAYS USE GOOGLE SHEET / DRIVE PHOTO FIRST
+2240:                // 3) Last option manual upload/current input
+2256:                        approvedSteps,
+2258:                        stepStatuses,
+2275:                payload.append("action", "challenge_upload_passport_pdf");
+2316:                    console.error("UPLOAD RESPONSE:", raw);
+2319:                        || `Upload failed (HTTP ${resp.status})`
+2352:                    "Passport PDF upload failed:",
+2373:                    new FileReader();
+2389:                            1200;
+2472:                reader.readAsDataURL(file);
+2480:            // NOTE: Uses outer-scoped `email` variable from uploadChallengePassportPdf().
+2484:            // MAY BAGONG UPLOAD (use compressed dataURL)
+2555:            approvedSteps,
+2556:            stepStatuses,
+2569:            approvedSteps =
+2570:                approvedSteps || [];
+2572:            stepStatuses =
+2573:                stepStatuses || {};
+2578:            // Basic 1-page PDF sized like an A4 portrait.
+2588:            // 1) Fixed background template
+2613:                18
+2625:                130,
+2656:                { x: 40, y: 160, w: 85, h: 170 },
+2657:                { x: 130, y: 160, w: 85, h: 170 },
+2658:                { x: 220, y: 160, w: 85, h: 170 },
+2659:                { x: 310, y: 160, w: 85, h: 170 },
+2661:                { x: 40, y: 350, w: 85, h: 170 },
+2662:                { x: 130, y: 350, w: 85, h: 170 },
+2663:                { x: 220, y: 350, w: 85, h: 170 },
+2664:                { x: 310, y: 350, w: 85, h: 170 }
+2672:            for (let i = 1; i <= 8; i++) {
+2675:                const box = taskBoxes[i - 1];
+2678:                    String(stepStatuses[i] || "")
+2682:                pdf.setLineWidth(1);
+2707:                    box.y + 15
+2713:                pdf.setFontSize(6.10);
+2716:                    taskNames[i - 1],
+2728:                    pdf.setFontSize(16);
+2732:                        130,
+2738:                        130,
+2756:                        box.y + 112,
+2758:                            angle: 12
+2771:                    pdf.setFontSize(14);
+2800:                        box.y + 112,
+2802:                            angle: 12
+2832:                        120,
+2833:                        130,
+2834:                        160,
+2859:                    const dataUrlType = String(photoBase64 || '').match(/^data:image\/([^;]+);/i)?.[1] || 'jpeg';
+2866:                        125,
+2867:                        120,
+2868:                        150
+2907:                        .slice(-10);
+2924:            pdf.setFontSize(10);
+2934:            let labelX = 515;
+2977:                yDetail + 100
+3009:                    maxWidth: 140
+3018:                    maxWidth: 160
+3035:                    maxWidth: 160
+3043:                yDetail + 100
+3060:                12
+3080:            // LINE 1
+3107:                10
+3119:                115,
+3124:            const pdfBase64 = pdf.output('datauristring').split(',')[1];
+3186:                    class="inline-flex items-center gap-2 bg-blue-100 text-blue-900 font-bold px-4 py-2 rounded-xl shadow opacity-80 cursor-not-allowed select-none">
+3215:                        <div class="text-xs font-semibold text-red-700 mt-1">
+3247:        async function sendChallengeCompletionEmail(applicantEmail, approvedSteps, passportPdfLink = "") {
+3250:            if (localStorage.getItem(alreadySentKey) === '1') return true;
+3252:            const passportSummary = buildPassportSummary(approvedSteps);
+3256:                approved_steps: approvedSteps.join(','),
+3258:                completion_message: "Congratulations! Approved na ang lahat ng Task 1-8 mo sa HSRC 30-Day Challenge.",
+3264:                localStorage.setItem(alreadySentKey, '1');
+3272:        async function submitChallengeStep(stepNumber) {
+3279:            const fileInput = document.querySelector(`input[data-upload-step="${stepNumber}"]`);
+3281:                alert(`Please upload Step ${stepNumber}`);
+3287:            setChallengeQueueStatus(stepNumber, "Uploading...");
+3288:            setChallengeStepStatusText(
+3289:                stepNumber,
+3290:                `Uploading Step ${stepNumber}...`
+3294:                const reader = new FileReader();
+3295:                reader.onload = () => resolve(reader.result.split(",")[1]);
+3297:                reader.readAsDataURL(file);
+3301:            payload.append("action", "challenge_submit_step");
+3346:            payload.append("stepNumber", String(stepNumber));
+3375:                        : `Upload failed (HTTP ${submitResp.status})`;
+3379:                setChallengeQueueStatus(stepNumber, "Uploaded");
+3380:                setChallengeStepStatusText(
+3381:                    stepNumber,
+3382:                    `Step ${stepNumber} uploaded successfully.`
+3388:                alert(`Step ${stepNumber} upload failed: ${err.message}`);
+3389:                setChallengeQueueStatus(stepNumber, "Upload Error");
+3390:                setChallengeStepStatusText(stepNumber, `Upload Error: ${err.message}`);
+3398:        function getChallengeRequiredSteps() {
+3399:            return Array.from({ length: 8 }, (_, i) => i + 1);
+3402:        function parseChallengeStepsFromStatusData(data) {
+3403:            const steps = (data && data.steps) ? data.steps : {};
+3404:            return steps;
+3407:        function computeUploadProgressFromSteps(stepsObj) {
+3415:                "uploaded",
+3422:            for (let i = 1; i <= 8; i++) {
+3423:                const v = stepsObj ? stepsObj[i] : undefined;
+3435:            const all = getChallengeRequiredSteps();
+3496:                    You have successfully completed and submitted all required Challenge Tasks (Task 1–Task 8).
+3500:                <p class="mt-2 text-slate-700">Kindly remember: Please save this information or take a screenshot for future reference, as these are the steps you will need to follow after 2–3 days.</p>
+3503:                    <li>• If you access the website using a different device, please upload again the same 2×2 photo you initially submitted.</li>
+3555:            let uploaded = 0;
+3560:                for (let s = 1; s <= 8; s++) {
+3563:                        document.querySelector(`input[data-upload-step="${s}"]`);
+3575:                        `Uploading Step ${s}...`
+3580:                        await submitChallengeStep(s);
+3584:                        uploaded++;
+3590:                if (uploaded === 0) {
+3597:                        "Please upload at least one challenge screenshot."
+3622:                        "challenge_upload_photo"
+3634:                        photoBase64.split(",")[1]
+3663:                    `${uploaded} task(s) uploaded successfully.`
+3666:                // ===== Feature 1: Smart Task Completion Detection (after partial submit) =====
+3671:                        if (statusData && statusData.steps) {
+3672:                            const stepsObj = parseChallengeStepsFromStatusData(statusData);
+3673:                            const progress = computeUploadProgressFromSteps(stepsObj);
+3678:                                // Keep user workflow: show progress popup + allow continue uploading
+3690:                    // Backward compatibility: if status fetch fails, do not break upload workflow
+3691:                    console.warn('[Feature 1] Progress detection failed:', e2);
+3704:                    "Upload failed."
+3725:            // Prevent duplicate-click guard: no-op if already uploading.
+3734:            // CHECK REQUIRED STEPS 1-8 BEFORE FINAL SUBMIT
+3735:            for (let step = 1; step <= 8; step++) {
+3739:                        `input[data-upload-step="${step}"]`
+3743:                const alreadyUploaded =
+3745:                        .getElementById(`challenge-step-${step}-status`)
+3748:                        ?.includes("uploaded");
+3754:                    !alreadyUploaded
+3758:                        `Please complete Step ${step} before submitting your challenge.`
+3791:            showChallengeLoading("Uploading Step 1 of 8...");
+3794:                let hasUpload = false;
+3796:                for (let s = 1; s <= 8; s++) {
+3799:                        document.querySelector(`input[data-upload-step="${s}"]`);
+3806:                        hasUpload = true;
+3809:                            `Uploading Step ${s} of 8...`
+3813:                            await submitChallengeStep(s);
+3829:                if (!hasUpload) {
+3836:                        "Please upload at least one challenge screenshot."
+3856:                        "challenge_upload_photo"
+3866:                        photoBase64.split(",")[1]
+3889:                    "✅ Submission Completed!\n\nYour form and challenge steps have been submitted successfully.\n\nPlease wait 2–3 days for admin approval.\n\nEnter your registered email address and click \"Start Checking Approval\" to check your Task 1–8 status."
+3895:                alert("Failed to submit challenge steps.");
+3914:            // Guard: prevent duplicate passport PDF generation/upload during repeated polling cycles
+3950:            // NOTE (bug fix): Do NOT show "Generating Passport PDF..." until ALL admin approval steps are approved.
+3969:                                <div class="text-sm font-bold text-slate-800">✓ Challenge Upload Received</div>
+3970:                                <div class="text-xs mt-1 text-slate-600 font-semibold">Passport Status: <span class="text-amber-700">🔒 LOCKED</span></div>
+3973:                                    Our team is currently reviewing your uploaded challenge tasks.
+4096:                    if (!data || !data.steps) {
+4104:                        alert("⏳ Approval Still Pending\n\nYour challenge submission has been received successfully.\nOur team is currently reviewing your uploaded challenge tasks.\nPlease allow approximately 2–3 business days for the approval process.\n\nAfter the review period, enter the same email address used during registration, then click Start Checking Approval again.\n\nThank you for your patience.");
+4125:                    let approvedSteps = [];
+4126:                    let stepStatuses = {};
+4128:                    for (let i = 1; i <= 8; i++) {
+4130:                        const rawStatus = data.steps[i];
+4141:                                ; approvedSteps.push(i); stepStatuses[i] = "APPROVED"; hasAnyDecision = true;
+4151:                                note = txt.split("-").slice(1).join("-").trim();
+4166:                            stepStatuses[i] = "REJECTED";
+4176:                            stepStatuses[i] = "PENDING";
+4182:                    const rejectedSteps = [];
+4183:                    for (let i = 1; i <= 8; i++) {
+4184:                        const s = data.steps?.[i];
+4194:                            rejectedSteps.push(i);
+4198:                    if (rejectedSteps.length > 0) {
+4209:                                    ${rejectedSteps
+4210:                                        .map((taskStep) => {
+4211:                                            const raw = data.steps?.[taskStep];
+4216:                                                const afterHyphen = txt.split("-").slice(1).join("-").trim();
+4222:                                                    <div>❌ Task ${taskStep}</div>
+4244:                    if (approvedSteps.length === 8) {
+4245:                        // Prevent multiple PDF generate/upload
+4259:                        renderChallengePassportPreview(approvedSteps);
+4266:                        const passportPdfLink = await uploadChallengePassportPdf(
+4268:                            approvedSteps,
+4269:                            data.steps
+4288:                    // At this point we have data.steps but not all are approved.
+4290:                    if (approvedSteps.length !== 8) {
+4296:                        alert("⏳ Approval Still Pending\n\nYour challenge submission has been received successfully.\nOur team is currently reviewing your uploaded challenge tasks.\nPlease allow approximately 2–3 business days for the approval process.\n\nAfter the review period, enter the same email address used during registration, then click Start Checking Approval again to view your approval status.\n\nThank you for your patience.");
+4338:            // Re-validate step indicators/buttons kapag may nagbago
+4339:            updateFormStep();
+4345:                const ratio = Math.max(window.devicePixelRatio || 1, 1);
+4350:                signaturePad = new SignaturePad(canvas, { penColor: "rgb(15, 23, 42)" });
+4376:            // 1) Stop every active timer/interval if necessary.
+4412:                currentStep = 1;
+4413:                isVideo1Finished = false;
+4415:                hasSeeking1 = false;
+4420:                targetTime1 = 0;
+4432:                    nextBtnEl.classList.remove('opacity-100');
+4522:                        <div class="w-full h-44 bg-slate-100 border-b border-slate-200 overflow-hidden">
+4530:                            <div class="hidden w-full h-full items-center justify-center text-slate-400 text-xs font-bold bg-slate-100">
+4536:                        <div class="w-full h-44 bg-slate-100 border-b border-slate-200 flex items-center justify-center text-slate-400 text-xs font-bold">
+4554:            container.innerHTML = `<div class="grid grid-cols-1 md:grid-cols-2 gap-4">${cards}</div>`;
+4602:            isVideo1Finished = false;
+4608:            targetTime1 = 0;
+4623:            // Re-enable Step 4 quiz radios after reset
+4648:            if (scoreEl) scoreEl.textContent = '-- / 10';
+4663:            document.getElementById('step-5-form-fields').classList.remove('hidden');
+4679:            currentStep = 1;
+4680:            updateFormStep();
+4685:                if (video.currentTime > targetTime1 && video.currentTime - targetTime1 < 1.5) {
+4686:                    targetTime1 = video.currentTime;
+4693:            isVideo1Finished = false;
+4702:            if (video.currentTime > targetTime1) {
+4703:                video.currentTime = targetTime1;
+4712:            if (currentStep !== 1) return;
+4713:            if (isVideo1Finished && isVideo2Finished) {
+4716:                statusMsg.innerHTML = '<i class="fa-solid fa-lock-open"></i> <span>Thanks for watching BOTH videos! You are now ready to move on to Step 2.</span>';
+4740:                isVideo1Finished = true;
+4741:                // Reveal Video 2 only after Video 1 is completed.
+4760:                isVideo1Finished = false;
+4765:                video.currentTime = Math.max(0, Math.min(targetTime1, video.duration - 0.25));
+4773:                if (video2.currentTime > targetTime2 && video2.currentTime - targetTime2 < 1.5) {
+4842:        // Form Inputs Real-time Tracker for Step validation
+4844:            validateCurrentStepInputs();
+4845:            // Step 4: auto-generate once all quiz answers are selected
+4849:            validateCurrentStepInputs();
+4850:            // Step 4: auto-generate once all quiz answers are selected
+4856:        function validateCurrentStepInputs() {
+4860:            // Keep existing behavior for Step 4 signature checkbox
+4861:            if (currentStep === 4) {
+4870:            // Step 5 validation: ensure preferredSchedule options are rendered and a radio is chosen
+4875:            const quizTotalQuestions = 10;
+4876:            for (let i = 1; i <= quizTotalQuestions; i++) {
+4884:            if (currentStep !== 4) return;
+4898:            const quizTotalQuestions = 10;
+4901:                'quiz-q1': 'B',
+4910:                'quiz-q10': 'B',
+4919:            for (let i = 1; i <= quizTotalQuestions; i++) {
+4955:            // Disable all Step 4 quiz radios to prevent answer changes
+4992:            // Step 1 gate: lock Next if BOTH videos are not fully finished
+4993:            if (currentStep === 1) {
+4994:                if (!(isVideo1Finished && isVideo2Finished)) {
+4996:                    // Keep user on Step 1; no advance
+5000:                        if (textNode) textNode.textContent = "You need to watch BOTH orientation videos completely to proceed to Step 2.";
+5006:            const currentStepEl = document.getElementById(`step-${currentStep}`);
+5007:            const inputs = currentStepEl.querySelectorAll('input[required], select[required]');
+5019:            if (currentStep === 4) {
+5020:                // Step 4 gate: kailangan muna ng Generate Result button
+5045:            if (currentStep === totalSteps) {
+5055:            currentStep++;
+5056:            updateFormStep();
+5060:            if (currentStep > 1) {
+5061:                currentStep--;
+5062:                updateFormStep();
+5071:            document.getElementById('step-5-form-fields').classList.add('hidden');
+5190:            const selectedLocationEl = document.getElementById('step5-selected-location');
+5191:            // Step 5: choices only Monday, Wednesday, Friday
+5195:            // If no branch selected yet, keep it empty so user must choose schedule after Step 2.
+5220:        function updateFormStep() {
+5221:            document.querySelectorAll('.step-content').forEach(content => { content.classList.remove('active'); });
+5222:            document.getElementById(`step-${currentStep}`).classList.add('active');
+5225:            const progressPercent = ((currentStep - 1) / (totalSteps - 1)) * 100;
+5228:            document.querySelectorAll('.step-indicator').forEach(indicator => {
+5229:                const stepNum = parseInt(indicator.getAttribute('data-step'));
+5233:                if (stepNum <= currentStep) {
+5234:                    circle.className = "w-10 h-10 rounded-full bg-brand-gold text-white flex items-center justify-center font-bold shadow-md border-4 border-white text-xs";
+5235:                    text.className = "text-[10px] sm:text-xs font-bold mt-2 text-brand-navy tracking-wide";
+5237:                    circle.className = "w-10 h-10 rounded-full bg-slate-300 text-slate-500 flex items-center justify-center font-bold shadow-md border-4 border-white text-xs";
+5238:                    text.className = "text-[10px] sm:text-xs font-bold mt-2 text-slate-500 tracking-wide";
+5242:            // Handle Nav Buttons state for current steps
+5243:            if (currentStep === 1) {
+5249:            if (currentStep === 4) {
+5251:                setTimeout(initSignaturePad, 100);
+5252:            } else if (currentStep === 5) {
+5258:            // When entering Step 5, render schedule options based on selected location (Step 2)
+5259:            if (currentStep === 5) {
+5267:            validateCurrentStepInputs();
+5270:        // Re-render Step 5 options whenever the user changes location in Step 2

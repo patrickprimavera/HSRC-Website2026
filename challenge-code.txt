@@ -1,0 +1,1505 @@
+/*************************************************
+ * HSRC 30 DAYS CHALLENGE BACKEND
+ * MATCHED WITH index.html + admin.html
+ *************************************************/
+
+const SPREADSHEET_ID = "1LnG7RJYatn41uP1j6sh2YBB9twY8MNSshfQUwsD6dgg";
+const SHEET_NAME = "Sheet1";
+const ADMIN_KEY = "HSRC_ADMIN_2026";
+const ROOT_FOLDER_ID = "1wQYu6j_nSCjrrPoe9cuHZW2A2GFEbjCi";
+const PROJECT_IMAGES_FOLDER_ID = "1kCMkiXc4Z5I6-OuKzU8vn8WNkLpj7kJ5";
+
+
+const COL = {
+  TIMESTAMP: 1,
+  TEAM: 2,
+  EMAIL: 3,
+  FULL_NAME: 4,
+  CONTACT: 5,
+  FOLDER_URL: 6,
+
+  STEP1_FILE: 7,
+  STEP1_STATUS: 8,
+
+  STEP2_FILE: 9,
+  STEP2_STATUS: 10,
+
+  STEP3_FILE: 11,
+  STEP3_STATUS: 12,
+
+  STEP4_FILE: 13,
+  STEP4_STATUS: 14,
+
+  STEP5_FILE: 15,
+  STEP5_STATUS: 16,
+
+  STEP6_FILE: 17,
+  STEP6_STATUS: 18,
+
+  STEP7_FILE: 19,
+  STEP7_STATUS: 20,
+
+  STEP8_FILE: 21,
+  STEP8_STATUS: 22,
+
+  PASSPORT_PHOTO: 23,
+
+  LAST_UPDATED: 24
+};
+
+
+const STEP_FILE_COL = {
+  1: 7,
+  2: 9,
+  3: 11,
+  4: 13,
+  5: 15,
+  6: 17,
+  7: 19,
+  8: 21
+};
+
+
+const STEP_STATUS_COL = {
+  1: 8,
+  2: 10,
+  3: 12,
+  4: 14,
+  5: 16,
+  6: 18,
+  7: 20,
+  8: 22
+};
+
+
+/***************
+ ROUTER
+****************/
+
+function doPost(e) {
+
+  try {
+
+    const req = parseRequest(e);
+
+    switch (req.action) {
+
+      case "challenge_submit_step":
+        return submitChallengeStep(req);
+
+      case "challenge_get_status":
+        return getChallengeStatus(req.email);
+
+      case "admin_get_submissions":
+        return adminGetSubmissions(req);
+
+      case "admin_update_step_status":
+        return adminUpdateStepStatus(req);
+
+      case "challenge_upload_passport_pdf":
+        return uploadPassport(req);
+
+      case "challenge_upload_photo":
+        return uploadPassportPhoto(req);
+
+      case "admin_add_project":
+        return adminAddProject(req);
+
+      case "admin_get_projects":
+        return adminGetProjects(req);
+
+      case "admin_update_project":
+        return adminUpdateProject(req);
+
+      case "admin_delete_project":
+        return deleteProject(req);
+
+      case "get_projects_by_branch":
+        return getProjectsByBranch(req);
+
+      default:
+        return json({
+          ok: false,
+          error: "Unknown action " + req.action
+        });
+
+    }
+
+  } catch (err) {
+
+    return json({
+      ok: false,
+      error: String(err)
+    });
+
+  }
+
+}
+
+
+
+/***************
+ REQUEST FIX
+****************/
+
+function parseRequest(e) {
+
+  let data = {};
+
+  if (e.parameter) {
+    data = e.parameter;
+  }
+
+
+  if (
+    e.postData &&
+    e.postData.type === "application/json"
+  ) {
+
+    try {
+      data = JSON.parse(e.postData.contents);
+    } catch (err) { }
+
+  }
+
+
+  return {
+
+    payload: data,
+
+    action: String(data.action || "").trim(),
+
+    email: String(data.email || "").trim(),
+
+    adminKey: String(data.adminKey || "").trim()
+
+  };
+
+
+}
+
+
+
+function json(obj) {
+
+  return ContentService
+    .createTextOutput(JSON.stringify(obj))
+    .setMimeType(ContentService.MimeType.JSON);
+
+}
+
+
+
+function sheet() {
+
+  return SpreadsheetApp
+    .openById(SPREADSHEET_ID)
+    .getSheetByName(SHEET_NAME);
+
+}
+
+function projectsSheet() {
+  return SpreadsheetApp
+    .openById(SPREADSHEET_ID)
+    .getSheetByName("Projects");
+}
+
+/***************
+ FIND USER
+****************/
+
+function findUser(email) {
+
+  const data = sheet()
+    .getDataRange()
+    .getValues();
+
+
+  for (let i = 1; i < data.length; i++) {
+
+    if (
+      String(data[i][COL.EMAIL - 1])
+        .toLowerCase()
+        .trim()
+      ===
+      email.toLowerCase()
+    ) {
+      return i + 1;
+    }
+
+  }
+
+  return -1;
+
+}
+
+
+
+
+function createUser(email, name, phone, team) {
+
+  sheet().appendRow([
+
+    new Date(),
+    team,
+    email,
+    name,
+    phone,
+    "",
+
+    "", "Pending",
+    "", "Pending",
+    "", "Pending",
+    "", "Pending",
+    "", "Pending",
+    "", "Pending",
+    "", "Pending",
+    "", "Pending",
+
+    "", // Passport Photo
+
+    new Date()
+
+  ]);
+
+  return sheet().getLastRow();
+
+}
+
+
+
+
+/***************
+ DRIVE FOLDER
+****************/
+
+
+function getFolder(row, name, email) {
+
+  const ss = sheet();
+
+  const existingUrl =
+    ss.getRange(row, COL.FOLDER_URL)
+      .getValue();
+
+
+  if (existingUrl) {
+
+    try {
+
+      const id =
+        existingUrl.match(/[-\w]{25,}/)[0];
+
+      return DriveApp.getFolderById(id);
+
+    } catch (e) { }
+
+  }
+
+
+  const root =
+    DriveApp.getFolderById(ROOT_FOLDER_ID);
+
+
+  const folder =
+    root.createFolder(
+      name + " - " + email
+    );
+
+
+  ss.getRange(row, COL.FOLDER_URL)
+    .setValue(folder.getUrl());
+
+
+  return folder;
+
+}
+
+
+
+
+/***************
+ USER UPLOAD
+****************/
+
+function submitChallengeStep(req) {
+
+  const p = req.payload;
+
+
+  const email =
+    String(p.email || "").trim();
+
+
+  const name =
+    String(
+      p.fullName ||
+      p.fullname ||
+      p.full_name ||
+      p.name ||
+      p.userName ||
+      p.username ||
+      "Challenge User"
+    ).trim();
+
+
+  const phone =
+    String(
+      p.contact ||
+      ""
+    ).trim();
+
+  const team =
+    String(
+      p.team ||
+      ""
+    ).trim();
+
+  const step =
+    Number(p.stepNumber);
+
+
+  if (
+    !email ||
+    !step ||
+    !p.base64
+  ) {
+
+    return json({
+      ok: false,
+      error: "Missing data"
+    });
+
+  }
+
+
+  let row = findUser(email);
+
+
+  if (row == -1) {
+
+    row = createUser(
+      email,
+      name,
+      phone,
+      team
+    );
+
+  }
+
+
+  const folder =
+    getFolder(row, name, email);
+
+
+
+  const blob =
+    Utilities.newBlob(
+
+      Utilities.base64Decode(
+        p.base64
+      ),
+
+      p.mimeType || "image/jpeg",
+
+      "Step" + step + ".jpg"
+
+    );
+
+
+
+  const old =
+    folder.getFilesByName(
+      "Step" + step + ".jpg"
+    );
+
+
+  while (old.hasNext()) {
+    old.next().setTrashed(true);
+  }
+
+
+  const file =
+    folder.createFile(blob);
+
+
+
+  sheet()
+    .getRange(row, STEP_FILE_COL[step])
+    .setValue(file.getUrl());
+
+
+  sheet()
+    .getRange(row, STEP_STATUS_COL[step])
+    .setValue("Pending");
+
+
+  sheet()
+    .getRange(row, COL.LAST_UPDATED)
+    .setValue(new Date());
+
+
+  return json({
+
+    ok: true,
+
+    fileUrl: file.getUrl()
+
+  });
+
+
+}
+
+
+
+
+/***************
+ CHECK STATUS USER
+****************/
+
+function getChallengeStatus(email) {
+
+  let steps = {};
+
+  const row = findUser(email);
+
+  if (row == -1) {
+
+    for (let i = 1; i <= 8; i++) {
+      steps[i] = "";
+    }
+
+    return json({
+      ok: true,
+      steps: steps
+    });
+
+  }
+
+  for (let i = 1; i <= 8; i++) {
+
+    const fileUrl = sheet()
+      .getRange(row, STEP_FILE_COL[i])
+      .getValue();
+
+    const status = String(
+      sheet()
+        .getRange(row, STEP_STATUS_COL[i])
+        .getValue()
+    ).trim();
+
+    if (fileUrl && String(fileUrl).trim() !== "") {
+
+      // Kung may uploaded file na pero Pending pa,
+      // ituring muna itong Uploaded.
+      if (
+        status === "" ||
+        status.toLowerCase() === "pending"
+      ) {
+
+        steps[i] = "Uploaded";
+
+      } else {
+
+        // Approved / Rejected / Stamped / Needs Revision...
+        steps[i] = status;
+
+      }
+
+    } else {
+
+      // Wala pang upload
+      steps[i] = "";
+
+    }
+
+  }
+
+  return json({
+
+    ok: true,
+
+    team:
+      sheet()
+        .getRange(row, COL.TEAM)
+        .getValue(),
+
+    name:
+      sheet()
+        .getRange(row, COL.FULL_NAME)
+        .getValue(),
+
+    contact:
+      sheet()
+        .getRange(row, COL.CONTACT)
+        .getValue(),
+
+    photoBase64:
+      driveImageToBase64(
+        sheet()
+          .getRange(row, COL.PASSPORT_PHOTO)
+          .getValue()
+      ),
+
+    email: email,
+
+    steps: steps
+
+  });
+
+}
+
+
+
+
+/***************
+ ADMIN LOAD
+****************/
+
+
+function adminGetSubmissions(req) {
+
+
+  if (req.adminKey !== ADMIN_KEY) {
+
+    return json({
+      ok: false,
+      error: "Unauthorized"
+    });
+
+  }
+
+
+  return json({
+
+    ok: true,
+
+    rows:
+      buildRows(
+        req.payload.email,
+        req.payload.team
+      )
+
+  });
+
+
+}
+
+
+
+function buildRows(filterEmail, filterTeam) {
+
+
+  const data =
+    sheet()
+      .getDataRange()
+      .getValues();
+
+
+  let result = [];
+
+
+  for (let i = 1; i < data.length; i++) {
+
+
+    const rowTeam =
+      String(data[i][COL.TEAM - 1])
+        .toLowerCase()
+        .trim();
+
+
+    const rowEmail =
+      String(data[i][COL.EMAIL - 1])
+        .toLowerCase()
+        .trim();
+
+
+
+    if (
+      filterEmail &&
+      rowEmail !== filterEmail.toLowerCase().trim()
+    ) {
+      continue;
+    }
+
+
+
+    if (
+      filterTeam &&
+      rowTeam !== filterTeam.toLowerCase().trim()
+    ) {
+      continue;
+    }
+
+
+
+    let obj = {
+
+      team: data[i][COL.TEAM - 1],
+
+      email: data[i][COL.EMAIL - 1],
+
+      name: data[i][COL.FULL_NAME - 1]
+
+    };
+
+
+
+    for (let s = 1; s <= 8; s++) {
+
+      obj["step" + s]
+        =
+        data[i][STEP_FILE_COL[s] - 1];
+
+
+      obj["step" + s + "Status"]
+        =
+        data[i][STEP_STATUS_COL[s] - 1];
+
+
+    }
+
+
+    result.push(obj);
+
+
+  }
+
+
+  return result;
+
+}
+
+
+
+/***************
+ ADMIN APPROVE REJECT
+****************/
+
+function adminUpdateStepStatus(req) {
+
+
+  const p = req.payload;
+
+
+  if (req.adminKey !== ADMIN_KEY) {
+
+    return json({
+      ok: false,
+      error: "Unauthorized"
+    });
+
+  }
+
+
+  const row = findUser(p.email);
+
+
+  if (row == -1) {
+
+    return json({
+      ok: false,
+      error: "User not found"
+    });
+
+  }
+
+
+  let status = p.status;
+
+  sheet()
+    .getRange(
+      row,
+      STEP_STATUS_COL[p.stepNumber]
+    )
+    .setValue(status);
+
+
+  sheet()
+    .getRange(row, COL.LAST_UPDATED)
+    .setValue(new Date());
+
+
+  return json({
+
+    ok: true,
+
+    message: "Updated"
+
+  });
+
+}
+
+
+
+/***************
+ PASSPORT PDF
+****************/
+
+function uploadPassport(req) {
+
+  const p = req.payload;
+
+
+  const row = findUser(p.email);
+
+
+  if (row == -1) {
+
+    return json({
+      ok: false
+    });
+
+  }
+
+
+  // kunin muna main user folder
+  const userFolder =
+    getFolder(
+      row,
+      "Passport",
+      p.email
+    );
+
+
+  // gumawa or hanapin HSRC Passport folder
+  let passportFolder;
+
+
+  const existing =
+    userFolder.getFoldersByName(
+      "HSRC Passport"
+    );
+
+
+  if (existing.hasNext()) {
+
+    passportFolder =
+      existing.next();
+
+  } else {
+
+    passportFolder =
+      userFolder.createFolder(
+        "HSRC Passport"
+      );
+
+  }
+
+
+  const blob =
+    Utilities.newBlob(
+
+      Utilities.base64Decode(
+        p.base64
+      ),
+
+      "application/pdf",
+
+      p.fileName
+
+    );
+
+
+  // delete old passport pdf
+  // delete lahat ng old passport PDF
+  const oldFiles =
+    passportFolder.getFiles();
+  while (oldFiles.hasNext()) {
+    const oldFile =
+      oldFiles.next();
+    if (
+      oldFile
+        .getName()
+        .startsWith("HSRC_PASSPORT")
+    ) {
+      oldFile.setTrashed(true);
+    }
+  }
+
+  const file =
+    passportFolder.createFile(blob);
+
+
+  return json({
+
+    ok: true,
+
+    pdfUrl: file.getUrl()
+
+  });
+
+
+}
+
+function uploadPassportPhoto(req) {
+
+  const p = req.payload;
+
+  const row = findUser(p.email);
+
+  if (row == -1) {
+    return json({
+      ok: false
+    });
+  }
+
+
+  const folder =
+    getFolder(
+      row,
+      "Passport",
+      p.email
+    );
+
+
+  const old =
+    folder.getFilesByName(
+      "passport_photo.jpg"
+    );
+
+  while (old.hasNext()) {
+    old.next().setTrashed(true);
+  }
+
+
+  const blob =
+    Utilities.newBlob(
+      Utilities.base64Decode(
+        p.base64
+      ),
+      p.mimeType || "image/jpeg",
+      "passport_photo.jpg"
+    );
+
+
+  const file =
+    folder.createFile(blob);
+
+
+  sheet()
+    .getRange(
+      row,
+      COL.PASSPORT_PHOTO
+    )
+    .setValue(
+      file.getUrl()
+    );
+
+  sheet()
+    .getRange(
+      row,
+      COL.LAST_UPDATED
+    )
+    .setValue(
+      new Date()
+    );
+
+
+  return json({
+    ok: true,
+    photoUrl: file.getUrl()
+  });
+
+}
+
+function doGet(e) {
+  return json({
+    ok: true,
+    message: "HSRC Challenge Backend Connected"
+  });
+}
+
+function driveImageToBase64(url) {
+
+  if (!url) {
+    return "";
+  }
+
+  try {
+
+    const id =
+      url.match(/[-\w]{25,}/)[0];
+
+
+    const file =
+      DriveApp.getFileById(id);
+
+
+    const blob =
+      file.getBlob();
+
+
+    return Utilities.base64Encode(
+      blob.getBytes()
+    );
+
+
+  } catch (e) {
+
+    return "";
+
+  }
+
+}
+
+function adminAddProject(req) {
+
+  // Check Admin Key
+  if (req.adminKey !== ADMIN_KEY) {
+    return json({
+      ok: false,
+      error: "Unauthorized"
+    });
+  }
+
+  var payload = req.payload || {};
+
+  // Final Project fields
+  var projectName = String(payload.projectName || "").trim();
+  var projectLocation = String(
+    payload.projectLocation ||
+    payload.location ||
+    ""
+  ).trim();
+
+  var developer = String(payload.developer || "").trim();
+  var startingPrice = String(payload.startingPrice || "").trim();
+  var assignedBranch = String(payload.assignedBranch || "").trim();
+
+  // Optional Project Image
+  var imageBase64 = String(payload.imageBase64 || "");
+  var imageFileName = String(payload.imageFileName || "");
+  var imageMimeType = String(payload.imageMimeType || "");
+
+  // Required fields
+  if (
+    !projectName ||
+    !projectLocation ||
+    !developer ||
+    !startingPrice ||
+    !assignedBranch
+  ) {
+    return json({
+      ok: false,
+      error: "Project Name, Project Location, Developer, Starting Price, and Assigned Branch are required."
+    });
+  }
+
+  // Validate Assigned Branch
+  var allowedBranches = [
+    "North Branch (Bulacan, Pampanga, Tarlac, Bataan)",
+    "East Branch (NCR, Rizal)",
+    "South Branch (Laguna, Batangas, Quezon)",
+    "Southwest Branch (Cavite, Parañaque)"
+      ];
+  if (allowedBranches.indexOf(assignedBranch) === -1) {
+    return json({
+      ok: false,
+      error: "Invalid Assigned Branch."
+    });
+  }
+
+  var sh = projectsSheet();
+
+  if (!sh) {
+    return json({
+      ok: false,
+      error: "Projects sheet not found."
+    });
+  }
+
+  // Generate Project ID
+  var projectId = "PRJ-" + new Date().getTime();
+
+  // Upload image if provided
+  var imageUrl = "";
+
+  if (imageBase64) {
+
+    var imageResult = uploadProjectImage(
+      imageBase64,
+      imageFileName,
+      imageMimeType
+    );
+
+    if (!imageResult.ok) {
+      return json({
+        ok: false,
+        error: "Project image upload failed: " + imageResult.error
+      });
+    }
+
+    imageUrl = imageResult.imageUrl;
+  }
+
+  var now = new Date();
+
+  // FINAL Projects Sheet columns:
+  // A Project ID
+  // B Project Name
+  // C Project Location
+  // D Developer
+  // E Starting Price
+  // F Project Image URL
+  // G Assigned Branch
+  // H Created At
+  // I Updated At
+
+  sh.appendRow([
+    projectId,
+    projectName,
+    projectLocation,
+    developer,
+    startingPrice,
+    imageUrl,
+    assignedBranch,
+    now,
+    now
+  ]);
+
+  return json({
+    ok: true,
+    projectId: projectId,
+    imageUrl: imageUrl,
+    message: "Project saved successfully"
+  });
+}
+
+function adminGetProjects(req) {
+
+  // Check Admin Key
+  if (req.adminKey !== ADMIN_KEY) {
+    return json({
+      ok: false,
+      error: "Unauthorized"
+    });
+  }
+
+  var sh = projectsSheet();
+
+  if (!sh) {
+    return json({
+      ok: false,
+      error: "Projects sheet not found."
+    });
+  }
+
+  var lastRow = sh.getLastRow();
+
+  if (lastRow < 2) {
+    return json({
+      ok: true,
+      projects: []
+    });
+  }
+
+  // Final structure: A2:I
+  var data = sh
+    .getRange(2, 1, lastRow - 1, 9)
+    .getValues();
+
+  var projects = data.map(function (row) {
+
+    var imageUrl = String(row[5] || "");
+
+    return {
+      projectId: row[0],
+      projectName: row[1],
+      projectLocation: row[2],
+      location: row[2], // temporary compatibility with current admin.html
+      developer: row[3],
+      startingPrice: row[4],
+      imageUrl: imageUrl,
+      imageData: projectImageToDataUrl(imageUrl),
+      assignedBranch: row[6],
+      createdAt: row[7],
+      updatedAt: row[8]
+    };
+
+  });
+
+  return json({
+    ok: true,
+    projects: projects
+  });
+}
+
+function adminUpdateProject(req) {
+
+  // Check Admin Key
+  if (req.adminKey !== ADMIN_KEY) {
+    return json({
+      ok: false,
+      error: "Unauthorized"
+    });
+  }
+
+  var payload = req.payload || {};
+
+  // Get Project ID and updated fields
+  var projectId = String(payload.projectId || "").trim();
+  var projectName = String(payload.projectName || "").trim();
+
+  var projectLocation = String(
+    payload.projectLocation ||
+    payload.location ||
+    ""
+  ).trim();
+
+  var developer = String(payload.developer || "").trim();
+  var startingPrice = String(payload.startingPrice || "").trim();
+  var assignedBranch = String(payload.assignedBranch || "").trim();
+
+  // Optional replacement image
+  var imageBase64 = String(payload.imageBase64 || "");
+  var imageFileName = String(payload.imageFileName || "");
+  var imageMimeType = String(payload.imageMimeType || "");
+
+  // Validate required fields
+  if (
+    !projectId ||
+    !projectName ||
+    !projectLocation ||
+    !developer ||
+    !startingPrice ||
+    !assignedBranch
+  ) {
+    return json({
+      ok: false,
+      error: "Project ID, Project Name, Project Location, Developer, Starting Price, and Assigned Branch are required."
+    });
+  }
+
+  // Validate Assigned Branch
+  var allowedBranches = [
+    "North Branch (Bulacan, Pampanga, Tarlac, Bataan)",
+    "East Branch (NCR, Rizal)",
+    "South Branch (Laguna, Batangas, Quezon)",
+    "Southwest Branch (Cavite, Parañaque)"
+    ];
+
+  if (allowedBranches.indexOf(assignedBranch) === -1) {
+    return json({
+      ok: false,
+      error: "Invalid Assigned Branch."
+    });
+  }
+
+  var sh = projectsSheet();
+
+  if (!sh) {
+    return json({
+      ok: false,
+      error: "Projects sheet not found."
+    });
+  }
+
+  var lastRow = sh.getLastRow();
+
+  if (lastRow < 2) {
+    return json({
+      ok: false,
+      error: "Project not found."
+    });
+  }
+
+  // Find project row using Project ID in Column A
+  var projectIds = sh
+    .getRange(2, 1, lastRow - 1, 1)
+    .getValues();
+
+  var targetRow = -1;
+
+  for (var i = 0; i < projectIds.length; i++) {
+    if (String(projectIds[i][0]).trim() === projectId) {
+      targetRow = i + 2;
+      break;
+    }
+  }
+
+  if (targetRow === -1) {
+    return json({
+      ok: false,
+      error: "Project not found."
+    });
+  }
+
+  // Keep existing image by default
+  var imageUrl = String(
+    sh.getRange(targetRow, 6).getValue() || ""
+  );
+
+  // Upload replacement image only if a new image was selected
+  if (imageBase64) {
+
+    var imageResult = uploadProjectImage(
+      imageBase64,
+      imageFileName,
+      imageMimeType
+    );
+
+    if (!imageResult.ok) {
+      return json({
+        ok: false,
+        error: "Project image upload failed: " + imageResult.error
+      });
+    }
+
+    imageUrl = imageResult.imageUrl;
+  }
+
+  // Keep original Created At from Column H
+  var createdAt = sh
+    .getRange(targetRow, 8)
+    .getValue();
+
+  // Update columns A:I
+  sh.getRange(targetRow, 1, 1, 9).setValues([[
+    projectId,          // A - Project ID
+    projectName,        // B - Project Name
+    projectLocation,    // C - Project Location
+    developer,          // D - Developer
+    startingPrice,      // E - Starting Price
+    imageUrl,           // F - Project Image URL
+    assignedBranch,     // G - Assigned Branch
+    createdAt,          // H - Created At
+    new Date()          // I - Updated At
+  ]]);
+
+  return json({
+    ok: true,
+    projectId: projectId,
+    imageUrl: imageUrl,
+    message: "Project updated successfully"
+  });
+}
+
+function getProjectsByBranch(req) {
+
+  var payload = req.payload || {};
+
+  // Get selected branch from Step 2
+  var assignedBranch = String(
+    payload.assignedBranch ||
+    payload.branch ||
+    ""
+  ).trim();
+
+  if (!assignedBranch) {
+    return json({
+      ok: false,
+      error: "Branch is required."
+    });
+  }
+
+  // Validate exact branch value
+  var allowedBranches = [
+    "North Branch (Bulacan, Pampanga, Tarlac, Bataan)",
+    "East Branch (NCR, Rizal)",
+    "South Branch (Laguna, Batangas, Quezon)",
+    "Southwest Branch (Cavite, Parañaque)"
+    ];
+    
+  if (allowedBranches.indexOf(assignedBranch) === -1) {
+    return json({
+      ok: false,
+      error: "Invalid branch."
+    });
+  }
+
+  var sh = projectsSheet();
+
+  if (!sh) {
+    return json({
+      ok: false,
+      error: "Projects sheet not found."
+    });
+  }
+
+  var lastRow = sh.getLastRow();
+
+  if (lastRow < 2) {
+    return json({
+      ok: true,
+      projects: []
+    });
+  }
+
+  // Final Projects Sheet structure: A:I
+  var data = sh
+    .getRange(2, 1, lastRow - 1, 9)
+    .getValues();
+
+  var projects = [];
+
+  for (var i = 0; i < data.length; i++) {
+
+    // Column G = Assigned Branch
+    var projectBranch = String(data[i][6] || "").trim();
+
+    // Only include projects assigned to selected Step 2 branch
+    if (projectBranch !== assignedBranch) {
+      continue;
+    }
+
+    // Column F = Project Image URL
+    var imageUrl = String(data[i][5] || "");
+
+    projects.push({
+      projectId: data[i][0],
+      projectName: data[i][1],
+      projectLocation: data[i][2],
+      developer: data[i][3],
+      startingPrice: data[i][4],
+      imageData: projectImageToDataUrl(imageUrl)
+    });
+  }
+
+  return json({
+    ok: true,
+    projects: projects
+  });
+}
+
+/********************************
+ PROJECT IMAGE UPLOAD
+********************************/
+function uploadProjectImage(base64Data, fileName, mimeType) {
+  try {
+    if (!base64Data) {
+      return {
+        ok: false,
+        error: "No image data provided."
+      };
+    }
+
+    const folder = DriveApp.getFolderById(PROJECT_IMAGES_FOLDER_ID);
+
+    // Remove data URL prefix if present
+    const cleanBase64 = base64Data.includes(",")
+      ? base64Data.split(",")[1]
+      : base64Data;
+
+    const decodedBytes = Utilities.base64Decode(cleanBase64);
+
+    const safeFileName =
+      "PROJECT-" +
+      Date.now() +
+      "-" +
+      (fileName || "project-image");
+
+    const blob = Utilities.newBlob(
+      decodedBytes,
+      mimeType || "image/jpeg",
+      safeFileName
+    );
+
+    const file = folder.createFile(blob);
+
+    // file.setSharing(
+    //   DriveApp.Access.ANYONE_WITH_LINK,
+    //   DriveApp.Permission.VIEW
+    // );
+
+    return {
+      ok: true,
+      fileId: file.getId(),
+      imageUrl: "https://drive.google.com/uc?export=view&id=" + file.getId()
+    };
+
+  } catch (err) {
+    return {
+      ok: false,
+      error: String(err && err.message ? err.message : err)
+    };
+  }
+}
+
+function projectImageToDataUrl(url) {
+  if (!url) {
+    return "";
+  }
+
+  try {
+    var match = String(url).match(/[-\w]{25,}/);
+
+    if (!match) {
+      return "";
+    }
+
+    var file = DriveApp.getFileById(match[0]);
+    var blob = file.getBlob();
+
+    return "data:" +
+      blob.getContentType() +
+      ";base64," +
+      Utilities.base64Encode(blob.getBytes());
+
+  } catch (e) {
+    return "";
+  }
+}
+
+function deleteProject(req) {
+
+  if (req.adminKey !== ADMIN_KEY) {
+    return json({
+      ok: false,
+      error: "Unauthorized"
+    });
+  }
+
+  var p = req.payload || {};
+  var projectId = String(p.projectId || "").trim();
+
+  if (!projectId) {
+    return json({
+      ok: false,
+      error: "Project ID is required."
+    });
+  }
+
+  var sh = projectsSheet();
+
+  if (!sh) {
+    return json({
+      ok: false,
+      error: "Projects sheet not found."
+    });
+  }
+
+  var lastRow = sh.getLastRow();
+  if (lastRow < 2) {
+    return json({
+      ok: false,
+      error: "Project not found."
+    });
+  }
+
+  var projectIds = sh.getRange(2, 1, lastRow - 1, 1).getValues();
+
+  var targetRow = -1;
+
+  for (var i = 0; i < projectIds.length; i++) {
+    if (String(projectIds[i][0]).trim() === projectId) {
+      targetRow = i + 2;
+      break;
+    }
+  }
+
+  if (targetRow === -1) {
+    return json({
+      ok: false,
+      error: "Project not found."
+    });
+  }
+
+  sh.deleteRow(targetRow);
+
+  return json({
+    ok: true,
+    message: "Project deleted successfully",
+    projectId: projectId
+  });
+}

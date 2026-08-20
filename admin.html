@@ -6,298 +6,383 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>HSRC Challenge Admin</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    referrerpolicy="no-referrer" />
 </head>
 
 <body class="bg-slate-100 min-h-screen">
   <style>
-    :root{
-      --primary:#0F766E;
-      --accent:#10B981; /* emerald */
-      --accent2:#06B6D4; /* cyan */
-      --bg1:#ffffff;
-      --bg2:#E6FFFB;
-      --bg3:#E7F3FF;
-      --card: rgba(255,255,255,.72);
-      --card-solid:#ffffff;
-      --radius:16px;
-      --shadow:0 14px 40px rgba(15, 118, 110, .10);
-      --shadow-sm:0 8px 24px rgba(2, 6, 23, .06);
-      --ring: 0 0 0 1px rgba(15,118,110,.14);
-      --ring-strong: 0 0 0 4px rgba(16,185,129,.18);
+    :root {
+      --primary: #0F766E;
+      --accent: #10B981;
+      /* emerald */
+      --accent2: #06B6D4;
+      /* cyan */
+      --bg1: #ffffff;
+      --bg2: #E6FFFB;
+      --bg3: #E7F3FF;
+      --card: rgba(255, 255, 255, .72);
+      --card-solid: #ffffff;
+      --radius: 16px;
+      --shadow: 0 14px 40px rgba(15, 118, 110, .10);
+      --shadow-sm: 0 8px 24px rgba(2, 6, 23, .06);
+      --ring: 0 0 0 1px rgba(15, 118, 110, .14);
+      --ring-strong: 0 0 0 4px rgba(16, 185, 129, .18);
     }
 
-    html,body{height:100%;}
+    html,
+    body {
+      height: 100%;
+    }
 
     /* Premium corporate background (CSS only; no images) */
-    body{
-      color:#0f172a;
-      background: radial-gradient(900px 600px at 0% 0%, rgba(6,182,212,.18) 0%, rgba(255,255,255,0) 60%),
-                  radial-gradient(850px 650px at 100% 0%, rgba(16,185,129,.15) 0%, rgba(255,255,255,0) 58%),
-                  radial-gradient(700px 520px at 100% 100%, rgba(59,130,246,.10) 0%, rgba(255,255,255,0) 60%),
-                  linear-gradient(135deg, var(--bg1) 0%, var(--bg2) 40%, var(--bg3) 100%) !important;
-      position:relative;
-      overflow-x:hidden;
+    body {
+      color: #0f172a;
+      background: radial-gradient(900px 600px at 0% 0%, rgba(6, 182, 212, .18) 0%, rgba(255, 255, 255, 0) 60%),
+        radial-gradient(850px 650px at 100% 0%, rgba(16, 185, 129, .15) 0%, rgba(255, 255, 255, 0) 58%),
+        radial-gradient(700px 520px at 100% 100%, rgba(59, 130, 246, .10) 0%, rgba(255, 255, 255, 0) 60%),
+        linear-gradient(135deg, var(--bg1) 0%, var(--bg2) 40%, var(--bg3) 100%) !important;
+      position: relative;
+      overflow-x: hidden;
     }
 
-    body::before{
-      content:"";
-      position:fixed;
-      inset:-60px;
-      pointer-events:none;
+    body::before {
+      content: "";
+      position: fixed;
+      inset: -60px;
+      pointer-events: none;
       background:
-        radial-gradient(420px 280px at 6% 12%, rgba(6,182,212,.22) 0%, rgba(6,182,212,0) 65%),
-        radial-gradient(360px 260px at 94% 12%, rgba(16,185,129,.18) 0%, rgba(16,185,129,0) 62%),
-        radial-gradient(420px 320px at 90% 92%, rgba(59,130,246,.12) 0%, rgba(59,130,246,0) 65%);
+        radial-gradient(420px 280px at 6% 12%, rgba(6, 182, 212, .22) 0%, rgba(6, 182, 212, 0) 65%),
+        radial-gradient(360px 260px at 94% 12%, rgba(16, 185, 129, .18) 0%, rgba(16, 185, 129, 0) 62%),
+        radial-gradient(420px 320px at 90% 92%, rgba(59, 130, 246, .12) 0%, rgba(59, 130, 246, 0) 65%);
       filter: blur(22px);
-      opacity:.55;
+      opacity: .55;
       transform: translateZ(0);
-      z-index:-1;
+      z-index: -1;
     }
 
-    body::after{
-      content:"";
-      position:fixed;
-      inset:0;
-      pointer-events:none;
-      background: linear-gradient(180deg, rgba(255,255,255,.65) 0%, rgba(255,255,255,.25) 100%);
-      opacity:.35;
-      z-index:-1;
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(180deg, rgba(255, 255, 255, .65) 0%, rgba(255, 255, 255, .25) 100%);
+      opacity: .35;
+      z-index: -1;
     }
 
     /* Glassmorphism cards */
-    .bbai-card{
+    .bbai-card {
       background: var(--card);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
-      border-radius:var(--radius);
+      border-radius: var(--radius);
       box-shadow: var(--shadow-sm);
-      border:1px solid rgba(15,118,110,.14);
-      position:relative;
-      overflow:hidden;
-      isolation:isolate;
+      border: 1px solid rgba(15, 118, 110, .14);
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
     }
 
-    .bbai-card::before{
-      content:"";
-      position:absolute;
-      inset:-2px;
-      background: radial-gradient(500px 240px at 20% 0%, rgba(6,182,212,.14) 0%, rgba(255,255,255,0) 60%),
-                  radial-gradient(520px 260px at 100% 0%, rgba(16,185,129,.14) 0%, rgba(255,255,255,0) 62%);
-      opacity:.55;
+    .bbai-card::before {
+      content: "";
+      position: absolute;
+      inset: -2px;
+      background: radial-gradient(500px 240px at 20% 0%, rgba(6, 182, 212, .14) 0%, rgba(255, 255, 255, 0) 60%),
+        radial-gradient(520px 260px at 100% 0%, rgba(16, 185, 129, .14) 0%, rgba(255, 255, 255, 0) 62%);
+      opacity: .55;
       filter: blur(18px);
-      z-index:-1;
+      z-index: -1;
     }
 
     /* Header */
-    .bbai-header{
-      display:flex;
-      align-items:flex-start;
-      justify-content:space-between;
-      gap:16px;
+    .bbai-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
     }
 
-    .bbai-badge{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:8px 12px;
-      border-radius:999px;
-      background:rgba(255,255,255,.55);
-      border:1px solid rgba(15,118,110,.16);
-      color:#0f766e;
-      font-weight:900;
-      font-size:12px;
-      letter-spacing:.02em;
-      white-space:nowrap;
+    .bbai-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .55);
+      border: 1px solid rgba(15, 118, 110, .16);
+      color: #0f766e;
+      font-weight: 900;
+      font-size: 12px;
+      letter-spacing: .02em;
+      white-space: nowrap;
       box-shadow: 0 6px 18px rgba(2, 6, 23, .05);
     }
 
     /* Buttons */
-    .bbai-btn{
-      border-radius:12px;
-      box-shadow:0 8px 22px rgba(2,6,23,.10);
-      transition:transform .18s ease, box-shadow .18s ease, filter .18s ease, background-color .18s ease;
-      position:relative;
-      overflow:hidden;
+    .bbai-btn {
+      border-radius: 12px;
+      box-shadow: 0 8px 22px rgba(2, 6, 23, .10);
+      transition: transform .18s ease, box-shadow .18s ease, filter .18s ease, background-color .18s ease;
+      position: relative;
+      overflow: hidden;
     }
 
-    .bbai-btn::after{
-      content:"";
-      position:absolute;
-      inset:-40px;
-      background: radial-gradient(120px 80px at 20% 30%, rgba(255,255,255,.35) 0%, rgba(255,255,255,0) 60%);
-      opacity:0;
+    .bbai-btn::after {
+      content: "";
+      position: absolute;
+      inset: -40px;
+      background: radial-gradient(120px 80px at 20% 30%, rgba(255, 255, 255, .35) 0%, rgba(255, 255, 255, 0) 60%);
+      opacity: 0;
       transition: opacity .2s ease;
     }
 
-    .bbai-btn:hover{ 
+    .bbai-btn:hover {
       transform: translateY(-1px);
-      box-shadow:0 14px 30px rgba(2,6,23,.14);
-      filter:saturate(1.05);
+      box-shadow: 0 14px 30px rgba(2, 6, 23, .14);
+      filter: saturate(1.05);
     }
-    .bbai-btn:hover::after{ opacity:1; }
 
-    .bbai-btn:active{ transform: translateY(0px) scale(.99); }
-
-    .bbai-filter-label{font-weight:900; color:#0f172a; font-size:13px;}
-
-    .bbai-input{
-      border-radius:12px !important;
-      border:1px solid rgba(15,118,110,.22) !important;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.7);
-      transition:border-color .15s ease, box-shadow .15s ease, transform .15s ease;
-      background:rgba(255,255,255,.9);
+    .bbai-btn:hover::after {
+      opacity: 1;
     }
-    .bbai-input:focus{
-      outline:none;
-      border-color:rgba(15,118,110,.62) !important;
-      box-shadow:0 0 0 4px rgba(16,185,129,.16);
+
+    .bbai-btn:active {
+      transform: translateY(0px) scale(.99);
+    }
+
+    .bbai-filter-label {
+      font-weight: 900;
+      color: #0f172a;
+      font-size: 13px;
+    }
+
+    .bbai-input {
+      border-radius: 12px !important;
+      border: 1px solid rgba(15, 118, 110, .22) !important;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, .7);
+      transition: border-color .15s ease, box-shadow .15s ease, transform .15s ease;
+      background: rgba(255, 255, 255, .9);
+    }
+
+    .bbai-input:focus {
+      outline: none;
+      border-color: rgba(15, 118, 110, .62) !important;
+      box-shadow: 0 0 0 4px rgba(16, 185, 129, .16);
       transform: translateY(-1px);
     }
 
-    .bbai-table-wrap{
-      border-radius:var(--radius);
-      background: rgba(255,255,255,.72);
-      border:1px solid rgba(15,118,110,.14);
-      box-shadow:var(--shadow-sm);
-      overflow:hidden;
+    .bbai-table-wrap {
+      border-radius: var(--radius);
+      background: rgba(255, 255, 255, .72);
+      border: 1px solid rgba(15, 118, 110, .14);
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
     }
 
     /* Sticky header */
-    #adminTableBody{ /* ensure tbody exists */ }
+    #adminTableBody {
+      /* ensure tbody exists */
+    }
 
-    thead th{
-      position:sticky;
-      top:0;
-      z-index:2;
-      background: rgba(241,245,249,.72) !important;
+    thead th {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      background: rgba(241, 245, 249, .72) !important;
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
-      font-weight:950;
-      font-size:12px;
-      color:#334155;
-      letter-spacing:.02em;
-      border-bottom: 1px solid rgba(15,118,110,.14) !important;
+      font-weight: 950;
+      font-size: 12px;
+      color: #334155;
+      letter-spacing: .02em;
+      border-bottom: 1px solid rgba(15, 118, 110, .14) !important;
     }
 
-    table{border-collapse:separate; border-spacing:0;}
+    table {
+      border-collapse: separate;
+      border-spacing: 0;
+    }
 
     /* Table UI */
-    tbody tr{
+    tbody tr {
       transition: background-color .18s ease, transform .18s ease, box-shadow .18s ease, opacity .25s ease;
-      opacity:1;
+      opacity: 1;
     }
-    tbody tr:hover{ 
-      background: rgba(15,118,110,.055);
+
+    tbody tr:hover {
+      background: rgba(15, 118, 110, .055);
       transform: translateY(-1px);
     }
 
-    tbody tr:nth-child(odd){ background: rgba(255,255,255,.35); }
-    tbody tr:nth-child(even){ background: rgba(255,255,255,.18); }
+    tbody tr:nth-child(odd) {
+      background: rgba(255, 255, 255, .35);
+    }
+
+    tbody tr:nth-child(even) {
+      background: rgba(255, 255, 255, .18);
+    }
 
     /* Loading overlay spinner */
-    #loadingOverlay{
+    #loadingOverlay {
       backdrop-filter: blur(6px);
       -webkit-backdrop-filter: blur(6px);
       transition: opacity .18s ease;
-      background: rgba(255,255,255,.62);
+      background: rgba(255, 255, 255, .62);
     }
-    #loadingOverlay > div{
-      background: rgba(255,255,255,.78) !important;
-      border: 1px solid rgba(15,118,110,.14);
-      box-shadow: 0 18px 60px rgba(2,6,23,.16);
+
+    #loadingOverlay>div {
+      background: rgba(255, 255, 255, .78) !important;
+      border: 1px solid rgba(15, 118, 110, .14);
+      box-shadow: 0 18px 60px rgba(2, 6, 23, .16);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
       border-radius: 16px;
     }
 
-    #loadingOverlay .bbai-spinner{
-      width:44px;height:44px;
-      border-radius:999px;
-      border:4px solid rgba(15,118,110,.18);
-      border-top-color:#0F766E;
+    #loadingOverlay .bbai-spinner {
+      width: 44px;
+      height: 44px;
+      border-radius: 999px;
+      border: 4px solid rgba(15, 118, 110, .18);
+      border-top-color: #0F766E;
       animation: bbai-spin 0.85s linear infinite;
-      margin:0 auto 12px auto;
-      box-shadow: 0 0 0 6px rgba(16,185,129,.10);
+      margin: 0 auto 12px auto;
+      box-shadow: 0 0 0 6px rgba(16, 185, 129, .10);
     }
-    @keyframes bbai-spin{ to{ transform: rotate(360deg);} }
 
-    #loadingOverlay:not(.hidden){
+    @keyframes bbai-spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    #loadingOverlay:not(.hidden) {
       animation: bbai-loading-fade .22s ease-out both;
     }
-    @keyframes bbai-loading-fade{ from{opacity:0; transform: translateY(4px);} to{opacity:1; transform: translateY(0);} }
+
+    @keyframes bbai-loading-fade {
+      from {
+        opacity: 0;
+        transform: translateY(4px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
 
     /* Status badges (pending/approved/rejected) */
     td .text-green-600,
     td .text-red-600,
-    td .text-amber-600{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      padding:7px 12px;
-      border-radius:999px;
-      font-weight:950 !important;
-      letter-spacing:.02em;
-      background: rgba(15,118,110,.06);
-      border: 1px solid rgba(15,118,110,.10);
-      box-shadow: 0 10px 22px rgba(2,6,23,.06);
+    td .text-amber-600 {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 7px 12px;
+      border-radius: 999px;
+      font-weight: 950 !important;
+      letter-spacing: .02em;
+      background: rgba(15, 118, 110, .06);
+      border: 1px solid rgba(15, 118, 110, .10);
+      box-shadow: 0 10px 22px rgba(2, 6, 23, .06);
       transform: translateZ(0);
-      position:relative;
-      overflow:hidden;
+      position: relative;
+      overflow: hidden;
     }
+
     td .text-green-600::after,
     td .text-red-600::after,
-    td .text-amber-600::after{
-      content:"";
-      position:absolute;
-      inset:-30px;
-      background: radial-gradient(110px 70px at 25% 30%, rgba(255,255,255,.30) 0%, rgba(255,255,255,0) 60%);
-      opacity:.0;
+    td .text-amber-600::after {
+      content: "";
+      position: absolute;
+      inset: -30px;
+      background: radial-gradient(110px 70px at 25% 30%, rgba(255, 255, 255, .30) 0%, rgba(255, 255, 255, 0) 60%);
+      opacity: .0;
       transition: opacity .18s ease;
     }
+
     td .text-green-600:hover::after,
     td .text-red-600:hover::after,
-    td .text-amber-600:hover::after{ opacity:.85; }
+    td .text-amber-600:hover::after {
+      opacity: .85;
+    }
 
-    td span.text-green-600{ background: rgba(16,185,129,.14) !important; border-color: rgba(16,185,129,.22) !important; }
-    td span.text-red-600{ background: rgba(239,68,68,.12) !important; border-color: rgba(239,68,68,.22) !important; }
-    td span.text-amber-600{ background: rgba(245,158,11,.16) !important; border-color: rgba(245,158,11,.26) !important; }
+    td span.text-green-600 {
+      background: rgba(16, 185, 129, .14) !important;
+      border-color: rgba(16, 185, 129, .22) !important;
+    }
+
+    td span.text-red-600 {
+      background: rgba(239, 68, 68, .12) !important;
+      border-color: rgba(239, 68, 68, .22) !important;
+    }
+
+    td span.text-amber-600 {
+      background: rgba(245, 158, 11, .16) !important;
+      border-color: rgba(245, 158, 11, .26) !important;
+    }
 
     /* Dashboard number micro animation (CSS only; affects existing IDs) */
     #bbai-total-users,
     #bbai-pending-count,
     #bbai-approved-count,
-    #bbai-rejected-count{
+    #bbai-rejected-count {
       transform: translateZ(0);
       animation: bbai-count-pop .45s ease-out both;
     }
-    @keyframes bbai-count-pop{
-      0%{ transform: translateY(6px) scale(.98); opacity:.0; }
-      60%{ transform: translateY(-2px) scale(1.01); opacity:1; }
-      100%{ transform: translateY(0px) scale(1); opacity:1; }
+
+    @keyframes bbai-count-pop {
+      0% {
+        transform: translateY(6px) scale(.98);
+        opacity: .0;
+      }
+
+      60% {
+        transform: translateY(-2px) scale(1.01);
+        opacity: 1;
+      }
+
+      100% {
+        transform: translateY(0px) scale(1);
+        opacity: 1;
+      }
     }
 
     /* Subtle fade-in */
-    @keyframes bbai-fade-up{ from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);} }
-    .bbai-animate-in{ animation: bbai-fade-up .35s ease-out both; }
+    @keyframes bbai-fade-up {
+      from {
+        opacity: 0;
+        transform: translateY(6px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .bbai-animate-in {
+      animation: bbai-fade-up .35s ease-out both;
+    }
 
     /* Sticky filter bar (CSS only). Uses existing layout by targeting the filter panel card. */
-    .bbai-card.mb-6:nth-of-type(2){
+    .bbai-card.mb-6:nth-of-type(2) {
       /* The second bbai-card is the filter panel. Keep layout intact; only stick it. */
     }
 
     /* Some browsers need a wrapper; use absolute minimal CSS-only sticky. */
-    .bbai-card.p-6.mb-6:nth-of-type(2){
+    .bbai-card.p-6.mb-6:nth-of-type(2) {
       position: sticky;
       top: 12px;
       z-index: 5;
     }
 
     /* Search highlight */
-    .bbai-search-highlight{
+    .bbai-search-highlight {
       background: rgba(250, 204, 21, .35) !important;
       border: 1px solid rgba(250, 204, 21, .55) !important;
       border-radius: 6px;
@@ -307,171 +392,695 @@
     }
 
     /* Action button polish (buttons inside table) */
-    td button{
+    td button {
       transition: transform .18s ease, filter .18s ease, box-shadow .18s ease;
-      box-shadow: 0 10px 22px rgba(2,6,23,.10);
+      box-shadow: 0 10px 22px rgba(2, 6, 23, .10);
       border-radius: 12px !important;
     }
-    td button:hover{ transform: translateY(-1px); filter:saturate(1.05); box-shadow: 0 16px 34px rgba(2,6,23,.16); }
+
+    td button:hover {
+      transform: translateY(-1px);
+      filter: saturate(1.05);
+      box-shadow: 0 16px 34px rgba(2, 6, 23, .16);
+    }
 
     /* Empty state row */
-    .bbai-empty-row{ background: rgba(15,118,110,.02); }
+    .bbai-empty-row {
+      background: rgba(15, 118, 110, .02);
+    }
 
-    @media (max-width: 640px){
-      .bbai-header{ flex-direction:column; align-items:flex-start; }
-      .bbai-card.p-6.mb-6:nth-of-type(2){ position: static; }
+    @media (max-width: 640px) {
+      .bbai-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .bbai-card.p-6.mb-6:nth-of-type(2) {
+        position: static;
+      }
     }
 
     /* Table row fade-in (micro) */
-    tbody tr{
+    tbody tr {
       animation: bbai-row-in .25s ease-out both;
     }
-    @keyframes bbai-row-in{
-      from{ opacity:.0; transform: translateY(4px); }
-      to{ opacity:1; transform: translateY(0px); }
+
+    @keyframes bbai-row-in {
+      from {
+        opacity: .0;
+        transform: translateY(4px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0px);
+      }
+    }
+
+    /* =========================================================
+   HSRC PREMIUM ID SYSTEM MODALS
+   ========================================================= */
+
+    .hsrc-id-modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 99999;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      padding: 20px;
+
+      background: rgba(10, 35, 36, 0.52);
+
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+
+      opacity: 0;
+      visibility: hidden;
+
+      transition:
+        opacity .25s ease,
+        visibility .25s ease;
+    }
+
+    .hsrc-id-modal-overlay.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .hsrc-id-modal {
+      position: relative;
+
+      width: min(440px, 100%);
+
+      background: #ffffff;
+
+      border-radius: 26px;
+
+      overflow: hidden;
+
+      box-shadow:
+        0 30px 80px rgba(2, 71, 70, .22),
+        0 10px 30px rgba(0, 0, 0, .10);
+
+      transform:
+        translateY(18px) scale(.96);
+
+      transition:
+        transform .3s cubic-bezier(.2, .8, .2, 1);
+    }
+
+    .hsrc-id-modal-overlay.show .hsrc-id-modal {
+      transform:
+        translateY(0) scale(1);
+    }
+
+
+    /* TOP ACCENT */
+
+    .hsrc-id-modal-accent {
+      height: 5px;
+
+      background:
+        linear-gradient(90deg,
+          #024746,
+          #0b7774,
+          #d7a93b);
+    }
+
+
+    /* ICON */
+
+    .hsrc-id-modal-icon-wrap {
+      display: flex;
+      justify-content: center;
+
+      padding-top: 30px;
+    }
+
+    .hsrc-id-modal-icon {
+      width: 74px;
+      height: 74px;
+
+      border-radius: 50%;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      font-size: 30px;
+
+      background: #f1f8f7;
+
+      border: 3px solid #d8ece9;
+
+      box-shadow:
+        0 10px 25px rgba(2, 71, 70, .10);
+    }
+
+    .hsrc-id-modal-icon.approve {
+      color: #08766c;
+    }
+
+    .hsrc-id-modal-icon.reject {
+      background: #fff7f5;
+      border-color: #f4d8d2;
+    }
+
+    .hsrc-id-modal-icon.reject {
+      color: #c94b3d;
+    }
+
+    .hsrc-id-modal-icon.success {
+      background: #f1fbf5;
+      border-color: #c9ecd7;
+      color: #168453;
+    }
+
+    .hsrc-id-modal-icon.error {
+      background: #fff7f5;
+      border-color: #f3d3ce;
+      color: #c94b3d;
+    }
+
+
+    /* CONTENT */
+
+    .hsrc-id-modal-content {
+      padding: 20px 30px 30px;
+
+      text-align: center;
+    }
+
+    .hsrc-id-modal-title {
+      margin: 0;
+
+      color: #163f40;
+
+      font-size: 25px;
+      font-weight: 800;
+
+      letter-spacing: -.4px;
+    }
+
+    .hsrc-id-modal-description {
+      margin: 9px auto 0;
+
+      max-width: 355px;
+
+      color: #718284;
+
+      font-size: 14px;
+
+      line-height: 1.65;
+    }
+
+
+    /* EMAIL CARD */
+
+    .hsrc-id-email-card {
+      display: flex;
+      align-items: center;
+
+      gap: 12px;
+
+      margin: 22px 0;
+
+      padding: 14px 16px;
+
+      text-align: left;
+
+      background: #f8fbfb;
+
+      border: 1px solid #e1ebea;
+
+      border-radius: 15px;
+    }
+
+    .hsrc-id-email-icon {
+      width: 42px;
+      height: 42px;
+
+      flex: 0 0 42px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border-radius: 12px;
+
+      background: #e8f3f2;
+
+      font-size: 18px;
+    }
+
+    .hsrc-id-email-info {
+      min-width: 0;
+    }
+
+    .hsrc-id-email-label {
+      display: block;
+
+      margin-bottom: 3px;
+
+      color: #8a9999;
+
+      font-size: 10px;
+      font-weight: 800;
+
+      text-transform: uppercase;
+
+      letter-spacing: .8px;
+    }
+
+    .hsrc-id-email {
+      display: block;
+
+      color: #294647;
+
+      font-size: 13px;
+      font-weight: 700;
+
+      word-break: break-word;
+    }
+
+
+    /* WARNING BOX */
+
+    .hsrc-id-warning {
+      margin-top: 18px;
+
+      padding: 12px 14px;
+
+      border-radius: 13px;
+
+      background: #fffaf0;
+
+      border: 1px solid #f1dfb4;
+
+      color: #866c31;
+
+      font-size: 12px;
+
+      line-height: 1.5;
+    }
+
+
+    /* ACTIONS */
+
+    .hsrc-id-modal-actions {
+      display: flex;
+
+      gap: 10px;
+
+      margin-top: 25px;
+    }
+
+    .hsrc-id-modal-btn {
+      flex: 1;
+
+      min-height: 49px;
+
+      border-radius: 13px;
+
+      padding: 0 18px;
+
+      font-size: 13px;
+      font-weight: 800;
+
+      cursor: pointer;
+
+      transition:
+        transform .2s ease,
+        box-shadow .2s ease,
+        background .2s ease;
+    }
+
+    .hsrc-id-modal-btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .hsrc-id-modal-btn:disabled {
+      opacity: .65;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .hsrc-id-modal-btn.cancel {
+      color: #526768;
+
+      background: #ffffff;
+
+      border: 1px solid #dce6e6;
+    }
+
+    .hsrc-id-modal-btn.cancel:hover {
+      background: #f7fafa;
+    }
+
+    .hsrc-id-modal-btn.approve {
+      color: #ffffff;
+
+      border: none;
+
+      background:
+        linear-gradient(135deg,
+          #075e5f,
+          #024746);
+
+      box-shadow:
+        0 8px 20px rgba(2, 71, 70, .18);
+    }
+
+    .hsrc-id-modal-btn.reject {
+      color: #ffffff;
+
+      border: none;
+
+      background:
+        linear-gradient(135deg,
+          #c95a4d,
+          #ad3f34);
+
+      box-shadow:
+        0 8px 20px rgba(173, 63, 52, .16);
+    }
+
+    .hsrc-id-modal-btn.delete {
+      color: #ffffff;
+
+      border: none;
+
+      background:
+        linear-gradient(135deg,
+          #475569,
+          #334155);
+
+      box-shadow:
+        0 8px 20px rgba(51, 65, 85, .18);
+    }
+
+    .hsrc-id-modal-btn.delete:hover {
+      background:
+        linear-gradient(135deg,
+          #334155,
+          #1e293b);
+    }
+
+    .hsrc-id-modal-btn.success {
+      color: #ffffff;
+
+      border: none;
+
+      background:
+        linear-gradient(135deg,
+          #08766c,
+          #024746);
+
+      box-shadow:
+        0 8px 20px rgba(2, 71, 70, .18);
+    }
+
+
+    /* CLOSE */
+
+    .hsrc-id-modal-close {
+      position: absolute;
+
+      top: 17px;
+      right: 17px;
+
+      width: 34px;
+      height: 34px;
+
+      border: none;
+
+      border-radius: 50%;
+
+      background: #f5f8f8;
+
+      color: #718182;
+
+      font-size: 20px;
+
+      cursor: pointer;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      transition: all .2s ease;
+    }
+
+    .hsrc-id-modal-close:hover {
+      background: #eaf1f1;
+      color: #024746;
+    }
+
+
+    /* SPINNER */
+
+    .hsrc-id-spinner {
+      width: 16px;
+      height: 16px;
+
+      border: 2px solid rgba(255, 255, 255, .35);
+
+      border-top-color: #ffffff;
+
+      border-radius: 50%;
+
+      animation:
+        hsrcIdSpin .7s linear infinite;
+    }
+
+    @keyframes hsrcIdSpin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+
+    /* MOBILE */
+
+    @media (max-width: 520px) {
+
+      .hsrc-id-modal-overlay {
+        padding: 14px;
+      }
+
+      .hsrc-id-modal {
+        border-radius: 22px;
+      }
+
+      .hsrc-id-modal-content {
+        padding: 18px 20px 23px;
+      }
+
+      .hsrc-id-modal-title {
+        font-size: 22px;
+      }
+
+      .hsrc-id-modal-actions {
+        flex-direction: column;
+      }
+
+      .hsrc-id-modal-btn {
+        width: 100%;
+      }
     }
   </style>
 
-    <div class="max-w-6xl mx-auto p-4 md:p-8">
+  <div class="max-w-6xl mx-auto p-4 md:p-8">
 
     <div id="bbaiChallengeAdminContent">
       <div class="bbai-card p-6 mb-6 bbai-animate-in">
 
-      <div class="bbai-header">
-        <div>
-          <h1 class="text-2xl md:text-3xl font-extrabold text-slate-800">HSRC Challenge Admin</h1>
-          <p class="text-sm text-slate-500 mt-1">Review and approve/reject Step1–Step8 submissions.</p>
-        </div>
-
-        <div class="flex items-start gap-3">
-          <div class="bbai-badge" title="Current date">
-            <i class="fa-solid fa-calendar-days" aria-hidden="true"></i>
-            <span id="bbai-current-date">—</span>
+        <div class="bbai-header">
+          <div>
+            <h1 class="text-2xl md:text-3xl font-extrabold text-slate-800">HSRC Challenge Admin</h1>
+            <p class="text-sm text-slate-500 mt-1">Review and approve/reject Step1–Step8 submissions.</p>
           </div>
-          <div class="bbai-badge" title="Admin">
-            <i class="fa-solid fa-user-shield" aria-hidden="true"></i>
-            Admin
+
+          <div class="flex items-start gap-3">
+            <div class="bbai-badge" title="Current date">
+              <i class="fa-solid fa-calendar-days" aria-hidden="true"></i>
+              <span id="bbai-current-date">—</span>
+            </div>
+            <div class="bbai-badge" title="Admin">
+              <i class="fa-solid fa-user-shield" aria-hidden="true"></i>
+              Admin
+            </div>
+          </div>
+        </div>
+
+        <p class="mt-3 text-xs md:text-sm text-slate-500">Authorized access for admin review.</p>
+      </div>
+
+      <div class="bbai-card p-6 mb-6 bbai-animate-in">
+        <div class="grid grid-cols-1 md:grid-cols-[1fr_1.3fr_1fr_auto] gap-4 items-end">
+
+          <!-- Premium filter panel (UI only; IDs unchanged) -->
+
+          <div>
+            <label class="block font-bold mb-2">
+              Admin Key
+            </label>
+
+            <input id="adminKey" type="password" placeholder="Enter admin key"
+              class="w-full border rounded-lg p-3 bbai-input" />
+          </div>
+
+          <div>
+            <label class="block font-bold mb-2">
+              Email
+            </label>
+
+            <input id="emailFilter" type="email" placeholder="user@email.com"
+              class="w-full border rounded-lg p-3 bbai-input" />
+          </div>
+
+          <div>
+            <label class="block font-bold mb-2">
+              Team Name
+            </label>
+
+            <input id="teamFilter" type="text" placeholder="Gold Keeper"
+              class="w-full border rounded-lg p-3 bbai-input" />
+          </div>
+
+          <div class="flex gap-2">
+            <button onclick="loadSubmissions()"
+              class="bbai-btn bg-blue-600 hover:bg-blue-700 text-white px-4 py-3 rounded-lg font-bold text-sm">
+              <i class="fa-solid fa-bolt mr-2" aria-hidden="true"></i>
+              Load
+            </button>
+
+            <button onclick="clearFilter()"
+              class="bbai-btn bg-slate-300 hover:bg-slate-400 px-4 py-3 rounded-lg font-bold text-sm">
+              <i class="fa-solid fa-eraser mr-2" aria-hidden="true"></i>
+              Clear
+            </button>
+          </div>
+
+        </div>
+
+        <p id="statusText" class="mt-3 text-sm text-slate-500">Ready.</p>
+
+        <!-- Quick filter chips (UI only; client-side only) -->
+        <div class="mt-4">
+          <div class="bbai-filter-label mb-2">Quick Filters</div>
+          <div class="flex flex-wrap gap-2" role="group" aria-label="Filter submissions">
+            <button type="button" data-filter-chip="All"
+              class="bbai-btn inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 font-extrabold text-sm text-slate-700"
+              aria-pressed="true">All</button>
+            <button type="button" data-filter-chip="Pending"
+              class="bbai-btn inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 font-extrabold text-sm text-slate-700"
+              aria-pressed="false">🟡 Pending</button>
+            <button type="button" data-filter-chip="Approved"
+              class="bbai-btn inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 font-extrabold text-sm text-slate-700"
+              aria-pressed="false">🟢 Approved</button>
+            <button type="button" data-filter-chip="Rejected"
+              class="bbai-btn inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 font-extrabold text-sm text-slate-700"
+              aria-pressed="false">🔴 Rejected</button>
           </div>
         </div>
       </div>
 
-      <p class="mt-3 text-xs md:text-sm text-slate-500">Authorized access for admin review.</p>
-    </div>
-
-    <div class="bbai-card p-6 mb-6 bbai-animate-in">
-      <div class="grid grid-cols-1 md:grid-cols-[1fr_1.3fr_1fr_auto] gap-4 items-end">
-
-        <!-- Premium filter panel (UI only; IDs unchanged) -->
-
-        <div>
-          <label class="block font-bold mb-2">
-            Admin Key
-          </label>
-
-          <input id="adminKey" type="password" placeholder="Enter admin key" class="w-full border rounded-lg p-3 bbai-input"/>
+      <!-- Dashboard summary cards (UI-only; computed from already-rendered rows) -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+        <div class="bbai-card p-5 bbai-animate-in">
+          <div class="flex items-center justify-between">
+            <div class="text-3xl" aria-hidden="true">👥</div>
+            <div class="w-10 h-10 rounded-2xl bg-emerald-50 flex items-center justify-center" aria-hidden="true"><i
+                class="fa-solid fa-users text-emerald-600"></i></div>
+          </div>
+          <div class="mt-3 text-3xl font-extrabold text-slate-800" id="bbai-total-users">0</div>
+          <div class="text-sm font-bold text-slate-500 mt-1">Total Users</div>
         </div>
 
-        <div>
-          <label class="block font-bold mb-2">
-            Email
-          </label>
-
-          <input id="emailFilter" type="email" placeholder="user@email.com" class="w-full border rounded-lg p-3 bbai-input"/>
+        <div class="bbai-card p-5 bbai-animate-in">
+          <div class="flex items-center justify-between">
+            <div class="text-3xl" aria-hidden="true">🟡</div>
+            <div class="w-10 h-10 rounded-2xl bg-amber-50 flex items-center justify-center" aria-hidden="true"><i
+                class="fa-solid fa-hourglass-half text-amber-600"></i></div>
+          </div>
+          <div class="mt-3 text-3xl font-extrabold text-slate-800" id="bbai-pending-count">0</div>
+          <div class="text-sm font-bold text-slate-500 mt-1">Pending</div>
         </div>
 
-        <div>
-          <label class="block font-bold mb-2">
-            Team Name
-          </label>
-
-          <input id="teamFilter" type="text" placeholder="Gold Keeper" class="w-full border rounded-lg p-3 bbai-input"/>
+        <div class="bbai-card p-5 bbai-animate-in">
+          <div class="flex items-center justify-between">
+            <div class="text-3xl" aria-hidden="true">🟢</div>
+            <div class="w-10 h-10 rounded-2xl bg-emerald-50 flex items-center justify-center" aria-hidden="true"><i
+                class="fa-solid fa-check-circle text-emerald-600"></i></div>
+          </div>
+          <div class="mt-3 text-3xl font-extrabold text-slate-800" id="bbai-approved-count">0</div>
+          <div class="text-sm font-bold text-slate-500 mt-1">Approved</div>
         </div>
 
-        <div class="flex gap-2">
-          <button onclick="loadSubmissions()"
-            class="bbai-btn bg-blue-600 hover:bg-blue-700 text-white px-4 py-3 rounded-lg font-bold text-sm">
-            <i class="fa-solid fa-bolt mr-2" aria-hidden="true"></i>
-            Load
-          </button>
-
-          <button onclick="clearFilter()"
-            class="bbai-btn bg-slate-300 hover:bg-slate-400 px-4 py-3 rounded-lg font-bold text-sm">
-            <i class="fa-solid fa-eraser mr-2" aria-hidden="true"></i>
-            Clear
-          </button>
+        <div class="bbai-card p-5 bbai-animate-in">
+          <div class="flex items-center justify-between">
+            <div class="text-3xl" aria-hidden="true">🔴</div>
+            <div class="w-10 h-10 rounded-2xl bg-red-50 flex items-center justify-center" aria-hidden="true"><i
+                class="fa-solid fa-xmark-circle text-red-600"></i></div>
+          </div>
+          <div class="mt-3 text-3xl font-extrabold text-slate-800" id="bbai-rejected-count">0</div>
+          <div class="text-sm font-bold text-slate-500 mt-1">Rejected</div>
         </div>
 
+        <!-- New card (UI only) -->
+        <div class="bbai-card p-5 bbai-animate-in cursor-pointer" role="button" tabindex="0"
+          aria-label="Open Project Portfolio Manager" onclick="bbaiToggleProjectPortfolio()"
+          onkeydown="if(event.key==='Enter'||event.key===' '){bbaiToggleProjectPortfolio();}">
+          <div class="flex items-center justify-between">
+            <div class="text-3xl" aria-hidden="true">🏡</div>
+            <div class="w-10 h-10 rounded-2xl bg-emerald-50 flex items-center justify-center" aria-hidden="true"><i
+                class="fa-solid fa-house-chimney-window text-emerald-600"></i></div>
+          </div>
+          <div class="mt-2 text-lg font-extrabold text-slate-800">🏡 Portfolio Manager</div>
+          <div class="text-sm font-bold text-slate-500 mt-1">Manage real estate projects for newly recruited agents.
+          </div>
+        </div>
+
+        <!-- ID SYSTEM REQUESTS CARD -->
+        <div class="bbai-card p-5 bbai-animate-in cursor-pointer" role="button" tabindex="0"
+          aria-label="Open HSRC ID System Requests" onclick="bbaiToggleIDSystemRequests()"
+          onkeydown="if(event.key==='Enter'||event.key===' '){bbaiToggleIDSystemRequests();}">
+          <div class="flex items-center justify-between">
+
+            <div class="text-3xl" aria-hidden="true">
+              🔐
+            </div>
+
+            <div class="w-10 h-10 rounded-2xl bg-teal-50 flex items-center justify-center" aria-hidden="true">
+              <i class="fa-solid fa-lock text-teal-600"></i>
+            </div>
+
+          </div>
+
+          <div class="mt-3 text-lg font-extrabold text-slate-800">
+            ID System Requests
+          </div>
+
+          <div class="text-sm font-bold text-slate-500 mt-1">
+            Review and manage HSRC ID System access requests.
+          </div>
+
+        </div>
+        <!-- END ID SYSTEM REQUESTS CARD -->
       </div>
-
-      <p id="statusText" class="mt-3 text-sm text-slate-500">Ready.</p>
-
-      <!-- Quick filter chips (UI only; client-side only) -->
-      <div class="mt-4">
-        <div class="bbai-filter-label mb-2">Quick Filters</div>
-        <div class="flex flex-wrap gap-2" role="group" aria-label="Filter submissions">
-          <button type="button" data-filter-chip="All" class="bbai-btn inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 font-extrabold text-sm text-slate-700" aria-pressed="true">All</button>
-          <button type="button" data-filter-chip="Pending" class="bbai-btn inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 font-extrabold text-sm text-slate-700" aria-pressed="false">🟡 Pending</button>
-          <button type="button" data-filter-chip="Approved" class="bbai-btn inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 font-extrabold text-sm text-slate-700" aria-pressed="false">🟢 Approved</button>
-          <button type="button" data-filter-chip="Rejected" class="bbai-btn inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 font-extrabold text-sm text-slate-700" aria-pressed="false">🔴 Rejected</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Dashboard summary cards (UI-only; computed from already-rendered rows) -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-      <div class="bbai-card p-5 bbai-animate-in">
-        <div class="flex items-center justify-between">
-          <div class="text-3xl" aria-hidden="true">👥</div>
-          <div class="w-10 h-10 rounded-2xl bg-emerald-50 flex items-center justify-center" aria-hidden="true"><i class="fa-solid fa-users text-emerald-600"></i></div>
-        </div>
-        <div class="mt-3 text-3xl font-extrabold text-slate-800" id="bbai-total-users">0</div>
-        <div class="text-sm font-bold text-slate-500 mt-1">Total Users</div>
-      </div>
-
-      <div class="bbai-card p-5 bbai-animate-in">
-        <div class="flex items-center justify-between">
-          <div class="text-3xl" aria-hidden="true">🟡</div>
-          <div class="w-10 h-10 rounded-2xl bg-amber-50 flex items-center justify-center" aria-hidden="true"><i class="fa-solid fa-hourglass-half text-amber-600"></i></div>
-        </div>
-        <div class="mt-3 text-3xl font-extrabold text-slate-800" id="bbai-pending-count">0</div>
-        <div class="text-sm font-bold text-slate-500 mt-1">Pending</div>
-      </div>
-
-      <div class="bbai-card p-5 bbai-animate-in">
-        <div class="flex items-center justify-between">
-          <div class="text-3xl" aria-hidden="true">🟢</div>
-          <div class="w-10 h-10 rounded-2xl bg-emerald-50 flex items-center justify-center" aria-hidden="true"><i class="fa-solid fa-check-circle text-emerald-600"></i></div>
-        </div>
-        <div class="mt-3 text-3xl font-extrabold text-slate-800" id="bbai-approved-count">0</div>
-        <div class="text-sm font-bold text-slate-500 mt-1">Approved</div>
-      </div>
-
-      <div class="bbai-card p-5 bbai-animate-in">
-        <div class="flex items-center justify-between">
-          <div class="text-3xl" aria-hidden="true">🔴</div>
-          <div class="w-10 h-10 rounded-2xl bg-red-50 flex items-center justify-center" aria-hidden="true"><i class="fa-solid fa-xmark-circle text-red-600"></i></div>
-        </div>
-        <div class="mt-3 text-3xl font-extrabold text-slate-800" id="bbai-rejected-count">0</div>
-        <div class="text-sm font-bold text-slate-500 mt-1">Rejected</div>
-      </div>
-
-      <!-- New card (UI only) -->
-      <div class="bbai-card p-5 bbai-animate-in cursor-pointer" role="button" tabindex="0" aria-label="Open Project Portfolio Manager" onclick="bbaiToggleProjectPortfolio()" onkeydown="if(event.key==='Enter'||event.key===' '){bbaiToggleProjectPortfolio();}">
-        <div class="flex items-center justify-between">
-          <div class="text-3xl" aria-hidden="true">🏡</div>
-          <div class="w-10 h-10 rounded-2xl bg-emerald-50 flex items-center justify-center" aria-hidden="true"><i class="fa-solid fa-house-chimney-window text-emerald-600"></i></div>
-        </div>
-        <div class="mt-2 text-lg font-extrabold text-slate-800">🏡 Portfolio Manager</div>
-        <div class="text-sm font-bold text-slate-500 mt-1">Manage real estate projects for newly recruited agents.</div>
-      </div>
-    </div>
     </div> <!-- /#bbaiChallengeAdminContent -->
 
     <div id="bbaiProjectPortfolioSection" class="hidden">
       <div class="bbai-card p-6 mb-6 bbai-animate-in">
 
         <div class="flex items-center justify-start gap-3">
-          <button type="button" class="bbai-btn bg-slate-200 hover:bg-slate-300 text-slate-800 px-4 py-2 rounded-lg font-bold text-sm" onclick="bbaiBackToChallengeAdmin()">&larr; Back to Challenge Admin</button>
+          <button type="button"
+            class="bbai-btn bg-slate-200 hover:bg-slate-300 text-slate-800 px-4 py-2 rounded-lg font-bold text-sm"
+            onclick="bbaiBackToChallengeAdmin()">&larr; Back to Challenge Admin</button>
         </div>
 
         <h2 class="text-xl md:text-2xl font-extrabold text-slate-800 mt-4">
@@ -483,15 +1092,21 @@
             <div class="flex items-center justify-between gap-3">
               <div>
                 <div class="text-lg font-extrabold text-slate-800">Project Portfolio</div>
-                <div id="bbaiProjectPortfolioMessage" class="mt-2 text-sm text-slate-500">No projects available yet.</div>
+                <div id="bbaiProjectPortfolioMessage" class="mt-2 text-sm text-slate-500">No projects available yet.
+                </div>
               </div>
-                    <div id="bbaiProjectPortfolioLoading" class="hidden text-sm text-slate-600 font-bold">Loading projects...</div>
-                    <div id="bbaiProjectEditNotice" class="hidden mt-3 text-sm font-bold text-amber-700 bg-amber-50 border border-amber-200 rounded-lg p-3"></div>
+              <div id="bbaiProjectPortfolioLoading" class="hidden text-sm text-slate-600 font-bold">Loading projects...
+              </div>
+              <div id="bbaiProjectEditNotice"
+                class="hidden mt-3 text-sm font-bold text-amber-700 bg-amber-50 border border-amber-200 rounded-lg p-3">
+              </div>
 
             </div>
 
             <div class="mt-4 flex items-center justify-end">
-              <button type="button" class="bbai-btn bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-3 rounded-lg font-bold text-sm" onclick="bbaiOpenAddProjectForm()">
+              <button type="button"
+                class="bbai-btn bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-3 rounded-lg font-bold text-sm"
+                onclick="bbaiOpenAddProjectForm()">
                 <span class="mr-2" aria-hidden="true">[ + ]</span>
                 + Add New Project
               </button>
@@ -500,16 +1115,19 @@
             <div class="mt-4 grid grid-cols-1 lg:grid-cols-4 gap-3 items-end">
               <div class="lg:col-span-2">
                 <label for="bbaiProjectSearchInput" class="block font-bold mb-2">Search Project</label>
-                <input id="bbaiProjectSearchInput" type="text" class="w-full border rounded-lg p-3 bbai-input" placeholder="Search by project name" />
+                <input id="bbaiProjectSearchInput" type="text" class="w-full border rounded-lg p-3 bbai-input"
+                  placeholder="Search by project name" />
               </div>
 
               <div>
                 <label for="bbaiProjectBranchFilter" class="block font-bold mb-2">Branch</label>
                 <select id="bbaiProjectBranchFilter" class="w-full border rounded-lg p-3 bbai-input">
                   <option value="">All Branches</option>
-                  <option value="North Branch (Bulacan, Pampanga, Tarlac, Bataan)">North Branch (Bulacan, Pampanga, Tarlac, Bataan)</option>
+                  <option value="North Branch (Bulacan, Pampanga, Tarlac, Bataan)">North Branch (Bulacan, Pampanga,
+                    Tarlac, Bataan)</option>
                   <option value="East Branch (NCR, Rizal)">East Branch (NCR, Rizal)</option>
-                  <option value="South Branch (Laguna, Batangas, Quezon)">South Branch (Laguna, Batangas, Quezon)</option>
+                  <option value="South Branch (Laguna, Batangas, Quezon)">South Branch (Laguna, Batangas, Quezon)
+                  </option>
                   <option value="Southwest Branch (Cavite, Parañaque)">Southwest Branch (Cavite, Parañaque)</option>
                 </select>
               </div>
@@ -526,7 +1144,8 @@
 
             <div class="mt-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
               <div id="bbaiProjectCounter" class="text-sm text-slate-600 font-bold">Showing 0 of 0 Projects.</div>
-              <button id="bbaiProjectClearFiltersBtn" type="button" class="bbai-btn bg-slate-200 hover:bg-slate-300 text-slate-800 px-4 py-2 rounded-lg font-bold text-sm">
+              <button id="bbaiProjectClearFiltersBtn" type="button"
+                class="bbai-btn bg-slate-200 hover:bg-slate-300 text-slate-800 px-4 py-2 rounded-lg font-bold text-sm">
                 Clear Filters
               </button>
             </div>
@@ -534,7 +1153,9 @@
             <div id="bbaiProjectsGrid" class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4"></div>
 
             <div class="mt-4">
-              <button type="button" class="bbai-btn bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-3 rounded-lg font-bold text-sm" onclick="bbaiOpenAddProjectForm()">
+              <button type="button"
+                class="bbai-btn bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-3 rounded-lg font-bold text-sm"
+                onclick="bbaiOpenAddProjectForm()">
                 <span class="mr-2" aria-hidden="true">[ + ]</span>
                 + Add New Project
               </button>
@@ -546,55 +1167,67 @@
               <div class="bbai-card p-5 md:p-6" style="background: rgba(255,255,255,.62);">
                 <div class="flex items-start justify-between gap-3">
                   <div>
-                    <div id="bbaiProjectFormHeading" class="text-lg font-extrabold text-slate-800">➕ Add New Project</div>
-                    <p id="bbaiProjectFormSubheading" class="mt-1 text-sm text-slate-500">UI placeholder — no data will be saved.</p>
+                    <div id="bbaiProjectFormHeading" class="text-lg font-extrabold text-slate-800">➕ Add New Project
+                    </div>
+                    <p id="bbaiProjectFormSubheading" class="mt-1 text-sm text-slate-500">UI placeholder — no data will
+                      be saved.</p>
                   </div>
                 </div>
 
-        <form onsubmit="event.preventDefault();" class="mt-4">
+                <form onsubmit="event.preventDefault();" class="mt-4">
 
                   <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                       <label class="block font-bold mb-2">Project Name <span class="text-red-500">*</span></label>
-                      <input id="bbaiProjectName" type="text" class="w-full border rounded-lg p-3 bbai-input" placeholder="e.g. North Vista Heights" required />
+                      <input id="bbaiProjectName" type="text" class="w-full border rounded-lg p-3 bbai-input"
+                        placeholder="e.g. North Vista Heights" required />
                     </div>
 
                     <div>
                       <label class="block font-bold mb-2">Project Location <span class="text-red-500">*</span></label>
-                      <input id="bbaiProjectLocation" type="text" class="w-full border rounded-lg p-3 bbai-input" placeholder="e.g. Bulacan" required />
+                      <input id="bbaiProjectLocation" type="text" class="w-full border rounded-lg p-3 bbai-input"
+                        placeholder="e.g. Bulacan" required />
                     </div>
 
                     <div>
                       <label class="block font-bold mb-2">Developer <span class="text-red-500">*</span></label>
-                      <input id="bbaiProjectDeveloper" type="text" class="w-full border rounded-lg p-3 bbai-input" placeholder="e.g. Acme Developments" required />
+                      <input id="bbaiProjectDeveloper" type="text" class="w-full border rounded-lg p-3 bbai-input"
+                        placeholder="e.g. Acme Developments" required />
                     </div>
 
                     <div>
                       <label class="block font-bold mb-2">Starting Price <span class="text-red-500">*</span></label>
-                      <input id="bbaiProjectStartingPrice" type="text" class="w-full border rounded-lg p-3 bbai-input" placeholder="₱2.8M" required />
+                      <input id="bbaiProjectStartingPrice" type="text" class="w-full border rounded-lg p-3 bbai-input"
+                        placeholder="₱2.8M" required />
                     </div>
 
                     <div>
                       <label class="block font-bold mb-2">Assigned Branch <span class="text-red-500">*</span></label>
                       <select id="bbaiAssignedBranch" class="w-full border rounded-lg p-3 bbai-input" required>
                         <option value="" selected>Select Assigned Branch</option>
-                        <option value="North Branch (Bulacan, Pampanga, Tarlac, Bataan)">North Branch (Bulacan, Pampanga, Tarlac, Bataan)</option>
+                        <option value="North Branch (Bulacan, Pampanga, Tarlac, Bataan)">North Branch (Bulacan,
+                          Pampanga, Tarlac, Bataan)</option>
                         <option value="East Branch (NCR, Rizal)">East Branch (NCR, Rizal)</option>
-                        <option value="South Branch (Laguna, Batangas, Quezon)">South Branch (Laguna, Batangas, Quezon)</option>
-                        <option value="Southwest Branch (Cavite, Parañaque)">Southwest Branch (Cavite, Parañaque)</option>
+                        <option value="South Branch (Laguna, Batangas, Quezon)">South Branch (Laguna, Batangas, Quezon)
+                        </option>
+                        <option value="Southwest Branch (Cavite, Parañaque)">Southwest Branch (Cavite, Parañaque)
+                        </option>
                       </select>
                     </div>
 
                     <div class="md:col-span-1">
                       <label class="block font-bold mb-2">Project Image (UI only)</label>
-                      <input id="bbaiProjectImage" type="file" accept="image/*" class="w-full border rounded-lg p-3 bbai-input" />
+                      <input id="bbaiProjectImage" type="file" accept="image/*"
+                        class="w-full border rounded-lg p-3 bbai-input" />
                       <p class="mt-1 text-xs text-slate-500">Select an image. It will not be uploaded in Phase 2.</p>
                       <div id="bbaiProjectEditImagePreviewWrap" class="hidden mt-3">
                         <div class="font-bold text-xs text-slate-700 mb-1">Current Image</div>
-                        <div id="bbaiProjectEditImagePreview" class="w-full h-24 bg-slate-100 rounded-xl overflow-hidden border border-slate-200 flex items-center justify-center">
+                        <div id="bbaiProjectEditImagePreview"
+                          class="w-full h-24 bg-slate-100 rounded-xl overflow-hidden border border-slate-200 flex items-center justify-center">
                           <span class="text-slate-400 text-xs font-bold">No image</span>
                         </div>
-                        <div class="mt-2 text-xs text-amber-700 font-bold bg-amber-50 border border-amber-200 rounded-lg p-2">
+                        <div
+                          class="mt-2 text-xs text-amber-700 font-bold bg-amber-50 border border-amber-200 rounded-lg p-2">
                           Leave Project Image empty to keep the current image.
                         </div>
                       </div>
@@ -603,8 +1236,12 @@
                   </div>
 
                   <div class="mt-6 flex flex-col sm:flex-row sm:items-center sm:justify-end gap-2">
-                    <button type="button" class="bbai-btn bg-slate-200 hover:bg-slate-300 text-slate-800 px-5 py-3 rounded-lg font-bold text-sm" onclick="bbaiCloseAddProjectForm()">Cancel</button>
-                    <button id="bbaiSaveProjectBtn" type="button" class="bbai-btn bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-3 rounded-lg font-bold text-sm" onclick="bbaiHandleSaveProjectUIPlaceholder()">Save Project</button>
+                    <button type="button"
+                      class="bbai-btn bg-slate-200 hover:bg-slate-300 text-slate-800 px-5 py-3 rounded-lg font-bold text-sm"
+                      onclick="bbaiCloseAddProjectForm()">Cancel</button>
+                    <button id="bbaiSaveProjectBtn" type="button"
+                      class="bbai-btn bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-3 rounded-lg font-bold text-sm"
+                      onclick="bbaiHandleSaveProjectUIPlaceholder()">Save Project</button>
 
                   </div>
                 </form>
@@ -615,10 +1252,99 @@
       </div>
     </div>
 
+    <!-- ============================================
+     HSRC ID SYSTEM REQUESTS SECTION
+     ============================================ -->
+
+    <section id="bbaiIDSystemRequestsSection"
+      class="hidden bg-white rounded-2xl border border-slate-200 shadow-sm p-6 mb-8">
+
+      <!-- HEADER -->
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+
+        <div>
+
+          <h2 class="text-2xl font-extrabold text-slate-800">
+            🔐 HSRC ID System Access Requests
+          </h2>
+
+          <p class="text-sm text-slate-500 mt-1">
+            Review and manage requests to access the HSRC ID System.
+          </p>
+
+        </div>
+
+
+        <div class="flex flex-wrap gap-2">
+
+          <button type="button" onclick="bbaiBackToChallengeAdminFromIDSystem()"
+            class="px-4 py-2 rounded-lg bg-slate-100 text-slate-700 text-sm font-semibold hover:bg-slate-200">
+            ← Back to Admin
+          </button>
+
+
+          <button type="button" id="refreshIDAccessRequests"
+            class="px-4 py-2 rounded-lg bg-teal-600 text-white text-sm font-semibold hover:bg-teal-700">
+            ↻ Refresh Requests
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <!-- REQUESTS TABLE -->
+      <div class="overflow-x-auto">
+
+        <table class="w-full text-sm">
+
+          <thead>
+
+            <tr class="border-b border-slate-200 text-left">
+
+              <th class="py-3 px-3 font-bold text-slate-600">
+                Email
+              </th>
+
+              <th class="py-3 px-3 font-bold text-slate-600">
+                Date Requested
+              </th>
+
+              <th class="py-3 px-3 font-bold text-slate-600">
+                Status
+              </th>
+
+              <th class="py-3 px-3 font-bold text-slate-600">
+                Action
+              </th>
+
+            </tr>
+
+          </thead>
+
+
+          <tbody id="idAccessRequestsBody">
+
+            <tr>
+
+              <td colspan="4" class="py-8 text-center text-slate-400">
+                Loading access requests...
+              </td>
+
+            </tr>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </section>
+
     <div id="bbaiChallengeSubmissionsTableWrap" class="bbai-card p-4 md:p-6 overflow-x-auto">
       <table class="w-full table-fixed border-collapse">
 
-      <colgroup>
+        <colgroup>
           <col style="width:15%">
           <col style="width:25%">
           <col style="width:10%">
@@ -640,13 +1366,16 @@
         <tbody id="adminTableBody"></tbody>
       </table>
     </div>
-          </div>
-        </div>
-      </div>
-    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+
+
 
   <script>
     const CHALLENGE_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxdu2fNY9IdpwkdHsHcE0PP_pgljDuGcSd4BaVFbkbOe6aq-mQk3TsJCOEW-TXD3NBeLQ/exec";
+    const ID_SYSTEM_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxXdkqokfTPC3-jLDI4ViLg3EBUGEwa2FR9JN80-xFNVn99MYvGhSkDm7c-e5oi3Ark/exec";
 
     // ===== Minimal UI activation state (cards + quick filters) =====
     // IMPORTANT: This code does not change any backend/business logic.
@@ -762,7 +1491,7 @@
           try {
             bbaiUpdateDashboardCardsFromRenderedRows();
             bbaiApplyQuickFilter();
-          } catch (e) {}
+          } catch (e) { }
           return out;
         };
         window.__bbaiRenderRowsPatched = true;
@@ -782,23 +1511,23 @@
         // Initial cards (if table already has rows)
         try {
           bbaiUpdateDashboardCardsFromRenderedRows();
-        } catch (e) {}
+        } catch (e) { }
         try {
           bbaiApplyQuickFilter();
-        } catch (e) {}
+        } catch (e) { }
       });
     })();
 
 
-    function bbaiToggleProjectPortfolio(){
+    function bbaiToggleProjectPortfolio() {
       const challengeAdmin = document.getElementById('bbaiChallengeAdminContent');
       const portfolioSection = document.getElementById('bbaiProjectPortfolioSection');
       const submissionsTableWrap = document.getElementById('bbaiChallengeSubmissionsTableWrap');
-      if(!challengeAdmin || !portfolioSection) return;
+      if (!challengeAdmin || !portfolioSection) return;
 
       // Hide Challenge Admin, show Portfolio Manager
       challengeAdmin.classList.add('hidden');
-      if(submissionsTableWrap) submissionsTableWrap.classList.add('hidden');
+      if (submissionsTableWrap) submissionsTableWrap.classList.add('hidden');
       portfolioSection.classList.remove('hidden');
 
       // Ensure add-project form starts hidden when opening manager
@@ -809,19 +1538,132 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
 
       // Load saved projects for the portfolio view
-      bbaiLoadProjectsIntoPortfolio().catch(()=>{});
+      bbaiLoadProjectsIntoPortfolio().catch(() => { });
+    }
+
+    function bbaiToggleIDSystemRequests() {
+
+      const dashboard =
+        document.getElementById("bbaiChallengeAdminContent");
+
+      const portfolioSection =
+        document.getElementById("bbaiProjectPortfolioSection");
+
+      const idSystemSection =
+        document.getElementById("bbaiIDSystemRequestsSection");
+
+      const submissionsTableWrap =
+        document.getElementById("bbaiChallengeSubmissionsTableWrap");
+
+
+      if (!dashboard) {
+
+        console.error(
+          "Challenge Admin dashboard not found."
+        );
+
+        return;
+      }
+
+
+      if (!idSystemSection) {
+
+        console.error(
+          "ID System Requests section not found."
+        );
+
+        return;
+      }
+
+
+      // Hide main Challenge Admin dashboard
+      dashboard.classList.add("hidden");
+
+      // Hide Challenge submissions table
+      if (submissionsTableWrap) {
+        submissionsTableWrap.classList.add("hidden");
+      }
+
+      // Hide Portfolio Manager if open
+      if (portfolioSection) {
+
+        portfolioSection.classList.add("hidden");
+
+      }
+
+
+      // Show ID System Requests
+      idSystemSection.classList.remove("hidden");
+
+
+      // Scroll to the section
+      idSystemSection.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+
+
+      // Load existing requests
+      if (
+        typeof loadIDAccessRequests === "function"
+      ) {
+
+        loadIDAccessRequests();
+
+      }
+
+    }
+
+    function bbaiBackToChallengeAdminFromIDSystem() {
+
+      const dashboard =
+        document.getElementById("bbaiChallengeAdminContent");
+
+      const idSystemSection =
+        document.getElementById("bbaiIDSystemRequestsSection");
+
+      if (!dashboard) {
+
+        console.error(
+          "Challenge Admin dashboard not found."
+        );
+
+        return;
+      }
+
+      if (!idSystemSection) {
+
+        console.error(
+          "ID System Requests section not found."
+        );
+
+        return;
+      }
+
+      // Hide ID System Requests
+      idSystemSection.classList.add("hidden");
+
+      // Show Challenge Admin dashboard
+      dashboard.classList.remove("hidden");
+
+      // Return to top
+      dashboard.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+
     }
 
 
-    function bbaiBackToChallengeAdmin(){
+    function bbaiBackToChallengeAdmin() {
       const submissionsTableWrap = document.getElementById('bbaiChallengeSubmissionsTableWrap');
 
       const challengeAdmin = document.getElementById('bbaiChallengeAdminContent');
       const portfolioSection = document.getElementById('bbaiProjectPortfolioSection');
-      if(!challengeAdmin || !portfolioSection) return;
+      if (!challengeAdmin || !portfolioSection) return;
 
       portfolioSection.classList.add('hidden');
-      if(submissionsTableWrap) submissionsTableWrap.classList.remove('hidden');
+      if (submissionsTableWrap) submissionsTableWrap.classList.remove('hidden');
       challengeAdmin.classList.remove('hidden');
 
       // Scroll to the top to restore the original view
@@ -867,7 +1709,7 @@
       return "Pending";
     }
 
-    function bbaiOpenAddProjectForm(){
+    function bbaiOpenAddProjectForm() {
       // Ensure we are always in ADD mode when opening the form from +Add button
       bbaiResetProjectFormToAddModeDefaults();
 
@@ -899,7 +1741,7 @@
       else window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    function bbaiCloseAddProjectForm(){
+    function bbaiCloseAddProjectForm() {
       // Cancel should always exit any edit/add mode and restore the projects UI.
       bbaiCloseEditOrAddProjectFormAndRestoreUI();
 
@@ -926,7 +1768,7 @@
       if (addBtn) addBtn.classList.remove('hidden');
 
       // Refresh project list so latest list appears
-      bbaiLoadProjectsIntoPortfolio().catch(()=>{});
+      bbaiLoadProjectsIntoPortfolio().catch(() => { });
 
       // Scroll to top
       const portfolioSection = document.getElementById('bbaiProjectPortfolioSection');
@@ -1252,7 +2094,7 @@
       bbaiResetProjectFormToAddModeDefaults();
 
       // Refresh project list using existing loading function
-      bbaiLoadProjectsIntoPortfolio().catch(()=>{});
+      bbaiLoadProjectsIntoPortfolio().catch(() => { });
 
       // Scroll to top
       const portfolioSection = document.getElementById('bbaiProjectPortfolioSection');
@@ -1550,7 +2392,7 @@
       }
     }
 
-    async function bbaiHandleSaveProjectUIPlaceholder(){
+    async function bbaiHandleSaveProjectUIPlaceholder() {
 
       // Save Project -> admin_add_project backend (Phase 3C)
 
@@ -1678,7 +2520,7 @@
         setStatus('Project saved successfully.');
 
         // Refresh project portfolio list without reloading admin.html
-        bbaiLoadProjectsIntoPortfolio().catch(()=>{});
+        bbaiLoadProjectsIntoPortfolio().catch(() => { });
 
 
         // Reset form
@@ -2146,7 +2988,7 @@
           bbaiCloseDeleteProjectModal();
 
           // Refresh projects list using existing loader (preserves current search/filter/sort behavior)
-          bbaiLoadProjectsIntoPortfolio().catch(()=>{});
+          bbaiLoadProjectsIntoPortfolio().catch(() => { });
 
         } catch (err) {
           const msg = (err && err.message) ? err.message : String(err);
@@ -2213,7 +3055,7 @@
     }
   </script>
 
-    <div id="loadingOverlay" class="hidden fixed inset-0 bg-white bg-opacity-75 flex items-center justify-center z-50">
+  <div id="loadingOverlay" class="hidden fixed inset-0 bg-white bg-opacity-75 flex items-center justify-center z-50">
     <div class="bg-white p-6 rounded-lg shadow-xl text-center">
       <div class="bbai-spinner" aria-hidden="true"></div>
       <div class="text-base font-extrabold text-slate-800">Loading submissions...</div>
@@ -2222,32 +3064,33 @@
   </div>
 
   <!-- Delete Project Modal (UI only) -->
-  <div id="bbaiDeleteProjectModalOverlay" class="hidden fixed inset-0 bg-slate-900 bg-opacity-40 flex items-center justify-center z-[100]">
-    <div
-      id="bbaiDeleteProjectModal"
-      class="opacity-0 transition-opacity duration-200 ease-out w-full max-w-lg"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="bbaiDeleteProjectModalTitle"
-    >
+  <div id="bbaiDeleteProjectModalOverlay"
+    class="hidden fixed inset-0 bg-slate-900 bg-opacity-40 flex items-center justify-center z-[100]">
+    <div id="bbaiDeleteProjectModal" class="opacity-0 transition-opacity duration-200 ease-out w-full max-w-lg"
+      role="dialog" aria-modal="true" aria-labelledby="bbaiDeleteProjectModalTitle">
       <div class="bbai-card p-5 md:p-6">
         <div class="flex items-start justify-between gap-3">
           <div>
-            <div class="text-lg md:text-xl font-extrabold text-slate-800" id="bbaiDeleteProjectModalTitle">Delete Project</div>
+            <div class="text-lg md:text-xl font-extrabold text-slate-800" id="bbaiDeleteProjectModalTitle">Delete
+              Project</div>
             <div class="text-sm text-slate-500 mt-1">This action cannot be undone.</div>
           </div>
-          <button type="button" id="bbaiDeleteProjectCancelX" class="text-slate-400 hover:text-slate-700" aria-label="Close">✕</button>
+          <button type="button" id="bbaiDeleteProjectCancelX" class="text-slate-400 hover:text-slate-700"
+            aria-label="Close">✕</button>
         </div>
 
         <div class="mt-4">
           <div class="text-sm text-slate-700 font-bold">Project to delete:</div>
           <div id="bbaiDeleteProjectName" class="mt-2 text-lg font-extrabold text-red-700 break-words">—</div>
-          <div id="bbaiDeleteProjectError" class="hidden mt-3 text-sm font-bold text-red-700 bg-red-50 border border-red-200 rounded-lg p-3"></div>
+          <div id="bbaiDeleteProjectError"
+            class="hidden mt-3 text-sm font-bold text-red-700 bg-red-50 border border-red-200 rounded-lg p-3"></div>
         </div>
 
         <div class="mt-5 flex items-center justify-end gap-3">
-          <button type="button" id="bbaiDeleteProjectCancelBtn" class="bbai-btn bg-slate-200 hover:bg-slate-300 text-slate-800 px-4 py-2 rounded-lg font-bold text-sm">Cancel</button>
-          <button type="button" id="bbaiDeleteProjectConfirmBtn" class="bbai-btn bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-bold text-sm opacity-100">
+          <button type="button" id="bbaiDeleteProjectCancelBtn"
+            class="bbai-btn bg-slate-200 hover:bg-slate-300 text-slate-800 px-4 py-2 rounded-lg font-bold text-sm">Cancel</button>
+          <button type="button" id="bbaiDeleteProjectConfirmBtn"
+            class="bbai-btn bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-bold text-sm opacity-100">
             Confirm Delete
           </button>
         </div>
@@ -2256,21 +3099,19 @@
   </div>
 
   <!-- Reject Modal (UI only; replaces only Reject button workflow) -->
-  <div id="bbaiRejectModalOverlay" class="hidden fixed inset-0 bg-slate-900 bg-opacity-40 flex items-center justify-center z-[100]">
-    <div
-      id="bbaiRejectModal"
-      class="opacity-0 transition-opacity duration-200 ease-out w-full max-w-lg"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="bbaiRejectModalTitle"
-    >
+  <div id="bbaiRejectModalOverlay"
+    class="hidden fixed inset-0 bg-slate-900 bg-opacity-40 flex items-center justify-center z-[100]">
+    <div id="bbaiRejectModal" class="opacity-0 transition-opacity duration-200 ease-out w-full max-w-lg" role="dialog"
+      aria-modal="true" aria-labelledby="bbaiRejectModalTitle">
       <div class="bbai-card p-5 md:p-6">
         <div class="flex items-start justify-between gap-3">
           <div>
-            <div class="text-lg md:text-xl font-extrabold text-slate-800" id="bbaiRejectModalTitle">Reject Challenge Step</div>
+            <div class="text-lg md:text-xl font-extrabold text-slate-800" id="bbaiRejectModalTitle">Reject Challenge
+              Step</div>
             <div class="text-sm text-slate-500 mt-1">Please select the reason for rejection.</div>
           </div>
-          <button type="button" id="bbaiRejectCancelX" class="text-slate-400 hover:text-slate-700" aria-label="Close">✕</button>
+          <button type="button" id="bbaiRejectCancelX" class="text-slate-400 hover:text-slate-700"
+            aria-label="Close">✕</button>
         </div>
 
         <div class="mt-4 space-y-3">
@@ -2310,18 +3151,16 @@
 
           <div id="bbaiRejectOtherWrap" class="hidden">
             <label class="block font-bold text-sm text-slate-800 mb-2">Other reason</label>
-            <textarea
-              id="bbaiRejectOtherText"
-              class="w-full bbai-input p-3 text-sm"
-              rows="4"
-              placeholder="Type the rejection reason..."
-            ></textarea>
+            <textarea id="bbaiRejectOtherText" class="w-full bbai-input p-3 text-sm" rows="4"
+              placeholder="Type the rejection reason..."></textarea>
           </div>
         </div>
 
         <div class="mt-5 flex items-center justify-end gap-3">
-          <button type="button" id="bbaiRejectCancelBtn" class="bbai-btn bg-slate-200 hover:bg-slate-300 text-slate-800 px-4 py-2 rounded-lg font-bold text-sm">Cancel</button>
-          <button type="button" id="bbaiRejectConfirmBtn" disabled class="bbai-btn bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-bold text-sm opacity-60 cursor-not-allowed">Reject</button>
+          <button type="button" id="bbaiRejectCancelBtn"
+            class="bbai-btn bg-slate-200 hover:bg-slate-300 text-slate-800 px-4 py-2 rounded-lg font-bold text-sm">Cancel</button>
+          <button type="button" id="bbaiRejectConfirmBtn" disabled
+            class="bbai-btn bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-bold text-sm opacity-60 cursor-not-allowed">Reject</button>
         </div>
       </div>
     </div>
@@ -2341,22 +3180,1088 @@
         if (xBtn) xBtn.addEventListener('click', () => {
           if (typeof bbaiCloseRejectModal === 'function') bbaiCloseRejectModal();
         });
-      } catch (e) {}
+      } catch (e) { }
     });
   </script>
 
 
   <script>
-    (function(){
+    (function () {
       var el = document.getElementById('bbai-current-date');
-      if(!el) return;
-      try{
-        el.textContent = new Date().toLocaleDateString(undefined,{year:'numeric',month:'short',day:'2-digit'});
-      }catch(e){
+      if (!el) return;
+      try {
+        el.textContent = new Date().toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: '2-digit' });
+      } catch (e) {
         el.textContent = '—';
       }
     })();
   </script>
+
+  <!-- =========================================================
+     HSRC ID SYSTEM PREMIUM MODAL
+     ========================================================= -->
+
+  <div id="hsrcIDModal" class="hsrc-id-modal-overlay" aria-hidden="true">
+
+    <div class="hsrc-id-modal" role="dialog" aria-modal="true">
+
+      <div class="hsrc-id-modal-accent"></div>
+
+      <button type="button" class="hsrc-id-modal-close" onclick="closeHSRCIDModal()" aria-label="Close">
+        ×
+      </button>
+
+
+      <div class="hsrc-id-modal-icon-wrap">
+
+        <div id="hsrcIDModalIcon" class="hsrc-id-modal-icon approve">
+          🔐
+        </div>
+
+      </div>
+
+
+      <div class="hsrc-id-modal-content">
+
+        <h2 id="hsrcIDModalTitle" class="hsrc-id-modal-title">
+          Approve ID System Access?
+        </h2>
+
+
+        <p id="hsrcIDModalDescription" class="hsrc-id-modal-description">
+          You are about to approve access to
+          the HSRC ID System.
+        </p>
+
+
+        <div id="hsrcIDEmailCard" class="hsrc-id-email-card">
+
+          <div class="hsrc-id-email-icon">
+            👤
+          </div>
+
+          <div class="hsrc-id-email-info">
+
+            <span class="hsrc-id-email-label">
+              Access Request
+            </span>
+
+            <span id="hsrcIDModalEmail" class="hsrc-id-email">
+              —
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <div id="hsrcIDWarning" class="hsrc-id-warning">
+          The user will receive an approval email
+          with their secure ID System access link.
+        </div>
+
+
+        <div class="hsrc-id-modal-actions">
+
+          <button id="hsrcIDCancelBtn" type="button" class="hsrc-id-modal-btn cancel" onclick="closeHSRCIDModal()">
+            Cancel
+          </button>
+
+          <button id="hsrcIDConfirmBtn" type="button" class="hsrc-id-modal-btn approve">
+            ✓ Approve Access
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+    /* ============================================
+       HSRC ID SYSTEM ACCESS REQUESTS
+       ============================================ */
+
+    async function loadIDAccessRequests() {
+
+      const tbody =
+        document.getElementById("idAccessRequestsBody");
+
+      if (!tbody) return;
+
+      tbody.innerHTML = `
+        <tr>
+            <td colspan="4"
+                class="py-8 text-center text-slate-400">
+                Loading access requests...
+            </td>
+        </tr>
+    `;
+
+      try {
+
+        const response = await fetch(
+          ID_SYSTEM_WEB_APP_URL,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type":
+                "text/plain;charset=utf-8"
+            },
+            body: JSON.stringify({
+              action: "id_get_access_requests",
+              adminKey: document.getElementById("adminKey")?.value.trim() || ""
+            })
+          }
+        );
+
+        const result =
+          await response.json();
+
+        if (!result.ok) {
+          throw new Error(
+            result.error ||
+            "Unable to load access requests."
+          );
+        }
+
+        renderIDAccessRequests(
+          result.requests || []
+        );
+
+      } catch (error) {
+
+        console.error(
+          "ID Access Requests Error:",
+          error
+        );
+
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="4"
+                    class="py-8 text-center text-red-500">
+                    Unable to load access requests.
+                </td>
+            </tr>
+        `;
+      }
+    }
+
+
+    /* ============================================
+       RENDER REQUESTS
+       ============================================ */
+
+    function renderIDAccessRequests(requests) {
+
+      const tbody =
+        document.getElementById(
+          "idAccessRequestsBody"
+        );
+
+      if (!tbody) return;
+
+
+      if (!requests.length) {
+
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="4"
+                    class="py-8 text-center text-slate-400">
+                    No access requests found.
+                </td>
+            </tr>
+        `;
+
+        return;
+      }
+
+
+      tbody.innerHTML = requests.map(request => {
+
+        const email =
+          String(request.email || "");
+
+        const timestamp =
+          String(request.timestamp || "");
+
+        const status =
+          String(request.status || "PENDING")
+            .toUpperCase();
+
+
+        let statusHTML = "";
+
+        if (status === "APPROVED") {
+
+          statusHTML = `
+                <span class="inline-flex px-3 py-1
+                    rounded-full text-xs font-semibold
+                    bg-green-100 text-green-700">
+                    APPROVED
+                </span>
+            `;
+
+        } else if (status === "REJECTED") {
+
+          statusHTML = `
+                <span class="inline-flex px-3 py-1
+                    rounded-full text-xs font-semibold
+                    bg-red-100 text-red-700">
+                    REJECTED
+                </span>
+            `;
+
+        } else {
+
+          statusHTML = `
+                <span class="inline-flex px-3 py-1
+                    rounded-full text-xs font-semibold
+                    bg-yellow-100 text-yellow-700">
+                    PENDING
+                </span>
+            `;
+        }
+
+
+        let actionHTML = "—";
+
+        const safeEmail =
+          encodeURIComponent(email);
+
+
+        /* ============================================
+           PENDING
+           ============================================ */
+
+        if (status === "PENDING") {
+
+          actionHTML = `
+    <div class="flex flex-wrap gap-2">
+
+      <button
+        type="button"
+        onclick="approveIDAccess('${safeEmail}')"
+        class="px-4 py-2 rounded-lg
+               bg-green-600 text-white
+               text-xs font-semibold
+               hover:bg-green-700
+               transition">
+
+        Approve
+
+      </button>
+
+
+      <button
+        type="button"
+        onclick="rejectIDAccess('${safeEmail}')"
+        class="px-4 py-2 rounded-lg
+               bg-red-600 text-white
+               text-xs font-semibold
+               hover:bg-red-700
+               transition">
+
+        Reject
+
+      </button>
+
+
+      <button
+        type="button"
+        onclick="deleteIDAccess('${safeEmail}')"
+        class="px-4 py-2 rounded-lg
+               bg-slate-700 text-white
+               text-xs font-semibold
+               hover:bg-slate-800
+               transition">
+
+        Delete
+
+      </button>
+
+    </div>
+  `;
+
+        }
+
+
+        /* ============================================
+           APPROVED
+           ============================================ */
+
+        else if (status === "APPROVED") {
+
+          actionHTML = `
+    <div class="flex flex-wrap gap-2">
+
+      <button
+        type="button"
+        onclick="rejectIDAccess('${safeEmail}')"
+        class="px-4 py-2 rounded-lg
+               bg-red-600 text-white
+               text-xs font-semibold
+               hover:bg-red-700
+               transition">
+
+        Reject
+
+      </button>
+
+
+      <button
+        type="button"
+        onclick="deleteIDAccess('${safeEmail}')"
+        class="px-4 py-2 rounded-lg
+               bg-slate-700 text-white
+               text-xs font-semibold
+               hover:bg-slate-800
+               transition">
+
+        Delete
+
+      </button>
+
+    </div>
+  `;
+
+        }
+
+
+        /* ============================================
+           REJECTED
+           ============================================ */
+
+        else if (status === "REJECTED") {
+
+          actionHTML = `
+    <div class="flex flex-wrap gap-2">
+
+      <button
+        type="button"
+        onclick="approveIDAccess('${safeEmail}')"
+        class="px-4 py-2 rounded-lg
+               bg-green-600 text-white
+               text-xs font-semibold
+               hover:bg-green-700
+               transition">
+
+        Approve
+
+      </button>
+
+
+      <button
+        type="button"
+        onclick="deleteIDAccess('${safeEmail}')"
+        class="px-4 py-2 rounded-lg
+               bg-slate-700 text-white
+               text-xs font-semibold
+               hover:bg-slate-800
+               transition">
+
+        Delete
+
+      </button>
+
+    </div>
+  `;
+
+        }
+
+
+        return `
+            <tr class="border-b border-slate-100">
+
+                <td class="py-4 px-3 font-medium text-slate-700">
+                    ${escapeIDAccessHTML(email)}
+                </td>
+
+                <td class="py-4 px-3 text-slate-500">
+                    ${escapeIDAccessHTML(timestamp)}
+                </td>
+
+                <td class="py-4 px-3">
+                    ${statusHTML}
+                </td>
+
+                <td class="py-4 px-3">
+                    ${actionHTML}
+                </td>
+
+            </tr>
+        `;
+
+      }).join("");
+    }
+
+
+    /* ============================================
+       APPROVE ACCESS
+       ============================================ */
+
+    async function approveIDAccess(encodedEmail) {
+
+      const email =
+        decodeURIComponent(encodedEmail);
+
+      const adminKey =
+        document.getElementById("adminKey")?.value?.trim() || "";
+
+      if (!adminKey) {
+        alert("Please enter the Admin Key first.");
+        return;
+      }
+
+
+      try {
+
+        const response = await fetch(
+          ID_SYSTEM_WEB_APP_URL,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type":
+                "text/plain;charset=utf-8"
+            },
+            body: JSON.stringify({
+              action: "id_approve_access",
+              adminKey: adminKey,
+              email: email
+            })
+          }
+        );
+
+
+        const result =
+          await response.json();
+
+
+        if (!result.ok) {
+
+          throw new Error(
+            result.error ||
+            "Unable to approve access."
+          );
+        }
+
+
+        openHSRCIDModal({
+          email: email,
+          type: "success",
+          buttonType: "success",
+          icon: "✓",
+          title: "Access Approved Successfully",
+          description: "The user has been granted access to the HSRC ID System.",
+          warning: "An approval email has been sent to: " + email,
+          buttonText: "Done",
+          action: null
+        });
+
+        await loadIDAccessRequests();
+
+
+      } catch (error) {
+
+        console.error(
+          "Approve ID Access Error:",
+          error
+        );
+
+        alert(
+          error.message ||
+          "Unable to approve access."
+        );
+      }
+    }
+
+
+    /* ============================================
+       REJECT ACCESS
+       ============================================ */
+
+    async function rejectIDAccess(encodedEmail) {
+
+      const email =
+        decodeURIComponent(encodedEmail);
+
+      const adminKey =
+        document.getElementById("adminKey")?.value?.trim() || "";
+
+      if (!adminKey) {
+        alert("Please enter the Admin Key first.");
+        return;
+      }
+
+      try {
+
+        const response = await fetch(
+          ID_SYSTEM_WEB_APP_URL,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type":
+                "text/plain;charset=utf-8"
+            },
+            body: JSON.stringify({
+              action: "id_reject_access",
+              adminKey: adminKey,
+              email: email
+            })
+          }
+        );
+
+
+        const result =
+          await response.json();
+
+
+        if (!result.ok) {
+
+          throw new Error(
+            result.error ||
+            "Unable to reject access."
+          );
+        }
+
+
+        openHSRCIDModal({
+          email: email,
+          type: "reject",
+          buttonType: "reject",
+          icon: "✓",
+          title: "Access Request Rejected",
+          description: "The user's request for HSRC ID System access has been rejected.",
+          warning: "No ID System access has been granted to this email address.",
+          buttonText: "Done",
+          action: null
+        });
+
+        await loadIDAccessRequests();
+
+
+      } catch (error) {
+
+        console.error(
+          "Reject ID Access Error:",
+          error
+        );
+
+        alert(
+          error.message ||
+          "Unable to reject access."
+        );
+      }
+    }
+
+    /* ============================================
+   DELETE ACCESS REQUEST
+   ============================================ */
+
+    async function deleteIDAccess(encodedEmail) {
+
+      const email =
+        decodeURIComponent(encodedEmail);
+
+      const adminKey =
+        document
+          .getElementById("adminKey")
+          ?.value
+          ?.trim() || "";
+
+
+      if (!adminKey) {
+
+        alert(
+          "Please enter the Admin Key first."
+        );
+
+        return;
+      }
+
+
+      openHSRCIDModal({
+
+        type: "delete",
+
+        icon: "🗑️",
+
+        title:
+          "Delete Access Request?",
+
+        description:
+          "This will permanently remove this access request from the HSRC ID System.",
+
+        email:
+          email,
+
+        warning:
+          "This action cannot be undone.",
+
+        buttonType:
+          "delete",
+
+        buttonText:
+          "Delete Request",
+
+        action:
+          async function () {
+
+            try {
+
+              const response =
+                await fetch(
+                  ID_SYSTEM_WEB_APP_URL,
+                  {
+                    method: "POST",
+
+                    headers: {
+                      "Content-Type":
+                        "text/plain;charset=utf-8"
+                    },
+
+                    body:
+                      JSON.stringify({
+
+                        action:
+                          "id_delete_access",
+
+                        adminKey:
+                          adminKey,
+
+                        email:
+                          email
+
+                      })
+                  }
+                );
+
+
+              const result =
+                await response.json();
+
+
+              if (!result.ok) {
+
+                throw new Error(
+                  result.error ||
+                  "Unable to delete access request."
+                );
+
+              }
+
+
+              closeHSRCIDModal();
+
+
+              await loadIDAccessRequests();
+
+
+            } catch (error) {
+
+              console.error(
+                "Delete ID Access Error:",
+                error
+              );
+
+
+              alert(
+                error.message ||
+                "Unable to delete access request."
+              );
+
+            }
+
+          }
+
+      });
+
+    }
+
+
+    /* ============================================
+       ESCAPE HTML
+       ============================================ */
+
+    function escapeIDAccessHTML(value) {
+
+      return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+
+    /* ============================================
+       REFRESH BUTTON
+       ============================================ */
+
+    document
+      .getElementById("refreshIDAccessRequests")
+      ?.addEventListener(
+        "click",
+        loadIDAccessRequests
+      );
+
+
+    /* ============================================
+       INITIAL LOAD
+       ============================================ */
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      () => {
+        loadIDAccessRequests();
+      }
+    );
+
+    /* =========================================================
+ HSRC PREMIUM ID SYSTEM MODAL CONTROLLER
+ ========================================================= */
+
+    let hsrcIDModalAction = null;
+    let hsrcIDModalEmail = "";
+
+
+    /* OPEN MODAL */
+
+    function openHSRCIDModal(options = {}) {
+
+      const modal =
+        document.getElementById("hsrcIDModal");
+
+      const icon =
+        document.getElementById("hsrcIDModalIcon");
+
+      const title =
+        document.getElementById("hsrcIDModalTitle");
+
+      const description =
+        document.getElementById("hsrcIDModalDescription");
+
+      const email =
+        document.getElementById("hsrcIDModalEmail");
+
+      const warning =
+        document.getElementById("hsrcIDWarning");
+
+      const confirmBtn =
+        document.getElementById("hsrcIDConfirmBtn");
+
+
+      if (!modal) return;
+
+
+      hsrcIDModalAction =
+        options.action || null;
+
+      hsrcIDModalEmail =
+        String(options.email || "");
+
+
+      if (title) {
+
+        title.textContent =
+          options.title ||
+          "Confirm Action";
+
+      }
+
+
+      if (description) {
+
+        description.textContent =
+          options.description ||
+          "";
+
+      }
+
+
+      if (email) {
+
+        email.textContent =
+          hsrcIDModalEmail;
+
+      }
+
+
+      if (warning) {
+
+        warning.textContent =
+          options.warning ||
+          "";
+
+        warning.style.display =
+          options.warning
+            ? "block"
+            : "none";
+
+      }
+
+
+      if (icon) {
+
+        icon.className =
+          "hsrc-id-modal-icon " +
+          (options.type || "approve");
+
+        icon.textContent =
+          options.icon ||
+          "🔐";
+
+      }
+
+
+      if (confirmBtn) {
+
+        confirmBtn.className =
+          "hsrc-id-modal-btn " +
+          (options.buttonType || "approve");
+
+        confirmBtn.innerHTML =
+          options.buttonText ||
+          "Confirm";
+
+        confirmBtn.disabled = false;
+
+      }
+
+
+      modal.classList.add("show");
+
+      modal.setAttribute(
+        "aria-hidden",
+        "false"
+      );
+
+    }
+
+
+    /* CLOSE MODAL */
+
+    function closeHSRCIDModal() {
+
+      const modal =
+        document.getElementById("hsrcIDModal");
+
+      if (!modal) return;
+
+      modal.classList.remove("show");
+
+      modal.setAttribute(
+        "aria-hidden",
+        "true"
+      );
+
+      hsrcIDModalAction = null;
+      hsrcIDModalEmail = "";
+
+    }
+
+
+    /* =========================================================
+   OPEN APPROVE MODAL
+   ========================================================= */
+
+    function openHSRCApproveModal(encodedEmail) {
+
+      const email =
+        decodeURIComponent(encodedEmail);
+
+      openHSRCIDModal({
+
+        email: email,
+
+        type: "approve",
+
+        buttonType: "approve",
+
+        icon: "🔐",
+
+        title:
+          "Approve ID System Access?",
+
+        description:
+          "You are about to approve access to the HSRC ID System.",
+
+        warning:
+          "The user will receive an approval email with their secure ID System access link.",
+
+        buttonText:
+          "✓ Approve Access",
+
+        action:
+          async function () {
+
+            closeHSRCIDModal();
+
+            await approveIDAccess(
+              encodedEmail
+            );
+
+          }
+
+      });
+
+    }
+
+
+    /* =========================================================
+       OPEN REJECT MODAL
+       ========================================================= */
+
+    function openHSRCRejectModal(encodedEmail) {
+
+      const email =
+        decodeURIComponent(encodedEmail);
+
+      openHSRCIDModal({
+
+        email: email,
+
+        type: "reject",
+
+        buttonType: "reject",
+
+        icon: "⚠️",
+
+        title:
+          "Reject ID System Access?",
+
+        description:
+          "You are about to reject this user's request for HSRC ID System access.",
+
+        warning:
+          "The user will not be granted access to the HSRC ID System.",
+
+        buttonText:
+          "Reject Access",
+
+        action:
+          async function () {
+
+            closeHSRCIDModal();
+
+            await rejectIDAccess(
+              encodedEmail
+            );
+
+          }
+
+      });
+
+    }
+
+    /* CONFIRM BUTTON */
+
+    document
+      .getElementById("hsrcIDConfirmBtn")
+      ?.addEventListener(
+        "click",
+        async function () {
+
+          if (
+            typeof hsrcIDModalAction !==
+            "function"
+          ) {
+            closeHSRCIDModal();
+            return;
+          }
+
+
+          const button = this;
+
+          const originalText =
+            button.innerHTML;
+
+
+          button.disabled = true;
+
+          button.innerHTML = `
+        <span
+          style="
+            display:inline-flex;
+            align-items:center;
+            justify-content:center;
+            gap:8px;
+          "
+        >
+
+          <span class="hsrc-id-spinner"></span>
+
+          Processing...
+
+        </span>
+      `;
+
+
+          try {
+
+            await hsrcIDModalAction();
+
+          } catch (error) {
+
+            console.error(
+              "HSRC ID Modal Action Error:",
+              error
+            );
+
+          } finally {
+
+            button.disabled = false;
+
+            button.innerHTML =
+              originalText;
+
+          }
+
+        }
+      );
+
+
+    /* CLOSE WHEN CLICKING OUTSIDE */
+
+    document
+      .getElementById("hsrcIDModal")
+      ?.addEventListener(
+        "click",
+        function (event) {
+
+          if (
+            event.target === this
+          ) {
+
+            closeHSRCIDModal();
+
+          }
+
+        }
+      );
+
+
+    /* ESC KEY */
+
+    document.addEventListener(
+      "keydown",
+      function (event) {
+
+        if (
+          event.key === "Escape"
+        ) {
+
+          closeHSRCIDModal();
+
+        }
+
+      }
+    );
+
+  </script>
+
 </body>
 
 </html>
