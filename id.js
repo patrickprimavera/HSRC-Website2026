@@ -2623,223 +2623,506 @@ function saveApplicantDetails() {
 
 function showPersonalInformation() {
 
-    const modalContent = document.querySelector("#idModal .p-8");
+    const modalContent =
+        document.querySelector("#idModal .p-8");
 
     modalContent.innerHTML = `
+
+        <!-- =========================================
+             STEP PROGRESS
+             ========================================= -->
 
         <div class="mb-6">
 
             <div class="flex justify-between text-sm text-slate-500 mb-2">
+
                 <span>Step 5 of 8</span>
+
                 <span>63%</span>
+
             </div>
 
             <div class="w-full bg-slate-200 rounded-full h-2">
-                <div class="bg-[#024746] h-2 rounded-full"
-                     style="width:63%">
+
+                <div
+                    class="bg-[#024746] h-2 rounded-full"
+                    style="width:63%">
                 </div>
+
             </div>
 
         </div>
 
+
+        <!-- =========================================
+             TITLE
+             ========================================= -->
+
         <h3 class="text-2xl font-bold text-[#024746] mb-2">
+
             Personal Information
+
         </h3>
 
         <p class="text-slate-500 mb-6">
-            Complete your personal and company information.
+
+            Please provide your personal and company information.
+
         </p>
+
+
+        <!-- =========================================
+             PERSONAL INFORMATION
+             ========================================= -->
 
         <div class="space-y-5">
 
-            <input id="fullName"
-                type="text"
-                placeholder="Full Name *"
-                class="w-full border rounded-xl px-4 py-3">
 
-            <textarea id="address"
-                placeholder="Full Home Address *"
-                class="w-full border rounded-xl px-4 py-3"></textarea>
-
-            <input id="idSystemBirthdate"
-    name="birthdate"
-    type="date"
-    class="w-full border rounded-xl px-4 py-3">
-
-            <input id="contactNumber"
-                type="text"
-                placeholder="Contact Number *"
-                class="w-full border rounded-xl px-4 py-3">
-
-            <input id="idSystemEmail"
-                type="email"
-                placeholder="Email Address *"
-                class="w-full border rounded-xl px-4 py-3">
-
-            <hr>
-
-            <input id="sss"
-                type="text"
-                placeholder="SSS Number"
-                class="w-full border rounded-xl px-4 py-3">
-
-            <input id="tin"
-                type="text"
-                placeholder="TIN Number"
-                class="w-full border rounded-xl px-4 py-3">
-
-            <input id="pagibig"
-                type="text"
-                placeholder="Pag-IBIG Number"
-                class="w-full border rounded-xl px-4 py-3">
-
-            <input id="philhealth"
-                type="text"
-                placeholder="PhilHealth Number"
-                class="w-full border rounded-xl px-4 py-3">
-
-            <hr>
-
-            <input id="teamSalesHead"
-                type="text"
-                placeholder="Team Name / Sales Head *"
-                class="w-full border rounded-xl px-4 py-3">
-
-            <div class="pt-2">
-
-    <p class="text-sm font-semibold text-slate-700 mb-3">
-        IN CASE OF EMERGENCY PLEASE CONTACT THIS PERSON
-    </p>
-
-    <input
-        id="emergencyName"
-        type="text"
-        placeholder="Emergency Contact Name *"
-        class="w-full border rounded-xl px-4 py-3 mb-3">
-
-    <input
-        id="emergencyContact"
-        type="text"
-        placeholder="Emergency Contact Number *"
-        class="w-full border rounded-xl px-4 py-3">
-
-</div>
-
-        </div>
-
-        <div class="space-y-2 mt-5">
-
-    <label class="block text-sm font-semibold text-slate-700">
-        Branch <span class="text-red-500">*</span>
-    </label>
-
-    <select
-        id="branch"
-        class="w-full border rounded-xl px-4 py-3 bg-white focus:outline-none focus:ring-2 focus:ring-[#024746] focus:border-[#024746]"
-        required>
-
-        <option value="">Select Branch</option>
-        <option value="East Branch">East Branch</option>
-        <option value="North Branch">North Branch</option>
-        <option value="South Branch">South Branch</option>
-        <option value="Southwest Branch">Southwest Branch</option>
-
-    </select>
-
-</div>
-
-<!-- =========================================
-     VALID ID UPLOAD — NEW AGENT ONLY
-     ========================================= -->
-
-<div
-    id="validIdUploadSection"
-    class="hidden mt-5">
-
-    <div
-        class="border-2 border-dashed
-               border-slate-300
-               rounded-2xl
-               p-5
-               bg-slate-50">
-
-        <div class="flex items-start gap-3">
-
-            <div
-                class="w-10 h-10 rounded-xl
-                       bg-[#024746]/10
-                       flex items-center justify-center
-                       flex-shrink-0">
-
-                <span class="text-xl">🪪</span>
-
-            </div>
+            <!-- FULL NAME -->
 
             <div>
 
-                <h4 class="font-bold text-[#024746]">
-                    Upload Valid ID
-                </h4>
+                <label
+                    for="fullName"
+                    class="block text-sm font-semibold text-slate-700 mb-2">
 
-                <p class="text-sm text-slate-500 mt-1">
-                    Required for New Agent only.
+                    Full Name
+                    <span class="text-red-500">*</span>
+
+                </label>
+
+                <input
+                    id="fullName"
+                    type="text"
+                    placeholder="Enter your full name"
+                    class="w-full border rounded-xl px-4 py-3">
+
+            </div>
+
+
+            <!-- HOME ADDRESS -->
+
+            <div>
+
+                <label
+                    for="address"
+                    class="block text-sm font-semibold text-slate-700 mb-2">
+
+                    Full Home Address
+                    <span class="text-red-500">*</span>
+
+                </label>
+
+                <textarea
+                    id="address"
+                    placeholder="Enter your complete home address"
+                    class="w-full border rounded-xl px-4 py-3">
+                </textarea>
+
+            </div>
+
+
+            <!-- DATE OF BIRTH -->
+
+            <div>
+
+                <label
+                    for="idSystemBirthdate"
+                    class="block text-sm font-semibold text-slate-700 mb-2">
+
+                    Date of Birth
+                    <span class="text-red-500">*</span>
+
+                </label>
+
+                <input
+                    id="idSystemBirthdate"
+                    name="birthdate"
+                    type="date"
+                    class="w-full border rounded-xl px-4 py-3">
+
+            </div>
+
+
+            <!-- CONTACT NUMBER -->
+
+            <div>
+
+                <label
+                    for="contactNumber"
+                    class="block text-sm font-semibold text-slate-700 mb-2">
+
+                    Contact Number
+                    <span class="text-red-500">*</span>
+
+                </label>
+
+                <input
+                    id="contactNumber"
+                    type="text"
+                    placeholder="Enter your active contact number"
+                    class="w-full border rounded-xl px-4 py-3">
+
+            </div>
+
+
+            <!-- EMAIL ADDRESS -->
+
+            <div>
+
+                <label
+                    for="idSystemEmail"
+                    class="block text-sm font-semibold text-slate-700 mb-2">
+
+                    Email Address
+                    <span class="text-red-500">*</span>
+
+                </label>
+
+                <input
+                    id="idSystemEmail"
+                    type="email"
+                    placeholder="Enter your email address"
+                    class="w-full border rounded-xl px-4 py-3">
+
+            </div>
+
+
+            <hr>
+
+
+            <!-- SSS -->
+
+            <div>
+
+                <label
+                    for="sss"
+                    class="block text-sm font-semibold text-slate-700 mb-2">
+
+                    SSS Number
+
+                </label>
+
+                <input
+                    id="sss"
+                    type="text"
+                    placeholder="Enter your SSS number"
+                    class="w-full border rounded-xl px-4 py-3">
+
+            </div>
+
+
+            <!-- TIN -->
+
+            <div>
+
+                <label
+                    for="tin"
+                    class="block text-sm font-semibold text-slate-700 mb-2">
+
+                    TIN Number
+
+                </label>
+
+                <input
+                    id="tin"
+                    type="text"
+                    placeholder="Enter your TIN number"
+                    class="w-full border rounded-xl px-4 py-3">
+
+            </div>
+
+
+            <!-- PAG-IBIG -->
+
+            <div>
+
+                <label
+                    for="pagibig"
+                    class="block text-sm font-semibold text-slate-700 mb-2">
+
+                    Pag-IBIG Number
+
+                </label>
+
+                <input
+                    id="pagibig"
+                    type="text"
+                    placeholder="Enter your Pag-IBIG number"
+                    class="w-full border rounded-xl px-4 py-3">
+
+            </div>
+
+
+            <!-- PHILHEALTH -->
+
+            <div>
+
+                <label
+                    for="philhealth"
+                    class="block text-sm font-semibold text-slate-700 mb-2">
+
+                    PhilHealth Number
+
+                </label>
+
+                <input
+                    id="philhealth"
+                    type="text"
+                    placeholder="Enter your PhilHealth number"
+                    class="w-full border rounded-xl px-4 py-3">
+
+            </div>
+
+
+            <hr>
+
+
+            <!-- TEAM / SALES HEAD -->
+
+            <div>
+
+                <label
+                    for="teamSalesHead"
+                    class="block text-sm font-semibold text-slate-700 mb-2">
+
+                    Team Name / Sales Head
+                    <span class="text-red-500">*</span>
+
+                </label>
+
+                <input
+                    id="teamSalesHead"
+                    type="text"
+                    placeholder="Enter your Team Name or Sales Head"
+                    class="w-full border rounded-xl px-4 py-3">
+
+            </div>
+
+
+            <!-- =========================================
+                 EMERGENCY CONTACT
+                 ========================================= -->
+
+            <div class="pt-2">
+
+                <p class="text-sm font-semibold text-[#024746] mb-1">
+
+                    Emergency Contact
+
+                </p>
+
+                <p class="text-xs text-slate-500 mb-4">
+
+                    Please provide someone we can contact in case of emergency.
+
+                </p>
+
+
+                <!-- EMERGENCY NAME -->
+
+                <label
+                    for="emergencyName"
+                    class="block text-sm font-semibold text-slate-700 mb-2">
+
+                    Emergency Contact Name
+                    <span class="text-red-500">*</span>
+
+                </label>
+
+                <input
+                    id="emergencyName"
+                    type="text"
+                    placeholder="Enter emergency contact name"
+                    class="w-full border rounded-xl px-4 py-3 mb-4">
+
+
+                <!-- EMERGENCY NUMBER -->
+
+                <label
+                    for="emergencyContact"
+                    class="block text-sm font-semibold text-slate-700 mb-2">
+
+                    Emergency Contact Number
+                    <span class="text-red-500">*</span>
+
+                </label>
+
+                <input
+                    id="emergencyContact"
+                    type="text"
+                    placeholder="Enter emergency contact number"
+                    class="w-full border rounded-xl px-4 py-3">
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================================
+             BRANCH
+             ========================================= -->
+
+        <div class="space-y-2 mt-5">
+
+            <label
+                for="branch"
+                class="block text-sm font-semibold text-slate-700">
+
+                Branch
+                <span class="text-red-500">*</span>
+
+            </label>
+
+            <select
+                id="branch"
+                class="w-full border rounded-xl px-4 py-3 bg-white
+                       focus:outline-none focus:ring-2
+                       focus:ring-[#024746]
+                       focus:border-[#024746]"
+                required>
+
+                <option value="">
+                    Select your branch
+                </option>
+
+                <option value="East Branch">
+                    East Branch
+                </option>
+
+                <option value="North Branch">
+                    North Branch
+                </option>
+
+                <option value="South Branch">
+                    South Branch
+                </option>
+
+                <option value="Southwest Branch">
+                    Southwest Branch
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- =========================================
+             VALID ID — NEW AGENT ONLY
+             ========================================= -->
+
+        <div
+            id="validIdUploadSection"
+            class="hidden mt-5">
+
+            <div
+                class="border-2 border-dashed
+                       border-slate-300
+                       rounded-2xl
+                       p-5
+                       bg-slate-50">
+
+                <div class="flex items-start gap-3">
+
+                    <div
+                        class="w-10 h-10 rounded-xl
+                               bg-[#024746]/10
+                               flex items-center justify-center
+                               flex-shrink-0">
+
+                        <span class="text-xl">
+                            🪪
+                        </span>
+
+                    </div>
+
+                    <div>
+
+                        <h4 class="font-bold text-[#024746]">
+
+                            Valid ID
+                            <span class="text-red-500">*</span>
+
+                        </h4>
+
+                        <p class="text-sm text-slate-500 mt-1">
+
+                            Required for New Agent only.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <input
+                    id="validIdInput"
+                    type="file"
+                    accept="image/jpeg,image/png,application/pdf"
+                    class="hidden">
+
+
+                <button
+                    id="chooseValidIdBtn"
+                    type="button"
+                    class="w-full mt-4
+                           bg-white
+                           border border-[#024746]
+                           text-[#024746]
+                           hover:bg-[#024746]
+                           hover:text-white
+                           px-5 py-3
+                           rounded-xl
+                           font-semibold">
+
+                    📎 Choose Valid ID
+
+                </button>
+
+
+                <div
+                    id="validIdPreview"
+                    class="hidden mt-4">
+                </div>
+
+
+                <p
+                    class="text-xs text-slate-400
+                           mt-3 text-center">
+
+                    JPG, JPEG, PNG or PDF · Maximum 5MB
+
                 </p>
 
             </div>
 
         </div>
 
-        <input
-            id="validIdInput"
-            type="file"
-            accept="image/jpeg,image/png,application/pdf"
-            class="hidden">
 
-        <button
-            id="chooseValidIdBtn"
-            type="button"
-            class="w-full mt-4
-                   bg-white
-                   border border-[#024746]
-                   text-[#024746]
-                   hover:bg-[#024746]
-                   hover:text-white
-                   px-5 py-3
-                   rounded-xl
-                   font-semibold">
-
-            📎 Choose Valid ID
-
-        </button>
-
-        <div
-            id="validIdPreview"
-            class="hidden mt-4">
-        </div>
-
-        <p
-            class="text-xs text-slate-400
-                   mt-3 text-center">
-
-            JPG, JPEG, PNG or PDF · Maximum 5MB
-
-        </p>
-
-    </div>
-
-</div>
+        <!-- =========================================
+             NAVIGATION
+             ========================================= -->
 
         <div class="flex justify-between mt-8">
 
-            <button id="backDetails"
+            <button
+                id="backDetails"
+                type="button"
                 class="px-6 py-3 border rounded-xl">
 
                 ← Back
 
             </button>
 
-            <button id="nextPhoto"
-                class="bg-[#024746] text-white px-8 py-3 rounded-xl">
+
+            <button
+                id="nextPhoto"
+                type="button"
+                class="bg-[#024746]
+                       text-white
+                       px-8 py-3
+                       rounded-xl">
 
                 Next →
 
@@ -2849,19 +3132,34 @@ function showPersonalInformation() {
 
     `;
 
+
+    /* =============================================
+       BACK BUTTON
+       ============================================= */
+
     document
         .getElementById("backDetails")
-        .addEventListener("click", () => showDetailsStep(true));
-
-    document
-        .getElementById("nextPhoto")
-        .addEventListener("click", savePersonalInformation);
-
+        .addEventListener(
+            "click",
+            () => showDetailsStep(true)
+        );
 
 
     /* =============================================
-   VALID ID — NEW AGENT ONLY
-   ============================================= */
+       NEXT BUTTON
+       ============================================= */
+
+    document
+        .getElementById("nextPhoto")
+        .addEventListener(
+            "click",
+            savePersonalInformation
+        );
+
+
+    /* =============================================
+       VALID ID — NEW AGENT ONLY
+       ============================================= */
 
     const validIdSection =
         document.getElementById(
@@ -2906,7 +3204,7 @@ function showPersonalInformation() {
 
 
     /* =============================================
-       CHOOSE FILE BUTTON
+       CHOOSE FILE
        ============================================= */
 
     chooseValidIdBtn?.addEventListener(
@@ -2933,9 +3231,9 @@ function showPersonalInformation() {
             if (!file) return;
 
 
-            /* -----------------------------------------
+            /* =========================================
                ALLOWED FILE TYPES
-               ----------------------------------------- */
+               ========================================= */
 
             const allowedTypes = [
                 "image/jpeg",
@@ -2963,9 +3261,9 @@ function showPersonalInformation() {
             }
 
 
-            /* -----------------------------------------
+            /* =========================================
                MAXIMUM FILE SIZE — 5MB
-               ----------------------------------------- */
+               ========================================= */
 
             if (
                 file.size >
@@ -2985,9 +3283,9 @@ function showPersonalInformation() {
             }
 
 
-            /* -----------------------------------------
+            /* =========================================
                READ FILE
-               ----------------------------------------- */
+               ========================================= */
 
             const reader =
                 new FileReader();
@@ -3000,10 +3298,6 @@ function showPersonalInformation() {
                         event.target.result;
 
 
-                    /* ---------------------------------
-                       PREVIEW
-                       --------------------------------- */
-
                     if (!validIdPreview) return;
 
 
@@ -3011,6 +3305,10 @@ function showPersonalInformation() {
                         "hidden"
                     );
 
+
+                    /* =================================
+                       PDF PREVIEW
+                       ================================= */
 
                     if (
                         file.type ===
@@ -3037,9 +3335,7 @@ function showPersonalInformation() {
                                                text-slate-700
                                                truncate">
 
-                                        ${escapeHTML(
-                            file.name
-                        )}
+                                        ${escapeHTML(file.name)}
 
                                     </p>
 
@@ -3058,7 +3354,14 @@ function showPersonalInformation() {
 
                         `;
 
-                    } else {
+                    }
+
+
+                    /* =================================
+                       IMAGE PREVIEW
+                       ================================= */
+
+                    else {
 
                         validIdPreview.innerHTML = `
 
