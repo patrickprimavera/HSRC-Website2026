@@ -3399,7 +3399,7 @@ ${applicationData.license === "none"
 
 }
 
-const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxxTJWUBOCvDzTeVYxh34NinD-HH2BQU9ckCD24BZ_V2twqKqaffGjQDagx-XZ9ypzA/exec";
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyEcWJ_Di9FzfLJrTgpeFOD7CQby2ATwK0RrbRLS-VzaU19w_ryDqiceAmAAoc5t8cS/exec";
 
 async function submitApplication() {
 
