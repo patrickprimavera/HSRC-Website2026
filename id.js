@@ -27,7 +27,6 @@ let applicationData = {
 
     classification: "",
     existingIdNumber: "",
-    validId: "",
     branch: "",
 
     license: "",
@@ -1341,42 +1340,24 @@ function closeIDModal() {
 
 function showClassificationStep() {
 
-    const modalContent =
-        document.querySelector("#idModal .p-8");
-
+    const modalContent = document.querySelector("#idModal .p-8");
 
     modalContent.innerHTML = `
-
-        <!-- =========================================
-             STEP PROGRESS
-             ========================================= -->
 
         <div class="mb-6">
 
             <div class="flex justify-between text-sm text-slate-500 mb-2">
-
                 <span>Step 1 of 8</span>
-
                 <span>12%</span>
-
             </div>
-
 
             <div class="w-full bg-slate-200 rounded-full h-2">
 
-                <div
-                    class="bg-[#024746] h-2 rounded-full"
-                    style="width:12%">
-                </div>
+                <div class="bg-[#024746] h-2 rounded-full" style="width:12%"></div>
 
             </div>
 
         </div>
-
-
-        <!-- =========================================
-             TITLE
-             ========================================= -->
 
         <h3 class="text-2xl font-bold text-[#024746] mb-2">
 
@@ -1384,224 +1365,71 @@ function showClassificationStep() {
 
         </h3>
 
-
         <p class="text-slate-500 mb-6">
 
             Please select your classification.
 
         </p>
 
-
-        <!-- =========================================
-             CLASSIFICATION OPTIONS
-             ========================================= -->
-
         <div class="space-y-4">
 
+            <label class="border rounded-xl p-4 flex items-center gap-3 cursor-pointer hover:border-[#024746]">
 
-            <!-- NEW AGENT -->
+                <input type="radio" name="classification" value="new">
 
-            <label
-                class="border rounded-xl p-4 flex items-center gap-3
-                       cursor-pointer hover:border-[#024746]">
-
-                <input
-                    type="radio"
-                    name="classification"
-                    value="new">
-
-                <span class="font-medium">
-
-                    New Agent
-
-                </span>
+                <span class="font-medium">New Agent</span>
 
             </label>
 
+            <label class="border rounded-xl p-4 flex items-center gap-3 cursor-pointer hover:border-[#024746]">
 
-            <!-- OLD AGENT -->
+                <input type="radio" name="classification" value="old">
 
-            <label
-                class="border rounded-xl p-4 flex items-center gap-3
-                       cursor-pointer hover:border-[#024746]">
-
-                <input
-                    type="radio"
-                    name="classification"
-                    value="old">
-
-                <span class="font-medium">
-
-                    Old Agent
-
-                </span>
+                <span class="font-medium">Old Agent</span>
 
             </label>
 
+            <label class="border rounded-xl p-4 flex items-center gap-3 cursor-pointer hover:border-[#024746]">
 
-            <!-- FOR RENEWAL -->
+                <input type="radio" name="classification" value="renewal">
 
-            <label
-                class="border rounded-xl p-4 flex items-center gap-3
-                       cursor-pointer hover:border-[#024746]">
-
-                <input
-                    type="radio"
-                    name="classification"
-                    value="renewal">
-
-                <span class="font-medium">
-
-                    For Renewal
-
-                </span>
+                <span class="font-medium">For Renewal</span>
 
             </label>
-
 
         </div>
-
-
-        <!-- =========================================
-             NAVIGATION BUTTONS
-             ========================================= -->
 
         <div class="flex justify-between mt-8">
 
+    <button
+        id="classificationBack"
+        type="button"
+        class="px-6 py-3 rounded-xl border">
 
-            <button
-                id="classificationBack"
-                type="button"
-                class="px-6 py-3 rounded-xl border">
+        ← Back
 
-                ← Back
+    </button>
 
-            </button>
+    <button
+        id="classificationNext"
+        type="button"
+        class="bg-[#024746] hover:bg-[#03635f] text-white px-8 py-3 rounded-xl font-semibold">
 
+        Next →
 
-            <button
-                id="classificationNext"
-                type="button"
-                class="bg-[#024746]
-                       hover:bg-[#03635f]
-                       text-white
-                       px-8 py-3
-                       rounded-xl
-                       font-semibold">
+    </button>
 
-                Next →
-
-            </button>
-
-
-        </div>
+</div>
 
     `;
 
-
-    /* =============================================
-       CLASSIFICATION INPUTS
-       ============================================= */
-
-    const classificationInputs =
-        document.querySelectorAll(
-            'input[name="classification"]'
-        );
-
-
-    /* =============================================
-       CLASSIFICATION CHANGE
-       ============================================= */
-
-    classificationInputs.forEach(
-        input => {
-
-            input.addEventListener(
-                "change",
-                function () {
-
-                    applicationData.classification =
-                        this.value;
-
-                }
-            );
-
-        }
-    );
-
-
-    /* =============================================
-       BACK BUTTON
-       ============================================= */
-
     document
         .getElementById("classificationBack")
-        ?.addEventListener(
-            "click",
-            showIDWelcomeScreen
-        );
-
-
-    /* =============================================
-       NEXT BUTTON
-       ============================================= */
+        .addEventListener("click", showIDWelcomeScreen);
 
     document
         .getElementById("classificationNext")
-        ?.addEventListener(
-            "click",
-            function () {
-
-
-                /* =================================
-                   CLASSIFICATION REQUIRED
-                   ================================= */
-
-                if (
-                    !applicationData.classification
-                ) {
-
-                    alert(
-                        "Please select your classification."
-                    );
-
-                    return;
-
-                }
-
-
-                /* =================================
-                   GO TO STEP 2
-                   ================================= */
-
-                showLicenseStep();
-
-            }
-        );
-
-
-    /* =============================================
-       RESTORE PREVIOUS SELECTION
-       ============================================= */
-
-    if (
-        applicationData.classification
-    ) {
-
-        const savedClassification =
-            document.querySelector(
-                `input[name="classification"][value="${applicationData.classification}"]`
-            );
-
-
-        if (savedClassification) {
-
-            savedClassification.checked =
-                true;
-
-        }
-
-    }
+        .addEventListener("click", showLicenseStep);
 
 }
 
@@ -2623,506 +2451,142 @@ function saveApplicantDetails() {
 
 function showPersonalInformation() {
 
-    const modalContent =
-        document.querySelector("#idModal .p-8");
+    const modalContent = document.querySelector("#idModal .p-8");
 
     modalContent.innerHTML = `
-
-        <!-- =========================================
-             STEP PROGRESS
-             ========================================= -->
 
         <div class="mb-6">
 
             <div class="flex justify-between text-sm text-slate-500 mb-2">
-
                 <span>Step 5 of 8</span>
-
                 <span>63%</span>
-
             </div>
 
             <div class="w-full bg-slate-200 rounded-full h-2">
-
-                <div
-                    class="bg-[#024746] h-2 rounded-full"
-                    style="width:63%">
+                <div class="bg-[#024746] h-2 rounded-full"
+                     style="width:63%">
                 </div>
-
             </div>
 
         </div>
 
-
-        <!-- =========================================
-             TITLE
-             ========================================= -->
-
         <h3 class="text-2xl font-bold text-[#024746] mb-2">
-
             Personal Information
-
         </h3>
 
         <p class="text-slate-500 mb-6">
-
-            Please provide your personal and company information.
-
+            Complete your personal and company information.
         </p>
-
-
-        <!-- =========================================
-             PERSONAL INFORMATION
-             ========================================= -->
 
         <div class="space-y-5">
 
+            <input id="fullName"
+                type="text"
+                placeholder="Full Name *"
+                class="w-full border rounded-xl px-4 py-3">
 
-            <!-- FULL NAME -->
+            <textarea id="address"
+                placeholder="Full Home Address *"
+                class="w-full border rounded-xl px-4 py-3"></textarea>
 
-            <div>
+            <input id="idSystemBirthdate"
+    name="birthdate"
+    type="date"
+    class="w-full border rounded-xl px-4 py-3">
 
-                <label
-                    for="fullName"
-                    class="block text-sm font-semibold text-slate-700 mb-2">
+            <input id="contactNumber"
+                type="text"
+                placeholder="Contact Number *"
+                class="w-full border rounded-xl px-4 py-3">
 
-                    Full Name
-                    <span class="text-red-500">*</span>
-
-                </label>
-
-                <input
-                    id="fullName"
-                    type="text"
-                    placeholder="Enter your full name"
-                    class="w-full border rounded-xl px-4 py-3">
-
-            </div>
-
-
-            <!-- HOME ADDRESS -->
-
-            <div>
-
-                <label
-                    for="address"
-                    class="block text-sm font-semibold text-slate-700 mb-2">
-
-                    Full Home Address
-                    <span class="text-red-500">*</span>
-
-                </label>
-
-                <textarea
-                    id="address"
-                    placeholder="Enter your complete home address"
-                    class="w-full border rounded-xl px-4 py-3">
-                </textarea>
-
-            </div>
-
-
-            <!-- DATE OF BIRTH -->
-
-            <div>
-
-                <label
-                    for="idSystemBirthdate"
-                    class="block text-sm font-semibold text-slate-700 mb-2">
-
-                    Date of Birth
-                    <span class="text-red-500">*</span>
-
-                </label>
-
-                <input
-                    id="idSystemBirthdate"
-                    name="birthdate"
-                    type="date"
-                    class="w-full border rounded-xl px-4 py-3">
-
-            </div>
-
-
-            <!-- CONTACT NUMBER -->
-
-            <div>
-
-                <label
-                    for="contactNumber"
-                    class="block text-sm font-semibold text-slate-700 mb-2">
-
-                    Contact Number
-                    <span class="text-red-500">*</span>
-
-                </label>
-
-                <input
-                    id="contactNumber"
-                    type="text"
-                    placeholder="Enter your active contact number"
-                    class="w-full border rounded-xl px-4 py-3">
-
-            </div>
-
-
-            <!-- EMAIL ADDRESS -->
-
-            <div>
-
-                <label
-                    for="idSystemEmail"
-                    class="block text-sm font-semibold text-slate-700 mb-2">
-
-                    Email Address
-                    <span class="text-red-500">*</span>
-
-                </label>
-
-                <input
-                    id="idSystemEmail"
-                    type="email"
-                    placeholder="Enter your email address"
-                    class="w-full border rounded-xl px-4 py-3">
-
-            </div>
-
+            <input id="idSystemEmail"
+                type="email"
+                placeholder="Email Address *"
+                class="w-full border rounded-xl px-4 py-3">
 
             <hr>
 
+            <input id="sss"
+                type="text"
+                placeholder="SSS Number"
+                class="w-full border rounded-xl px-4 py-3">
 
-            <!-- SSS -->
+            <input id="tin"
+                type="text"
+                placeholder="TIN Number"
+                class="w-full border rounded-xl px-4 py-3">
 
-            <div>
+            <input id="pagibig"
+                type="text"
+                placeholder="Pag-IBIG Number"
+                class="w-full border rounded-xl px-4 py-3">
 
-                <label
-                    for="sss"
-                    class="block text-sm font-semibold text-slate-700 mb-2">
-
-                    SSS Number
-
-                </label>
-
-                <input
-                    id="sss"
-                    type="text"
-                    placeholder="Enter your SSS number"
-                    class="w-full border rounded-xl px-4 py-3">
-
-            </div>
-
-
-            <!-- TIN -->
-
-            <div>
-
-                <label
-                    for="tin"
-                    class="block text-sm font-semibold text-slate-700 mb-2">
-
-                    TIN Number
-
-                </label>
-
-                <input
-                    id="tin"
-                    type="text"
-                    placeholder="Enter your TIN number"
-                    class="w-full border rounded-xl px-4 py-3">
-
-            </div>
-
-
-            <!-- PAG-IBIG -->
-
-            <div>
-
-                <label
-                    for="pagibig"
-                    class="block text-sm font-semibold text-slate-700 mb-2">
-
-                    Pag-IBIG Number
-
-                </label>
-
-                <input
-                    id="pagibig"
-                    type="text"
-                    placeholder="Enter your Pag-IBIG number"
-                    class="w-full border rounded-xl px-4 py-3">
-
-            </div>
-
-
-            <!-- PHILHEALTH -->
-
-            <div>
-
-                <label
-                    for="philhealth"
-                    class="block text-sm font-semibold text-slate-700 mb-2">
-
-                    PhilHealth Number
-
-                </label>
-
-                <input
-                    id="philhealth"
-                    type="text"
-                    placeholder="Enter your PhilHealth number"
-                    class="w-full border rounded-xl px-4 py-3">
-
-            </div>
-
+            <input id="philhealth"
+                type="text"
+                placeholder="PhilHealth Number"
+                class="w-full border rounded-xl px-4 py-3">
 
             <hr>
 
-
-            <!-- TEAM / SALES HEAD -->
-
-            <div>
-
-                <label
-                    for="teamSalesHead"
-                    class="block text-sm font-semibold text-slate-700 mb-2">
-
-                    Team Name / Sales Head
-                    <span class="text-red-500">*</span>
-
-                </label>
-
-                <input
-                    id="teamSalesHead"
-                    type="text"
-                    placeholder="Enter your Team Name or Sales Head"
-                    class="w-full border rounded-xl px-4 py-3">
-
-            </div>
-
-
-            <!-- =========================================
-                 EMERGENCY CONTACT
-                 ========================================= -->
+            <input id="teamSalesHead"
+                type="text"
+                placeholder="Team Name / Sales Head *"
+                class="w-full border rounded-xl px-4 py-3">
 
             <div class="pt-2">
 
-                <p class="text-sm font-semibold text-[#024746] mb-1">
+    <p class="text-sm font-semibold text-slate-700 mb-3">
+        IN CASE OF EMERGENCY PLEASE CONTACT THIS PERSON
+    </p>
 
-                    Emergency Contact
+    <input
+        id="emergencyName"
+        type="text"
+        placeholder="Emergency Contact Name *"
+        class="w-full border rounded-xl px-4 py-3 mb-3">
 
-                </p>
+    <input
+        id="emergencyContact"
+        type="text"
+        placeholder="Emergency Contact Number *"
+        class="w-full border rounded-xl px-4 py-3">
 
-                <p class="text-xs text-slate-500 mb-4">
-
-                    Please provide someone we can contact in case of emergency.
-
-                </p>
-
-
-                <!-- EMERGENCY NAME -->
-
-                <label
-                    for="emergencyName"
-                    class="block text-sm font-semibold text-slate-700 mb-2">
-
-                    Emergency Contact Name
-                    <span class="text-red-500">*</span>
-
-                </label>
-
-                <input
-                    id="emergencyName"
-                    type="text"
-                    placeholder="Enter emergency contact name"
-                    class="w-full border rounded-xl px-4 py-3 mb-4">
-
-
-                <!-- EMERGENCY NUMBER -->
-
-                <label
-                    for="emergencyContact"
-                    class="block text-sm font-semibold text-slate-700 mb-2">
-
-                    Emergency Contact Number
-                    <span class="text-red-500">*</span>
-
-                </label>
-
-                <input
-                    id="emergencyContact"
-                    type="text"
-                    placeholder="Enter emergency contact number"
-                    class="w-full border rounded-xl px-4 py-3">
-
-            </div>
+</div>
 
         </div>
-
-
-        <!-- =========================================
-             BRANCH
-             ========================================= -->
 
         <div class="space-y-2 mt-5">
 
-            <label
-                for="branch"
-                class="block text-sm font-semibold text-slate-700">
+    <label class="block text-sm font-semibold text-slate-700">
+        Branch <span class="text-red-500">*</span>
+    </label>
 
-                Branch
-                <span class="text-red-500">*</span>
+    <select
+        id="branch"
+        class="w-full border rounded-xl px-4 py-3 bg-white focus:outline-none focus:ring-2 focus:ring-[#024746] focus:border-[#024746]"
+        required>
 
-            </label>
+        <option value="">Select Branch</option>
+        <option value="East Branch">East Branch</option>
+        <option value="North Branch">North Branch</option>
+        <option value="South Branch">South Branch</option>
+        <option value="Southwest Branch">Southwest Branch</option>
 
-            <select
-                id="branch"
-                class="w-full border rounded-xl px-4 py-3 bg-white
-                       focus:outline-none focus:ring-2
-                       focus:ring-[#024746]
-                       focus:border-[#024746]"
-                required>
+    </select>
 
-                <option value="">
-                    Select your branch
-                </option>
-
-                <option value="East Branch">
-                    East Branch
-                </option>
-
-                <option value="North Branch">
-                    North Branch
-                </option>
-
-                <option value="South Branch">
-                    South Branch
-                </option>
-
-                <option value="Southwest Branch">
-                    Southwest Branch
-                </option>
-
-            </select>
-
-        </div>
-
-
-        <!-- =========================================
-             VALID ID — NEW AGENT ONLY
-             ========================================= -->
-
-        <div
-            id="validIdUploadSection"
-            class="hidden mt-5">
-
-            <div
-                class="border-2 border-dashed
-                       border-slate-300
-                       rounded-2xl
-                       p-5
-                       bg-slate-50">
-
-                <div class="flex items-start gap-3">
-
-                    <div
-                        class="w-10 h-10 rounded-xl
-                               bg-[#024746]/10
-                               flex items-center justify-center
-                               flex-shrink-0">
-
-                        <span class="text-xl">
-                            🪪
-                        </span>
-
-                    </div>
-
-                    <div>
-
-                        <h4 class="font-bold text-[#024746]">
-
-                            Valid ID
-                            <span class="text-red-500">*</span>
-
-                        </h4>
-
-                        <p class="text-sm text-slate-500 mt-1">
-
-                            Required for New Agent only.
-
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-                <input
-                    id="validIdInput"
-                    type="file"
-                    accept="image/jpeg,image/png,application/pdf"
-                    class="hidden">
-
-
-                <button
-                    id="chooseValidIdBtn"
-                    type="button"
-                    class="w-full mt-4
-                           bg-white
-                           border border-[#024746]
-                           text-[#024746]
-                           hover:bg-[#024746]
-                           hover:text-white
-                           px-5 py-3
-                           rounded-xl
-                           font-semibold">
-
-                    📎 Choose Valid ID
-
-                </button>
-
-
-                <div
-                    id="validIdPreview"
-                    class="hidden mt-4">
-                </div>
-
-
-                <p
-                    class="text-xs text-slate-400
-                           mt-3 text-center">
-
-                    JPG, JPEG, PNG or PDF · Maximum 5MB
-
-                </p>
-
-            </div>
-
-        </div>
-
-
-        <!-- =========================================
-             NAVIGATION
-             ========================================= -->
+</div>
 
         <div class="flex justify-between mt-8">
 
-            <button
-                id="backDetails"
-                type="button"
+            <button id="backDetails"
                 class="px-6 py-3 border rounded-xl">
 
                 ← Back
 
             </button>
 
-
-            <button
-                id="nextPhoto"
-                type="button"
-                class="bg-[#024746]
-                       text-white
-                       px-8 py-3
-                       rounded-xl">
+            <button id="nextPhoto"
+                class="bg-[#024746] text-white px-8 py-3 rounded-xl">
 
                 Next →
 
@@ -3132,272 +2596,15 @@ function showPersonalInformation() {
 
     `;
 
-
-    /* =============================================
-       BACK BUTTON
-       ============================================= */
-
     document
         .getElementById("backDetails")
-        .addEventListener(
-            "click",
-            () => showDetailsStep(true)
-        );
-
-
-    /* =============================================
-       NEXT BUTTON
-       ============================================= */
+        .addEventListener("click", () => showDetailsStep(true));
 
     document
         .getElementById("nextPhoto")
-        .addEventListener(
-            "click",
-            savePersonalInformation
-        );
+        .addEventListener("click", savePersonalInformation);
 
 
-    /* =============================================
-       VALID ID — NEW AGENT ONLY
-       ============================================= */
-
-    const validIdSection =
-        document.getElementById(
-            "validIdUploadSection"
-        );
-
-    const validIdInput =
-        document.getElementById(
-            "validIdInput"
-        );
-
-    const chooseValidIdBtn =
-        document.getElementById(
-            "chooseValidIdBtn"
-        );
-
-    const validIdPreview =
-        document.getElementById(
-            "validIdPreview"
-        );
-
-
-    /* =============================================
-       SHOW / HIDE VALID ID
-       ============================================= */
-
-    if (
-        applicationData.classification === "new"
-    ) {
-
-        validIdSection?.classList.remove(
-            "hidden"
-        );
-
-    } else {
-
-        validIdSection?.classList.add(
-            "hidden"
-        );
-
-    }
-
-
-    /* =============================================
-       CHOOSE FILE
-       ============================================= */
-
-    chooseValidIdBtn?.addEventListener(
-        "click",
-        () => {
-
-            validIdInput?.click();
-
-        }
-    );
-
-
-    /* =============================================
-       FILE SELECT
-       ============================================= */
-
-    validIdInput?.addEventListener(
-        "change",
-        function () {
-
-            const file =
-                this.files?.[0];
-
-            if (!file) return;
-
-
-            /* =========================================
-               ALLOWED FILE TYPES
-               ========================================= */
-
-            const allowedTypes = [
-                "image/jpeg",
-                "image/png",
-                "application/pdf"
-            ];
-
-
-            if (
-                !allowedTypes.includes(
-                    file.type
-                )
-            ) {
-
-                alert(
-                    "Please upload a JPG, PNG, or PDF file only."
-                );
-
-                this.value = "";
-
-                applicationData.validId = "";
-
-                return;
-
-            }
-
-
-            /* =========================================
-               MAXIMUM FILE SIZE — 5MB
-               ========================================= */
-
-            if (
-                file.size >
-                5 * 1024 * 1024
-            ) {
-
-                alert(
-                    "The Valid ID file must not exceed 5MB."
-                );
-
-                this.value = "";
-
-                applicationData.validId = "";
-
-                return;
-
-            }
-
-
-            /* =========================================
-               READ FILE
-               ========================================= */
-
-            const reader =
-                new FileReader();
-
-
-            reader.onload =
-                function (event) {
-
-                    applicationData.validId =
-                        event.target.result;
-
-
-                    if (!validIdPreview) return;
-
-
-                    validIdPreview.classList.remove(
-                        "hidden"
-                    );
-
-
-                    /* =================================
-                       PDF PREVIEW
-                       ================================= */
-
-                    if (
-                        file.type ===
-                        "application/pdf"
-                    ) {
-
-                        validIdPreview.innerHTML = `
-
-                            <div
-                                class="flex items-center gap-3
-                                       bg-white
-                                       border
-                                       rounded-xl
-                                       p-4">
-
-                                <span class="text-2xl">
-                                    📄
-                                </span>
-
-                                <div class="min-w-0">
-
-                                    <p
-                                        class="font-semibold
-                                               text-slate-700
-                                               truncate">
-
-                                        ${escapeHTML(file.name)}
-
-                                    </p>
-
-                                    <p
-                                        class="text-xs
-                                               text-green-600
-                                               mt-1">
-
-                                        ✓ Valid ID selected
-
-                                    </p>
-
-                                </div>
-
-                            </div>
-
-                        `;
-
-                    }
-
-
-                    /* =================================
-                       IMAGE PREVIEW
-                       ================================= */
-
-                    else {
-
-                        validIdPreview.innerHTML = `
-
-                            <div class="text-center">
-
-                                <img
-                                    src="${event.target.result}"
-                                    class="max-h-48
-                                           max-w-full
-                                           mx-auto
-                                           rounded-xl
-                                           border
-                                           object-contain">
-
-                                <p
-                                    class="text-xs
-                                           text-green-600
-                                           mt-2">
-
-                                    ✓ Valid ID selected
-
-                                </p>
-
-                            </div>
-
-                        `;
-
-                    }
-
-                };
-
-
-            reader.readAsDataURL(file);
-
-        }
-    );
 
 }
 
@@ -4192,7 +3399,7 @@ ${applicationData.license === "none"
 
 }
 
-const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzdaNMHfGGWD6-_k3UkV00-oo-Tzk80c2aWKj5II6IM3XLAuuiJaXWCpEJU9JCh2aXw/exec";
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxxTJWUBOCvDzTeVYxh34NinD-HH2BQU9ckCD24BZ_V2twqKqaffGjQDagx-XZ9ypzA/exec";
 
 async function submitApplication() {
 
@@ -4285,10 +3492,7 @@ async function submitApplication() {
                 applicationData.photo,
 
             signature:
-                applicationData.signature,
-
-            validId:
-                applicationData.validId
+                applicationData.signature
 
         };
 
