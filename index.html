@@ -327,16 +327,33 @@
             <!-- 2. Action Area -->
             <div class="flex items-center gap-3">
 
-                <button id="idSystemBtn"
-                    class="flex items-center gap-2 bg-[#024746] hover:bg-[#03635f] text-white font-bold px-3 py-1.5 rounded-xl transition">
+                <!-- Documents + ID System: Documents comes first -->
+                <div class="flex items-center gap-2 shrink-0">
 
-                    <i class="fa-solid fa-id-card"></i>
+                    <!-- Documents Button -->
+                    <button id="documentsBtn" type="button"
+                        class="flex items-center gap-2 bg-[#F68E61] hover:bg-[#e87d50] text-white font-bold px-3 py-1.5 rounded-xl transition shadow-sm">
 
-                    <span class="hidden md:inline">
-                        ID System
-                    </span>
+                        <i class="fa-solid fa-folder-open"></i>
 
-                </button>
+                        <span class="hidden md:inline">
+                            Documents
+                        </span>
+
+                    </button>
+
+                    <button id="idSystemBtn"
+                        class="flex items-center gap-2 bg-[#024746] hover:bg-[#03635f] text-white font-bold px-3 py-1.5 rounded-xl transition">
+
+                        <i class="fa-solid fa-id-card"></i>
+
+                        <span class="hidden md:inline">
+                            ID System
+                        </span>
+
+                    </button>
+
+                </div>
 
                 <!-- Accept Challenge Button (Visible sa desktop, Icon lang sa mobile) -->
                 <button onclick="goToChallengePage()"
@@ -6153,8 +6170,8 @@
             if (!optionsContainer) return;
 
             const selectedLocationEl = document.getElementById('step5-selected-location');
-            // Step 5: choices only Monday, Wednesday, Friday
-            const days = ['Monday 2:00 PM', 'Wednesday 2:00 PM', 'Friday 2:00 PM'];
+            // Step 5: choices only Monday, Friday
+            const days = ['Monday 2:00 PM', 'Friday 2:00 PM'];
 
 
             // If no branch selected yet, keep it empty so user must choose schedule after Step 2.
@@ -6474,6 +6491,566 @@
 
     </div>
 
+
+    <!-- =========================
+         HSRC DOCUMENTS SYSTEM
+    ========================== -->
+    <div id="documentsOverlay" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-[99996]"></div>
+
+    <div id="documentsModal"
+        class="hidden fixed inset-0 z-[99997] items-center justify-center p-3 sm:p-5 overflow-y-auto">
+
+        <div id="documentsDialog"
+            class="relative w-full max-w-6xl max-h-[94vh] bg-white rounded-3xl shadow-[0_30px_100px_rgba(0,0,0,.35)] overflow-hidden flex flex-col lg:flex-row">
+
+            <!-- Main Documents Panel -->
+            <section class="flex-1 min-w-0 flex flex-col bg-white">
+
+                <!-- Documents Header -->
+                <div class="bbai-documents-header">
+
+                    <!-- Left: Icon + Title -->
+                    <div class="bbai-documents-header-content">
+
+                        <div class="bbai-documents-title-icon">
+                            <i class="fa-solid fa-file-lines"></i>
+                        </div>
+
+                        <div class="min-w-0">
+                            <h2 class="bbai-documents-title">
+                                Documents
+                            </h2>
+
+                            <p class="bbai-documents-subtitle">
+                                Download important files and guides to help you on your journey.
+                            </p>
+                        </div>
+
+                    </div>
+
+
+                    <!-- Decorative Image -->
+                    <div class="bbai-documents-header-art">
+                        <img src="header-documents.png" alt="">
+                    </div>
+
+
+                    <!-- Close Button -->
+                    <button id="documentsCloseX" type="button" aria-label="Close documents"
+                        class="bbai-documents-close">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+
+                </div>
+
+                <div class="p-4 sm:p-6 overflow-y-auto flex-1">
+                    <div id="documentsList" class="space-y-3"></div>
+
+                    <button id="downloadAllDocuments" type="button"
+                        class="mt-4 w-full rounded-2xl bg-[#164849] hover:bg-[#0f393a] text-white font-extrabold py-3.5 px-4 flex items-center justify-center gap-2 transition shadow-sm">
+                        <i class="fa-solid fa-download"></i>
+                        Download All Documents
+                    </button>
+
+                    <button id="documentsCloseBottom" type="button"
+                        class="mt-3 w-full rounded-2xl border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 font-bold py-3.5 px-4 flex items-center justify-center gap-2 transition">
+                        <i class="fa-solid fa-xmark"></i>
+                        Close
+                    </button>
+                </div>
+            </section>
+
+
+        </div>
+    </div>
+
+    <!-- Document Viewer -->
+    <div id="documentViewerOverlay"
+        class="hidden fixed inset-0 bg-black/75 backdrop-blur-sm z-[99998] items-center justify-center p-3 sm:p-5">
+        <div class="w-full max-w-6xl h-[92vh] bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col">
+            <div class="px-4 sm:px-6 py-4 border-b flex items-center justify-between gap-3">
+                <div class="min-w-0">
+                    <h2 id="documentViewerTitle" class="font-extrabold text-[#164849] text-lg sm:text-xl truncate">
+                        Document Viewer</h2>
+                    <p id="documentViewerMeta" class="text-xs text-slate-500 mt-0.5"></p>
+                </div>
+                <button id="documentViewerClose" type="button"
+                    class="w-10 h-10 rounded-full bg-slate-100 hover:bg-slate-200 text-[#164849] flex items-center justify-center shrink-0">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="flex-1 min-h-0 bg-slate-100">
+                <iframe id="documentViewerFrame" title="Document Viewer" class="w-full h-full border-0"
+                    loading="lazy"></iframe>
+                <div id="documentViewerFallback" class="hidden h-full items-center justify-center p-8 text-center">
+                    <div class="max-w-md">
+                        <i class="fa-solid fa-file-circle-exclamation text-5xl text-slate-400"></i>
+                        <h3 class="mt-4 text-xl font-extrabold text-slate-700">Preview unavailable</h3>
+                        <p class="mt-2 text-sm text-slate-500">You can still download the original file using the button
+                            below.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-4 border-t bg-white flex flex-col sm:flex-row gap-3">
+                <a id="documentViewerDownload" href="#" download
+                    class="flex-1 rounded-xl bg-[#164849] hover:bg-[#0f393a] text-white font-extrabold py-3 px-4 flex items-center justify-center gap-2 transition">
+                    <i class="fa-solid fa-download"></i>
+                    Download File
+                </a>
+                <button id="documentViewerCloseBottom" type="button"
+                    class="sm:w-32 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 font-bold py-3 px-4 transition">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        #documentsModal.hs-doc-open,
+        #documentViewerOverlay.hs-doc-open {
+            display: flex;
+        }
+
+        #documentsOverlay.hs-doc-open {
+            display: block;
+        }
+
+        body.hs-doc-lock {
+            overflow: hidden;
+        }
+
+        .hs-doc-card {
+            transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+        }
+
+        .hs-doc-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(2, 71, 70, .10);
+            border-color: #9cc6c5;
+        }
+
+        @media (max-width: 1023px) {
+            #documentsDialog {
+                max-height: 96vh;
+            }
+        }
+
+        @media (max-width: 640px) {
+            #documentsDialog {
+                border-radius: 1.25rem;
+            }
+
+            #documentsModal {
+                align-items: flex-start;
+                padding-top: .75rem;
+            }
+        }
+
+        /* =========================================================
+   PREMIUM DOCUMENTS HEADER
+   ========================================================= */
+
+        .bbai-documents-header {
+            position: relative;
+            min-height: 118px;
+            padding: 22px 28px;
+            border-bottom: 1px solid #e2e8f0;
+            background:
+                linear-gradient(135deg, #ffffff 0%, #f8fbfb 100%);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .bbai-documents-header-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            min-width: 0;
+        }
+
+        .bbai-documents-title-icon {
+            width: 58px;
+            height: 58px;
+            min-width: 58px;
+            border-radius: 18px;
+            background: #164849;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 27px;
+            box-shadow:
+                0 10px 24px rgba(22, 72, 73, 0.18);
+        }
+
+        .bbai-documents-title {
+            margin: 0;
+            color: #164849;
+            font-size: clamp(1.55rem, 2.5vw, 2rem);
+            line-height: 1.1;
+            font-weight: 900;
+            letter-spacing: -0.025em;
+        }
+
+        .bbai-documents-subtitle {
+            margin: 6px 0 0;
+            color: #64748b;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .bbai-documents-header-art {
+            position: absolute;
+            right: 65px;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 100%;
+            width: 230px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .bbai-documents-header-art img {
+            width: 210px;
+            max-width: 100%;
+            height: auto;
+            object-fit: contain;
+            opacity: 0.95;
+        }
+
+        .bbai-documents-close {
+            position: relative;
+            z-index: 3;
+            width: 42px;
+            height: 42px;
+            min-width: 42px;
+            border: 0;
+            border-radius: 999px;
+            background: #f1f5f9;
+            color: #164849;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            cursor: pointer;
+            transition:
+                transform .2s ease,
+                background .2s ease,
+                box-shadow .2s ease;
+        }
+
+        .bbai-documents-close:hover {
+            background: #e2e8f0;
+            transform: rotate(90deg);
+            box-shadow: 0 8px 18px rgba(15, 23, 42, 0.10);
+        }
+
+
+        /* Mobile */
+        @media (max-width: 768px) {
+
+            .bbai-documents-header {
+                min-height: 100px;
+                padding: 18px;
+            }
+
+            .bbai-documents-header-art {
+                display: flex;
+                right: 48px;
+                width: 135px;
+                height: 90px;
+                opacity: 0.50;
+                z-index: 1;
+            }
+
+            .bbai-documents-header-art img {
+                width: 125px;
+                max-width: 125px;
+            }
+
+            .bbai-documents-header-content {
+                position: relative;
+                z-index: 2;
+                padding-right: 45px;
+            }
+
+            .bbai-documents-close {
+                position: relative;
+                z-index: 5;
+            }
+
+            .bbai-documents-title-icon {
+                width: 48px;
+                height: 48px;
+                min-width: 48px;
+                border-radius: 15px;
+                font-size: 22px;
+            }
+
+            .bbai-documents-subtitle {
+                font-size: 0.78rem;
+                padding-right: 5px;
+            }
+
+            .bbai-documents-close {
+                width: 38px;
+                height: 38px;
+                min-width: 38px;
+            }
+        }
+    </style>
+
+    <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+    <script>
+        /* =========================
+           HSRC DOCUMENT CONFIG
+           Replace these sample files with your official files.
+        ========================== */
+        let HSRC_DOCUMENTS = [];
+
+        const HSRC_DOCUMENTS_API_URL = "https://script.google.com/macros/s/AKfycbwVmPH_Rm4fmZ4yBgftzEVmP2S5GmHJNG3s-PjFnOSsXnKX5iLtokmnzCkL7JOz4FcOkg/exec";
+
+
+        const documentsBtn = document.getElementById("documentsBtn");
+        const documentsOverlay = document.getElementById("documentsOverlay");
+        const documentsModal = document.getElementById("documentsModal");
+        const documentsList = document.getElementById("documentsList");
+        const documentsCloseX = document.getElementById("documentsCloseX");
+        const documentsCloseBottom = document.getElementById("documentsCloseBottom");
+        const downloadAllDocuments = document.getElementById("downloadAllDocuments");
+
+        const documentViewerOverlay = document.getElementById("documentViewerOverlay");
+        const documentViewerFrame = document.getElementById("documentViewerFrame");
+        const documentViewerFallback = document.getElementById("documentViewerFallback");
+        const documentViewerTitle = document.getElementById("documentViewerTitle");
+        const documentViewerMeta = document.getElementById("documentViewerMeta");
+        const documentViewerDownload = document.getElementById("documentViewerDownload");
+        const documentViewerClose = document.getElementById("documentViewerClose");
+        const documentViewerCloseBottom = document.getElementById("documentViewerCloseBottom");
+
+        function escapeDocHTML(value) {
+            return String(value)
+                .replaceAll("&", "&amp;")
+                .replaceAll("<", "&lt;")
+                .replaceAll(">", "&gt;")
+                .replaceAll('"', "&quot;")
+                .replaceAll("'", "&#039;");
+        }
+
+        function renderHSRCDocuments() {
+            if (!HSRC_DOCUMENTS.length) {
+                documentsList.innerHTML = `
+                    <div class="rounded-2xl border border-dashed border-slate-300 bg-slate-50 p-8 text-center">
+                        <i class="fa-solid fa-folder-open text-4xl text-slate-300"></i>
+                        <h3 class="mt-3 font-extrabold text-slate-700">No documents available</h3>
+                        <p class="mt-1 text-sm text-slate-500">Documents uploaded by the admin will appear here.</p>
+                    </div>`;
+                return;
+            }
+
+            documentsList.innerHTML = HSRC_DOCUMENTS.map((doc, index) => `
+                <article class="hs-doc-card rounded-2xl border border-slate-200 bg-white p-3 sm:p-4 flex items-center gap-3 sm:gap-4">
+                    <button type="button" data-view-document="${index}"
+                        class="flex-1 min-w-0 text-left flex items-center gap-3 sm:gap-4">
+                        <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-xl ${escapeDocHTML(doc.iconClass || "bg-slate-50 text-slate-600")} flex items-center justify-center shrink-0">
+                            <i class="fa-solid ${escapeDocHTML(doc.icon || "fa-file")} text-2xl"></i>
+                        </div>
+                        <div class="min-w-0">
+                            <h3 class="font-extrabold text-[#164849] truncate">${index + 1}. ${escapeDocHTML(doc.title)}</h3>
+                            <div class="mt-1.5 text-xs sm:text-sm text-slate-500 flex flex-wrap items-center gap-x-2 gap-y-1">
+                                <span>${escapeDocHTML(doc.type || "FILE")}</span><span>•</span><span>${escapeDocHTML(doc.size || "")}</span>
+                            </div>
+                        </div>
+                    </button>
+                    <button type="button" data-download-document="${index}" aria-label="Download ${escapeDocHTML(doc.title)}"
+                        class="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-[#eef6f5] hover:bg-[#dcecea] text-[#164849] flex items-center justify-center transition shrink-0">
+                        <i class="fa-solid fa-download"></i>
+                    </button>
+                </article>
+            `).join("");
+
+            documentsList.querySelectorAll("[data-view-document]").forEach(btn => {
+                btn.addEventListener("click", () => openHSRCDocumentViewer(Number(btn.dataset.viewDocument)));
+            });
+            documentsList.querySelectorAll("[data-download-document]").forEach(btn => {
+                btn.addEventListener("click", () => downloadHSRCDocument(Number(btn.dataset.downloadDocument)));
+            });
+        }
+
+        async function loadHSRCDocuments() {
+            documentsList.innerHTML = `
+                <div class="rounded-2xl border border-slate-200 bg-white p-8 text-center">
+                    <i class="fa-solid fa-spinner fa-spin text-3xl text-[#164849]"></i>
+                    <p class="mt-3 text-sm font-semibold text-slate-500">Loading documents...</p>
+                </div>`;
+
+            try {
+                const response = await fetch(
+                    HSRC_DOCUMENTS_API_URL + "?action=documents_list",
+                    { cache: "no-store" }
+                );
+                const result = await response.json();
+
+                if (!result.ok) {
+                    throw new Error(result.error || "Unable to load documents.");
+                }
+
+                HSRC_DOCUMENTS = Array.isArray(result.documents)
+                    ? result.documents
+                    : [];
+
+                renderHSRCDocuments();
+            } catch (error) {
+                console.error("HSRC Documents Load Error:", error);
+                HSRC_DOCUMENTS = [];
+                documentsList.innerHTML = `
+                    <div class="rounded-2xl border border-red-200 bg-red-50 p-8 text-center">
+                        <i class="fa-solid fa-triangle-exclamation text-3xl text-red-500"></i>
+                        <h3 class="mt-3 font-extrabold text-red-700">Unable to load documents</h3>
+                        <p class="mt-1 text-sm text-red-600">Please try again later.</p>
+                    </div>`;
+            }
+        }
+
+        function lockDocumentUI() {
+            document.body.classList.add("hs-doc-lock");
+        }
+
+        function unlockDocumentUI() {
+            if (!documentsModal.classList.contains("hs-doc-open") && !documentViewerOverlay.classList.contains("hs-doc-open")) {
+                document.body.classList.remove("hs-doc-lock");
+            }
+        }
+
+        async function openDocuments() {
+            documentsOverlay.classList.add("hs-doc-open");
+            documentsModal.classList.add("hs-doc-open");
+            lockDocumentUI();
+            await loadHSRCDocuments();
+        }
+
+        function closeDocuments() {
+            documentsModal.classList.remove("hs-doc-open");
+            documentsOverlay.classList.remove("hs-doc-open");
+            closeHSRCDocumentViewer();
+            unlockDocumentUI();
+        }
+
+        function getViewerURL(doc) {
+            const fileId = String(doc.fileId || "").trim();
+
+            if (!fileId) {
+                return "";
+            }
+
+            return "https://drive.google.com/file/d/" +
+                encodeURIComponent(fileId) +
+                "/preview";
+        }
+
+        function openHSRCDocumentViewer(index) {
+            const doc = HSRC_DOCUMENTS[index];
+            if (!doc) return;
+
+            documentViewerTitle.textContent = doc.title;
+            documentViewerMeta.textContent = `${doc.type} • ${doc.size}`;
+            documentViewerDownload.href = doc.downloadUrl || doc.url || doc.file;
+            documentViewerDownload.setAttribute("download", "");
+
+            documentViewerFallback.classList.add("hidden");
+            documentViewerFallback.classList.remove("flex");
+            documentViewerFrame.classList.remove("hidden");
+            documentViewerFrame.src = getViewerURL(doc);
+
+            documentViewerOverlay.classList.add("hs-doc-open");
+            lockDocumentUI();
+        }
+
+        function closeHSRCDocumentViewer() {
+            documentViewerOverlay.classList.remove("hs-doc-open");
+            documentViewerFrame.src = "about:blank";
+            unlockDocumentUI();
+        }
+
+        function downloadHSRCDocument(index) {
+            const doc = HSRC_DOCUMENTS[index];
+            if (!doc) return;
+            const link = document.createElement("a");
+            link.href = doc.downloadUrl || doc.url || doc.file;
+            link.download = "";
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+        }
+
+        async function downloadAllHSRCDocuments() {
+            if (!window.JSZip) {
+                HSRC_DOCUMENTS.forEach((_, index) => downloadHSRCDocument(index));
+                return;
+            }
+
+            const button = downloadAllDocuments;
+            const original = button.innerHTML;
+            button.disabled = true;
+            button.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Preparing ZIP...';
+
+            try {
+                const zip = new JSZip();
+                for (const doc of HSRC_DOCUMENTS) {
+                    const fileURL = doc.downloadUrl || doc.url || doc.file;
+                    const response = await fetch(fileURL);
+                    if (!response.ok) throw new Error(`Unable to fetch ${fileURL}`);
+                    zip.file(doc.fileName || doc.title, await response.blob());
+                }
+                const blob = await zip.generateAsync({ type: "blob" });
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement("a");
+                link.href = url;
+                link.download = "HSRC_Documents.zip";
+                document.body.appendChild(link);
+                link.click();
+                link.remove();
+                setTimeout(() => URL.revokeObjectURL(url), 1000);
+            } catch (error) {
+                console.error("HSRC Download All Error:", error);
+                alert("Some documents could not be packaged. Please download them individually.");
+            } finally {
+                button.disabled = false;
+                button.innerHTML = original;
+            }
+        }
+
+        documentsBtn?.addEventListener("click", openDocuments);
+        documentsCloseX?.addEventListener("click", closeDocuments);
+        documentsCloseBottom?.addEventListener("click", closeDocuments);
+        documentsOverlay?.addEventListener("click", closeDocuments);
+        downloadAllDocuments?.addEventListener("click", downloadAllHSRCDocuments);
+        documentViewerClose?.addEventListener("click", closeHSRCDocumentViewer);
+        documentViewerCloseBottom?.addEventListener("click", closeHSRCDocumentViewer);
+        documentViewerOverlay?.addEventListener("click", (event) => {
+            if (event.target === documentViewerOverlay) closeHSRCDocumentViewer();
+        });
+
+        document.addEventListener("keydown", (event) => {
+            if (event.key !== "Escape") return;
+            if (documentViewerOverlay.classList.contains("hs-doc-open")) {
+                closeHSRCDocumentViewer();
+            } else if (documentsModal.classList.contains("hs-doc-open")) {
+                closeDocuments();
+            }
+        });
+    </script>
     <script src="intro.js"></script>
     <script src="id.js"></script>
 

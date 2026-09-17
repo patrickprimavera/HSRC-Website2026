@@ -10,6 +10,353 @@
     referrerpolicy="no-referrer" />
 </head>
 
+<style>
+  /* =========================================================
+   HSRC DOCUMENTS MANAGER — MODERN UI
+   Documents section only
+   ========================================================= */
+
+  #bbaiDocumentsManagerSection {
+    background:
+      radial-gradient(circle at top right, rgba(246, 142, 97, 0.08), transparent 32%),
+      linear-gradient(180deg, #ffffff 0%, #f8fbfb 100%);
+    border: 1px solid rgba(22, 72, 73, 0.10);
+    box-shadow: 0 20px 50px rgba(22, 72, 73, 0.08);
+  }
+
+  .bbai-doc-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .bbai-doc-header-icon {
+    width: 58px;
+    height: 58px;
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #164849, #216568);
+    color: white;
+    font-size: 24px;
+    box-shadow: 0 10px 24px rgba(22, 72, 73, 0.18);
+  }
+
+  .bbai-doc-title {
+    color: #164849;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+  }
+
+  .bbai-doc-subtitle {
+    color: #64748b;
+    margin-top: 4px;
+  }
+
+  .bbai-doc-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .bbai-doc-toolbar button {
+    transition: all .2s ease;
+  }
+
+  .bbai-doc-toolbar button:hover {
+    transform: translateY(-1px);
+  }
+
+  .bbai-doc-table-wrap {
+    margin-top: 22px;
+    border: 1px solid #e2e8f0;
+    border-radius: 18px;
+    overflow: hidden;
+    background: white;
+  }
+
+  .bbai-doc-table-head {
+    background: linear-gradient(180deg, #f8fafc, #f1f5f9);
+  }
+
+  .bbai-doc-row {
+    background: #ffffff;
+    transition:
+      background .2s ease,
+      box-shadow .2s ease,
+      transform .2s ease;
+  }
+
+  .bbai-doc-row:hover {
+    background: #fbfefe;
+    box-shadow: inset 4px 0 0 #164849;
+  }
+
+  .bbai-doc-file {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .bbai-doc-file-icon {
+    width: 52px;
+    height: 52px;
+    min-width: 52px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 21px;
+    box-shadow: 0 5px 14px rgba(15, 23, 42, 0.06);
+  }
+
+  .bbai-doc-file-icon.pdf {
+    background: #fff1f2;
+    color: #dc2626;
+  }
+
+  .bbai-doc-file-icon.word {
+    background: #eff6ff;
+    color: #2563eb;
+  }
+
+  .bbai-doc-file-icon.powerpoint {
+    background: #fff7ed;
+    color: #ea580c;
+  }
+
+  .bbai-doc-file-icon.excel {
+    background: #f0fdf4;
+    color: #16a34a;
+  }
+
+  .bbai-doc-file-icon.file {
+    background: #f1f5f9;
+    color: #475569;
+  }
+
+  .bbai-doc-name {
+    color: #164849;
+    font-weight: 900;
+    font-size: 14px;
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+  }
+
+  .bbai-doc-filename {
+    color: #94a3b8;
+    font-size: 11px;
+    margin-top: 4px;
+    font-weight: 600;
+  }
+
+  .bbai-doc-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 9px 13px;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: 800;
+    transition: all .18s ease;
+    border: 1px solid transparent;
+  }
+
+  .bbai-doc-action:hover {
+    transform: translateY(-1px);
+  }
+
+  .bbai-doc-action.open {
+    background: #f1f5f9;
+    color: #334155;
+  }
+
+  .bbai-doc-action.edit {
+    background: #ecfdf5;
+    color: #0f766e;
+  }
+
+  .bbai-doc-action.delete {
+    background: #fff1f2;
+    color: #be123c;
+  }
+
+  .bbai-doc-action.delete:hover {
+    background: #ffe4e6;
+  }
+
+  .bbai-doc-empty {
+    padding: 55px 20px;
+    text-align: center;
+  }
+
+  .bbai-doc-empty-icon {
+    width: 68px;
+    height: 68px;
+    margin: 0 auto 14px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #edf7f7;
+    color: #164849;
+    font-size: 26px;
+  }
+
+  /* Custom delete modal */
+  #bbaiDocumentDeleteModal {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(15, 23, 42, .62);
+    backdrop-filter: blur(7px);
+  }
+
+  #bbaiDocumentDeleteModal.show {
+    display: flex;
+  }
+
+  .bbai-delete-dialog {
+    width: min(460px, 100%);
+    background: white;
+    border-radius: 24px;
+    padding: 28px;
+    box-shadow: 0 30px 80px rgba(15, 23, 42, .28);
+    animation: bbaiDeleteIn .18s ease-out;
+  }
+
+  @keyframes bbaiDeleteIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px) scale(.98);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  .bbai-delete-icon {
+    width: 54px;
+    height: 54px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff1f2;
+    color: #dc2626;
+    font-size: 22px;
+    margin-bottom: 16px;
+  }
+
+  .bbai-delete-title {
+    color: #164849;
+    font-size: 20px;
+    font-weight: 900;
+  }
+
+  .bbai-delete-document-name {
+    margin-top: 8px;
+    color: #475569;
+    font-weight: 800;
+    word-break: break-word;
+  }
+
+  .bbai-delete-description {
+    margin-top: 12px;
+    color: #64748b;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .bbai-delete-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 24px;
+  }
+
+  .bbai-delete-cancel,
+  .bbai-delete-confirm {
+    border: 0;
+    border-radius: 11px;
+    padding: 11px 17px;
+    font-size: 13px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all .18s ease;
+  }
+
+  .bbai-delete-cancel {
+    background: #f1f5f9;
+    color: #334155;
+  }
+
+  .bbai-delete-confirm {
+    background: #dc2626;
+    color: white;
+  }
+
+  .bbai-delete-cancel:hover,
+  .bbai-delete-confirm:hover {
+    transform: translateY(-1px);
+  }
+
+  @media (max-width: 768px) {
+    .bbai-doc-header {
+      align-items: flex-start;
+    }
+
+    .bbai-doc-toolbar {
+      width: 100%;
+    }
+
+    .bbai-doc-toolbar button {
+      flex: 1;
+    }
+
+    .bbai-doc-table-wrap {
+      border: 0;
+      background: transparent;
+      overflow: visible;
+    }
+
+    .bbai-doc-table-wrap table,
+    .bbai-doc-table-wrap thead {
+      display: none;
+    }
+
+    .bbai-doc-row {
+      display: block;
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      margin-bottom: 12px;
+      padding: 15px;
+    }
+
+    .bbai-doc-row td {
+      display: block;
+      padding: 7px 0 !important;
+      border: 0 !important;
+    }
+
+    .bbai-doc-actions-mobile {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 7px;
+    }
+  }
+</style>
+
 <body class="bg-slate-100 min-h-screen">
   <style>
     :root {
@@ -1071,6 +1418,25 @@
 
         </div>
         <!-- END ID SYSTEM REQUESTS CARD -->
+        <!-- DOCUMENTS MANAGER CARD -->
+        <div class="bbai-card p-5 bbai-animate-in cursor-pointer" role="button" tabindex="0"
+          aria-label="Open Documents Manager" onclick="bbaiToggleDocumentsManager()"
+          onkeydown="if(event.key==='Enter'||event.key===' '){bbaiToggleDocumentsManager();}">
+          <div class="flex items-center justify-between">
+            <div class="text-3xl" aria-hidden="true">📁</div>
+            <div class="w-10 h-10 rounded-2xl bg-orange-50 flex items-center justify-center" aria-hidden="true">
+              <i class="fa-solid fa-folder-open text-orange-600"></i>
+            </div>
+          </div>
+          <div class="mt-3 text-lg font-extrabold text-slate-800">
+            Documents Manager
+          </div>
+          <div class="text-sm font-bold text-slate-500 mt-1">
+            Add, edit, replace, and delete documents shown on the public portal.
+          </div>
+        </div>
+        <!-- END DOCUMENTS MANAGER CARD -->
+
       </div>
     </div> <!-- /#bbaiChallengeAdminContent -->
 
@@ -1341,6 +1707,155 @@
 
     </section>
 
+
+    <!-- ============================================
+         HSRC DOCUMENTS MANAGER
+         ============================================ -->
+    <section id="bbaiDocumentsManagerSection"
+      class="hidden bg-white rounded-2xl border border-slate-200 shadow-sm p-6 mb-8">
+
+      <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-5 mb-7">
+
+        <!-- DOCUMENTS TITLE -->
+        <div class="bbai-doc-header">
+
+          <div class="bbai-doc-header-icon">
+            <i class="fa-solid fa-folder-open"></i>
+          </div>
+
+          <div>
+            <h2 class="bbai-doc-title text-2xl">
+              Documents Manager
+            </h2>
+
+            <p class="bbai-doc-subtitle text-sm">
+              Manage the documents displayed in the public HSRC portal.
+            </p>
+          </div>
+
+        </div>
+
+
+        <!-- ACTION BUTTONS -->
+        <div class="bbai-doc-toolbar">
+
+          <button type="button" onclick="bbaiBackToChallengeAdminFromDocuments()"
+            class="px-4 py-2.5 rounded-xl bg-slate-100 text-slate-700 text-sm font-bold hover:bg-slate-200">
+            <i class="fa-solid fa-arrow-left mr-2"></i>
+            Back to Admin
+          </button>
+
+
+          <button type="button" onclick="bbaiOpenDocumentForm()"
+            class="px-4 py-2.5 rounded-xl bg-[#F68E61] text-white text-sm font-extrabold hover:bg-[#e87d50] shadow-sm">
+            <i class="fa-solid fa-plus mr-2"></i>
+            Add Document
+          </button>
+
+
+          <button type="button" id="bbaiRefreshDocuments"
+            class="px-4 py-2.5 rounded-xl bg-[#164849] text-white text-sm font-extrabold hover:bg-[#123d3e] shadow-sm">
+            <i class="fa-solid fa-rotate mr-2"></i>
+            Refresh
+          </button>
+
+        </div>
+
+      </div>
+
+      <div id="bbaiDocumentFormWrap" class="hidden mb-6 rounded-2xl border border-slate-200 bg-slate-50 p-5">
+        <div class="flex items-center justify-between gap-3 mb-4">
+          <h3 id="bbaiDocumentFormTitle" class="text-lg font-extrabold text-slate-800">Add Document</h3>
+          <button type="button" onclick="bbaiCloseDocumentForm()" class="text-slate-500 hover:text-slate-800">
+            <i class="fa-solid fa-xmark text-lg"></i>
+          </button>
+        </div>
+
+        <input type="hidden" id="bbaiDocumentId">
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm font-bold text-slate-700 mb-1">Document Title *</label>
+            <input id="bbaiDocumentTitle" type="text" placeholder="e.g. HSRC Sales Manual"
+              class="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none focus:border-teal-500">
+          </div>
+          <div>
+            <label class="block text-sm font-bold text-slate-700 mb-1">Type</label>
+            <select id="bbaiDocumentType"
+              class="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none focus:border-teal-500">
+              <option value="">Auto-detect</option>
+              <option value="PDF">PDF</option>
+              <option value="WORD">WORD</option>
+              <option value="POWERPOINT">POWERPOINT</option>
+              <option value="EXCEL">EXCEL</option>
+              <option value="FILE">FILE</option>
+            </select>
+          </div>
+          <div class="md:col-span-2">
+            <label class="block text-sm font-bold text-slate-700 mb-1">Description</label>
+            <textarea id="bbaiDocumentDescription" rows="3" placeholder="Short description shown to users."
+              class="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none focus:border-teal-500"></textarea>
+          </div>
+          <div class="md:col-span-2">
+            <label class="block text-sm font-bold text-slate-700 mb-1">File *</label>
+            <input id="bbaiDocumentFile" type="file" accept=".pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.txt,.csv"
+              class="w-full rounded-xl border border-slate-300 bg-white px-4 py-3">
+            <p id="bbaiDocumentFileHelp" class="mt-1 text-xs text-slate-500">
+              Required for a new document. When editing, leave empty to keep the current file.
+            </p>
+          </div>
+        </div>
+
+        <div class="mt-4 flex flex-col sm:flex-row sm:justify-end gap-2">
+          <button type="button" onclick="bbaiCloseDocumentForm()"
+            class="px-5 py-3 rounded-xl bg-white border border-slate-300 text-slate-700 font-bold">
+            Cancel
+          </button>
+          <button type="button" id="bbaiSaveDocumentBtn" onclick="bbaiSaveDocument()"
+            class="px-5 py-3 rounded-xl bg-[#024746] hover:bg-[#03635f] text-white font-bold">
+            Save Document
+          </button>
+        </div>
+      </div>
+
+      <div id="bbaiDocumentsStatus" class="hidden mb-4 rounded-xl px-4 py-3 text-sm font-semibold"></div>
+
+      <div id="bbaiDocumentsTableWrap" class="bbai-doc-table-wrap overflow-x-auto">
+        <table class="w-full text-sm bbai-documents-table">
+          <thead class="bbai-doc-table-head">
+            <tr class="border-b border-slate-200 text-left">
+
+              <th class="py-4 px-4 font-extrabold text-slate-500 text-xs uppercase tracking-wider">
+                Document
+              </th>
+
+              <th class="py-4 px-4 font-extrabold text-slate-500 text-xs uppercase tracking-wider">
+                Type
+              </th>
+
+              <th class="py-4 px-4 font-extrabold text-slate-500 text-xs uppercase tracking-wider">
+                Size
+              </th>
+
+              <th class="py-4 px-4 font-extrabold text-slate-500 text-xs uppercase tracking-wider">
+                Updated
+              </th>
+
+              <th class="py-4 px-4 font-extrabold text-slate-500 text-xs usppercase tracking-wider">
+                Action
+              </th>
+
+            </tr>
+          </thead>
+          <tbody id="bbaiDocumentsBody">
+            <tr>
+              <td colspan="5" class="py-8 text-center text-slate-400">Loading documents...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
     <div id="bbaiChallengeSubmissionsTableWrap" class="bbai-card p-4 md:p-6 overflow-x-auto">
       <table class="w-full table-fixed border-collapse">
 
@@ -1375,7 +1890,8 @@
 
   <script>
     const CHALLENGE_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxdu2fNY9IdpwkdHsHcE0PP_pgljDuGcSd4BaVFbkbOe6aq-mQk3TsJCOEW-TXD3NBeLQ/exec";
-    const ID_SYSTEM_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxxTJWUBOCvDzTeVYxh34NinD-HH2BQU9ckCD24BZ_V2twqKqaffGjQDagx-XZ9ypzA/exec";
+    const ID_SYSTEM_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxcs1G2lqvsLASRyAc2t1kXLPTuI47iZKoFF7bJ3Q9VCbCbczKv8ckmVbOhHwzYkrB3/exec";
+    const DOCUMENTS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwVmPH_Rm4fmZ4yBgftzEVmP2S5GmHJNG3s-PjFnOSsXnKX5iLtokmnzCkL7JOz4FcOkg/exec";
 
     // ===== Minimal UI activation state (cards + quick filters) =====
     // IMPORTANT: This code does not change any backend/business logic.
@@ -1527,6 +2043,7 @@
 
       // Hide Challenge Admin, show Portfolio Manager
       challengeAdmin.classList.add('hidden');
+      document.getElementById("bbaiDocumentsManagerSection")?.classList.add("hidden");
       if (submissionsTableWrap) submissionsTableWrap.classList.add('hidden');
       portfolioSection.classList.remove('hidden');
 
@@ -1642,6 +2159,7 @@
 
       // Hide ID System Requests
       idSystemSection.classList.add("hidden");
+      document.getElementById("bbaiDocumentsManagerSection")?.classList.add("hidden");
 
       // Show Challenge Admin dashboard
       dashboard.classList.remove("hidden");
@@ -1670,6 +2188,585 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
+
+
+    /* ============================================
+       DOCUMENTS MANAGER
+       ============================================ */
+
+    let bbaiDocumentsCache = [];
+
+    function bbaiEscapeDocumentHTML(value) {
+      return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function bbaiDocumentApi(action, payload = {}) {
+      const adminKey =
+        document.getElementById("adminKey")?.value?.trim() || "";
+
+      return fetch(DOCUMENTS_WEB_APP_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "text/plain;charset=utf-8"
+        },
+        body: JSON.stringify({
+          action,
+          adminKey,
+          payload
+        })
+      }).then(async r => {
+        const text = await r.text();
+
+        try {
+          return JSON.parse(text);
+        } catch (err) {
+          console.error("Documents API returned non-JSON:", text);
+          throw new Error(
+            "Documents API returned an invalid response."
+          );
+        }
+      });
+    }
+
+    async function bbaiLoadDocumentsManager() {
+      const body = document.getElementById("bbaiDocumentsBody");
+      if (!body) return;
+
+      body.innerHTML = `
+    <tr>
+      <td colspan="5" class="py-12 text-center text-slate-400">
+        <i class="fa-solid fa-spinner fa-spin mr-2"></i>
+        Loading documents...
+      </td>
+    </tr>
+  `;
+
+      try {
+        const result = await bbaiDocumentApi("documents_admin_list");
+
+        if (!result.ok) {
+          throw new Error(result.error || "Unable to load documents.");
+        }
+
+        bbaiDocumentsCache = Array.isArray(result.documents)
+          ? result.documents
+          : [];
+
+        if (!bbaiDocumentsCache.length) {
+          body.innerHTML = `
+        <tr>
+          <td colspan="5">
+            <div class="bbai-doc-empty">
+              <div class="bbai-doc-empty-icon">
+                <i class="fa-regular fa-folder-open"></i>
+              </div>
+
+              <div class="text-lg font-extrabold text-slate-700">
+                No documents yet
+              </div>
+
+              <div class="text-sm text-slate-400 mt-2">
+                Upload your first HSRC document using
+                <b>+ Add Document</b>.
+              </div>
+            </div>
+          </td>
+        </tr>
+      `;
+          return;
+        }
+
+        function getDocumentIcon(type, fileName) {
+          const file = String(fileName || "").toLowerCase();
+
+          if (file.endsWith(".pdf")) {
+            return {
+              icon: "fa-file-pdf",
+              className: "pdf",
+              label: "PDF"
+            };
+          }
+
+          if (
+            file.endsWith(".doc") ||
+            file.endsWith(".docx")
+          ) {
+            return {
+              icon: "fa-file-word",
+              className: "word",
+              label: "WORD"
+            };
+          }
+
+          if (
+            file.endsWith(".ppt") ||
+            file.endsWith(".pptx")
+          ) {
+            return {
+              icon: "fa-file-powerpoint",
+              className: "powerpoint",
+              label: "POWERPOINT"
+            };
+          }
+
+          if (
+            file.endsWith(".xls") ||
+            file.endsWith(".xlsx")
+          ) {
+            return {
+              icon: "fa-file-excel",
+              className: "excel",
+              label: "EXCEL"
+            };
+          }
+
+          return {
+            icon: "fa-file",
+            className: "file",
+            label: String(type || "FILE").toUpperCase()
+          };
+        }
+
+        body.innerHTML = bbaiDocumentsCache.map((doc, index) => {
+          const fileIcon = getDocumentIcon(
+            doc.type,
+            doc.fileName
+          );
+
+          return `
+        <tr class="bbai-doc-row border-b border-slate-100 align-middle">
+
+          <td class="py-4 px-4">
+            <div class="bbai-doc-file">
+
+              <div class="bbai-doc-file-icon ${fileIcon.className}">
+                <i class="fa-solid ${fileIcon.icon}"></i>
+              </div>
+
+              <div class="min-w-0">
+                <div class="bbai-doc-name truncate">
+                  ${bbaiEscapeDocumentHTML(doc.title || "Untitled Document")}
+                </div>
+
+                <div class="bbai-doc-filename">
+                  ${bbaiEscapeDocumentHTML(doc.fileName || "")}
+                </div>
+
+                ${doc.description
+              ? `
+                      <div class="text-xs text-slate-500 mt-2 max-w-xl">
+                        ${bbaiEscapeDocumentHTML(doc.description)}
+                      </div>
+                    `
+              : ""
+            }
+              </div>
+
+            </div>
+          </td>
+
+          <td class="py-4 px-4">
+            <span class="inline-flex items-center px-2.5 py-1 rounded-full
+              bg-slate-100 text-slate-600 text-xs font-extrabold">
+              ${bbaiEscapeDocumentHTML(fileIcon.label)}
+            </span>
+          </td>
+
+          <td class="py-4 px-4 text-sm font-semibold text-slate-600">
+            ${bbaiEscapeDocumentHTML(doc.size || "")}
+          </td>
+
+          <td class="py-4 px-4 text-sm text-slate-500">
+            ${bbaiEscapeDocumentHTML(doc.updatedAt || "")}
+          </td>
+
+          <td class="py-4 px-4">
+
+            <div class="flex flex-wrap gap-2">
+
+              <a
+                href="${bbaiEscapeDocumentHTML(doc.downloadUrl || doc.url || "#")}"
+                target="_blank"
+                rel="noopener"
+                class="bbai-doc-action open"
+              >
+                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                Open
+              </a>
+
+              <button
+                type="button"
+                onclick="bbaiEditDocument(${index})"
+                class="bbai-doc-action edit"
+              >
+                <i class="fa-solid fa-pen"></i>
+                Edit
+              </button>
+
+              <button
+                type="button"
+                onclick="bbaiDeleteDocument('${encodeURIComponent(doc.id)}')"
+                class="bbai-doc-action delete"
+              >
+                <i class="fa-solid fa-trash"></i>
+                Delete
+              </button>
+
+            </div>
+
+          </td>
+
+        </tr>
+      `;
+        }).join("");
+
+      } catch (error) {
+
+        console.error(
+          "Documents Manager Load Error:",
+          error
+        );
+
+        body.innerHTML = `
+      <tr>
+        <td colspan="5" class="py-10 text-center">
+
+          <div class="text-red-500 font-bold">
+            <i class="fa-solid fa-circle-exclamation mr-2"></i>
+            ${bbaiEscapeDocumentHTML(
+          error.message || "Unable to load documents."
+        )}
+          </div>
+
+        </td>
+      </tr>
+    `;
+      }
+    }
+
+    function bbaiShowDocumentStatus(message, type = "success") {
+      const box = document.getElementById("bbaiDocumentsStatus");
+      if (!box) return;
+      box.className = "mb-4 rounded-xl px-4 py-3 text-sm font-semibold " +
+        (type === "error" ? "bg-red-50 text-red-700 border border-red-200" : "bg-emerald-50 text-emerald-700 border border-emerald-200");
+      box.textContent = message;
+      box.classList.remove("hidden");
+      setTimeout(() => box.classList.add("hidden"), 4000);
+    }
+
+    function bbaiOpenDocumentForm(doc = null) {
+      document.getElementById("bbaiDocumentFormWrap")?.classList.remove("hidden");
+      document.getElementById("bbaiDocumentFormTitle").textContent = doc ? "Edit Document" : "Add Document";
+      document.getElementById("bbaiDocumentId").value = doc?.id || "";
+      document.getElementById("bbaiDocumentTitle").value = doc?.title || "";
+      document.getElementById("bbaiDocumentDescription").value = doc?.description || "";
+      document.getElementById("bbaiDocumentType").value = doc?.type || "";
+      document.getElementById("bbaiDocumentFile").value = "";
+      document.getElementById("bbaiDocumentFileHelp").textContent = doc
+        ? "Leave empty to keep the current file. Select a new file only if you want to replace it."
+        : "Required for a new document. PDF, Word, PowerPoint and common office files are supported.";
+      document.getElementById("bbaiSaveDocumentBtn").textContent = doc ? "Save Changes" : "Save Document";
+      document.getElementById("bbaiDocumentFormWrap").scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    function bbaiCloseDocumentForm() {
+      document.getElementById("bbaiDocumentFormWrap")?.classList.add("hidden");
+      document.getElementById("bbaiDocumentId").value = "";
+      document.getElementById("bbaiDocumentTitle").value = "";
+      document.getElementById("bbaiDocumentDescription").value = "";
+      document.getElementById("bbaiDocumentType").value = "";
+      document.getElementById("bbaiDocumentFile").value = "";
+    }
+
+    function bbaiEditDocument(index) {
+      const doc = bbaiDocumentsCache[index];
+      if (doc) bbaiOpenDocumentForm(doc);
+    }
+
+    function bbaiReadFileAsBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          const result = String(reader.result || "");
+          resolve(result.includes(",") ? result.split(",")[1] : result);
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+
+    async function bbaiSaveDocument() {
+      const adminKey = document.getElementById("adminKey")?.value?.trim() || "";
+      if (!adminKey) {
+        alert("Please enter the Admin Key first.");
+        return;
+      }
+
+      const id = document.getElementById("bbaiDocumentId").value.trim();
+      const title = document.getElementById("bbaiDocumentTitle").value.trim();
+      const description = document.getElementById("bbaiDocumentDescription").value.trim();
+      const type = document.getElementById("bbaiDocumentType").value.trim();
+      const fileInput = document.getElementById("bbaiDocumentFile");
+      const file = fileInput.files?.[0];
+
+      if (!title) {
+        alert("Please enter the document title.");
+        return;
+      }
+      if (!id && !file) {
+        alert("Please choose a file.");
+        return;
+      }
+
+      if (file && file.size > 25 * 1024 * 1024) {
+        alert("Please keep the uploaded file at 25 MB or below.");
+        return;
+      }
+
+      const btn = document.getElementById("bbaiSaveDocumentBtn");
+      const original = btn.innerHTML;
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Saving...';
+
+      try {
+        let base64 = "";
+        let fileName = "";
+        let mimeType = "";
+
+        if (file) {
+          base64 = await bbaiReadFileAsBase64(file);
+          fileName = file.name;
+          mimeType = file.type || "application/octet-stream";
+        }
+
+        const result = await bbaiDocumentApi(id ? "documents_admin_update" : "documents_admin_add", {
+          id,
+          title,
+          description,
+          type,
+          fileName,
+          mimeType,
+          base64
+        });
+
+        if (!result.ok) throw new Error(result.error || "Unable to save document.");
+
+        bbaiCloseDocumentForm();
+        bbaiShowDocumentStatus(id ? "Document updated successfully." : "Document added successfully.");
+        await bbaiLoadDocumentsManager();
+      } catch (error) {
+        console.error("Save Document Error:", error);
+        bbaiShowDocumentStatus(error.message || "Unable to save document.", "error");
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = original;
+      }
+    }
+
+    let bbaiPendingDeleteDocumentId = "";
+
+    function bbaiEnsureDeleteModal() {
+      if (document.getElementById("bbaiDocumentDeleteModal")) {
+        return;
+      }
+
+      document.body.insertAdjacentHTML("beforeend", `
+    <div id="bbaiDocumentDeleteModal">
+
+      <div
+        class="bbai-delete-dialog"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="bbaiDeleteModalTitle"
+      >
+
+        <div class="bbai-delete-icon">
+          <i class="fa-solid fa-trash-can"></i>
+        </div>
+
+        <div
+          id="bbaiDeleteModalTitle"
+          class="bbai-delete-title"
+        >
+          Delete Document?
+        </div>
+
+        <div
+          id="bbaiDeleteDocumentName"
+          class="bbai-delete-document-name"
+        >
+        </div>
+
+        <div class="bbai-delete-description">
+          This will remove the document from the public
+          Documents list and move its Drive file to trash.
+        </div>
+
+        <div class="bbai-delete-actions">
+
+          <button
+            type="button"
+            class="bbai-delete-cancel"
+            onclick="bbaiCloseDeleteDocumentModal()"
+          >
+            Cancel
+          </button>
+
+          <button
+            type="button"
+            class="bbai-delete-confirm"
+            onclick="bbaiConfirmDeleteDocument()"
+          >
+            <i class="fa-solid fa-trash mr-1"></i>
+            Delete Document
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+  `);
+
+      const modal = document.getElementById(
+        "bbaiDocumentDeleteModal"
+      );
+
+      modal.addEventListener("click", (event) => {
+        if (event.target === modal) {
+          bbaiCloseDeleteDocumentModal();
+        }
+      });
+    }
+
+    function bbaiDeleteDocument(encodedId) {
+      const id = decodeURIComponent(encodedId);
+
+      const doc = bbaiDocumentsCache.find(
+        x => String(x.id) === String(id)
+      );
+
+      const title = doc?.title || "this document";
+
+      bbaiPendingDeleteDocumentId = id;
+
+      bbaiEnsureDeleteModal();
+
+      const nameEl = document.getElementById(
+        "bbaiDeleteDocumentName"
+      );
+
+      if (nameEl) {
+        nameEl.textContent = `"${title}"`;
+      }
+
+      document
+        .getElementById("bbaiDocumentDeleteModal")
+        ?.classList.add("show");
+    }
+
+    function bbaiCloseDeleteDocumentModal() {
+      document
+        .getElementById("bbaiDocumentDeleteModal")
+        ?.classList.remove("show");
+
+      bbaiPendingDeleteDocumentId = "";
+    }
+
+    async function bbaiConfirmDeleteDocument() {
+
+      const id = bbaiPendingDeleteDocumentId;
+
+      if (!id) {
+        bbaiCloseDeleteDocumentModal();
+        return;
+      }
+
+      const confirmBtn = document.querySelector(
+        ".bbai-delete-confirm"
+      );
+
+      if (confirmBtn) {
+        confirmBtn.disabled = true;
+        confirmBtn.innerHTML =
+          '<i class="fa-solid fa-spinner fa-spin mr-1"></i> Deleting...';
+      }
+
+      try {
+
+        const result = await bbaiDocumentApi(
+          "documents_admin_delete",
+          { id }
+        );
+
+        if (!result.ok) {
+          throw new Error(
+            result.error || "Unable to delete document."
+          );
+        }
+
+        bbaiCloseDeleteDocumentModal();
+
+        bbaiShowDocumentStatus(
+          "Document deleted successfully."
+        );
+
+        await bbaiLoadDocumentsManager();
+
+      } catch (error) {
+
+        console.error(
+          "Delete Document Error:",
+          error
+        );
+
+        bbaiCloseDeleteDocumentModal();
+
+        bbaiShowDocumentStatus(
+          error.message ||
+          "Unable to delete document.",
+          "error"
+        );
+
+      } finally {
+
+        if (confirmBtn) {
+          confirmBtn.disabled = false;
+          confirmBtn.innerHTML =
+            '<i class="fa-solid fa-trash mr-1"></i> Delete Document';
+        }
+
+      }
+    }
+
+    function bbaiToggleDocumentsManager() {
+      const dashboard = document.getElementById("bbaiChallengeAdminContent");
+      const portfolio = document.getElementById("bbaiProjectPortfolioSection");
+      const idSystem = document.getElementById("bbaiIDSystemRequestsSection");
+      const docs = document.getElementById("bbaiDocumentsManagerSection");
+      const submissions = document.getElementById("bbaiChallengeSubmissionsTableWrap");
+      if (!dashboard || !docs) return;
+
+      dashboard.classList.add("hidden");
+      portfolio?.classList.add("hidden");
+      idSystem?.classList.add("hidden");
+      submissions?.classList.add("hidden");
+      docs.classList.remove("hidden");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      bbaiLoadDocumentsManager();
+    }
+
+    function bbaiBackToChallengeAdminFromDocuments() {
+      document.getElementById("bbaiDocumentsManagerSection")?.classList.add("hidden");
+      const dashboard = document.getElementById("bbaiChallengeAdminContent");
+      dashboard?.classList.remove("hidden");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
 
     function showLoading(show) {
       const overlay = document.getElementById('loadingOverlay');
