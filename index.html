@@ -1101,27 +1101,96 @@
                                 </div>
                             </div>
 
+                            <!-- APPLICATION SOURCE - SHOWN WHEN NO REFERRER -->
+                            <div id="application-source-container" class="hidden transition-all duration-300">
+
+                                <div>
+                                    <label class="block text-sm font-bold text-slate-700 mb-1">
+                                        Where did you apply? <span class="text-red-500">*</span>
+                                    </label>
+
+                                    <div class="relative">
+                                        <select id="application-source" name="applicationSource"
+                                            class="w-full px-4 py-2.5 pr-10 rounded-lg border border-slate-300 bg-white focus:ring-2 focus:ring-brand-gold text-brand-dark font-medium appearance-none">
+                                            <option value="" disabled selected>-- Select where you applied --</option>
+                                            <option value="Facebook Page (Human Shelter Page)">
+                                                Facebook Page (Human Shelter Page)
+                                            </option>
+                                            <option value="Facebook Page (Human Shelter Careers)">
+                                                Facebook Page (Human Shelter Careers)
+                                            </option>
+                                            <option value="Official Website (joinhumanshelter.com)">
+                                                Official Website (joinhumanshelter.com)
+                                            </option>
+                                            <option value="HSRC Main Office">
+                                                HSRC Main Office
+                                            </option>
+                                        </select>
+
+                                        <div
+                                            class="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none text-slate-500">
+                                            <i class="fa-solid fa-chevron-down"></i>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
                             <div id="referrer-name-container" class="hidden transition-all duration-300 space-y-4">
 
                                 <div>
                                     <label class="block text-sm font-bold text-slate-700 mb-1">
-                                        If Yes, Please indicate the Fullname of your referrer/recruiter: <span
+                                        Team Name <span class="text-red-500">*</span>
+                                    </label>
+
+                                    <div class="relative" id="team-dropdown-wrapper">
+
+                                        <!-- SELECTED TEAM -->
+                                        <input type="text" id="team-name" name="teamName" readonly required
+                                            onclick="openTeamDropdown()"
+                                            class="w-full px-4 py-2.5 pr-12 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brand-gold text-brand-dark font-medium cursor-pointer bg-white"
+                                            placeholder="Select Team Name" autocomplete="off">
+
+                                        <!-- ARROW -->
+                                        <div
+                                            class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500">
+                                            <i class="fa-solid fa-chevron-down"></i>
+                                        </div>
+
+                                        <!-- DROPDOWN -->
+                                        <div id="team-dropdown"
+                                            class="hidden absolute z-[9999] left-0 right-0 mt-2 bg-white border border-slate-200 rounded-xl shadow-2xl overflow-hidden">
+
+                                            <!-- SEARCH -->
+                                            <div class="p-3 border-b border-slate-200 bg-white">
+                                                <div class="relative">
+                                                    <i
+                                                        class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
+
+                                                    <input type="text" id="team-search" oninput="filterTeamOptions()"
+                                                        onclick="event.stopPropagation()"
+                                                        class="w-full pl-10 pr-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brand-gold text-brand-dark"
+                                                        placeholder="Search Team Name..." autocomplete="off">
+                                                </div>
+                                            </div>
+
+                                            <!-- TEAM LIST -->
+                                            <div id="team-options" class="max-h-64 overflow-y-auto">
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm font-bold text-slate-700 mb-1">
+                                        Please indicate the Fullname of your referrer/recruiter: <span
                                             class="text-red-500">*</span>
                                     </label>
                                     <input type="text" id="recruiter-name" name="recruiterName"
                                         class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brand-gold text-brand-dark font-medium"
                                         placeholder="">
                                 </div>
-
-                                <div>
-                                    <label class="block text-sm font-bold text-slate-700 mb-1">
-                                        Team Name <span class="text-red-500">*</span>
-                                    </label>
-                                    <input type="text" id="team-name" name="teamName"
-                                        class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-brand-gold text-brand-dark font-medium"
-                                        placeholder="">
-                                </div>
-
                             </div>
                         </div>
                     </div>
@@ -5231,33 +5300,265 @@
         }
 
 
+        // =============================================
+        // HSRC TEAM LIST
+        // =============================================
+
+        const HSRC_TEAM_LIST = [
+            "Achievers (Belinda Negro)",
+            "Active (Nimpa Tiangco)",
+            "Alpha (Michelle Oblego)",
+            "Amazing (Dolores Obando)",
+            "Ascenders (Joe Marie Fajardo)",
+            "Brilliant (Janize Villanueva)",
+            "CBS Network - Diamond (Ien Maravilla)",
+            "CBS Network - Infinity (Lester Sy)",
+            "CBS Network - Joy (Jocelyn Cu)",
+            "CBS Network (Cerila Sy)",
+            "Challenger (Ruben Torrecampo)",
+            "Cheerful (Maria Elena Bandilla)",
+            "Courage (Erly Ramos)",
+            "CSR (Gaspar Idio)",
+            "Delightful (Divina Abogag)",
+            "Dynamic (Joni Macalisang)",
+            "Elite (Desa Angelyn Fermo)",
+            "Energetic (Nelia Montante)",
+            "Extraordinary (Catherine Vallente)",
+            "Fearless (Esmeralda Castro)",
+            "Fusion (Jennifer Pole)",
+            "Fusion (Nancy Asis)",
+            "Glam (Rosalie Salvador)",
+            "Glory (Gloria Lim)",
+            "God's Grace (Mary Grace Boholong)",
+            "Gold Keeper (Estrella Canaman)",
+            "Gracious (Grace Vejano)",
+            "Heart (Elisa Pascubillo)",
+            "Innovative (Leonila Bautista)",
+            "Integrity (Elvira Suico)",
+            "Kairos (Anne Rosalie Ibañez)",
+            "Limitless (Lydia Secretario)",
+            "Luminous (Mary Grace Janoras)",
+            "Optimistic (Cerenis Julieta Cadlan)",
+            "Peaceful (Arceli Galano)",
+            "Phoenix (Ria Onod)",
+            "Prime (Carminia Luisa Jereza)",
+            "Prosperity (Maria Labrador)",
+            "Resilient (Jenie Rose Silverio)",
+            "RISE Inc. (Vilma Soldao)",
+            "Royalty (Herminda Ignacio)",
+            "Salespreneur (Rene Besuenia)",
+            "Sirius (Cherrilyn Lubrin)",
+            "Star (Angelita Porte)",
+            "Terrific (Thelma Bahian)",
+            "The Cornerstone (Mercidita Matagro)",
+            "Thrive (Matilde Burro)",
+            "Unity Squad (Julie Ann Fulgencio)",
+            "Unstoppable (Joan Joy Padilla)",
+            "Zai (Zadira Delos Santos)",
+            "Zinnia (Helen Cajotay)",
+            "Red Eagles (Teodolo Totanes II)",
+            "Others"
+        ];
+
+
+        // =============================================
+        // TEAM DROPDOWN
+        // =============================================
+
+        function renderTeamOptions(list = HSRC_TEAM_LIST) {
+
+            const optionsContainer =
+                document.getElementById("team-options");
+
+            if (!optionsContainer) return;
+
+            optionsContainer.innerHTML = "";
+
+            if (list.length === 0) {
+
+                optionsContainer.innerHTML = `
+            <div class="px-4 py-4 text-sm text-slate-500 text-center">
+                No team found.
+            </div>
+        `;
+
+                return;
+            }
+
+            list.forEach(team => {
+
+                const button = document.createElement("button");
+
+                button.type = "button";
+
+                button.className =
+                    "w-full text-left px-4 py-3 text-sm font-medium text-brand-dark hover:bg-amber-50 transition-colors border-b border-slate-100 last:border-b-0";
+
+                button.textContent = team;
+
+                button.onclick = function () {
+
+                    const teamNameInput =
+                        document.getElementById("team-name");
+
+                    const dropdown =
+                        document.getElementById("team-dropdown");
+
+                    const search =
+                        document.getElementById("team-search");
+
+                    if (teamNameInput) {
+                        teamNameInput.value = team;
+                    }
+
+                    if (dropdown) {
+                        dropdown.classList.add("hidden");
+                    }
+
+                    if (search) {
+                        search.value = "";
+                    }
+
+                    renderTeamOptions();
+
+                    updateFormStep();
+                };
+
+                optionsContainer.appendChild(button);
+            });
+        }
+
+
+        // =============================================
+        // OPEN TEAM DROPDOWN
+        // =============================================
+
+        function openTeamDropdown() {
+
+            const dropdown =
+                document.getElementById("team-dropdown");
+
+            const search =
+                document.getElementById("team-search");
+
+            if (!dropdown) return;
+
+            dropdown.classList.remove("hidden");
+
+            renderTeamOptions();
+
+            setTimeout(() => {
+
+                if (search) {
+                    search.focus();
+                }
+
+            }, 50);
+        }
+
+
+        // =============================================
+        // SEARCH TEAM
+        // =============================================
+
+        function filterTeamOptions() {
+
+            const search =
+                document.getElementById("team-search");
+
+            if (!search) return;
+
+            const searchValue =
+                search.value.trim().toLowerCase();
+
+            const filteredTeams =
+                HSRC_TEAM_LIST.filter(team =>
+                    team.toLowerCase().includes(searchValue)
+                );
+
+            renderTeamOptions(filteredTeams);
+        }
+
+
+        // =============================================
+        // CLOSE DROPDOWN WHEN CLICKING OUTSIDE
+        // =============================================
+
+        document.addEventListener("click", function (event) {
+
+            const wrapper =
+                document.getElementById("team-dropdown-wrapper");
+
+            const dropdown =
+                document.getElementById("team-dropdown");
+
+            if (
+                wrapper &&
+                dropdown &&
+                !wrapper.contains(event.target)
+            ) {
+                dropdown.classList.add("hidden");
+            }
+
+        });
+
+
+        // =============================================
         // TOGGLE LOGIC FOR REFERRER FIELD
+        // =============================================
+
         function toggleReferrerField() {
 
-            const container = document.getElementById('referrer-name-container');
+            const referrerContainer = document.getElementById('referrer-name-container');
+            const applicationSourceContainer = document.getElementById('application-source-container');
 
             const recruiterNameInput = document.getElementById('recruiter-name');
             const teamNameInput = document.getElementById('team-name');
+            const applicationSourceInput = document.getElementById('application-source');
 
             const yesRadio = document.querySelector('input[name="isReferred"][value="Yes"]');
+            const noRadio = document.querySelector('input[name="isReferred"][value="No"]');
 
             if (yesRadio && yesRadio.checked) {
 
-                container.classList.remove('hidden');
+                // SHOW RECRUITER + TEAM
+                referrerContainer.classList.remove('hidden');
+                applicationSourceContainer.classList.add('hidden');
 
                 recruiterNameInput.required = true;
                 teamNameInput.required = true;
+                applicationSourceInput.required = false;
 
-            } else {
+                // Clear application source when switching to YES
+                applicationSourceInput.value = "";
 
-                container.classList.add('hidden');
+            } else if (noRadio && noRadio.checked) {
+
+                // SHOW APPLICATION SOURCE
+                referrerContainer.classList.add('hidden');
+                applicationSourceContainer.classList.remove('hidden');
 
                 recruiterNameInput.required = false;
                 teamNameInput.required = false;
+                applicationSourceInput.required = true;
 
+                // Clear recruiter/team when switching to NO
                 recruiterNameInput.value = "";
                 teamNameInput.value = "";
 
+            } else {
+
+                // DEFAULT / NOTHING SELECTED
+                referrerContainer.classList.add('hidden');
+                applicationSourceContainer.classList.add('hidden');
+
+                recruiterNameInput.required = false;
+                teamNameInput.required = false;
+                applicationSourceInput.required = false;
+
+                recruiterNameInput.value = "";
+                teamNameInput.value = "";
+                applicationSourceInput.value = "";
             }
 
             updateFormStep();
@@ -6004,6 +6305,9 @@
             const teamNameInput =
                 document.getElementById("team-name")?.value || "N/A";
 
+            const applicationSourceInput =
+                document.getElementById("application-source")?.value || "N/A";
+
             const signatureBase64 = signaturePad ? signaturePad.toDataURL("image/png") : "";
 
             const sheetFormData = new FormData();
@@ -6025,6 +6329,7 @@
             sheetFormData.append('isReferred', isReferredInput);
             sheetFormData.append('recruiterName', recruiterNameInput);
             sheetFormData.append('teamName', teamNameInput);
+            sheetFormData.append('applicationSource', applicationSourceInput);
 
             // Setup Target Emails safely if multiple recipients
             let targetEmail = BLInfo.email;
