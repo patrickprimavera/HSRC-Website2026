@@ -1796,6 +1796,56 @@
             <textarea id="bbaiDocumentDescription" rows="3" placeholder="Short description shown to users."
               class="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none focus:border-teal-500"></textarea>
           </div>
+
+
+          <!-- DOCUMENT PASSWORD SETTINGS -->
+          <div class="md:col-span-2 rounded-xl border border-slate-200 bg-white p-4">
+
+            <label class="block text-sm font-bold text-slate-700 mb-2">
+              Document Access
+            </label>
+
+            <select id="bbaiDocumentPasswordMode" onchange="bbaiToggleDocumentPasswordFields()"
+              class="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none focus:border-teal-500">
+
+              <option value="none">No Password – Public Access</option>
+              <option value="protected">Require Password</option>
+
+            </select>
+
+            <p class="text-xs text-slate-500 mt-2">
+              Choose whether users need a password before accessing this document.
+            </p>
+
+            <div id="bbaiDocumentPasswordFields" class="hidden mt-4 space-y-3">
+
+              <div>
+                <label class="block text-sm font-bold text-slate-700 mb-1">
+                  Document Password *
+                </label>
+                <input id="bbaiDocumentPassword" type="password" autocomplete="new-password"
+                  placeholder="Enter document password"
+                  class="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none focus:border-teal-500">
+              </div>
+
+              <div>
+                <label class="block text-sm font-bold text-slate-700 mb-1">
+                  Confirm Password *
+                </label>
+                <input id="bbaiDocumentPasswordConfirm" type="password" autocomplete="new-password"
+                  placeholder="Confirm document password"
+                  class="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none focus:border-teal-500">
+              </div>
+
+              <p class="text-xs text-amber-700">
+                Users will need this password to access the document.
+              </p>
+
+            </div>
+          </div>
+          <!-- END DOCUMENT PASSWORD SETTINGS -->
+
+
           <div class="md:col-span-2">
             <label class="block text-sm font-bold text-slate-700 mb-1">File *</label>
             <input id="bbaiDocumentFile" type="file" accept=".pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.txt,.csv"
@@ -2500,6 +2550,7 @@
       });
     }
 
+
     async function bbaiSaveDocument() {
       const adminKey = document.getElementById("adminKey")?.value?.trim() || "";
       if (!adminKey) {
@@ -2514,10 +2565,16 @@
       const fileInput = document.getElementById("bbaiDocumentFile");
       const file = fileInput.files?.[0];
 
+      // Document password settings
+      const passwordMode = document.getElementById("bbaiDocumentPasswordMode").value;
+      const password = document.getElementById("bbaiDocumentPassword").value;
+      const confirmPassword = document.getElementById("bbaiDocumentPasswordConfirm").value;
+
       if (!title) {
         alert("Please enter the document title.");
         return;
       }
+
       if (!id && !file) {
         alert("Please choose a file.");
         return;
@@ -2526,6 +2583,18 @@
       if (file && file.size > 25 * 1024 * 1024) {
         alert("Please keep the uploaded file at 25 MB or below.");
         return;
+      }
+
+      if (passwordMode === "protected") {
+        if (!password || !confirmPassword) {
+          alert("Please enter and confirm the document password.");
+          return;
+        }
+
+        if (password !== confirmPassword) {
+          alert("Passwords do not match.");
+          return;
+        }
       }
 
       const btn = document.getElementById("bbaiSaveDocumentBtn");
@@ -2544,21 +2613,31 @@
           mimeType = file.type || "application/octet-stream";
         }
 
-        const result = await bbaiDocumentApi(id ? "documents_admin_update" : "documents_admin_add", {
-          id,
-          title,
-          description,
-          type,
-          fileName,
-          mimeType,
-          base64
-        });
+        const result = await bbaiDocumentApi(
+          id ? "documents_admin_update" : "documents_admin_add",
+          {
+            id,
+            title,
+            description,
+            type,
+            fileName,
+            mimeType,
+            base64,
+            passwordMode,
+            password: passwordMode === "protected" ? password : ""
+          }
+        );
 
-        if (!result.ok) throw new Error(result.error || "Unable to save document.");
+        if (!result.ok) {
+          throw new Error(result.error || "Unable to save document.");
+        }
 
         bbaiCloseDocumentForm();
-        bbaiShowDocumentStatus(id ? "Document updated successfully." : "Document added successfully.");
+        bbaiShowDocumentStatus(
+          id ? "Document updated successfully." : "Document added successfully."
+        );
         await bbaiLoadDocumentsManager();
+
       } catch (error) {
         console.error("Save Document Error:", error);
         bbaiShowDocumentStatus(error.message || "Unable to save document.", "error");
@@ -2567,6 +2646,7 @@
         btn.innerHTML = original;
       }
     }
+
 
     let bbaiPendingDeleteDocumentId = "";
 
@@ -5356,6 +5436,29 @@
 
       }
     );
+
+
+
+    function bbaiToggleDocumentPasswordFields() {
+      const mode = document.getElementById('bbaiDocumentPasswordMode');
+      const fields = document.getElementById('bbaiDocumentPasswordFields');
+      const password = document.getElementById('bbaiDocumentPassword');
+      const confirm = document.getElementById('bbaiDocumentPasswordConfirm');
+
+      if (!mode || !fields) return;
+
+      const isProtected = mode.value === 'protected';
+
+      fields.classList.toggle('hidden', !isProtected);
+
+      if (password) password.required = isProtected;
+      if (confirm) confirm.required = isProtected;
+
+      if (!isProtected) {
+        if (password) password.value = '';
+        if (confirm) confirm.value = '';
+      }
+    }
 
   </script>
 
