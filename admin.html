@@ -2509,20 +2509,49 @@
       setTimeout(() => box.classList.add("hidden"), 4000);
     }
 
+
     function bbaiOpenDocumentForm(doc = null) {
       document.getElementById("bbaiDocumentFormWrap")?.classList.remove("hidden");
-      document.getElementById("bbaiDocumentFormTitle").textContent = doc ? "Edit Document" : "Add Document";
+
+      document.getElementById("bbaiDocumentFormTitle").textContent =
+        doc ? "Edit Document" : "Add Document";
+
       document.getElementById("bbaiDocumentId").value = doc?.id || "";
       document.getElementById("bbaiDocumentTitle").value = doc?.title || "";
       document.getElementById("bbaiDocumentDescription").value = doc?.description || "";
       document.getElementById("bbaiDocumentType").value = doc?.type || "";
+
       document.getElementById("bbaiDocumentFile").value = "";
+
+      // Password settings
+      const passwordMode =
+        document.getElementById("bbaiDocumentPasswordMode");
+
+      const password =
+        document.getElementById("bbaiDocumentPassword");
+
+      const confirmPassword =
+        document.getElementById("bbaiDocumentPasswordConfirm");
+
+      passwordMode.value = doc?.passwordMode || "none";
+      password.value = "";
+      confirmPassword.value = "";
+
+      bbaiToggleDocumentPasswordFields();
+
       document.getElementById("bbaiDocumentFileHelp").textContent = doc
         ? "Leave empty to keep the current file. Select a new file only if you want to replace it."
         : "Required for a new document. PDF, Word, PowerPoint and common office files are supported.";
-      document.getElementById("bbaiSaveDocumentBtn").textContent = doc ? "Save Changes" : "Save Document";
-      document.getElementById("bbaiDocumentFormWrap").scrollIntoView({ behavior: "smooth", block: "start" });
+
+      document.getElementById("bbaiSaveDocumentBtn").textContent =
+        doc ? "Save Changes" : "Save Document";
+
+      document.getElementById("bbaiDocumentFormWrap").scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
     }
+
 
     function bbaiCloseDocumentForm() {
       document.getElementById("bbaiDocumentFormWrap")?.classList.add("hidden");
