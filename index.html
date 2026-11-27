@@ -7149,6 +7149,7 @@
         const documentViewerMeta = document.getElementById("documentViewerMeta");
         const documentViewerDownload = document.getElementById("documentViewerDownload");
         const documentViewerClose = document.getElementById("documentViewerClose");
+        let HSRC_ACTIVE_VIEWER_DOCUMENT = null;
         const documentViewerCloseBottom = document.getElementById("documentViewerCloseBottom");
 
         function escapeDocHTML(value) {
@@ -7180,6 +7181,7 @@
                         </div>
                         <div class="min-w-0">
                             <h3 class="font-extrabold text-[#164849] truncate">${index + 1}. ${escapeDocHTML(doc.title)}</h3>
+                            ${doc.passwordMode === "protected" ? '<span class="inline-flex items-center gap-1 mt-1 text-xs font-bold text-amber-700"><i class="fa-solid fa-lock"></i> Password Protected</span>' : ''}
                             <div class="mt-1.5 text-xs sm:text-sm text-slate-500 flex flex-wrap items-center gap-x-2 gap-y-1">
                                 <span>${escapeDocHTML(doc.type || "FILE")}</span><span>•</span><span>${escapeDocHTML(doc.size || "")}</span>
                             </div>
@@ -7271,44 +7273,109 @@
                 "/preview";
         }
 
-        function openHSRCDocumentViewer(index) {
+        async function authorizeHSRCDocument(doc) {
+            if (!doc) throw new Error("Document not found.");
+
+            if (String(doc.passwordMode || "none").toLowerCase() !== "protected") {
+                return doc;
+            }
+
+            const password = window.prompt(`Enter the password to open "${doc.title}"`);
+            if (password === null) return null;
+            if (!password) {
+                alert("Please enter the document password.");
+                return null;
+            }
+
+            const response = await fetch(HSRC_DOCUMENTS_API_URL, {
+                method: "POST",
+                headers: { "Content-Type": "text/plain;charset=utf-8" },
+                body: JSON.stringify({
+                    action: "documents_verify_password",
+                    payload: { id: doc.id, password }
+                })
+            });
+            const result = await response.json();
+            if (!result.ok || !result.document) {
+                throw new Error(result.error || "Incorrect password.");
+            }
+            return { ...doc, ...result.document, passwordMode: "protected" };
+        }
+
+        async function openHSRCDocumentViewer(index) {
             const doc = HSRC_DOCUMENTS[index];
             if (!doc) return;
 
-            documentViewerTitle.textContent = doc.title;
-            documentViewerMeta.textContent = `${doc.type} • ${doc.size}`;
-            documentViewerDownload.href = doc.downloadUrl || doc.url || doc.file;
-            documentViewerDownload.setAttribute("download", "");
+            try {
+                const authorizedDoc = await authorizeHSRCDocument(doc);
+                if (!authorizedDoc) return;
+                if (!authorizedDoc.fileId) throw new Error("Document file is unavailable.");
 
-            documentViewerFallback.classList.add("hidden");
-            documentViewerFallback.classList.remove("flex");
-            documentViewerFrame.classList.remove("hidden");
-            documentViewerFrame.src = getViewerURL(doc);
+                HSRC_ACTIVE_VIEWER_DOCUMENT = authorizedDoc;
+                documentViewerTitle.textContent = authorizedDoc.title;
+                documentViewerMeta.textContent = `${authorizedDoc.type || "FILE"} • ${authorizedDoc.size || ""}`;
+                documentViewerDownload.href = authorizedDoc.downloadUrl || authorizedDoc.url || "#";
+                documentViewerDownload.setAttribute("download", authorizedDoc.fileName || "");
 
-            documentViewerOverlay.classList.add("hs-doc-open");
-            lockDocumentUI();
+                documentViewerFallback.classList.add("hidden");
+                documentViewerFallback.classList.remove("flex");
+                documentViewerFrame.classList.remove("hidden");
+                documentViewerFrame.src = getViewerURL(authorizedDoc);
+
+                documentViewerOverlay.classList.add("hs-doc-open");
+                lockDocumentUI();
+            } catch (error) {
+                console.error("HSRC Document Authorization Error:", error);
+                alert(error.message || "Unable to verify document password.");
+            }
         }
 
         function closeHSRCDocumentViewer() {
             documentViewerOverlay.classList.remove("hs-doc-open");
             documentViewerFrame.src = "about:blank";
+            HSRC_ACTIVE_VIEWER_DOCUMENT = null;
             unlockDocumentUI();
         }
 
-        function downloadHSRCDocument(index) {
+        async function downloadHSRCDocument(index) {
             const doc = HSRC_DOCUMENTS[index];
             if (!doc) return;
-            const link = document.createElement("a");
-            link.href = doc.downloadUrl || doc.url || doc.file;
-            link.download = "";
-            document.body.appendChild(link);
-            link.click();
-            link.remove();
+            try {
+                const authorizedDoc = await authorizeHSRCDocument(doc);
+                if (!authorizedDoc) return;
+                const fileURL = authorizedDoc.downloadUrl || authorizedDoc.url;
+                if (!fileURL) throw new Error("Download link is unavailable.");
+                const link = document.createElement("a");
+                link.href = fileURL;
+                link.download = authorizedDoc.fileName || authorizedDoc.title || "document";
+                link.target = "_blank";
+                document.body.appendChild(link);
+                link.click();
+                link.remove();
+            } catch (error) {
+                console.error("HSRC Document Download Error:", error);
+                alert(error.message || "Unable to download document.");
+            }
         }
 
         async function downloadAllHSRCDocuments() {
+            const protectedDocs = HSRC_DOCUMENTS.filter(doc =>
+                String(doc.passwordMode || "none").toLowerCase() === "protected"
+            );
+            if (protectedDocs.length) {
+                alert("Some documents are password-protected. Please open or download each protected document individually so its password can be verified.");
+            }
+
+            const publicDocs = HSRC_DOCUMENTS.filter(doc =>
+                String(doc.passwordMode || "none").toLowerCase() !== "protected"
+            );
+            if (!publicDocs.length) return;
+
             if (!window.JSZip) {
-                HSRC_DOCUMENTS.forEach((_, index) => downloadHSRCDocument(index));
+                publicDocs.forEach(doc => {
+                    const index = HSRC_DOCUMENTS.indexOf(doc);
+                    downloadHSRCDocument(index);
+                });
                 return;
             }
 
@@ -7319,10 +7386,11 @@
 
             try {
                 const zip = new JSZip();
-                for (const doc of HSRC_DOCUMENTS) {
+                for (const doc of publicDocs) {
                     const fileURL = doc.downloadUrl || doc.url || doc.file;
+                    if (!fileURL) continue;
                     const response = await fetch(fileURL);
-                    if (!response.ok) throw new Error(`Unable to fetch ${fileURL}`);
+                    if (!response.ok) throw new Error(`Unable to fetch ${doc.title}`);
                     zip.file(doc.fileName || doc.title, await response.blob());
                 }
                 const blob = await zip.generateAsync({ type: "blob" });
@@ -7336,7 +7404,7 @@
                 setTimeout(() => URL.revokeObjectURL(url), 1000);
             } catch (error) {
                 console.error("HSRC Download All Error:", error);
-                alert("Some documents could not be packaged. Please download them individually.");
+                alert("Some public documents could not be packaged. Please download them individually.");
             } finally {
                 button.disabled = false;
                 button.innerHTML = original;
@@ -7348,6 +7416,17 @@
         documentsCloseBottom?.addEventListener("click", closeDocuments);
         documentsOverlay?.addEventListener("click", closeDocuments);
         downloadAllDocuments?.addEventListener("click", downloadAllHSRCDocuments);
+        documentViewerDownload?.addEventListener("click", (event) => {
+            if (!HSRC_ACTIVE_VIEWER_DOCUMENT) {
+                event.preventDefault();
+                return;
+            }
+            if (HSRC_ACTIVE_VIEWER_DOCUMENT.passwordMode === "protected") {
+                // The password was verified before the viewer was opened.
+                // Keep the download link tied to this currently authorized document.
+                if (!HSRC_ACTIVE_VIEWER_DOCUMENT.fileId) event.preventDefault();
+            }
+        });
         documentViewerClose?.addEventListener("click", closeHSRCDocumentViewer);
         documentViewerCloseBottom?.addEventListener("click", closeHSRCDocumentViewer);
         documentViewerOverlay?.addEventListener("click", (event) => {
