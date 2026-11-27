@@ -7270,61 +7270,59 @@
          * Requests a protected document from the backend.
          * The file is returned only after server-side password verification.
          */
+
+
         async function getProtectedDocumentBlob(doc) {
+            let lastError = "";
 
-            const password = window.prompt(
-                "This document is password-protected.\nPlease enter the document password:"
-            );
+            while (true) {
+                const password = await window.hsrcAskDocumentPassword(lastError);
 
-            if (password === null) {
-                return null;
-            }
-
-            if (!password.trim()) {
-                alert("Please enter the document password.");
-                return null;
-            }
-
-            try {
-                const response = await fetch(HSRC_DOCUMENTS_API_URL, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "text/plain;charset=utf-8"
-                    },
-                    body: JSON.stringify({
-                        action: "documents_get_protected_file",
-                        payload: {
-                            id: doc.id,
-                            password: password
-                        }
-                    })
-                });
-
-                const result = await response.json();
-
-                if (!result.ok || !result.base64) {
-                    throw new Error(
-                        result.error || "Unable to unlock this document."
-                    );
+                if (password === null) {
+                    return null;
                 }
 
-                const binary = atob(result.base64);
-                const bytes = new Uint8Array(binary.length);
+                try {
+                    const response = await fetch(HSRC_DOCUMENTS_API_URL, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "text/plain;charset=utf-8"
+                        },
+                        body: JSON.stringify({
+                            action: "documents_get_protected_file",
+                            payload: {
+                                id: doc.id,
+                                password: password
+                            }
+                        })
+                    });
 
-                for (let i = 0; i < binary.length; i++) {
-                    bytes[i] = binary.charCodeAt(i);
+                    const result = await response.json();
+
+                    if (!result.ok || !result.base64) {
+                        lastError = result.error || "Incorrect password. Please try again.";
+                        continue;
+                    }
+
+                    const binary = atob(result.base64);
+                    const bytes = new Uint8Array(binary.length);
+
+                    for (let i = 0; i < binary.length; i++) {
+                        bytes[i] = binary.charCodeAt(i);
+                    }
+
+                    return new Blob([bytes], {
+                        type: result.mimeType || "application/octet-stream"
+                    });
+
+                } catch (error) {
+                    console.error("Protected Document Error:", error);
+                    lastError = error.message || "Unable to open protected document.";
                 }
-
-                return new Blob([bytes], {
-                    type: result.mimeType || "application/octet-stream"
-                });
-
-            } catch (error) {
-                console.error("Protected Document Error:", error);
-                alert(error.message || "Unable to open protected document.");
-                return null;
             }
         }
+
+
 
 
         function getViewerURL(doc) {
@@ -7552,6 +7550,401 @@
     </script>
     <script src="intro.js"></script>
     <script src="id.js"></script>
+
+    <!-- =========================================
+     HSRC PASSWORD MODAL
+     Official Brand Colors:
+     Deep Teal: #164849
+     Terracotta: #F68E61
+========================================= -->
+
+    <style>
+        #hsrcPasswordModal {
+            position: fixed;
+            inset: 0;
+            z-index: 999999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: rgba(10, 30, 30, 0.72);
+            backdrop-filter: blur(7px);
+            -webkit-backdrop-filter: blur(7px);
+            font-family: "Century Gothic", Arial, sans-serif;
+        }
+
+        #hsrcPasswordModal.active {
+            display: flex;
+            animation: hsrcModalFade 0.25s ease;
+        }
+
+        @keyframes hsrcModalFade {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .hsrc-password-card {
+            position: relative;
+            width: 100%;
+            max-width: 430px;
+            overflow: hidden;
+            background: #ffffff;
+            border-radius: 18px;
+            box-shadow: 0 24px 70px rgba(0, 0, 0, 0.28);
+            animation: hsrcCardEnter 0.3s ease;
+        }
+
+        @keyframes hsrcCardEnter {
+            from {
+                opacity: 0;
+                transform: translateY(18px) scale(0.97);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .hsrc-password-header {
+            background: #164849;
+            padding: 27px 25px 24px;
+            text-align: center;
+            color: #ffffff;
+        }
+
+        .hsrc-lock-icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(246, 142, 97, 0.16);
+            border: 1px solid rgba(246, 142, 97, 0.55);
+            border-radius: 50%;
+        }
+
+        .hsrc-lock-icon svg {
+            width: 30px;
+            height: 30px;
+            stroke: #F68E61;
+        }
+
+        .hsrc-password-header h2 {
+            margin: 0;
+            font-family: "Nexa", "Century Gothic", Arial, sans-serif;
+            font-size: 23px;
+            font-weight: 800;
+            letter-spacing: 0.4px;
+        }
+
+        .hsrc-password-header p {
+            margin: 9px 0 0;
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        .hsrc-password-body {
+            padding: 27px 28px 25px;
+        }
+
+        .hsrc-password-label {
+            display: block;
+            margin-bottom: 9px;
+            color: #164849;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .hsrc-password-input-wrap {
+            position: relative;
+        }
+
+        #hsrcPasswordInput {
+            width: 100%;
+            height: 49px;
+            box-sizing: border-box;
+            padding: 0 48px 0 14px;
+            border: 1.5px solid #d8e2df;
+            border-radius: 9px;
+            outline: none;
+            background: #ffffff;
+            color: #164849;
+            font-family: "Century Gothic", Arial, sans-serif;
+            font-size: 14px;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        #hsrcPasswordInput:focus {
+            border-color: #164849;
+            box-shadow: 0 0 0 3px rgba(22, 72, 73, 0.10);
+        }
+
+        #hsrcTogglePassword {
+            position: absolute;
+            top: 50%;
+            right: 13px;
+            transform: translateY(-50%);
+            border: none;
+            background: transparent;
+            color: #164849;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        #hsrcPasswordError {
+            display: none;
+            margin-top: 10px;
+            padding: 10px 12px;
+            border-radius: 7px;
+            background: #fff1ec;
+            color: #b94b32;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        .hsrc-password-note {
+            margin: 13px 0 22px;
+            color: #718080;
+            font-size: 11px;
+            line-height: 1.6;
+        }
+
+        .hsrc-password-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .hsrc-password-actions button {
+            flex: 1;
+            min-height: 46px;
+            border-radius: 8px;
+            font-family: "Century Gothic", Arial, sans-serif;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        #hsrcUnlockButton {
+            border: 1px solid #164849;
+            background: #164849;
+            color: #ffffff;
+        }
+
+        #hsrcUnlockButton:hover {
+            background: #103b3c;
+        }
+
+        #hsrcCancelPassword {
+            border: 1px solid #dce4e2;
+            background: #ffffff;
+            color: #164849;
+        }
+
+        #hsrcCancelPassword:hover {
+            background: #f3f6f5;
+        }
+
+        .hsrc-password-footer {
+            padding: 13px 20px;
+            border-top: 1px solid #edf0ef;
+            text-align: center;
+            color: #84908e;
+            font-size: 10px;
+            letter-spacing: 0.3px;
+        }
+
+        .hsrc-password-footer span {
+            color: #F68E61;
+            font-weight: bold;
+        }
+
+        @media (max-width: 480px) {
+            .hsrc-password-card {
+                max-width: 100%;
+                border-radius: 14px;
+            }
+
+            .hsrc-password-body {
+                padding: 23px 20px;
+            }
+
+            .hsrc-password-header h2 {
+                font-size: 21px;
+            }
+        }
+    </style>
+
+    <div id="hsrcPasswordModal">
+        <div class="hsrc-password-card">
+
+            <div class="hsrc-password-header">
+                <div class="hsrc-lock-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <rect x="4" y="10" width="16" height="11" rx="2"></rect>
+                        <path d="M8 10V7a4 4 0 0 1 8 0v3"></path>
+                        <path d="M12 14v3"></path>
+                    </svg>
+                </div>
+
+                <h2>Protected Document</h2>
+                <p>This document is password-protected.<br>
+                    Enter the password to access this file.</p>
+            </div>
+
+            <div class="hsrc-password-body">
+                <label class="hsrc-password-label" for="hsrcPasswordInput">
+                    DOCUMENT PASSWORD
+                </label>
+
+                <div class="hsrc-password-input-wrap">
+                    <input type="password" id="hsrcPasswordInput" placeholder="Enter your password"
+                        autocomplete="current-password">
+
+                    <button type="button" id="hsrcTogglePassword">
+                        SHOW
+                    </button>
+                </div>
+
+                <div id="hsrcPasswordError" role="alert"></div>
+
+                <p class="hsrc-password-note">
+                    For authorized access only. Please enter the correct
+                    document password to continue.
+                </p>
+
+                <div class="hsrc-password-actions">
+                    <button type="button" id="hsrcCancelPassword">
+                        CANCEL
+                    </button>
+
+                    <button type="button" id="hsrcUnlockButton">
+                        UNLOCK DOCUMENT
+                    </button>
+                </div>
+            </div>
+
+            <div class="hsrc-password-footer">
+                HUMAN SHELTER REALTY CORPORATION
+                <span> | </span> YOUR PARTNER. FOREVER.
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        (function () {
+            const modal = document.getElementById("hsrcPasswordModal");
+            const input = document.getElementById("hsrcPasswordInput");
+            const unlockBtn = document.getElementById("hsrcUnlockButton");
+            const cancelBtn = document.getElementById("hsrcCancelPassword");
+            const toggleBtn = document.getElementById("hsrcTogglePassword");
+            const errorBox = document.getElementById("hsrcPasswordError");
+
+            if (!modal || !input || !unlockBtn || !cancelBtn || !toggleBtn) {
+                console.error("HSRC Password Modal elements are missing.");
+                return;
+            }
+
+            let passwordResolver = null;
+
+            function closeModal(value) {
+                modal.classList.remove("active");
+                input.value = "";
+                input.type = "password";
+                toggleBtn.textContent = "SHOW";
+                errorBox.style.display = "none";
+                errorBox.textContent = "";
+
+                const resolve = passwordResolver;
+                passwordResolver = null;
+
+                if (resolve) resolve(value);
+            }
+
+            function submitPassword() {
+                const password = input.value;
+
+                if (!password.trim()) {
+                    errorBox.textContent = "Please enter the document password.";
+                    errorBox.style.display = "block";
+                    input.focus();
+                    return;
+                }
+
+                closeModal(password);
+            }
+
+            window.hsrcAskDocumentPassword = function (errorMessage = "") {
+                if (passwordResolver) {
+                    closeModal(null);
+                }
+
+                modal.classList.add("active");
+                input.value = "";
+                input.type = "password";
+                toggleBtn.textContent = "SHOW";
+
+                if (errorMessage) {
+                    errorBox.textContent = errorMessage;
+                    errorBox.style.display = "block";
+                } else {
+                    errorBox.style.display = "none";
+                    errorBox.textContent = "";
+                }
+
+                return new Promise((resolve) => {
+                    passwordResolver = resolve;
+                    setTimeout(() => input.focus(), 100);
+                });
+            };
+
+            unlockBtn.addEventListener("click", submitPassword);
+
+            cancelBtn.addEventListener("click", function () {
+                closeModal(null);
+            });
+
+            toggleBtn.addEventListener("click", function () {
+                const isHidden = input.type === "password";
+                input.type = isHidden ? "text" : "password";
+                toggleBtn.textContent = isHidden ? "HIDE" : "SHOW";
+            });
+
+            input.addEventListener("keydown", function (event) {
+                if (event.key === "Enter") {
+                    event.preventDefault();
+                    submitPassword();
+                }
+            });
+
+            modal.addEventListener("click", function (event) {
+                if (event.target === modal) {
+                    closeModal(null);
+                }
+            });
+
+            document.addEventListener("keydown", function (event) {
+                if (
+                    event.key === "Escape" &&
+                    modal.classList.contains("active")
+                ) {
+                    closeModal(null);
+                }
+            });
+        })();
+    </script>
+
 
 </body>
 
