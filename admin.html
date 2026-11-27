@@ -2614,6 +2614,15 @@
         return;
       }
 
+      if (
+        passwordMode === "protected" &&
+        file &&
+        file.size > 8 * 1024 * 1024
+      ) {
+        alert("Protected documents must not exceed 8 MB.");
+        return;
+      }
+      
       if (passwordMode === "protected") {
         if (!password || !confirmPassword) {
           alert("Please enter and confirm the document password.");
