@@ -7257,6 +7257,17 @@
             await loadHSRCDocuments();
         }
 
+
+        // Automatically open Documents modal through QR/direct link
+        window.addEventListener("load", function () {
+            const urlParams = new URLSearchParams(window.location.search);
+
+            if (urlParams.get("open") === "documents") {
+                openDocuments();
+            }
+        });
+
+
         function closeDocuments() {
             documentsModal.classList.remove("hs-doc-open");
             documentsOverlay.classList.remove("hs-doc-open");
